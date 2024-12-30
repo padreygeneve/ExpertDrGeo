@@ -5,4 +5,4 @@ de traiter des cicuits dessinés avec DrGeo.
 
 Il est possibles de traiter tout sujet en crèant ses propres règles.
 Dansle cadre d'un cours d'informatique il permet d'illustrer la voie logique de l'AI, opposée à la voie du neuromimétisme.
-Il peut aussi être utilisé  comme une simplification de Prolog de la même manière que Logo est une simplification de LISP-
+Il peut aussi être utilisé  comme une simplification de Prolog de la même manière que Logo est une simplification de LISP.
