@@ -3,4 +3,6 @@ Il s'utilise avec l'èditeur de script de DrGeo, il ajoute au menu de la figure 
 Différents jeux de règles permettent de l'utiliser pour d'aures applications que la géométrie; un jeu de régles permet de traiter des problémes sur les circuits de résistances en électricité est
 de traiter des cicuits dessinés avec DrGeo.
 
-Il est possibles de traiter tout sujet
+Il est possibles de traiter tout sujet en crèant ses propres règles.
+Dansle cadre d'un cours d'informatique il permet d'illustrer la voie logique de l'AI, opposée à la voie du neuromimétisme.
+Il peut aussi être utilisé  comme une simplification de Prolog de la même manière que Logo est une simplification de LISP-
