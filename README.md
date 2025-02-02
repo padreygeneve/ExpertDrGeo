@@ -6,4 +6,6 @@ de traiter des circuits dessinés avec DrGeo.
 Il est possibles de traiter tout sujet en créant ses propres règles.
 Dans le cadre d'un cours d'informatique il permet d'illustrer la voie logique de l'AI, opposée à la voie du neuro-mimétisme.
 Il peut aussi être  considéré  comme une simplification de Prolog, de la même manière que Logo est une simplification de LISP.
-!!! version expèrimentale  le package contient des ereurs attendre une nouvelle version !!!
+
+
+!!! version expérimentale  le package contient des ereurs attendre une nouvelle version !!!
