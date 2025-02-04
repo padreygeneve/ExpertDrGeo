@@ -1,9 +1,9 @@
-'From Cuis7.1 [latest update: #6452] on 3 February 2025 at 1:31:08 am'!
+'From Cuis7.1 [latest update: #6452] on 4 February 2025 at 4:36:22 pm'!
 'Description '!
 !provides: 'Myexpert' 1 6!
 !requires: 'Erudite' 1 242 nil!
-!requires: 'DrGeoFrench' 1 14 nil!
 !requires: 'DrGeo' 1 741 nil!
+!requires: 'DrGeoFrench' 1 13 nil!
 SystemOrganization addCategory: #Myexpert!
 
 
