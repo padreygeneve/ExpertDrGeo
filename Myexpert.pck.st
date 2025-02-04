@@ -1,4 +1,4 @@
-'From Cuis7.1 [latest update: #6452] on 4 February 2025 at 4:36:22 pm'!
+'From Cuis7.1 [latest update: #6452] on 4 February 2025 at 10:24:15 pm'!
 'Description '!
 !provides: 'Myexpert' 1 6!
 !requires: 'Erudite' 1 242 nil!
