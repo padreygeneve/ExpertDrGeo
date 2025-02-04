@@ -1,9 +1,9 @@
-'From Cuis7.1 [latest update: #6452] on 28 December 2024 at 8:59:51 am'!
+'From Cuis7.1 [latest update: #6452] on 3 February 2025 at 1:31:08 am'!
 'Description '!
 !provides: 'Myexpert' 1 6!
 !requires: 'Erudite' 1 242 nil!
+!requires: 'DrGeoFrench' 1 14 nil!
 !requires: 'DrGeo' 1 741 nil!
-!requires: 'DrGeoFrench' 1 13 nil!
 SystemOrganization addCategory: #Myexpert!
 
 
@@ -81,8 +81,8 @@ ExpertRegle class
 !Expert commentStamp: '<historical>' prior: 0!
 Main Class of This Expert SystemClass intentionContains most of the user's commands. Class collaborationsThis is an addOn for DrGeo .pad!
 
-!ExpertRegle commentStamp: 'DrGeoUser 1/26/2020 22:08' prior: 0!
-I hold a rule.My Responsibility part: is to verify a rule,store it and display it.I mainly use the tool unifie ( unify)to verify the facts stored in the data base.- verifRegle verify  my rule.- afficheRegle display me .- antecedents: set  my antecedents .- concl: set my conclusion.The set of rules are stored in methods on my class Side.try:"|e |e:=Expert new.ExpertRegle perform:  #'Electricite:'    withArguments: { e }.e afficheRegles."																											   One simple example is simply gorgeous. The class Expert is my sender . It contains methods for using me friendly.lisRegle: name  com: comment   .lisregle:Internal Representation and Key Implementation Points.    Instance Variables	ant:		<Object>	com:		<Object>	concl:		<Object>	cut:		<Object>	expert:		<Object>	lf:		<Object>	lv:		<Object>	name:		<Object>	neg:		<Object>    Implementation Points!
+!ExpertRegle commentStamp: '<historical>' prior: 0!
+I hold a rule.My Responsibility part: is to verify a rule,store it and display it.I mainly use the tool unifie ( unify)to verify the facts stored in the data base.- verifRegle verify  my rule.- afficheRegle display me .- antecedents: set  my antecedents .- concl: set my conclusion.The set of rules are stored in methods on my class Side.try:"|e |e:=Expert new.ExpertRegle perform:  #'Electricite:'    withArguments: { e }.e afficheRegles."																											. The class Expert is my sender . It contains methods for using me.lisRegle: name  com: comment   .lisregle:Internal Representation and Key Implementation Points.    Instance Variables	ant:		<Object>	com:		<Object>	concl:		<Object>	cut:		<Object>	expert:		<Object>	lf:		<Object>	lv:		<Object>	name:		<Object>	neg:		<Object>    Implementation Points!
 
 !ExpertWorkspace methodsFor: 'accessing' stamp: 'drgeo 11/19/2024 14:41:22'!
 bindings
@@ -702,12 +702,29 @@ floatString: str
 					((((x  asciiValue  between: 48 and: 57) or: [ x = $. ]) or: [ x = $- ])or:( x= $/))
 						or: [ x = $e ] ]) size! !
 
-!ExpertOutils methodsFor: 'accessing' stamp: 'DrGeoUser 12/8/2021 03:17'!
+!ExpertOutils methodsFor: 'accessing' stamp: 'drgeo 1/23/2025 03:19:43'!
 instancie: lVars fait: f
-	| res |
+	| res fts |
 	lVars ifNil: [ ^ f ].
 	(lVars isKindOf: IdentityDictionary)
 		ifFalse: [ ^ f ].
+	fts:=ExpertList new: f.
+	res := fts collect: [ :t4 | self valeur: t4 vars: lVars ].
+	"	args := res contents allButFirst.
+	$: = concl first last
+	ifTrue: [args add: lVars.
+			self perform: (concl first , 'vars:') asSymbol withArguments: args asArray].
+"
+self halt.
+	^ res! !
+
+!ExpertOutils methodsFor: 'accessing' stamp: 'drgeo 1/16/2025 20:34:13'!
+instancie: f vars:lVars
+	| res fts |
+	lVars ifNil: [ ^ f ].
+	(lVars isKindOf: IdentityDictionary)
+		ifFalse: [ ^ f ].
+	fts:=ExpertList new: f.
 	res := f do: [ :t4 | self valeur: t4 vars: lVars ].
 	"	args := res contents allButFirst.
 	$: = concl first last
@@ -903,11 +920,13 @@ makeFactCollection: arg1
 	temp3 ifNotEmpty: [ temp2 add: temp3 ].
 	^ temp2.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 9/6/2024 22:09:55'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 1/19/2025 14:48:53'!
 makeFactCollectionFromString: aString
-
-
-^(self makeFactCollection:( self makeWordCollection:aString))collect: [:c | ExpertList new: c]
+|r|
+r:= self creeRegle: 'temp'.
+r antecedents: aString.
+^r ant
+"^(self makeFactCollection:( self makeWordCollection:aString))collect: [:c | ExpertList new: c]"
    ! !
 
 !ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 4/1/2013 14:28'!
@@ -1136,7 +1155,7 @@ unifie: t1 avec: t2 vars: t3
 			^ self unifie: t4 avec: t5 vars: t3 ].
 	^ false! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 1/6/2020 17:57'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 1/23/2025 02:02:11'!
 valeur: t1 vars: t2 
 |val|
 t1 isList  ifTrue: [^t1  instancie: t2].
@@ -1150,7 +1169,7 @@ t1 isList  ifTrue: [^t1  instancie: t2].
 		at: t1 asSymbol
 		ifAbsent: [^ t1]).
 	val isList ifTrue: [ ^  val instancie: t2 ].
-	
+	"self halt."
 ^val.! !
 
 !ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 4/8/2013 15:26'!
@@ -1738,9 +1757,9 @@ creeRegle: nom
 deductions
 ^deductions! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/20/2024 05:32:38'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 1/17/2025 13:55:57'!
 deduis
-| fst rgl fts  rr|
+| fst rgl fts  rr wrst rstr  |
 deductions:=OrderedCollection new.
 fts :=affirmations size.
 "stw:=Time primMillisecondClock."
@@ -1751,21 +1770,17 @@ fst:=self  faits keys reject: [:k|k endsWith: '-regles'].
 rgl := fst collect: [:k| self faits at:(( k,'-regles')asSymbol)  ifAbsent:[ nil]].
 rgl :=(self concat:rgl)reject:[:r|r ='temp' or: [ r isNil]].
 rgl isEmpty ifTrue:[ ^ 'pas de règles applicables'].
-
 rgl do:[:r|
 	
 (rr:=self regles at:(r  asSymbol    ) ifAbsent:[ nil ] )ifNotNil: [ rr verifRegle  ] ].trouve.]whileTrue.
-
-deductions:= deductions asSet asOrderedCollection.
+deductions:= deductions asSet asOrderedCollection. 
 ((affirmations size)= fts )ifTrue: [ ^'rien de nouveau '].
-^ 'Déductions effectuées '.
-  " 
+"^ 'Déductions effectuées '."
+ 
 wrst :=WriteStream on: ''.
-fts ifEmpty: [ ^wrst contents ]. 
-rstr := ReadStream on: fts .
-[ wrst nextPut:  Character cr. wrst nextPutAll:  rstr next. rstr atEnd ]whileFalse  .
-
-^ wrst contents."! !
+rstr := ReadStream on: deductions.
+[  ( rstr atEnd) ifFalse:[ wrst nextPutAll: rstr next fait asString.wrst nextPut: Character cr].rstr atEnd ]whileFalse  .
+^ wrst contents.	! !
 
 !Expert methodsFor: 'accessing' stamp: 'DrGeoUser 2/5/2020 12:20'!
 drgeo 
@@ -2280,6 +2295,10 @@ retireFait: aFait
 	res retire: true.
 	^ true! !
 
+!Expert methodsFor: 'accessing'!
+règlesChargées
+	^ stw.! !
+
 !Expert methodsFor: 'accessing' stamp: 'drgeo 10/9/2024 02:28:24'!
 règlesPrédéfinies
 ^ExpertRegle class methodDict keys sort! !
@@ -2341,29 +2360,25 @@ trace: anObject
 ^ anObject
 "! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/15/2024 20:51:01'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 1/29/2025 22:04:31'!
 verifieCondition: cond
-	| flse r res c inst ccr resStr rr rr2 wStr inter|
+	| flse r res resStr ccr wStr rr rr2 c inst dic |
 	flse := false.
-	"dic := IdentityDictionary new."
-	cond isEmpty ifTrue:[^false].
-	c := self makeFactCollectionFromString: cond.
-	r := ExpertRegle new.
-	r ant: c.
+	dic := IdentityDictionary new.
+	r:=self creeRegle: 'temp'.
+	r antecedents: cond asString.
+	c :=r ant.
 	r expert: self.
-	r nom: 'temp'.
+	
 	res := r verifAntecedants.
 	res = false
 		ifTrue: [ ^ 'faux' ].
-	(res includes: flse )ifTrue: [ ^'faux' ].
+	"(res includes: flse )ifTrue: [ ^'faux' ]."
 	(1 = res size and: [ res first = flse ])
 		ifTrue: [ ^ 'faux' ].
 	res := res
 		reject: [ :x | x = flse ].
-		res isEmpty  ifTrue:[^ 'faux'].
-	inter :=self colAsStringWithCrForSet: ( self colAsString: res debut: 22).
-
-	res := res	 collect: [ :f | 
+	res :=res 	collect: [ :f | 
 			c
 				collect: [ :con | 
 					r concl: con.
@@ -2372,13 +2387,12 @@ verifieCondition: cond
 						ifTrue: [ inst := false ].
 					inst ] ].
 	res := res reject: [ :x | x = flse ].
-	res := res asSet asOrderedCollection.
-	
-
+	res
+		ifEmpty: [ ^ '
+faux' ].
 	resStr := ReadStream on: res.
 	ccr := Character cr.
 	wStr := WriteStream on: ''.
-	wStr nextPut: ccr.
 	wStr nextPut: ccr.
 	[ rr := resStr next.
 	rr ifNil: [ rr := c ].
@@ -2392,7 +2406,7 @@ verifieCondition: cond
 	wStr nextPut: ccr.
 	resStr atEnd ] whileFalse.
 	wStr nextPut: ccr.
-	^wStr contents, inter asString! !
+	^ wStr contents! !
 
 !Expert methodsFor: 'accessing' stamp: 'drgeo 9/8/2024 18:55:57'!
 verifieFait: t1 vars: lvars
@@ -2433,6 +2447,60 @@ verifieFaits
 					'
 	' , (self colAsStringWithCr: s last) ].
 	^ st! !
+
+!Expert methodsFor: 'accessing' stamp: 'drgeo 1/23/2025 15:36:39'!
+vérifieCondition: cond 
+	| flse r res dic c rep|
+	"self halt."
+	flse := false.
+	dic := IdentityDictionary new.
+	r :=	self creeRegle: 'temp'. 
+	r antecedents:cond. 
+	c:=r ant.
+	res := r  verifAntecedants.
+	res ifEmpty:   [^ false].
+	
+	"(res includes: flse )ifTrue: [ ^'faux' ]."
+	res :=Array with: (res collect:[:fct| (self instancie: fct fait: c first)]) with:res.
+	  rep:='
+	'.
+	res 
+	do:[:m|rep :=rep, m first asString,Character cr asString,m last asString,Character cr asString]. 
+	
+.
+	^rep 
+
+
+	"(1 = res size and: [ res first = flse ])
+		ifTrue: [ ^ 'faux' ].
+	res := res 
+		reject: [ :x | x = flse ].
+
+	^​ res.
+				
+	^rep.
+		End of block expected ->ifEmpty: [ ^ '
+faux' ].
+
+
+ 
+	resStr := ReadStream on: res.
+	ccr := Character cr.
+	wStr := WriteStream on: ''.
+	wStr nextPut: ccr.
+	[ rr := resStr next.
+	rr ifNil: [ rr := c ].
+	rr2 := ReadStream on: rr.
+	[ c := self faitTelque: rr2 next asString.
+	(c ~= false and: [ c ~= nil ])
+		ifTrue: [ wStr nextPutAll: c.
+			rr size > 1
+				ifTrue: [ wStr nextPut: ccr ] ].
+	rr2 atEnd ] whileFalse.
+	wStr nextPut: ccr.
+	resStr atEnd ] whileFalse.
+	wStr nextPut: ccr.
+	^ wStr contents"! !
 
 !Expert methodsFor: 'initialize' stamp: 'drgeo 11/15/2024 16:26:40'!
 apppfficheCode
@@ -2601,26 +2669,14 @@ initVars
 	vars := IdentityDictionary new.
 	^ vars! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 9/7/2024 17:35:17'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 1/23/2025 11:48:56'!
 instancie: lVars fait: f
-	| res |
-	
+	| res fait |
+	fait :=ExpertList new: f.
 	(lVars isKindOf: IdentityDictionary)
 		ifFalse: [ ^ f ].
-	res := f do: [ :t4 | self valeur: t4 vars: lVars ].
+	res := fait do: [ :t4 | self valeur: t4 vars: lVars ].
 	^ res! !
-
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 1/4/2022 15:02'!
-instancie: faitAsList vars: lVars 
-|m|
-
-m:=faitAsList .
-"m first ='~' ifTrue: [m:=m allButFirst ]."
-m isList ifFalse: [  m:= self valeur: m vars:   lVars ].	
-	
-
-	^m 	instancie:lVars expert: self.
-! !
 
 !Expert methodsFor: 'tools' stamp: 'DrGeoUser 12/8/2021 03:43'!
 instancieNum: lVars fait: f
@@ -4431,12 +4487,12 @@ varLibre: vl vars: lvars
 ^(self valeur: vl vars: lvars) = vl.
 ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 8/16/2024 10:50:30'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 1/19/2025 21:59:26'!
 verifAnt: antes vars: lvars
-""
 	| base lant lfClef myAnt aFirst r |
 	neg := false.
 	cut := false.
+	"self halt."
 	lant := antes copy.
 	lant class ~= OrderedCollection
 		ifTrue: [ ^ false ].
@@ -4499,9 +4555,10 @@ verifAnt: antes vars: lvars
 verifAntecedants
 ^  self verifAntecedants: IdentityDictionary new! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 8/1/2024 23:36:48'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 1/19/2025 21:36:55'!
 verifAntecedants:lvars
 	| res flse|
+	"self halt."
 	flse:=false.
 	self initLv.
 	res := self verifAnt: self ant copy vars: lvars. 
@@ -4512,8 +4569,8 @@ verifAntecedants:lvars
 		ifTrue: [^false].
 	res:=
 	self	applatis: (res	reject:  [:t2 | (t2 = flse) or:[t2 isNil ]]) .
-"	res:= (res asSet) .
-	res:=res asOrderedCollection ."
+	res:= (res asSet) .
+	res:=res asOrderedCollection .
 	 cut ifTrue:  [cut:=false. res ifNotEmpty: [res:= OrderedCollection with: res first]].
 	^res! !
 
@@ -5590,7 +5647,30 @@ EuclideMinimum: e
 	"ExpertRegle figuresNonRectilignes: e".
 	! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/1/2024 01:14:41'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/20/2025 21:37:21'!
+Famille: e
+e initRegles .
+e lisRegle: 'parents'
+si:'père  ?p
+mère  ?m
+enfants ?m ?p ?e'
+alors:'parents ?e ?m  ?p' 
+com:'Les parents d''un enfant sont son père et sa mère'.
+
+e  lisRegle:'frèreOuSoeur'
+si:'parents ?e1 ?p  ?m
+parents ?e2  ?p  ?m
+different:de: ?e1 ?e2'
+alors:'frèreOuSoeur ?e1 ?e2'.
+
+e lisRegle: 'parents2'
+si:'père  ?p
+mère  ?m
+enfants ?m ?p [ ?x1 ?x2 ]'
+alors:'parents [ ?x1 ?x2 ] ?m  ?p' 
+com:'Les parents d''un enfant sont son père et sa mère'.! !
+
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/1/2025 10:29:16'!
 angles: e
 	e
 		lisRegle: 'angles-alignés'
@@ -5603,7 +5683,7 @@ contient:el: ?al ?x3'
 		alors: 'angle0 [ classement:  plat ]'
 		com:
 			'Si les trois points qui définissent un angle sont alignés, l''angle est plat'.
-	"	e
+		e
 		lisRegle: 'angles-equivalent'
 		si:
 			'angle0 [ ?x1 ?o ?x2 ]
@@ -5620,7 +5700,7 @@ position ?x4 ?pos2 ?o ?d2
 relationCrée:et:nom: [ ?x1 ?o ?x2 ] [ ?x3 ?o ?x4 ] équivalent'
 		alors: 'relationCréée  [ ?x1 ?o ?x2 ] [ ?x3 ?o ?x4 ]  équivalent'
 		com:
-			'Des angles de même sommet et avec des extrémités sur les mêmes droites et les mêmes positions sont équivalents.'."
+			'Des angles de même sommet et avec des extrémités sur les mêmes droites et les mêmes positions sont équivalents.'.
 	e
 		lisRegle: 'angles-inscrit'
 		si:
@@ -7250,20 +7330,6 @@ parallèle [ ?xx1 ?yy1 ] ?x
 ajoute:liste:rep: [ ?xx2 ?yy2 ] ?x ?rep3 '
 alors: 'parallèles [ ?xx1 ?yy1 ] ?rep3 '.
 ! !
-
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/2/2024 15:35:49'!
-famille: e
-e lisRegle: 'parents'
-si:'père ?e ?p
-mère ?e ?m'
-alors:'parents ?e ?p  ?m' 
-com:'Les parents d''un enfant sont son père et sa mère'.
-
-e  lisRegle:'frèreOuSoeur'
-si:'parents ?e1 ?p  ?m
-parents ?e2  ?p  ?m
-different:de: ?e1 ?e2'
-alors:'frèreOuSoeur ?e1 ?e2'.! !
 
 !ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/31/2024 22:06:13'!
 figuresNonRectilignes: e
