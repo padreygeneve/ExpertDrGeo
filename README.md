@@ -9,7 +9,7 @@ Il peut aussi être  considéré  comme une simplification de Prolog, de la mêm
 
 
 !!! version expérimentale  le package Foctionne pour:
-  Le tutoriel
-  l'utilisation interactive
-  Les premiers chapitres de Géométrie et système Expert
+  Le tutoriel,
+  l'utilisation interactive,
+  Les premiers chapitres de Géométrie et système Expert,
   Les prédicats ne sont pas tous vérifiés !!!
