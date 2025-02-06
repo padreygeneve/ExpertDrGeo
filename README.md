@@ -8,4 +8,8 @@ Dans le cadre d'un cours d'informatique il permet d'illustrer la voie logique de
 Il peut aussi être  considéré  comme une simplification de Prolog, de la même manière que Logo est une simplification de LISP.
 
 
-!!! version expérimentale  le package contient des ereurs attendre une nouvelle version !!!
+!!! version expérimentale  le package Foctionne pour:
+  Le tutoriel
+  l'utilisation interactive
+  Les premiers chapitres de Géométrie et système Expert
+  Les prédicats ne sont pas tous vérifiés !!!
