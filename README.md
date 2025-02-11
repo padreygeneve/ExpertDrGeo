@@ -1,4 +1,4 @@
-Caution : Only tested with DrGeo-windows-24.06-beta
+Caution : Only tested with DrGeo-windows-24.06a-beta
 
 Ce système expert est une extension de DrGeo, il contient des règles pour faire des déduction à partir de figures DrGeo.
 Il s'utilise avec l'éditeur de script de DrGeo, il ajoute au menu de la figure un sous menu Expert pour son  utilisation conviviale mais peut aussi s'utiliser avec des commandes de script.
