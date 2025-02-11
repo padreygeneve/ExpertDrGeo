@@ -1,4 +1,5 @@
 Caution : Only tested with DrGeo-windows-24.06a-beta, some work is needed for other versions. 
+
 Attention : Seulement testée  avec  DrGeo-windows-24.06a-beta Il y a encore du travail pour les autres versions.
 
 Ce système expert est une extension de DrGeo, il contient des règles pour faire des déduction à partir de figures DrGeo.
