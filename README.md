@@ -1,3 +1,5 @@
+Caution : Only tested with DrGeo-windows-24.06-beta
+
 Ce système expert est une extension de DrGeo, il contient des règles pour faire des déduction à partir de figures DrGeo.
 Il s'utilise avec l'éditeur de script de DrGeo, il ajoute au menu de la figure un sous menu Expert pour son  utilisation conviviale mais peut aussi s'utiliser avec des commandes de script.
 Différents jeux de règles permettent de l'utiliser pour d'autres applications que la géométrie; un jeu de règles permet de traiter des problèmes sur les circuits de résistances en électricité est
