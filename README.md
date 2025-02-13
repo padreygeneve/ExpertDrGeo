@@ -1,7 +1,8 @@
-Caution : Only tested with DrGeo-windows-24.06a-beta, some work is needed for other versions. 
-Attention : Seulement testée  avec  DrGeo-windows-24.06a-beta Il y a encore du travail pour les autres versions.
+Caution : The file 'Myexpert.pck.st' is only tested with DrGeo-windows-24.06a-beta.
+Attention : Le fichier 'Myexpert.pck.st' est seulement testé avec DrGeo-windows-24.06a-beta .
 
-The folder 'expertInstall' contains 3 files to install the expert system in 23.12a beta (code revision 1.661)  image
+The folder 'expertInstall' contains 3 files to install the expert system in 23.12a beta (code revision 1.661)  image,
+Le dossier contient 3 fichiers à installer dans l'ordre indiqué pour intaller le système expert, testé avec 23.12a beta (code revision 1.661).
 
   
 Ce système expert est une extension de DrGeo, il contient des règles pour faire des déduction à partir de figures DrGeo.
