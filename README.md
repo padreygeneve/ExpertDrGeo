@@ -1,7 +1,17 @@
 Caution : The file 'Myexpert.pck.st' is only tested with DrGeo-windows-24.06a-beta.
-Attention : Le fichier 'Myexpert.pck.st' est seulement testé avec DrGeo-windows-24.06a-beta .
 
 The folder 'expertInstall' contains 3 files to install the expert system in 23.12a beta (code revision 1.661)  image.
+
+
+This expert system is an extension of DrGeo. It contains rules to make deductions from DrGeo figures. It is used with the DrGeo script editor, adding a submenu "Expert" to the figure menu for a user-friendly experience, but can also be used with script commands. Different sets of rules allow it to be used for applications other than geometry; one set of rules allows it to handle problems on resistance circuits in electricity and to handle circuits drawn with DrGeo.
+
+It is possible to address any subject by creating your own rules. In the context of a computer science course, it helps illustrate the logical pathway of AI, as opposed to the neuro-mimetic approach. It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
+
+!!! Experimental version: the package works for: The tutorial, interactive use, the first chapters of Geometry and Expert System, not all predicates are verified !!!
+
+********************************************************************************************************************************
+
+Attention : Le fichier 'Myexpert.pck.st' est seulement testé avec DrGeo-windows-24.06a-beta .
 
 Le dossier 'expertInstall' contient 3 fichiers à installer dans l'ordre indiqué pour installer le système expert, testé avec 23.12a beta (code revision 1.661).
 
