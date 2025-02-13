@@ -1,6 +1,6 @@
 Caution : Only tested with DrGeo-windows-24.06a-beta, some work is needed for other versions. 
 Attention : Seulement testée  avec  DrGeo-windows-24.06a-beta Il y a encore du travail pour les autres versions.
-The folder contains 3 files to install the expert system in 23.12a beta (code revision 1.661)  image
+The folder 'expertinstall' contains 3 files to install the expert system in 23.12a beta (code revision 1.661)  image
 
   
 Ce système expert est une extension de DrGeo, il contient des règles pour faire des déduction à partir de figures DrGeo.
