@@ -3,7 +3,7 @@ Attention : Le fichier 'Myexpert.pck.st' est seulement testé avec DrGeo-windows
 
 The folder 'expertInstall' contains 3 files to install the expert system in 23.12a beta (code revision 1.661)  image.
 
-Le dossier contient 3 fichiers à installer dans l'ordre indiqué pour intaller le système expert, testé avec 23.12a beta (code revision 1.661).
+Le dossier 'expertInstall' contient 3 fichiers à installer dans l'ordre indiqué pour intaller le système expert, testé avec 23.12a beta (code revision 1.661).
 
   
 Ce système expert est une extension de DrGeo, il contient des règles pour faire des déduction à partir de figures DrGeo.
