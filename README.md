@@ -16,7 +16,7 @@ It is possible to address any subject by creating your own rules. In the context
 ********************************************************************************************************************************
 Dernière mise à jour 24 2 2025.
 
-Le fichier 'Myexpert.pck.st'fonctionne avec CUIS DrGeo-windows-24.06a-beta .
+Le fichier 'Myexpert.pck.st'  fonctionne avec CUIS DrGeo-windows-24.06a-beta .
 Vous pouvez télécharger CUIS DrGeo-windows-24.06a-beta  à:   https://github.com/Dynamic-Book/drgeo
 
 Le dossier 'expertInstall' est obsolete ,ilcontient 3 fichiers à installer dans l'ordre indiqué pour installer le système expert, testé avec 23.12a beta (code revision 1.661). N'est plus mis à jour.
