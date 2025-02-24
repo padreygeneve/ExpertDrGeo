@@ -4,7 +4,7 @@ last update 24 2 2025
 The file 'Myexpert.pck.st' is working with CUIS DrGeo-windows-24.06a-beta.
 You can download CUIS DrGeo-windows-24.06a-beta. at: https://github.com/Dynamic-Book/drgeo
 
-The folder 'expertInstall' is obsolete. contains 3 files to install the expert system in 23.12a beta (code revision 1.661)  image.
+The folder 'expertInstall' is obsolete. contains 3 files to install the expert system in the old 23.12a beta (code revision 1.661)  image.
 no more updated
 
 This expert system is an extension of DrGeo. It contains rules to make deductions from DrGeo figures. It is used with the DrGeo script editor, adding a submenu "Expert" to the figure menu for a user-friendly experience, but can also be used with script commands. Different sets of rules allow it to be used for applications other than geometry; one set of rules allows it to handle problems on resistance circuits in electricity and to handle circuits drawn with DrGeo.
@@ -19,7 +19,7 @@ Dernière mise à jour 24 2 2025.
 Le fichier 'Myexpert.pck.st'  fonctionne avec CUIS DrGeo-windows-24.06a-beta .
 Vous pouvez télécharger CUIS DrGeo-windows-24.06a-beta  à:   https://github.com/Dynamic-Book/drgeo
 
-Le dossier 'expertInstall' est obsolete ,ilcontient 3 fichiers à installer dans l'ordre indiqué pour installer le système expert, testé avec 23.12a beta (code revision 1.661). N'est plus mis à jour.
+Le dossier 'expertInstall' est obsolète ,ilcontient 3 fichiers à installer dans l'ordre indiqué pour installer le système expert, dans l'ancienne version 23.12a beta (code revision 1.661). N'est plus mis à jour.
 
   
 Ce système expert est une extension de DrGeo, il contient des règles pour faire des déduction à partir de figures DrGeo.
