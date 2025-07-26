@@ -46,5 +46,6 @@ dans la fenêtre. Dans le menu qui s'ouvre choisir installPackage.
 
 faire de même avec le fivhier Myexpert.pck.st
 
-cliquer dans le fond et choisir Outils/Editer une figure Smallialk
-Ouvrir Erudite et utilisr les articles du sous menu Export.
+cliquer dans le fond et chois 
+ir Outils/Editer une figure Smallialk
+Ouvrir Erudite et utilisr les articles du sous menu Expert.
