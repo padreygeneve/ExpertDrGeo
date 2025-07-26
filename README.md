@@ -32,5 +32,19 @@ Il peut aussi être  considéré  comme une simplification de Prolog, de la mêm
   Les prédicats ne sont pas tous vérifiés.
 
 Installation.
+  
+Télécharger et installer CUIS DrGeo-windows-24.06a-beta  à: https://github.com/Dynamic-Book/drgeo
 
+Telecharger les fichiers:
 
+DrGeoFrench.pck.st
+et
+Myexpert.pck.st
+
+Ovrir Drgeo et lâcher  DrGeoFrench.pck.st 
+dans la fenêtre. Dans le menu qui s'ouvre choisir installPackage.
+
+faire de même avec le fivhier Myexpert.pck.st
+
+cliquer dans le fond rt choisir Outils/Editer une figure Smallialk
+Ouvrir Erudite et utilisr les articles du sous menu Exprt.
