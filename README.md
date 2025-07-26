@@ -29,4 +29,8 @@ Il peut aussi être  considéré  comme une simplification de Prolog, de la mêm
   Le tutoriel,
   l'utilisation interactive,
   Les premiers chapitres de Géométrie et système Expert,
-  Les prédicats ne sont pas tous vérifiés !!!
+  Les prédicats ne sont pas tous vérifiés.
+
+Installation.
+
+
