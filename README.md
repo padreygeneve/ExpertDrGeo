@@ -35,17 +35,11 @@ Installation.
   
 Télécharger et installer CUIS DrGeo-windows-24.06a-beta  à: https://github.com/Dynamic-Book/drgeo
 
-Telecharger les fichiers:
-
-DrGeoFrench.pck.st
-et
-Myexpert.pck.st
-
+Telecharger les fichiers:m
 Ovrir Drgeo et lâcher  DrGeoFrench.pck.st 
 dans la fenêtre. Dans le menu qui s'ouvre choisir installPackage.
 
 faire de même avec le fivhier Myexpert.pck.st
 
-cliquer dans le fond et chois 
-ir Outils/Editer une figure Smallialk
+cliquer dans le fond et choirOutils/Editer une figure Smalltalkp
 Ouvrir Erudite et utilisr les articles du sous menu Expert.
