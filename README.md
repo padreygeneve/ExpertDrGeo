@@ -1,6 +1,12 @@
+new update 1.10.2025
+more with Erudit Expert
+
+
 new update 26 07 202
 
-This expert system is an extension of DrGeo. It contains rules to make deductions from DrGeo figures. It is used with the DrGeo script editor, adding a submenu "Expert" to the figure menu for a user-friendly experience, but can also be used with script commands. Different sets of rules allow it to be used for applications other than geometry; one set of rules allows it to handle problems on resistance circuits in electricity and to handle circuits drawn with DrGeo.
+This expert system is an extension of DrGeo. It contains rules to make deductions from DrGeo figures. It is used with the DrGeo script editor, adding a submenu "Expert" to the figure menu for a user-friendly experience, but can also be used with script commands. Different sets of rules allow it to be used for applications other than geometry; one set of rules allows it to handle problems on resistance circuits in e
+
+lectricity and to handle circuits drawn with DrGeo.
 
 It is possible to pas process any subject by creating your own rules. In the context of a computer science course, it helps illustrate the logical pathway of AI, as opposed to the neuro-mimetic approach. It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
 
