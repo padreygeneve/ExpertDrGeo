@@ -78,10 +78,50 @@ ExpertRegle class
 
 
 !Expert commentStamp: '<historical>' prior: 0!
-Main Class of This Expert SystemClass intentionContains most of the user's commands. Class collaborationsThis is an addOn for DrGeo .pad!
+Main Class of This Expert System
+Class intention
+Contains most of the user's commands. 
+Class collaborations
+This is an addOn for DrGeo .
+pad!
 
 !ExpertRegle commentStamp: '<historical>' prior: 0!
-I hold a rule.My Responsibility part: is to verify a rule,store it and display it.I mainly use the tool unifie ( unify)to verify the facts stored in the data base.- verifRegle verify  my rule.- afficheRegle display me .- antecedents: set  my antecedents .- concl: set my conclusion.The set of rules are stored in methods on my class Side.try:"|e |e:=Expert new.ExpertRegle perform:  #'Electricite:'    withArguments: { e }.e afficheRegles."																											. The class Expert is my sender . It contains methods for using me.lisRegle: name  com: comment   .lisregle:Internal Representation and Key Implementation Points.    Instance Variables	ant:		<Object>	com:		<Object>	concl:		<Object>	cut:		<Object>	expert:		<Object>	lf:		<Object>	lv:		<Object>	name:		<Object>	neg:		<Object>    Implementation Points!
+I hold a rule.
+
+My Responsibility part: is to verify a rule,store it and display it.
+
+I mainly use the tool unifie ( unify)to verify the facts stored in the data base.
+
+- verifRegle verify  my rule.
+- afficheRegle display me .
+- antecedents: set  my antecedents .
+- concl: set my conclusion.
+
+The set of rules are stored in methods on my class Side.
+try:
+"|e |
+e:=Expert new.
+ExpertRegle perform:  #'Electricite:'    withArguments: { e }.
+e afficheRegles."																											
+
+.
+ The class Expert is my sender . It contains methods for using me.
+lisRegle: name  com: comment   .lisregle:
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	ant:		<Object>
+	com:		<Object>
+	concl:		<Object>
+	cut:		<Object>
+	expert:		<Object>
+	lf:		<Object>
+	lv:		<Object>
+	name:		<Object>
+	neg:		<Object>
+
+
+    Implementation Points!
 
 !ExpertWorkspace methodsFor: 'accessing' stamp: 'drgeo 11/19/2024 14:41:22'!
 bindings
@@ -2588,7 +2628,8 @@ faux' ].
 vérifieCondition: cond 
 | f v |
 
-f :=self verifieCondition: cond. (#( 'faux' false ) includes: f  ) ifTrue: [ ^false ].
+f :=self verifieCondition: cond. 
+(#( 'faux' false ) includes: f  ) ifTrue: [ ^false ].
 	
 v := self vérifieConditionVar: cond.
 ^f,v.! !
