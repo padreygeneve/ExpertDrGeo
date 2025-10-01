@@ -1,5 +1,5 @@
 new update 1.10.2025
-more with Erudit Expert
+more in Erudit about geometry and Expert
 
 
 new update 26 07 202
