@@ -13,6 +13,9 @@ It is possible to pas process any subject by creating your own rules. In the con
 !!! Experimental version: the package works for: The tutorial, interactive use, the first chapters of Geometry and Expert System, not all predicates are verified !!!
 
 ********************************************************************************************************************************
+Dernière mise à jour  1.10.2025
+
+Ajout dans Erudite  Système Expert
 Dernière mise à jour 26 07 2025 
 
 Ce site permet d'ajouter un système expert au programme DrGeo ce qui permet d'obtenir 
