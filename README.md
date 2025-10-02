@@ -31,6 +31,7 @@ ll faut charger:
 - DrGeo.pck.st
 - DrGeoFrench.pck.st
 - Myexpert2.10.pck.st
+
 Intaller ces Packages
 soit en lâchant ces fichiers dans DrGeo 
 soit en les mettant dans le dossier DrGeo/NewPackage et en utilisant /ouvrir un fichier/ installe package  pour les installer.
