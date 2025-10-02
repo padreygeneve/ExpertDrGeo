@@ -1,4 +1,5 @@
 New update  1.10.2025
+
 Sorry not working now
 
 Additions in the Erudite section: Expert System
@@ -25,7 +26,11 @@ It is possible to pas process any subject by creating your own rules. In the con
 
 ********************************************************************************************************************************
 Nouvelle mise à jour  1.10.2025
+
+
 Désolé ne fonctionne pas en ce moment
+
+
 Ajouts dans Erudite  section: Système Expert.
 
 ll faut charger:
