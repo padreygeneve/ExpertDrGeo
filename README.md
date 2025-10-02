@@ -28,11 +28,11 @@ Nouvelle mise à jour  1.10.2025
 Ajouts dans Erudite  section: Système Expert.
 
 ll faut charger:
-DrGeo.pck.st
-DrGeoFrench.pck.st
-Myexpert2.10.pck.st
+- DrGeo.pck.st
+- DrGeoFrench.pck.st
+- Myexpert2.10.pck.st
 Intaller ces Packages
-soit en lachant ces fichiers dans DrGeo 
+soit en lâchant ces fichiers dans DrGeo 
 soit en les mettant dans le dossier DrGeo/NewPackage et en utilisant /ouvrir un fichier/ installe package  pour les installer.
 
 Dernière mise à jour 26 07 2025 
