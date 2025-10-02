@@ -1,5 +1,15 @@
-new update 1.10.2025
-more in Erudit about geometry and Expert
+New update  1.10.2025
+
+Additions in the Erudite section: Expert System
+You need to load:
+- DrGeo.pck.st
+- DrGeoFrench.pck.st
+- Myexpert2.10.pck.st
+Install these packages either by:
+- Dragging these files into DrGeo
+- Or placing them in the DrGeo/NewPackage folder and using Open a file / Install package to install them.
+
+
 
 
 new update 26 07 202
@@ -13,9 +23,18 @@ It is possible to pas process any subject by creating your own rules. In the con
 !!! Experimental version: the package works for: The tutorial, interactive use, the first chapters of Geometry and Expert System, not all predicates are verified !!!
 
 ********************************************************************************************************************************
-Dernière mise à jour  1.10.2025
+Nouvelle mise à jour  1.10.2025
 
-Ajout dans Erudite  Système Expert
+Ajouts dans Erudite  section: Système Expert.
+
+ll faut charger:
+DrGeo.pck.st
+DrGeoFrench.pck.st
+Myexpert2.10.pck.st
+Intaller ces Packages
+soit en lachant ces fichiers dans DrGeo 
+soit en les mettant dans le dossier DrGeo/NewPackage et en utilisant /ouvrir un fichier/ installe package  pour les installer.
+
 Dernière mise à jour 26 07 2025 
 
 Ce site permet d'ajouter un système expert au programme DrGeo ce qui permet d'obtenir 
