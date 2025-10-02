@@ -6,7 +6,7 @@ Additions in the Erudite section: Expert System
 You need to load in this order
 - DrGeo.pck.st
 - DrGeoFrench.pck.st
-- Myexpert2.10.pck.st
+- Myexpert.pck.st
 - Be sure that filename ends with .pck.st
 
 
@@ -33,7 +33,7 @@ Ajouts dans Erudite  section: Système Expert.
 ll faut charger dans cet ordre:
 - DrGeo.pck.st
 - DrGeoFrench.pck.st
-- Myexpert2.10.pck.st
+- Myexpert.pck.st
 
 - avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses our distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
