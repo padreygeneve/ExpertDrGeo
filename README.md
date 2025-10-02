@@ -1,18 +1,18 @@
 New update  1.10.2025
 
-Sorry not working now
+
 
 Additions in the Erudite section: Expert System
-You need to load:
+You need to load in this order
 - DrGeo.pck.st
 - DrGeoFrench.pck.st
 - Myexpert2.10.pck.st
+- Be sure that filename ends with .pck.st
+
+
 Install these packages either by:
 - Dragging these files into DrGeo
 - Or placing them in the DrGeo/NewPackage folder and using Open a file / Install package to install them.
-
-
-
 
 new update 26 07 202
 
@@ -28,15 +28,14 @@ It is possible to pas process any subject by creating your own rules. In the con
 Nouvelle mise à jour  1.10.2025
 
 
-Désolé ne fonctionne pas en ce moment
-
-
 Ajouts dans Erudite  section: Système Expert.
 
-ll faut charger:
+ll faut charger dans cet ordre:
 - DrGeo.pck.st
 - DrGeoFrench.pck.st
 - Myexpert2.10.pck.st
+
+- avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses our distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
 Intaller ces Packages
 soit en lâchant ces fichiers dans DrGeo 
