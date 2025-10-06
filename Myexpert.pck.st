@@ -1,8 +1,8 @@
-'From Cuis7.1 [latest update: #6452] on 30 September 2025 at 12:03:18 am'!
+'From Cuis7.1 [latest update: #6452] on 6 October 2025 at 8:34:11 pm'!
 'Description '!
-!provides: 'Myexpert' 1 12!
-!requires: 'DrGeoFrench' 1 15 nil!
+!provides: 'Myexpert' 1 13!
 !requires: 'DrGeo' 1 744 nil!
+!requires: 'DrGeoFrench' 1 15 nil!
 SystemOrganization addCategory: #Myexpert!
 
 
@@ -6144,11 +6144,25 @@ EuclideMinimum: e
 	"ExpertRegle figuresNonRectilignes: e".
 	! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/14/2025 02:43:29'!
-angleSuite:e
-
-e lisRegle: 'angle-angleEquivalent1' 
-si:  'angle0 [ ?x1 ?s ?x2 ]
+!ExpertRegle class methodsFor: 'rules'!
+angleSuite: arg1
+	arg1
+		lisRegle: 'angles-mesureAnglesAlterneInterne'
+		si: 'angle0 [ ?x1 ?o ?x2 ] [ alterneInterne:  ?a1 ] 
+ordonneMot:et:rep1:rep2:  ?a1 [ ?x1 ?o ?x2 ]  ?aa1 ?aa2
+relationCrée:et:nom: ?aa1 ?aa2 isométrique'
+		alors: 'relationCréée   ?aa1 ?aa2 isométrique'
+		com: 'Des angles AlterneInternes sont isométriques'.
+	arg1
+		lisRegle: 'angles-mesureAnglesAlterneIExerne'
+		si: 'angle0 [ ?x1 ?o ?x2 ] [ alterneExterne:  ?a1 ] 
+ordonneMot:et:rep1:rep2:  ?a1 [ ?x1 ?o ?x2 ]  ?aa1 ?aa2
+relationCrée:et:nom: ?aa1 ?aa2 isométrique'
+		alors: 'relationCréée   ?aa1 ?aa2 isométrique'
+		com: 'Des angles alterneIExernes sont isométriques'.
+	arg1
+		lisRegle: 'angle-angleEquivalent1'
+		si: 'angle0 [ ?x1 ?s ?x2 ]
 angle0 [ ?x1 ?s ?x2 ] [ classement: nonPlat ]
 demi-droite ?dd1 ?s ?ex1
 demi-droite ?dd2 ?s ?ex2
@@ -6157,11 +6171,11 @@ pointSur ?dd1 ?p
 pointSur ?dd2 ?x2
 different:de: ?p ?x1
 different:de: ?p ?s'
-alors:  'angle0 [ ?x1 ?s ?x2 ]  [ équivalent: [ ?p ?s ?x2 ]  ]'
-com: 'Des points sur les mêmes demi-droites  forment un angle équivalent à l''angle de base .'.
-
-e lisRegle: 'angle-angleEquivalent2' 
-si:  'angle0 [ ?x1 ?s ?x2 ]
+		alors: 'angle0 [ ?x1 ?s ?x2 ]  [ équivalent: [ ?p ?s ?x2 ]  ]'
+		com: 'Des points sur les mêmes demi-droites  forment un angle équivalent à l''angle de base .'.
+	arg1
+		lisRegle: 'angle-angleEquivalent2'
+		si: 'angle0 [ ?x1 ?s ?x2 ]
 angle0 [ ?x1 ?s ?x2 ] [ classement: nonPlat ]
 demi-droite ?dd1 ?s ?ex1
 demi-droite ?dd2 ?s ?ex2
@@ -6170,28 +6184,25 @@ pointSur ?dd2 ?p
 pointSur ?dd2 ?x2
 different:de: ?p ?x2
 different:de: ?p ?s'
-alors:  'angle0 [ ?x1 ?s ?x2 ]  [ équivalent: [ ?x1 ?s ?p ]  ]'
-com: 'Des points sur les mêmes demi-droites  forment un angle équivalent à l''angle de base .'.
-! !
+		alors: 'angle0 [ ?x1 ?s ?x2 ]  [ équivalent: [ ?x1 ?s ?p ]  ]'
+		com: 'Des points sur les mêmes demi-droites  forment un angle équivalent à l''angle de base .'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/14/2025 02:57:09'!
-angles: e
-
-e lisRegle: 'pointSur demi-droite'
-si: 'demi-droite ?dd ?or ?ex
+!ExpertRegle class methodsFor: 'rules'!
+angles: arg1
+	arg1
+		lisRegle: 'pointSur demi-droite'
+		si: 'demi-droite ?dd ?or ?ex
 droite ?d
 pointSur ?d ?p
 pointSur ?d ?or
 pointSur ?d ?ex
 position  ?or ?pos ?ex ?d
 position  ?or ?pos ?p ?d'
-alors: 'pointSur ?dd ?p'
-com: 'Un point sur une droite à la même position que un parent de la demi-droite est aussi sur le demi-droite'.  
-"ordonneMot:et:rep1:rep2: ?x2 ?x3  ?x2 ?x3"
-	e
+		alors: 'pointSur ?dd ?p'
+		com: 'Un point sur une droite à la même position que un parent de la demi-droite est aussi sur le demi-droite'.
+	arg1
 		lisRegle: 'angles-alignés1'
-		si:
-			'droite ?d
+		si: 'droite ?d
 demi-droite ?dd1 ?x1 ?x2
 demi-droite ?dd2 ?x1 ?x3
 pointSur ?d ?x1
@@ -6202,48 +6213,33 @@ pointsSur ?d ?pts
 justeAvant:el:rep: ?pts  ?x1  ?x3
 justeAprès:el:rep: ?pts ?x1  ?x2'
 		alors: 'angle0 [ ?x2 ?x1 ?x3 ] [ classement:  plat ]'
-		com:
-			'Si les trois points qui définissent un angle sont alignés, l''angle est plat'.  
-			
-			
-	e
+		com: 'Si les trois points qui définissent un angle sont alignés, l''angle est plat'.
+	arg1
 		lisRegle: 'angles-saillant'
-		si:
-			'mesure  [ ?x2 ?x1 ?x3 ] ?m
+		si: 'mesure  [ ?x2 ?x1 ?x3 ] ?m
 inférieur:à: ?m 180'
 		alors: 'angle0 [ ?x2 ?x1 ?x3 ] [ classement:  saillant ]'
-		com:
-			'Si un angle est inférieur à un angle plat,il est saillant'.  
-			
-			e
+		com: 'Si un angle est inférieur à un angle plat,il est saillant'.
+	arg1
 		lisRegle: 'angles-rentrant'
-		si:
-			'mesure  [ ?x2 ?x1 ?x3 ] ?m
+		si: 'mesure  [ ?x2 ?x1 ?x3 ] ?m
 supérieur:à: ?m 180'
 		alors: 'angle0 [ ?x2 ?x1 ?x3 ] [ classement:  rentrant ]'
-		com:
-			'Si un angle est inférieur à un angle plat,il est rentrant'.  
-				
-			
-	e	lisRegle: 'angles-PlatsComplémentaires'
-		si:
-			'angle0 [ ?x1 ?O ?x2 ] [ classement: NonPlat ] '
+		com: 'Si un angle est inférieur à un angle plat,il est rentrant'.
+	arg1
+		lisRegle: 'angles-PlatsComplémentaires'
+		si: 'angle0 [ ?x1 ?O ?x2 ] [ classement: NonPlat ] '
 		alors: 'angle0 [ ?x2 ?O ?x1 ]'
-		com:
-			'Si un angle est plat, l''angle complémentaire de l''autre côté l'' est aussi. '.  
-			
-e			
-lisRegle: 'angles-nul'
-		si:
-			'angle0 [ ?x1 ?s ?x2 ]
+		com: 'Si un angle est plat, l''angle complémentaire de l''autre côté l'' est aussi. '.
+	arg1
+		lisRegle: 'angles-nul'
+		si: 'angle0 [ ?x1 ?s ?x2 ]
 égaux:et: ?x1 ?x2'
 		alors: 'angle0  [ ?x ?s ?x ] [ classement:  nul ]'
-		com:
-			'Si deux points qui définissent un angle sont les mêmes, l''angle est nul'.  			
-	e
+		com: 'Si deux points qui définissent un angle sont les mêmes, l''angle est nul'.
+	arg1
 		lisRegle: 'angles-angleDef1ApAv'
-		si:
-			'sorteDeDroite ?d1
+		si: 'sorteDeDroite ?d1
 sorteDeDroite ?d2
 pointSur ?d1 ?O
 pointSur ?d2 ?O
@@ -6256,13 +6252,10 @@ different:de: ?O ?avO2
 different:de: ?d1 ?d2
 aireTriangleNegative:avec:avec: ?apO1 ?O ?avO2'
 		alors: '  angle0 [ ?apO1 ?O ?avO2 ] [ position:  [ Après Avant ] ]'
-		com:
-			'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
-			
-	e
+		com: 'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
+	arg1
 		lisRegle: 'angles-angleDef2AvAv'
-		si:
-			'sorteDeDroite ?d1
+		si: 'sorteDeDroite ?d1
 sorteDeDroite ?d2
 pointSur ?d1 ?O
 pointSur ?d2 ?O
@@ -6274,13 +6267,11 @@ different:de: ?O ?avO1
 different:de: ?O ?avO2
 different:de: ?d1 ?d2
 aireTriangleNegative:avec:avec: ?avO1 ?O ?avO2'
-		alors: 'angle0 [ ?avO1 ?O ?avO2 ] [  position: [  Avant Avant ] ]' 
-		com:
-			'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
-	e
+		alors: 'angle0 [ ?avO1 ?O ?avO2 ] [  position: [  Avant Avant ] ]'
+		com: 'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
+	arg1
 		lisRegle: 'angles-angleDef3AvAp'
-		si:
-			'sorteDeDroite ?d1
+		si: 'sorteDeDroite ?d1
 sorteDeDroite ?d2
 pointSur ?d1 ?O
 pointSur ?d2 ?O
@@ -6293,12 +6284,10 @@ different:de: ?O ?apO2
 different:de: ?d1 ?d2
 aireTriangleNegative:avec:avec: ?avO1 ?O ?apO2'
 		alors: 'angle0 [ ?avO1 ?O ?apO2 ] [ position: [ Avant Après ] ]'
-		com:
-			'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
-	e
+		com: 'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
+	arg1
 		lisRegle: 'angles-angleDef4ApAp'
-		si:
-			'sorteDeDroite ?d1
+		si: 'sorteDeDroite ?d1
 sorteDeDroite ?d2
 pointSur ?d1 ?O
 pointSur ?d2 ?O
@@ -6311,100 +6300,74 @@ different:de: ?O ?apO2
 different:de: ?d1 ?d2
 aireTriangleNegative:avec:avec: ?apO1 ?O ?apO2'
 		alors: 'angle0 [ ?apO1 ?O ?apO2 ] [ position: [ Après Après ] ]'
-		com:
-			'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.			
-			
-			 
-			"e lisRegle:  'angleo-angle0AussiAngle2'
-			si:  'angle0 [ 	?x1 ?s ?x2 ]'
-			alors:  'angle ?a  [ 	?x1 ?s ?x2 ]' 
-			com: 'L''angle de base est aussi un angle.'."
-			
-			e lisRegle: 'angle0-angle' 
-si:  'angle0 ?x1 ?x2'
-
-alors:  'angle0 ?x1'
-com: 'L''angle avec les points les plus proches du sommet est dit angle de base, noté angle0.'.
-
-
-e
+		com: 'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
+	arg1
+		lisRegle: 'angle0-angle'
+		si: 'angle0 ?x1 ?x2'
+		alors: 'angle0 ?x1'
+		com: 'L''angle avec les points les plus proches du sommet est dit angle de base, noté angle0.'.
+	arg1
 		lisRegle: 'angles-inscrit'
-		si:
-			'angle0 [ ?p1 ?s ?p2 ] [ plusProche ]
+		si: 'angle0 [ ?p1 ?s ?p2 ] [ plusProche ]
 cercle ?c
 pointSur ?c ?p1
 pointSur ?c ?p2
 pointSur ?c ?s'
 		alors: 'angle0  [ ?p1 ?s ?p2 ]  [ Inscrit: ?c ]'
-		com:
-			'Un angle inscrit dans un cercle a son sommet sur le cercle et ses côtés interceptent le cercle.'.
-	e
+		com: 'Un angle inscrit dans un cercle a son sommet sur le cercle et ses côtés interceptent le cercle.'.
+	arg1
 		lisRegle: 'angles-inscritsIsométrique'
-		si:
-			'angle0  [ ?p1 ?s1 ?p2 ]  [ Inscrit: ?c ]
+		si: 'angle0  [ ?p1 ?s1 ?p2 ]  [ Inscrit: ?c ]
 angle0  [ ?p1 ?s2 ?p2 ]  [ Inscrit: ?c ]
 ordonneMot:et:rep1:rep2: ?s1 ?s2 ?ss1 ?ss2
 different:de: ?s1 ?s2
 relationCrée:et:nom:   [ ?p1 ?ss1 ?p2 ]  [ ?p1 ?ss2 ?p2 ] isométrique'
 		alors: 'relationCréée  [ ?p1 ?ss1 ?p2 ]  [ ?p1 ?ss2 ?p2 ] isométrique'
-		com:
-			'Des angles inscrits  dans un  même cercle et interceptant le même arc sont isométriques'.
-	e
+		com: 'Des angles inscrits  dans un  même cercle et interceptant le même arc sont isométriques'.
+	arg1
 		lisRegle: 'angles-inscritsIsométriqueClassement'
-		si:
-			' angle0  ?a1 [ ?cl ]
+		si: ' angle0  ?a1 [ ?cl ]
 angle0 ?a2
 contient:el: [ aigu droit obtus  ] ?cl
 relation:et:nom: ?a1 ?a2 isométrique
 different:de: ?a1 ?a2'
 		alors: 'angle0 ?a2 [ ?cl ]'
 		com: ''.
-	'Des angles  isométriques ont le même classement.'.
-	e
+	arg1
 		lisRegle: 'angles-AuCentre1'
-		si:
-			'cercle ?c [ centre: ?o ]
+		si: 'cercle ?c [ centre: ?o ]
 angle0 [ ?p1 ?o ?p2 ] [ plusProche ]
 pointSur ?c ?p1
 pointSur ?c ?p2
 pointSur ?c ?s'
 		alors: 'angle0  [ ?p1 ?s ?p2 ]  [ AuCentre:  ?c ]'
-		com:
-			'Un angle au centre d''un cercle a son sommet au centre du  cercle et ses côtés interceptent le cercle.'.
-		e
+		com: 'Un angle au centre d''un cercle a son sommet au centre du  cercle et ses côtés interceptent le cercle.'.
+	arg1
 		lisRegle: 'angles-angleInscritMesure'
-		si:
-			'angle0  [ ?x1 ?s ?x2 ] [ Inscrit: ?c ]
+		si: 'angle0  [ ?x1 ?s ?x2 ] [ Inscrit: ?c ]
 angle0 [ ?x1 ?o ?x2 ]  [ AuCentre: ?c ]'
-		alors:
-			'égal [ mesure [ ?x1 ?o ?x2 ]  ] [ double [  mesure  [ ?x1 ?s ?x2 ]  ] ] ]'
-		com:
-			'La mesure de l''angle au centre esi le double de l''angle inscrit de même arc.'.
-	e
+		alors: 'égal [ mesure [ ?x1 ?o ?x2 ]  ] [ double [  mesure  [ ?x1 ?s ?x2 ]  ] ] ]'
+		com: 'La mesure de l''angle au centre esi le double de l''angle inscrit de même arc.'.
+	arg1
 		lisRegle: 'angles-inscritIsométrie'
-		si:
-			'angle0   [  ?x1 ?s1 ?y1 ]  [ Inscrit: ?c ]
+		si: 'angle0   [  ?x1 ?s1 ?y1 ]  [ Inscrit: ?c ]
 angle0   [  ?x2 ?s2 ?y2 ]  [ Inscrit: ?c ]
 ordonneMot:et:rep1:rep2:   [  ?x1 ?s1 ?y1 ] [  ?x2 ?s2 ?y2 ]  [  ?x1 ?s1 ?y1 ] [  ?x2 ?s2 ?y2 ] 
 relationCrée:et:nom:  [  ?x1 ?s1 ?y1 ] [  ?x2 ?s2 ?y2 ] isométrique
 different:de: [  ?x1 ?s1 ?y1 ] [  ?x2 ?s2 ?y2 ]'
 		alors: 'relationCréée [  ?x1 ?s1 ?y1 ] [  ?x2 ?s2 ?y2 ] isométrique'
-		com:
-			'Des angle inscrit dans un cercle qui interceptent le cercle sur les mêmes points sont isométriques.'.
-	e
+		com: 'Des angle inscrit dans un cercle qui interceptent le cercle sur les mêmes points sont isométriques.'.
+	arg1
 		lisRegle: 'angles-AuCentre'
-		si:
-			'angle0 [  ?x ?o ?y ] 
+		si: 'angle0 [  ?x ?o ?y ] 
 cercle ?c [ centre: ?o ]
 pointSur ?c ?x
 pointSur ?c ?y'
 		alors: 'angle0 [  ?x ?o ?y ]  [ AuCentre: ?c ]'
-		com:
-			'Un angle au centre  son sommet au centre d''un cercle et ses côtés interceptent le cercle.'.
-	e
+		com: 'Un angle au centre  son sommet au centre d''un cercle et ses côtés interceptent le cercle.'.
+	arg1
 		lisRegle: 'angles-ClassementDroit1'
-		si:
-			' perpendiculaire [ ?x1 ?y1 ] [ ?x2 ?y2 ]
+		si: ' perpendiculaire [ ?x1 ?y1 ] [ ?x2 ?y2 ]
 pointSur ?d1 ?x1 
 pointSur ?d1 ?y1
 sorteDeDroite ?d1
@@ -6419,10 +6382,9 @@ angle0 [ ?x  ?I ?y ]
 relation:et:nom: [ ?rep1 ?I ?rep2  ] [ ?x  ?I ?y ] équivalent'
 		alors: 'angle0  [ ?x  ?I ?y ] [ classement: droit ]'
 		com: 'L''angle entre des droites perpendiculaires est classé angle droit.'.
-	e
+	arg1
 		lisRegle: 'angles-ClassementDroit2'
-		si:
-			'perpendiculaire [ ?x1 ?y1 ] [ ?x2 ?y2 ]
+		si: 'perpendiculaire [ ?x1 ?y1 ] [ ?x2 ?y2 ]
 pointSur ?d1 ?x1 
 pointSur ?d1 ?y1
 sorteDeDroite ?
@@ -6437,145 +6399,9 @@ angle0 [ ?x  ?I ?y ]
 relation:et:nom: [ ?rep2 ?I ?rep1  ] [ ?x  ?I ?y ] équivalent'
 		alors: 'angle0  [ ?x  ?I ?y ] [ classement: droit ]'
 		com: 'L''angle entre des droites perpendiculaires est classé angle droit.'.
-
-	"e lisRegle: 'angles-equivalentAVAP'
- si: 'angle [ ?x1 ?s ?x2 ] [ position: [ Avant Après ] ] 
-position ?x1 Avant ?s ?d
-pointsSur:rep: ?d ?pts1
-index:el:rep: ?pts1 ?s ?ind1
-somme:et:rep:  ?ind1 -1 ?somme
-élément:à:rep: ?pts1 ?somme ?el
-position ?x2 Après ?s ?d2
-pointsSur:rep: ?d2 ?pts2
-index:el:rep: ?pts2 ?s ?ind2
-somme:et:rep:  ?ind2 1 ?somme2
-élément:à:rep: ?pts2 ?somme2 ?el2'
-alors: 'angle [ ?x1 ?s ?x2 ] [ équivalent: [ ?el ?s ?el2 ]'
-com: 'Des angles de même sommet et avec des extrémités sur les mêmes droites sont équivalents.'.
-
-e lisRegle: 'angles-equivalentAVAV'
- si: 'angle [ ?x1 ?s ?x2 ] [ position: [ Avant Avant ] ] 
-position ?x1 Avant ?s ?d
-pointsSur:rep: ?d ?pts1
-index:el:rep: ?pts1 ?s ?ind1
-somme:et:rep:  ?ind1 -1 ?somme
-élément:à:rep: ?pts1 ?somme ?el
-position ?x2 Avant ?s ?d2
-pointsSur:rep: ?d2 ?pts2
-index:el:rep: ?pts2 ?s ?ind2
-somme:et:rep:  ?ind2 -1 ?somme2
-élément:à:rep: ?pts2 ?somme2 ?el2'
-alors: 'angle [ ?x1 ?s ?x2 ] [ équivalent: [ ?el ?s ?el2 ]'
-com: 'Des angles de même sommet et avec des extrémités sur les mêmes droites sont équivalents.'.
-
-e lisRegle: 'angles-equivalentApAp'
- si: 'angle [ ?x1 ?s ?x2 ] [ position: [ Après Après ] ] 
-position ?x1 Après ?s ?d
-pointsSur:rep: ?d ?pts1
-index:el:rep: ?pts1 ?s ?ind1
-somme:et:rep:  ?ind1 1 ?somme
-élément:à:rep: ?pts1 ?somme ?el
-position ?x2 Après ?s ?d2
-pointsSur:rep: ?d2 ?pts2
-index:el:rep: ?pts2 ?s ?ind2
-somme:et:rep:  ?ind2 1 ?somme2
-élément:à:rep: ?pts2 ?somme2 ?el2'
-alors: 'angle [ ?x1 ?s ?x2 ] [ équivalent: [ ?el ?s ?el2 ]'
-com: 'Des angles de même sommet et avec des extrémités sur les mêmes droites sont équivalents.'.
-
-		e
-		lisRegle: 'angles-équivalentMêmesPropriétés1'
-		si:
-			'angle0 ?x ?prop 
-angle ?y [ équivalent: ?x ]'
-		alors: 'angle ?y ?prop'
-		com: 'Des angles équivalents ont les mêmes propriétés.'.
-
-	e lisRegle: 'angles-équivalentMêmesPropriétés2' 
-si: 'angle ?x1 [  ?prop ?x ]
-angle ?y [ équivalent: ?x ]
-different:de: ?prop  équivalent:'
-alors:  'angle ?x1  [ ?prop ?y ]'
-com: 'Des angles équivalents ont les mêmes propriétés.'.
-	e
-		lisRegle: 'angles-équivalentMêmeMesure'
-		si:
-			'angle0 ?x
-mesure [ ?x ] ?m
-angle ?y [ équivalent: ?x ]'
-		alors: 'mesure ?y ?m déduite'
-		com: 'Des angles équivalents ont les mêmes propriétés.'.
-
-	e
-		lisRegle: 'angles-angleDef2'
-		si:
-			'intersection ?o ?d2 ?d1
-sorteDeDroite ?d1
-sorteDeDroite ?d2
-pointSur ?d1 ?p1
-pointSur ?d2 ?p2
-position ?pos1 ?p1 ?o ?dd1
-position ?pos2  ?p2 ?o ?dd2
-pointsSur:rep: ?d1 ?pts1
-pointsSur:rep: ?d2 ?pts2
-index:el:rep: ?pts1 ?o ?indO1
-index:el:rep: ?pts2 ?o ?indO2
-index:el:rep: ?pts1  ?p1 ?indp1
-index:el:rep: ?pts2  ?p2 ?indp2
-difference:et:rep: ?indO1 ?indp1 ?diff1
-difference:et:rep: ?indO2 ?indp2 ?diff2
-abs:rep: ?diff1 ?absdiff1
-abs:rep: ?diff2 ?absdiff2
-égal:à: ?absdiff1 1 
-égal:à: ?absdiff2 1 
-mot:et:rep: ?d1 ?pos1 ?res1
-mot:et:rep: ?res1 ?o ?rres1
-mot:et:rep: ?d2 ?pos2 ?res2
-mot:et:rep: ?res2 ?o ?rres2
-aireTriangleNegative:avec:avec: ?p1 ?o ?p2
-different:de: ?o ?p1
-different:de: ?o ?p2
-different:de: ?p1 ?p2
-'
-		alors: 'angle [ ?p1 ?o ?p2 ]  [ demi-droites: [  ?rres1 ?rres2 ]  ]'
-		com: 'définition d''un angle par des demi-droites'.
-	e
-		lisRegle: 'angles-angleDef1'
-		si:
-			'intersection ?o ?d1 ?d2
-sorteDeDroite ?d1
-sorteDeDroite ?d2
-pointSur ?d1 ?p1
-pointSur ?d2 ?p2
-position ?pos1 ?p1 ?o ?dd1
-position ?pos2  ?p2 ?o ?dd2
-pointsSur:rep: ?d1 ?pts1
-pointsSur:rep: ?d2 ?pts2
-index:el:rep: ?pts1 ?o ?indO1
-index:el:rep: ?pts2 ?o ?indO2
-index:el:rep: ?pts1  ?p1 ?indp1
-index:el:rep: ?pts2  ?p2 ?indp2
-difference:et:rep: ?indO1 ?indp1 ?diff1
-difference:et:rep: ?indO2 ?indp2 ?diff2
-abs:rep: ?diff1 ?absdiff1
-abs:rep: ?diff2 ?absdiff2
-égal:à: ?absdiff1 1 
-égal:à: ?absdiff2 1 
-mot:et:rep: ?d1 ?pos1 ?res1
-mot:et:rep: ?res1 ?o ?rres1
-mot:et:rep: ?d2 ?pos2 ?res2
-mot:et:rep: ?res2 ?o ?rres2
-aireTriangleNegative:avec:avec: ?p1 ?o ?p2
-different:de: ?o ?p1
-different:de: ?o ?p2
-different:de: ?p1 ?p2
-'
-		alors: 'angle [ ?p1 ?o ?p2 ]  [ demi-droites: [  ?rres1 ?rres2 ]  ]'
-		com: 'définition d''un angle par des demi-droites'.	"
-	e
+	arg1
 		lisRegle: 'angles-angleDefA'
-		si:
-			'angle0 [ ?p1 ?o ?p2 ]
+		si: 'angle0 [ ?p1 ?o ?p2 ]
 sorteDeDroite ?d1
 sorteDeDroite ?d2
 pointSur ?d1 ?p1
@@ -6586,107 +6412,38 @@ aireTriangleNegative:avec:avec: ?p1 ?o ?p2
 angle0 [ ?p1 ?o ?p2 ] [ plusProche ]'
 		alors: 'angle0 [ ?p1 ?o ?p2 ] [  position:  [ ?pos1 ?pos2 ] ]'
 		com: 'Angle défini par la position de ses extrémités'.
-	e
+	arg1
 		lisRegle: 'angles-plusProche2'
-		si:
-			'angle0  [ ?x1  ?O ?x2 ] 
+		si: 'angle0  [ ?x1  ?O ?x2 ] 
 pointsConfondus  ?x3 ?x1
 contient:el: [  ?x3 ?x1 ] ?x1
 enleverDe:el:rep: [ ?x3 ?x1 ] ?x1 ?ang'
 		alors: 'angle0 [ ?ang ?O ?x2 ] [ classement: nonPlat  ]'
 		com: 'Autre angle plus proche avec des points confondus'.
-	e
+	arg1
 		lisRegle: 'angles-plusProche3'
-		si:
-			'angle0  [ ?x1  ?O ?x2 ]
+		si: 'angle0  [ ?x1  ?O ?x2 ]
 pointsConfondus  ?x3 ?x2
 contient:el: [  ?x3 ?x2 ] ?x2
 enleverDe:el:rep: [ ?x3 ?x2 ] ?x2 ?ang'
 		alors: 'angle0 [ ?x1 ?O ?ang ] [ classement: nonPlat ]'
 		com: 'Autre angle plus proche avec des points confondus'.
-	"e
-		lisRegle: 'angles-angleDef02'
-		si:
-			'sorteDeDroite ?dd1
-sorteDeDroite ?dd2
-ordonneMot:et:rep1:rep2: ?dd1 ?dd2 ?d1 ?d2
-intersection ?O ?d1 ?d2
-pointsSur ?d1 ?pts1
-pointsSur ?d2 ?pts2
-justeAvant:el:rep: ?pts1 ?O ?avO1
-justeAvant:el:rep: ?pts2 ?O ?avO2
-different:de: ?O ?avO2
-different:de: ?O ?avO1
-aireTriangleNegative:avec:avec: ?avO1 ?O ?avO2'
-		alors: 'angle0 [ ?avO1 ?O ?avO2 ] [ classement: nonPlat  ]'
-		com:
-			'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
-	e
-		lisRegle: 'angles-angleDef03'
-		si:
-			'sorteDeDroite ?dd1
-sorteDeDroite ?dd2
-ordonneMot:et:rep1:rep2: ?dd1 ?dd2 ?d1 ?d2
-intersection ?O ?d1 ?d2
-pointsSur ?d1 ?pts1
-pointsSur ?d2 ?pts2
-justeAprès:el:rep: ?pts1 ?O ?avO1
-justeAvant:el:rep: ?pts2 ?O ?avO2
-different:de: ?O ?avO2
-different:de: ?O ?avO1
-aireTriangleNegative:avec:avec: ?avO1 ?O ?avO2'
-		alors: 'angle0 [ ?avO1 ?O ?avO2 ] [ classement: nonPlat  ]'
-		com:
-			'Angle non plat défini par la position de ses extrémités les plus proches du sommet'.
-	e
-		lisRegle: 'angles-angleDef04'
-		si:
-			'sorteDeDroite ?dd1
-sorteDeDroite ?dd2
-ordonneMot:et:rep1:rep2: ?dd1 ?dd2 ?d1 ?d2
-intersection ?O ?d1 ?d2
-pointsSur ?d1 ?pts1
-pointsSur ?d2 ?pts2
-justeAprès:el:rep: ?pts1 ?O ?avO1
-justeAprès:el:rep: ?pts2 ?O ?avO2
-different:de: ?O ?avO2
-different:de: ?O ?avO1
-aireTriangleNegative:avec:avec: ?avO1 ?O ?avO2'
-		alors: 'angle0 [ ?avO1 ?O ?avO2 ] [ classement: nonPlat  ]'
-		com:
-			'Angle non plat défini par la position de ses extrémités les plus proches du sommet'."
-
-	e
+	arg1
 		lisRegle: 'angles-angleDeBaseNonplats'
-		si:
-			'angle0 [ ?p1 ?o ?p2 ] [ classement: nonPlat  ]
+		si: 'angle0 [ ?p1 ?o ?p2 ] [ classement: nonPlat  ]
 aireTriangle:avec:avec:rep:  ?p1 ?o ?p2 ?res
 abs:rep: ?res ?absres
 supérieur:à: ?absres  1e-10'
 		alors: 'angle0 [ position: ?p1 ?o ?p2 ]'
-		com:
-			'Angle non plat sans ses propriétés et avec les extrémités les plus proches du sommet.'.
-			
-e
+		com: 'Angle non plat sans ses propriétés et avec les extrémités les plus proches du sommet.'.
+	arg1
 		lisRegle: 'angles-angleDeBaseNonplats'
-		si:
-			'angle0 [ ?p1 ?o ?p2 ] [ position: [ ?x ?y  ] ]'
+		si: 'angle0 [ ?p1 ?o ?p2 ] [ position: [ ?x ?y  ] ]'
 		alors: 'angle0 [ ?p1 ?o ?p2 ] [ classement: nonPlat ]'
-		com:
-			'Angle non plat sans ses propriétés et avec les extrémités les plus proches du sommet.'.
-	"e
-		lisRegle: 'angles-angleNonplatsPropNonPlat'
-		si:
-			'angle0 [ ?p1 ?o ?p2 ] [ classement: nonPlat  ]
-angle0 [ ?p1 ?o ?p2 ] [ ?x ]
-different:de: plat ?x'
-		alors: 'angle0 [ ?p1 ?o ?p2 ] [ nonPlat ]'
-		com:
-			'Angle sans ses propriétés et avec les extrémités les plus proches du sommet.'."
-	e
+		com: 'Angle non plat sans ses propriétés et avec les extrémités les plus proches du sommet.'.
+	arg1
 		lisRegle: 'angles-Obtus1'
-		si:
-			'angle0 [ ?x1 ?x2 ?x3 ]
+		si: 'angle0 [ ?x1 ?x2 ?x3 ]
 médiatrice ?m [ ?x1 ?x3 ]
 médiatrice ?m2 [ ?x1 ?x2 ]
 milieu [  ?x1 ?x3 ] ?mil
@@ -6695,12 +6452,10 @@ position  ?mil    ?pos ?im ?m
 égaux:et: Avant ?pos
 different:de: ?m ?m2'
 		alors: 'angle0 [ ?x1 ?x2 ?x3 ] [ obtus ]'
-		com:
-			'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est avant l''intersection avec une médiatrice d''un côté, l''agle est obtus, supérieur à un droit.'.
-	e
+		com: 'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est avant l''intersection avec une médiatrice d''un côté, l''agle est obtus, supérieur à un droit.'.
+	arg1
 		lisRegle: 'angles-Aigu1'
-		si:
-			'angle0 [ ?x1 ?x2 ?x3 ]
+		si: 'angle0 [ ?x1 ?x2 ?x3 ]
 médiatrice ?m [ ?x1 ?x3 ]
 médiatrice ?m2 [ ?x1 ?x2 ]
 milieu [  ?x1 ?x3 ] ?mil
@@ -6711,12 +6466,10 @@ different:de: ?m ?m2
 different:de: ?mil   ?im 
 '
 		alors: ' angle0 [ ?x1 ?x2 ?x3 ] [ aigu ]'
-		com:
-			'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est avant l''intersection avec une médiatrice d''un côté, l''agle est aigu, inférieur à un droit.'.
-	e
+		com: 'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est avant l''intersection avec une médiatrice d''un côté, l''agle est aigu, inférieur à un droit.'.
+	arg1
 		lisRegle: 'angles-médiatricesAngleDroit1'
-		si:
-			'angle0 [ ?x1 ?x2 ?x3 ]
+		si: 'angle0 [ ?x1 ?x2 ?x3 ]
 médiatrice ?m [ ?x1 ?x3 ]
 médiatrice ?m2 [ ?x1 ?x2 ]
 milieu [  ?x1 ?x3 ] ?mil
@@ -6724,12 +6477,10 @@ intersection ?im ?m ?m2
 pointConfondu:avec: ?im ?mil
 different:de: ?m ?m2'
 		alors: 'angle0 [ ?x1 ?x2 ?x3 ] [ classement: droit]'
-		com:
-			'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est confondu avec  l''intersection d''une médiatrice d''un côté, l''agle est droit'.
-	e
+		com: 'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est confondu avec  l''intersection d''une médiatrice d''un côté, l''agle est droit'.
+	arg1
 		lisRegle: 'angles-aigu2'
-		si:
-			'angle0 [ ?x1 ?x2 ?x3 ]
+		si: 'angle0 [ ?x1 ?x2 ?x3 ]
 médiatrice ?m [ ?x1 ?x3 ]
 médiatrice ?m2 [ ?x2 ?x3 ]
 milieu [  ?x1 ?x3 ] ?mil
@@ -6737,12 +6488,10 @@ intersection ?im ?m ?m2
 position  ?mil   Après ?im ?m
 different:de: ?m ?m2'
 		alors: 'angle0 [ ?x1 ?x2 ?x3 ] [ aigu ]'
-		com:
-			'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est avant l''intersection avec une médiatrice d''un côté, l''agle est aigu, inférieur à un droit.'.
-	e
+		com: 'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est avant l''intersection avec une médiatrice d''un côté, l''agle est aigu, inférieur à un droit.'.
+	arg1
 		lisRegle: 'angles-obtus2'
-		si:
-			'angle0 [ ?x1 ?x2 ?x3 ]
+		si: 'angle0 [ ?x1 ?x2 ?x3 ]
 médiatrice ?m [ ?x1 ?x3 ]
 médiatrice ?m2 [ ?x2 ?x3 ]
 milieu [  ?x1 ?x3 ] ?mil
@@ -6750,27 +6499,10 @@ intersection ?im ?m ?m2
 position  ?mil    Avant ?im ?m
 different:de: ?m ?m2'
 		alors: 'angle0 [ ?x1 ?x2 ?x3 ] [ obtus ]'
-		com:
-			'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est avant l''intersection avec une médiatrice d''un côté, l''agle est obtus, supérieur à un droit'.
-	"e
-		lisRegle: 's-testDroit'
-		si:
-			'angle [ ?x1 ?s ?x2 ] [ équivalent: [ ?xx1 ?s ?xx2 ] ]
-droite ?d ?s ?x1
-intersection ?i2 ?d ?d3
-perpendiculaire ?perp ?d1  ?p
-pointSur ?d1 ?x2	
-point:rep: ?i2 ?ptI2
-point:rep: ?p ?ptp
-égal:à:  ?ptI2 ?ptp'
-		alors: 'angle0  [ ?xx1 ?s ?xx2  ] [ droit ]'
-		com:
-			'Si une droite coupe la droite issue du sommet de cet angle et perpendiculaire à un côté  de cet angle 
-au point de son intersection avec l''autre côté de l''angle, l''angle est droit.'."
-	e
+		com: 'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est avant l''intersection avec une médiatrice d''un côté, l''agle est obtus, supérieur à un droit'.
+	arg1
 		lisRegle: 'angles-testAigu'
-		si:
-			'perpendiculaire ?x ?y ?o
+		si: 'perpendiculaire ?x ?y ?o
 intersection ?i ?x ?d
 pointSur ?d ?i
 pointSur ?d ?x2
@@ -6782,13 +6514,11 @@ position ?x2 ?pos2 ?1 ?d
 ~ pointsConfondus ?x1 ?i 
 different:de: ?i ?x1'
 		alors: 'angle0  [ ?x1 ?o ?x2 ] [ classement: aigu ]'
-		com:
-			'Si une droite coupe la droite issue du sommet de cet angle et perpendiculaire à un côté de cet angle 
+		com: 'Si une droite coupe la droite issue du sommet de cet angle et perpendiculaire à un côté de cet angle 
 avant son intersection avec l''autre côté de l''angle, l''angle est aigu.'.
-	e
+	arg1
 		lisRegle: 'angles-testDroit'
-		si:
-			'perpendiculaire ?x ?y ?o
+		si: 'perpendiculaire ?x ?y ?o
 intersection ?i ?x ?d
 pointSur ?d ?i
 pointSur ?d ?x2
@@ -6797,13 +6527,11 @@ angle0 [ ?x1 ?o ?x2 ]
 pointsConfondus ?x1 ?i 
 different:de: ?i ?x1'
 		alors: 'angle0  [ ?x1 ?o ?x2 ] [ classement: droit ]'
-		com:
-			'Si une droite coupe la droite issue du sommet de cet angle et perpendiculaire à un côté de cet angle 
+		com: 'Si une droite coupe la droite issue du sommet de cet angle et perpendiculaire à un côté de cet angle 
 à l''intersection avec l''autre côté de l''angle, l''angle est droit.'.
-	e
+	arg1
 		lisRegle: 'angles-testObtus'
-		si:
-			'perpendiculaire ?x ?y ?o
+		si: 'perpendiculaire ?x ?y ?o
 intersection ?i ?x ?d
 pointSur ?d ?i
 pointSur ?d ?x2
@@ -6815,13 +6543,11 @@ different:de: ?pos1 ?pos2
 ~ pointsConfondus ?x1 ?i 
 different:de: ?i ?x1'
 		alors: 'angle0 [ ?x1 ?o ?x2 ] [ classement: obtus ]'
-		com:
-			'Si une droite coupe la droite issue du sommet de cet angle et perpendiculaire à un côté  de cet angle 
+		com: 'Si une droite coupe la droite issue du sommet de cet angle et perpendiculaire à un côté  de cet angle 
 après son intersection avec l''autre côté de l''angle, l''angle est obtus.'.
-	e
+	arg1
 		lisRegle: 'angles-médiatricesAngleDroit2'
-		si:
-			'angle0 [ ?x1 ?x2 ?x3 ]
+		si: 'angle0 [ ?x1 ?x2 ?x3 ]
 médiatrice ?m [ ?x1 ?x3 ]
 médiatrice ?m2 [ ?x2 ?x3 ]
 milieu [  ?x1 ?x3 ] ?mil
@@ -6829,43 +6555,34 @@ intersection ?im ?m ?m2
 position  ?mil    pointConfonduAvec ?im ?m
 different:de: ?m ?m2'
 		alors: 'angle0 [ ?x1 ?x2 ?x3 ] [ classement: droit ]'
-		com:
-			'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est confondu avec  l''intersection d''une médiatrice d''un côté, l''agle est droit'.
-	e
+		com: 'Si sur la médiatrice des extrémités d''un angle  le milieu des extrémités est confondu avec  l''intersection d''une médiatrice d''un côté, l''agle est droit'.
+	arg1
 		lisRegle: 'angles-opposésSommets1'
-		si:
-			'angle0  ?x1 [  supplémentaire: ?x2 ]
+		si: 'angle0  ?x1 [  supplémentaire: ?x2 ]
 angle0  ?x3 [  supplémentaire: ?x1 ]'
 		alors: 'angle0 ?x2 [ opposé:  ?x3  ]'
-		com:
-			'Deux angles sont opposés par le sommet s''ils sont supplémentaires au même angle'.
-	e
+		com: 'Deux angles sont opposés par le sommet s''ils sont supplémentaires au même angle'.
+	arg1
 		lisRegle: 'angles-opposésSommets2'
-		si:
-			'angle0  ?x1 [  supplémentaire: ?x2 ]
+		si: 'angle0  ?x1 [  supplémentaire: ?x2 ]
 angle0  ?x1 [  supplémentaire: ?x3 ]
 ordonneMot:et:rep1:rep2: ?x2 ?x3  ?x2 ?x3
 different:de: ?x2 ?x3'
 		alors: 'angle0 ?x2 [ opposé:  ?x3  ]'
-		com:
-			'Deux angles sont opposés par le sommet s''ils sont supplémentaires au même angle'.
-
-	e
+		com: 'Deux angles sont opposés par le sommet s''ils sont supplémentaires au même angle'.
+	arg1
 		lisRegle: 'angles-angleAdjacentMesure'
-		si:
-			'angle 0 [ ?x1 ?o ?x2 ] [  adjacent: [ ?x2 ?o ?x3 ] ]
+		si: 'angle 0 [ ?x1 ?o ?x2 ] [  adjacent: [ ?x2 ?o ?x3 ] ]
 mesure [ ?x1 ?o ?x2 ] ?m1
 mesure [ ?x2 ?o ?x3 ] ?m2
 somme:et:rep: ?m1 ?m2 ?m3
 inférieurOuEgal:à: ?m3  180
 different:de: 180.0 ?m3'
 		alors: 'mesure [ ?x1 ?o ?x3 ] ?m3 déduite'
-		com:
-			'La mesure de la somme de deux angles adjacents est la somme des mesures des angles.'.
-	e
+		com: 'La mesure de la somme de deux angles adjacents est la somme des mesures des angles.'.
+	arg1
 		lisRegle: 'angles-mesureTroisièmeAngle1'
-		si:
-			'polygone ?pol  [  Trigone ]
+		si: 'polygone ?pol  [  Trigone ]
 polygone ?pol  [  sommets: [ ?s1 ?s2 ?s3] ]
 mesure [ ?s2  ?s1 ?s3 ] ?m1 donnée
 mesure [ ?s3   ?s2 ?s1 ] ?m2 donnée
@@ -6873,10 +6590,9 @@ somme:et:rep: ?m1 ?m2 ?ms
 difference:et:rep: 180 ?ms ?m3'
 		alors: 'mesure [ ?s1 ?s3 ?s2 ] ?m3 déduite'
 		com: 'Un angle du Trigone est égal à 180 - somme des deux autres.'.
-	e
+	arg1
 		lisRegle: 'angles-mesureTroisièmeAngle2'
-		si:
-			'polygone ?pol  [  Trigone ]
+		si: 'polygone ?pol  [  Trigone ]
 polygone ?pol  [  sommets: [ ?s1 ?s2 ?s3] ]
 mesure [ ?s3 ?s2 ?s1 ] ?m1 donnée
 mesure [ ?s1 ?s3 ?s2 ] ?m2 donnée
@@ -6884,10 +6600,9 @@ somme:et:rep: ?m1 ?m2 ?ms
 difference:et:rep: 180 ?ms ?m3'
 		alors: 'mesure [ ?s2 ?s1 ?s3 ] ?m3 déduite'
 		com: 'Un angle du Trigone est égal à 180 - somme des deux autres.'.
-	e
+	arg1
 		lisRegle: 'angles-mesureTroisièmeAngle3'
-		si:
-			'polygone ?pol  [  Trigone ]
+		si: 'polygone ?pol  [  Trigone ]
 polygone ?pol  [  sommets: [ ?s1 ?s2 ?s3] ]
 mesure [ ?s1  ?s3 ?s2 ] ?m1 donnée
 mesure [ ?s2  ?s1 ?s3 ] ?m2 donnée
@@ -6895,245 +6610,182 @@ somme:et:rep: ?m1 ?m2 ?ms
 difference:et:rep: 180 ?ms ?m3'
 		alors: 'mesure [ ?s3 ?s2 ?s1 ] ?m3 déduite'
 		com: 'Un angle du Trigone est égal à 180 - somme des deux autres.'.
-	e
+	arg1
 		lisRegle: 'angles-mesureAnglesOpposés2'
-		si:
-			'mesure  ?a1  ?v ?source
+		si: 'mesure  ?a1  ?v ?source
 angle0 ?a1 [ opposé:  [ ?x1 ?o ?x2 ]  
 ~ mesure [ ?x1 ?o ?x2 ] ?v donnée'
 		alors: 'mesure [ ?x1 ?o ?x2 ] ?v déduite'.
-	e
+	arg1
 		lisRegle: 'angles-mesureAnglesOpposés1'
-		si:
-			'angle0 [ ?x1 ?o ?x2 ] [ opposé:  ?a1 ] 
+		si: 'angle0 [ ?x1 ?o ?x2 ] [ opposé:  ?a1 ] 
 ordonneMot:et:rep1:rep2:  ?a1 [ ?x1 ?o ?x2 ]  ?aa1 ?aa2
 relationCrée:et:nom: ?aa1 ?aa2 isométrique'
 		alors: 'relationCréée ?aa1 ?aa2 isométrique'
 		com: 'Des angles opposés sont isométriques'.
-	e
+	arg1
 		lisRegle: 'angles-mesureAnglesOpposés2'
-		si:
-			'mesure  ?a1  ?v ?source
+		si: 'mesure  ?a1  ?v ?source
 angle0 ?a1 [ opposé:  [ ?x1 ?o ?x2 ]
 ordonneMot:et:rep1:rep2:  ?a1 [ ?x1 ?o ?x2 ]  ?aa1 ?aa2
 relationCrée:et:nom: ?aa1 ?aa2 isométrique'
 		alors: 'relationCréée ?aa1 ?aa2 isométrique'
 		com: 'Des angles opposés sont isométriques'.
-	e
+	arg1
 		lisRegle: 'angles-mesureAnglescorrespondant1Isométrie'
-		si:
-			'angle0 [ ?x1 ?o ?x2 ] [ correspondant:  ?a1 ] 
+		si: 'angle0 [ ?x1 ?o ?x2 ] [ correspondant:  ?a1 ] 
 ordonneMot:et:rep1:rep2:  ?a1 [ ?x1 ?o ?x2 ]  ?aa1 ?aa2
 relationCrée:et:nom: ?aa1 ?aa2 isométrique'
 		alors: 'relationCréée   ?aa1 ?aa2 isométrique'
 		com: 'Des angles correspondants sont isométriques'.
-	e
+	arg1
 		lisRegle: 'angles-mesureAnglescorrespondant2Isométrie'
-		si:
-			'mesure  ?a1  ?v ?source
+		si: 'mesure  ?a1  ?v ?source
 angle0	[ ?x1 ?o ?x2 ] 		
 angle0 ?a1 [ correspondant:  [ ?x1 ?o ?x2 ] ]
 ordonneMot:et:rep1:rep2:  ?a1 [ ?x1 ?o ?x2 ]  ?aa1 ?aa2
 relationCrée:et:nom: ?aa1 ?aa2 isométrique'
 		alors: 'relationCréée ?aa1 ?aa2 isométrique'
 		com: 'Des angles correspondants sont isométriques'.
-	e
+	arg1
 		lisRegle: 'angles-mesureAngles supplémentaire1'
-		si:
-			'mesure  ?a1 ?v ?source 
+		si: 'mesure  ?a1 ?v ?source 
 angle0 ?a1 [ supplémentaire:  ?a2 ]
 difference:et:rep: 180 ?v ?v1
 supérieur:à: ?v1 0'
 		alors: 'mesure ?a2 ?v1 déduite'
 		com: 'La somme de deux angles supplémentaires est 180'.
-	e
+	arg1
 		lisRegle: 'angles-mesureAngles supplémentaire2'
-		si:
-			'mesure  ?a2  ?v ?source
+		si: 'mesure  ?a2  ?v ?source
 angle0 ?a1 [ supplémentaire:  ?a2 ]
 difference:et:rep: 180 ?v ?v1
 supérieur:à:  ?v1 0
 ~ mesure ?a1 ?v1 donnée'
 		alors: 'mesure ?a1 ?v1 déduite'.
-	e
+	arg1
 		lisRegle: 'angles-mesureAngles supplémentaireDroit1'
-		si:
-			'angle0 ?a1 [  classement: droit  ]
+		si: 'angle0 ?a1 [  classement: droit  ]
 angle0 ?a1 [ supplémentaire:  ?a2 ]'
 		alors: 'angle0 ?a2 [ classement: droit ]'
-		com:
-			'Si l''un de deux angles supplémentaires est droit, alors l''autre est aussi droit'.
-	e
+		com: 'Si l''un de deux angles supplémentaires est droit, alors l''autre est aussi droit'.
+	arg1
 		lisRegle: 'angles-mesureAngles supplémentaireDroit2'
-		si:
-			'angle0 ?a2 [  classement: droit ]
+		si: 'angle0 ?a2 [  classement: droit ]
 angle0 ?a1 [ supplémentaire:  ?a2 ]'
 		alors: 'angle0 ?a1 [ classement: droit]'
-		com:
-			'Si l''un de deux angles supplémentaires est droit, alors l''autre est aussi droit'.
-	e
+		com: 'Si l''un de deux angles supplémentaires est droit, alors l''autre est aussi droit'.
+	arg1
 		lisRegle: 'angles-adjacentAngles1'
-		si:
-			'angle0 [ ?x1 ?o ?x2 ] [ classement: nonPlat ]
+		si: 'angle0 [ ?x1 ?o ?x2 ] [ classement: nonPlat ]
 angle0 [ ?x2 ?o ?x3 ] [ classement: nonPlat ]'
-		alors: 'angle0   [ ?x1 ?o ?x2 ]  [ adjacent:  [ ?x2 ?o ?x3  ] ]'  
+		alors: 'angle0   [ ?x1 ?o ?x2 ]  [ adjacent:  [ ?x2 ?o ?x3  ] ]'
 		com: 'Des angles qui ont un côté commun sont adjacents.'.
-"	e
+	arg1
 		lisRegle: 'angles-supplémentaires1'
-		si:
-			'angle0 [  ?x1 ?O ?x2 ] [ adjacent: [  ?x3 ?O ?x13 ]  ]  
-angle0 [  ?x2 ?O ?x3  ]  [ classement: plat  ]
-different:de: ?x1 ?x2
-ordonneMot:et:rep1:rep:
-different:de: ?x2 ?x3'
-		alors: 'angle0  [  ?x2 ?O ?x1 ]  [  supplémentaire:  [  ?x1 ?O ?x3 ]  ]'
-		com:
-			'Si la somme de deux angles est un angle plat, ces angles sont  supplémentaires.'."
-	e
-		lisRegle: 'angles-supplémentaires1'
-		si:'angle0 [ ?x3 ?s ?x1 ] [ adjacent: [ ?x2 ?s ?x4 ]
+		si: 'angle0 [ ?x3 ?s ?x1 ] [ adjacent: [ ?x2 ?s ?x4 ]
 angle0 [ ?x4 ?s ?x3 ] [ classement: plat ]'
 		alors: 'angle0  [ ?x3 ?s ?x1 ] [  supplémentaire:  [ ?x2 ?s ?x4 ] ]'
-		com:
-			'Si la somme de deux angles est un angle plat, ces angles sont  supplémentaires.'.
-		e
+		com: 'Si la somme de deux angles est un angle plat, ces angles sont  supplémentaires.'.
+	arg1
 		lisRegle: 'angles-supplémentaires2'
-		si:
-			' angle0 [ ?x3 ?s ?x1 ] [ adjacent: [ ?x1 ?s ?x4 ]
+		si: ' angle0 [ ?x3 ?s ?x1 ] [ adjacent: [ ?x1 ?s ?x4 ]
 angle0 [ ?x3 ?s ?x4 ] [ classement: plat ]'
 		alors: 'angle0 [ ?x3 ?s ?x1 ]  [  supplémentaire: [ ?x1 ?s ?x4 ] ]'
-		com:
-			'La somme de deux angles est un angle plat, ces angles sont  supplémentaires.'.
-	"e
-		lisRegle: 'angles-supplémentaires2'
-		si: 'angle0 ?x1 [  supplémentaire: ?x2 ]'
-		alors: 'angle0 ?x2  [  supplémentaire: ?x1 ]'
-		com: 'La somme de deux angles supplémentaires est 180°'."
-	e
+		com: 'La somme de deux angles est un angle plat, ces angles sont  supplémentaires.'.
+	arg1
 		lisRegle: 'angles-bissect'
-		si:
-			'angle [  ?a ?o ?b ]
+		si: 'angle [  ?a ?o ?b ]
 isométrique [ ?a ?o ] [ ?b ?o ]
 médiatrice ?m [ ?a ?b ]'
 		alors: 'bissectrice ?m angle [ ?a ?o ?b ]'
-		com:
-			'La bissectriceDe:  d''un angle est la médiatrice de points situés à même distance du sommet; la médiatrice d''un triangle isocèle est aussi la bissectrice.'.
-	e
+		com: 'La bissectriceDe:  d''un angle est la médiatrice de points situés à même distance du sommet; la médiatrice d''un triangle isocèle est aussi la bissectrice.'.
+	arg1
 		lisRegle: 'angles-bissectriceAnglesIsométriques'
-		si:
-			'bissectrice  ?bis [ ?x1 ?o ?x3 ]
+		si: 'bissectrice  ?bis [ ?x1 ?o ?x3 ]
 milieu [ ?x1 ?x3 ] ?m
 ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3
 relationCrée:et:nom: [ ?x1 ?o ?m ] [ ?m ?o ?x3 ] isométrique
 different:de: ?o ?m'
 		alors: 'relationCréée   [ ?x1 ?o ?m ] [ ?m ?o ?x3 ] isométrique'
-		com:
-			'La bissectrice d''un angle divise cet angle en deux angles isométriques.'.
-	e
+		com: 'La bissectrice d''un angle divise cet angle en deux angles isométriques.'.
+	arg1
 		lisRegle: 'angles-AnglePlatDef'
 		si: 'alignement  [ ?x1 ?o ?x2 ]'
 		alors: 'angle0  [ ?x1 ?o ?x2 ]  [ classement: plat ]'
-		com:
-			'Un angle plat est un angle de 180°, les côtés de  l''angle sont sur une même droite ainsi que les points qui définissent l''angle'.
-	"
-	"
-	e
+		com: 'Un angle plat est un angle de 180°, les côtés de  l''angle sont sur une même droite ainsi que les points qui définissent l''angle'.
+	arg1
 		lisRegle: 'angles-AnglePlusProche'
-		si:
-			'angle0  ?x1 [ position: ?x2 ?x3 ]'
+		si: 'angle0  ?x1 [ position: ?x2 ?x3 ]'
 		alors: 'angle0 ?x1'
-		com:
-			'L'' angle le plus proche, l''angle avec ses extrémiés les plus proches de son sommet'.
-	e
+		com: 'L'' angle le plus proche, l''angle avec ses extrémiés les plus proches de son sommet'.
+	arg1
 		lisRegle: 'angles-Angle platDef2'
 		si: 'angle0  [ classement: plat ]'
 		alors: 'angle0 [ classement: nonPlat  ]'
-		com:
-			'L'' angle qui sert à la définition de l''angle plat  est aussi le plus proche'.
-	e
+		com: 'L'' angle qui sert à la définition de l''angle plat  est aussi le plus proche'.
+	arg1
 		lisRegle: 'angles-droit->perpendiculaire'
-		si:
-			'angle0 [ ?x ?O ?y ] [  d roit ]
+		si: 'angle0 [ ?x ?O ?y ] [  d roit ]
 ordonneMot:et:rep1:rep2: [  ?x ?O ] [  ?O ?y  ] ?xx ?yy'
 		alors: 'perpendiculaire  ?xx ?yy '
 		com: ' Les côtés d''un angle droit sont perpendiculaire.'.
-	e
+	arg1
 		lisRegle: 'angles-AngleSupplémentairesDroit1'
-		si:
-			'angle0 [ ?x1 ?o ?x2 ] [ supplémentaire: ?sup ]
+		si: 'angle0 [ ?x1 ?o ?x2 ] [ supplémentaire: ?sup ]
 relation:et:nom: [ ?x1 ?o ?x2 ]  ?sup isométrique'
 		alors: 'angle0  [ ?x1 ?o ?x2 ]  [ classement: droit ]'
-		com:
-			'Définition: Losqu''une droite coupe une autre droite avec des angles isométriques de chaque côté, ces angles sont dits droits et les droites sont dites perpendiculaires.'.
-	e
+		com: 'Définition: Losqu''une droite coupe une autre droite avec des angles isométriques de chaque côté, ces angles sont dits droits et les droites sont dites perpendiculaires.'.
+	arg1
 		lisRegle: 'angles-SupplémentairesAngleDroit2'
-		si:
-			'angle0 [ ?x1 ?o ?x2 ] [ supplémentaire: ?sup ]
+		si: 'angle0 [ ?x1 ?o ?x2 ] [ supplémentaire: ?sup ]
 relation:et:nom: [ ?x1 ?o ?x2 ]  ?sup isométrique'
 		alors: 'angle0  ?sup  [ classement: droit ]'
-		com:
-			'Définition: Losqu''une droite coupe une autre droite avec des angles isométriques de chaque côté, ces angles sont dits droits et les droites sont dites perpendiculaires.'.
-	e
+		com: 'Définition: Losqu''une droite coupe une autre droite avec des angles isométriques de chaque côté, ces angles sont dits droits et les droites sont dites perpendiculaires.'.
+	arg1
 		lisRegle: 'angles-AngleDroit3'
-		si:
-			'angle0 [ ?x1 ?o ?x2 ]
+		si: 'angle0 [ ?x1 ?o ?x2 ]
 intersection  ?o ?d2 ?d1
 pointSur ?d1 ?x1
 pointSur ?d2 ?x2
 perpendiculaire ?d1 ?d2'
 		alors: 'angle0  [ ?x1 ?o ?x2 ]  [ classement: droit]'
-		com:
-			'Définition: Un angle droit est un angle dont la mesure est 90°. Un angle droit a ses côtés perpendiculaires'.
-	e
+		com: 'Définition: Un angle droit est un angle dont la mesure est 90°. Un angle droit a ses côtés perpendiculaires'.
+	arg1
 		lisRegle: 'angles-AngleAigu'
-		si:
-			'angle ?x1
+		si: 'angle ?x1
 angle ?x1 [ position: [  ?pos1 ?pos2 ] ]
 different:de: ?pos1 ?pos2
 ~ angle ?x1 [ classement: droit]'
 		alors: 'angle ?x1 [ aigu ]'
-		com:
-			'Un angle aigus est un angle > 0° et  < 90°. C''est aussi un angle  avec des positions différentes. (Après  Avant  ou Avant Après)'.
-	e
+		com: 'Un angle aigus est un angle > 0° et  < 90°. C''est aussi un angle  avec des positions différentes. (Après  Avant  ou Avant Après)'.
+	arg1
 		lisRegle: 'angles-AngleObtus'
-		si:
-			'angle ?x1
+		si: 'angle ?x1
 angle ?x1 [ position: [  ?pos1 ?pos2 ] ]
 ~ angle ?x1 [ classement: droit]
 égaux:et: ?pos1 ?pos2'
 		alors: 'angle ?x1 [ obtus ]'
-		com:
-			'Un angle obtu est un angle > 90° et  < 180°. C''est aussi un angle  avec des mêmes positions. (Avant Avant  ou Après Après)'.
-		e
+		com: 'Un angle obtu est un angle > 90° et  < 180°. C''est aussi un angle  avec des mêmes positions. (Avant Avant  ou Après Après)'.
+	arg1
 		lisRegle: 'angles-correspondant'
 		si: 'angle0  ?x1 [ position:  [ ?x ?y ]  ]
 angle0  ?x2 [ position:  [ ?x ?y ]  ]
 different:de: ?x1 ?x2
-ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1 ?x2'		
-	alors:'angle0 ?x1 [ correspondant: ?x2 ]'
-	com:'Des angles de même position sont correspondants'.
-	
-	e
-lisRegle: 'angles-correspondant2'
-	si: 'angle0  ?x1 [ position:  [ Après Avant  ]  ]
+ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1 ?x2'
+		alors: 'angle0 ?x1 [ correspondant: ?x2 ]'
+		com: 'Des angles de même position sont correspondants'.
+	arg1
+		lisRegle: 'angles-correspondant2'
+		si: 'angle0  ?x1 [ position:  [ Après Avant  ]  ]
 angle0  ?x2 [ position:  [ Après Avant]  ]
 different:de: ?x1 ?x2
-ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1 ?x2'		
-	alors:'angle0 ?x1 [ correspondant ?x2 ]'
-	com:'Des angles de même position sont correspondants'.
-			
-
-
-			
-
-			
-	
-		
-	
-	e
+ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1 ?x2'
+		alors: 'angle0 ?x1 [ correspondant ?x2 ]'
+		com: 'Des angles de même position sont correspondants'.
+	arg1
 		lisRegle: 'angles-alterneInterne1'
-		si:
-			'sorteDeDroite ?d1
+		si: 'sorteDeDroite ?d1
 sorteDeDroite ?d2
 sorteDeDroite ?d3
 relation:et:nom: ?d1 ?d2 parallèle
@@ -7153,13 +6805,10 @@ angle0 [ ?x2 ?o2 ?y2 ] [ classement: nonPlat ]
 ordonneMot:et:rep1:rep2: [ ?x1 ?o1 ?y1 ] [ ?x2 ?o2 ?y2  ] ?a1 ?a2
 different:de: ?o1 ?o2'
 		alors: 'angle0 ?a1 [  alterneInterne:  ?a2 ]'
-		com:
-			'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''intérieur de ces parallèles sont alternes internes.'.
-			
-			e
+		com: 'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''intérieur de ces parallèles sont alternes internes.'.
+	arg1
 		lisRegle: 'angles-alterneinterne2'
-		si:
-			'sorteDeDroite ?d1
+		si: 'sorteDeDroite ?d1
 sorteDeDroite ?d2
 sorteDeDroite ?d3
 relation:et:nom: ?d1 ?d2 parallèle
@@ -7178,12 +6827,10 @@ angle0 [ ?x1 ?o1 ?y1 ] [ classement: nonPlat ]
 angle0 [ ?x2 ?o2 ?y2  ] [ classement: nonPlat ]
 ordonneMot:et:rep1:rep2: [ ?x1 ?o1 ?y1 ] [ ?x2 ?o2 ?y2  ] ?a1 ?a2'
 		alors: 'angle0 ?a1 [  alterneInterne:  ?a2 ]'
-		com:
-			'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''intérieur de ces parallèles sont alternes internes.'.
-
-	e
-	lisRegle: 'angles-alterneExterne1'
-	si: 'sorteDeDroite ?d1
+		com: 'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''intérieur de ces parallèles sont alternes internes.'.
+	arg1
+		lisRegle: 'angles-alterneExterne1'
+		si: 'sorteDeDroite ?d1
 sorteDeDroite ?d2
 sorteDeDroite ?d3
 ordonneMot:et:rep1:rep2: ?d1 ?d3 ?dd1 ?dd3
@@ -7202,13 +6849,10 @@ angle0 [ ?x2 ?o2 ?y2  ]  [ classement: nonPlat ]
 ordonneMot:et:rep1:rep2: [ ?x1 ?o1 ?y1 ] [ ?x2 ?o2 ?y2  ] ?a1 ?a2 ]
 different:de: ?o1 ?o2'
 		alors: 'angle0 ?a1 [  alterneExterne:  ?a2 ]'
-		com:
-			'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''extérieur de ces parallèles sont alternes externes.'.			
-			
-	e
+		com: 'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''extérieur de ces parallèles sont alternes externes.'.
+	arg1
 		lisRegle: 'angles-alterneExterne2'
-		si:
-			'sorteDeDroite ?d1
+		si: 'sorteDeDroite ?d1
 sorteDeDroite ?d2
 sorteDeDroite ?d3
 relation:et:nom: ?d1 ?d2 parallèle
@@ -7228,11 +6872,8 @@ angle0 [ ?x2 ?o2 ?y2 ] [ classement: nonPlat ]
 ordonneMot:et:rep1:rep2: [ ?x1 ?o1 ?y1 ] [ ?x2 ?o2 ?y2  ] ?a1 ?a2
 different:de: ?o1 ?o2'
 		alors: 'angle0 ?a1 [  alterneExterne:  ?a2 ]'
-		com:
-			'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''extérieur de ces parallèles sont alternes externes.'.
-			
-ExpertRegle angleSuite: e.
-! !
+		com: 'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''extérieur de ces parallèles sont alternes externes.'.
+	ExpertRegle angleSuite: arg1.! !
 
 !ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 12/18/2023 13:11'!
 circuitRegles: e
