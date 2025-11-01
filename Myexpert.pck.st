@@ -1,9 +1,9 @@
-'From Cuis7.1 [latest update: #6452] on 24 October 2025 at 7:49:32 pm'!
+'From Cuis7.1 [latest update: #6452] on 1 November 2025 at 2:56:55 am'!
 'Description '!
 !provides: 'Myexpert' 1 15!
-!requires: 'Erudite' 1 242 nil!
-!requires: 'DrGeoFrench' 1 19 nil!
 !requires: 'DrGeo' 1 747 nil!
+!requires: 'Erudite' 1 242 nil!
+!requires: 'DrGeoFrench' 1 18 nil!
 SystemOrganization addCategory: #Myexpert!
 
 
@@ -6171,9 +6171,9 @@ EuclideMinimum: e
 	ExpertRegle figuresNonRectilignes: e.
 	^ 'Règles EuclideMinimum: chargées'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/8/2025 01:05:18'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/28/2025 23:22:01'!
 angleSuite: e
-	e
+"	e
 		lisRegle: 'angle-angleEquivalent1'
 		si: 'angle0 [ ?x1 ?s ?x2 ]
 angle0 [ ?x1 ?s ?x2 ] [ classement: nonPlat ]
@@ -6202,15 +6202,15 @@ aireTriangleNegative:avec:avec: ?x1 ?s ?x2
 aireTriangleNegative:avec:avec:  ?p ?s ?x2
 relationCrée:et:nom: [ ?x1 ?s ?x2 ] [ ?p ?s ?x2 ]  équivalent'
 		alors: 'angle0 [ ?x1 ?s ?x2 ]  [ équivalent: [ ?x1 ?s ?p ]  ]'
-		com: 'Des points sur les mêmes demi-droites  forment un angle équivalent à l''angle de base .'.
+		com: 'Des points sur les mêmes demi-droites  forment un angle équivalent à l''angle de base .'."
 		
 		
-e		lisRegle: 'angle-angleEquivalentRelationCréée'
+"e		lisRegle: 'angle-angleEquivalentRelationCréée'
 		si: 'angle0 [ ?x1 ?s ?x2 ]  [ équivalent: [ ?x3 ?s ?x4  ]'
 		alors: 'relationCréée [ ?x1 ?s ?x2 ] [ ?x3 ?s ?x4 ] équivalent '
-		com: 'Affirmation d''une relation céée'.! !
+		com: 'Affirmation d''une relation céée'".! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/23/2025 01:37:09'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/28/2025 23:55:59'!
 angles: e
 	
 e		lisRegle: 'angles-alignés1'
@@ -6256,17 +6256,20 @@ different:de: ?p1 ?p2
 angle  [ ?y1 ?s ?y2 ] 
 pointSur ?dd1 ?x1
 pointSur ?dd1 ?y1
-pointSur ?dd2 ?x2
-pointSur ?dd2 ?y2'
+position ?x1 ?pos ?s  ?dd1
+position ?y1 ?pos ?s  ?dd1
+position ?x2 ?pos ?s  ?dd2
+position ?y2 ?pos ?s  ?dd2
+different:de:   [ ?x1 ?s ?x2 ] [ ?y1 ?s ?y2 ] '
 		alors: 'relationCréée [ ?x1 ?s ?x2 ] [ ?y1 ?s ?y2 ] équivalent'
-		com: 'Des points sur les mêmes demi-droites  forment un angle équivalent à l''angle de base .'.
-	e
+		com: 'Des points sur les mêmes demi-droites et de même positionpar rapport au sommet  sont équivalents à l''angle de base .'.
+	"e
 		lisRegle: 'angles-equivalent'
 		si: 'angle0 [ ?x1 ?o ?x2 ]
 angle [ ?x3 ?o ?x4 ] 
 relationCrée:et:nom: [ ?x1 ?o ?x2 ] [ ?x3 ?o ?x4 ] équivalent'
 		alors: 'relationCréée  [ ?x1 ?o ?x2 ] [ ?x3 ?o ?x4 ]  équivalent'
-		com: 'Des angles de même sommet et avec des extrémités sur les mêmes demi-droites  sont équivalents.'.
+		com: 'Des angles de même sommet et avec des extrémités sur les mêmes demi-droites  sont équivalents.'."
 	e
 		lisRegle: 'angles-inscrit'
 		si: 'angle0 [ ?p1 ?s ?p2 ] [ plusProche ]
@@ -7305,7 +7308,7 @@ ordonneMot:et:rep1:rep2: ?e1 ?e2  ?x1 ?x2'
 alors:'parents2 [ ?x1 ?x2 ] ?m  ?p'   
 com:'Les parents d''un enfant sont son père et sa mère'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/23/2025 00:11:23'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/25/2025 22:08:06'!
 figuresNonRectilignes: e
 	e
 		lisRegle: 'figuresNonRectilignes-AngleAuCentre'
@@ -7531,16 +7534,7 @@ ordonneMot:et:rep1:rep2: ?c2 ?c1 ?xx1 ?xx2'
 ordonneMot:et:rep1:rep2: ?c3 ?c1 ?xx1 ?xx2'
 		alors: 'orthogonal ?xx1 ?xx2'
 		com: 'Un cercle orthogonal à un cercle donné passant par deux points.'."
-	e
-		lisRegle: 'figuresNonRectilignes-isométrieSegment'
-		si:
-			'pointSur ?c ?p
-cercle ?c [  rayon: [ mesure [ ?p1 ?p2 ] ]  ]  ]
-cercle ?c [  centre: ?o  ]
-relationCrée:et:nom: [ ?p1 ?p2 ]  [ ?o  ?p ] isométrique'
-		alors: 'relationCréée  [ ?p1 ?p2 ]  [ ?o  ?p ] isométrique'
-		com:
-			'Tout rayon d''un cercle défini par un segment est isométrique à ce segment .'.
+	
 	e
 		lisRegle: 'figuresNonRectilignes-médiatriceCorde'
 		si:
@@ -7617,38 +7611,9 @@ enleverDe:el:rep: ?pts2 ?p ?p2'
 		alors: 'pointSur ?c ?p2'
 		com:
 			'Un des 3 points par où passe un cercle par 3 points est sur le cercle.'.
-	e
-		lisRegle: 'figuresNonRectilignes-isométrie-Rayons'
-		si:
-			' sorteDeCercle  ?c [ rayon: [ ?x1  ?y1 ] ] 
-sorteDeCercle  ?c [ rayon:  [ ?x2  ?y2 ]  ]
-ordonneMot:et:rep1:rep2:  [ ?x1  ?y1 ] [ ?x2  ?y2 ]  ?r1 ?r2
-relationCrée:et:nom: ?r1 ?r2  isométrique
-different:de: [ ?x1  ?y1 ] [ ?x2  ?y2 ]'
-		alors: 'relationCréée ?r1 ?r2 isométrique'
-		com: 'Les rayons d''une même sorteDeCercle sont isométriques.'.
-	e
-		lisRegle: 'figuresNonRectilignes-isométrie-Cercle1'
-		si:
-			'sorteDeCercle  ?c1 [ rayon: ?r ]
-sorteDeCercle  ?c2 [ rayon: ?r ]
-different:de: ?c1 ?c2
-relationCrée:et:nom:?c1 ?c2  isométrique'
-		alors: 'relationCréée  ?c1 ?c2 isométrique'
-		com:
-			'Si deux cercles différents, ont même rayon ou des rayons de même mesure, alors les cercles sont isométriques.'.
-	e
-		lisRegle: 'figuresNonRectilignes-isométrie-CercleSegment'
-		si:
-			'cercle ?c1 ?s
-segment ?s
-cercle ?c2 ?s
-different:de: ?c1 ?c2
-ordonneMot:et:rep1:rep2: ?c1 ?c2 ?cc1 ?cc2
-relationCrée:et:nom: ?cc1 ?cc2 isométrique'
-		alors: 'relationCréée  ?cc1 ?cc2 isométrique'
-		com:
-			'Si  deux cercles différents sont définis par un même segment, alors les cercles sont isométriques, ils ont un même rayon.'.
+	
+	
+	
 	e
 		lisRegle: 'figuresNonRectilignes-isométrie-CercleValeurCentre'
 		si: 'cercle ?c1 ?centre ?val  ?n'
@@ -7759,15 +7724,7 @@ ordonneMot:et:rep1:rep2: ?v1 ?v2 ?x1 ?x2
 		alors: 'segment ?s [ ?x1 ?x2 ]'
 		com:
 			'Si le diamètre d''un cercle est un vecteur, il est aussi un segment de mêmes extrémités, pour compatibilité avec les règles qui utilisent des segments.'.
-	e
-		lisRegle: 'figuresNonRectilignes-diamètreCercleIsometrie'
-		si:
-			'diamètre ?c ?d1
-diamètre ?c ?d2
-different:de: ?d1 ?d2
-relationCrée:et:nom: ?d1 ?d2 isométrique'
-		alors: 'relationCréée  ?d1 ?d2 isométrique'
-		com: 'Les diamètres d''un même cerccle sont isométriques'.
+	
 	e
 		lisRegle: 'figuresNonRectilignes-diamètreArc2'
 		si:
@@ -7783,40 +7740,7 @@ milieu ?x1 ?x2 ?centre'
 		alors: 'arcCentré  ?arc [   diamètre: [ ?x1 ?x2   ]'
 		com:
 			'Si le centre de l''arc est le  milieu des extrémités alors le segment reliant les extémités est un diamètre'.
-	e
-		lisRegle: 'figuresNonRectilignes-ArcIsométriques'
-		si:
-			'arcCentré ?arc1 ?o ?a ?b
-arcCentré ?arc2 ?o ?b ?c
-relation:et:nom:  [ ?a ?b ] [  ?c  ?b ] isométrique
-relationCrée:et:nom:  ?arc1 ?arc2  isométrique'
-		alors: 'relationCréée  ?arc1 ?arc2   isométrique'
-		com:
-			'Des arcs centrés de même centre sont isométriques si leur extrémités sont des couples isométriques'.
-	e
-		lisRegle: 'figuresNonRectilignes-ArcIsométriquesAngleDroit1'
-		si:
-			'arcCentré  ?x1 ?x2 ?x3 ?x4
-arcCentré  ?x5  ?x2 ?x7 ?x8
-angle0 [ ?x3 ?x2 ?x4 ] [ supplémentaire: [ ?x7 ?x2 ?x8 ] ]
-relation:et:nom: ?x1 ?x5 isométrique
-different:de: ?x1 ?x5
-relationCrée:et:nom: [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
-		alors: 'relationCréée [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
-		com:
-			'Si deux arcs centrés partagent un demi-cercle et sont isométriques, ils partagent le demi-cercle en deux parties égales, leurs extrémités sont les extrémités d''angles supplémentaires et isométriques'.
-e
-		lisRegle: 'figuresNonRectilignes-ArcIsométriquesAngleDroit2'
-		si:
-			'arcCentré  ?x1 ?x2 ?x3 ?x4
-arcCentré  ?x5  ?x2 ?x7 ?x8
-angle0 [ ?x3 ?x2 ?x4 ] [ supplémentaire: [ ?x7 ?x2 ?x8 ] ]
-relation:et:nom: ?x1 ?x5 isométrique
-different:de: ?x1 ?x5
-relationCrée:et:nom: [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
-		alors: 'relationCréée [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
-		com:
-			'Si deux arcs centrés partagent un demi-cercle et sont isométriques, ils partagent le demi-cercle en deux parties égales, leurs extrémités sont les extrémités d''angles supplémentaires et isométriques'.
+	
 	e
 		lisRegle: 'figuresNonRectilignes-AngleAigu'
 		si:
@@ -7923,15 +7847,7 @@ relation:et:nom: [  ?p1 ?p2 ?p3 ] [ ?x1 ?p2 ?x3 ] équivalent'
 		alors: 'cercle ?c [ angleInscrit: [ ?p1 ?p2 ?p3  ] ]'
 		com:
 			'Un angle inscrit dans un cercle a son sommet sur ce cercle et ses extrémités interceptent le cercle'.
-	e
-		lisRegle: 'figuresNonRectilignes-alignementMilieu'
-		si:
-			'milieu ?o [  ?x1 ?x2 ]
-relationCrée:et:nom: [ ?o ?x1 ] [ ?x2 ?o ] isométrique
-different:de: ?x1 ?x2'
-		alors: 'relationCréée [ ?o  ?x1 ] [ ?x2 ?o] isométrique'
-		com:
-			'si un point est le milieu de deux points,  les couples qui le reiie à chaque point sont isométriques.'.
+	
 	e
 		lisRegle: 'figuresNonRectilignes-PuissancePoint'
 		si:
@@ -11990,7 +11906,7 @@ ordonneMot:et:rep1:rep2: [  ?b1 ?c1 ?a1  ]    [ ?b2 ?c2 ?a2  ] ?ang1 ?ang2
 different:de: ?t1 ?t2'
 		alors: 'isométrique [ ?ang1 ] [  ?ang2 ]'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/31/2024 23:36:08'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/25/2025 22:12:35'!
 isometrieRegles: e
 	| r |
 	"Angles"
@@ -12391,7 +12307,180 @@ triangle ?t2  [ sommets: [  ?a2 ?b2 ?c2 ]  ]
 isométrique ?t1 ?t2
 ordonneMot:et:rep1:rep2: [  ?b1 ?c1 ?a1  ]    [ ?b2 ?c2 ?a2  ] ?ang1 ?ang2
 different:de: ?t1 ?t2'
-		alors: 'isométrique [ ?ang1 ] [  ?ang2 ]'! !
+		alors: 'isométrique [ ?ang1 ] [  ?ang2 ]'.
+		
+! !
+
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/25/2025 22:13:34'!
+isometrieReglesSuite: e 
+		e
+		lisRegle: 'figuresNonRectilignes-isométrieSegment'
+		si:
+			'pointSur ?c ?p
+cercle ?c [  rayon: [ mesure [ ?p1 ?p2 ] ]  ]  ]
+cercle ?c [  centre: ?o  ]
+relationCrée:et:nom: [ ?p1 ?p2 ]  [ ?o  ?p ] isométrique'
+		alors: 'relationCréée  [ ?p1 ?p2 ]  [ ?o  ?p ] isométrique'
+		com:
+			'Tout rayon d''un cercle défini par un segment est isométrique à ce segment .'.
+			
+		e
+		lisRegle: 'figuresNonRectilignes-isométrie-Rayons'
+		si:
+			' sorteDeCercle  ?c [ rayon: [ ?x1  ?y1 ] ] 
+sorteDeCercle  ?c [ rayon:  [ ?x2  ?y2 ]  ]
+ordonneMot:et:rep1:rep2:  [ ?x1  ?y1 ] [ ?x2  ?y2 ]  ?r1 ?r2
+relationCrée:et:nom: ?r1 ?r2  isométrique
+different:de: [ ?x1  ?y1 ] [ ?x2  ?y2 ]'
+		alors: 'relationCréée ?r1 ?r2 isométrique'
+		com: 'Les rayons d''une même sorteDeCercle sont isométriques.'.e
+		lisRegle: 'figuresNonRectilignes-isométrie-CercleSegment'
+		si:
+			'cercle ?c1 ?s
+segment ?s
+cercle ?c2 ?s
+different:de: ?c1 ?c2
+ordonneMot:et:rep1:rep2: ?c1 ?c2 ?cc1 ?cc2
+relationCrée:et:nom: ?cc1 ?cc2 isométrique'
+		alors: 'relationCréée  ?cc1 ?cc2 isométrique'
+		com:
+			'Si  deux cercles différents sont définis par un même segment, alors les cercles sont isométriques, ils ont un même rayon.'.
+			
+		e
+		lisRegle: 'figuresNonRectilignes-isométrie-Cercle1'
+		si:
+			'sorteDeCercle  ?c1 [ rayon: ?r ]
+sorteDeCercle  ?c2 [ rayon: ?r ]
+different:de: ?c1 ?c2
+relationCrée:et:nom:?c1 ?c2  isométrique'
+		alors: 'relationCréée  ?c1 ?c2 isométrique'
+		com:
+			'Si deux cercles différents, ont même rayon ou des rayons de même mesure, alors les cercles sont isométriques.'.
+			
+		e
+		lisRegle: 'figuresNonRectilignes-diamètreCercleIsometrie'
+		si:
+			'diamètre ?c ?d1
+diamètre ?c ?d2
+different:de: ?d1 ?d2
+relationCrée:et:nom: ?d1 ?d2 isométrique'
+		alors: 'relationCréée  ?d1 ?d2 isométrique'
+		com: 'Les diamètres d''un même cerccle sont isométriques'.
+
+	e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriques'
+		si:
+			'arcCentré ?arc1 ?o ?a ?b
+arcCentré ?arc2 ?o ?b ?c
+relation:et:nom:  [ ?a ?b ] [  ?c  ?b ] isométrique
+relationCrée:et:nom:  ?arc1 ?arc2  isométrique'
+		alors: 'relationCréée  ?arc1 ?arc2   isométrique'
+		com:
+			'Des arcs centrés de même centre sont isométriques si leur extrémités sont des couples isométriques'.
+	e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriquesAngleDroit1'
+		si:
+			'arcCentré  ?x1 ?x2 ?x3 ?x4
+arcCentré  ?x5  ?x2 ?x7 ?x8
+angle0 [ ?x3 ?x2 ?x4 ] [ supplémentaire: [ ?x7 ?x2 ?x8 ] ]
+relation:et:nom: ?x1 ?x5 isométrique
+different:de: ?x1 ?x5
+relationCrée:et:nom: [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		alors: 'relationCréée [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		com:
+			'Si deux arcs centrés partagent un demi-cercle et sont isométriques, ils partagent le demi-cercle en deux parties égales, leurs extrémités sont les extrémités d''angles supplémentaires et isométriques'.
+e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriquesAngleDroit2'
+		si:
+			'arcCentré  ?x1 ?x2 ?x3 ?x4
+arcCentré  ?x5  ?x2 ?x7 ?x8
+angle0 [ ?x3 ?x2 ?x4 ] [ supplémentaire: [ ?x7 ?x2 ?x8 ] ]
+relation:et:nom: ?x1 ?x5 isométrique
+different:de: ?x1 ?x5
+relationCrée:et:nom: [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		alors: 'relationCréée [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		com:
+			'Si deux arcs centrés partagent un demi-cercle et sont isométriques, ils partagent le demi-cercle en deux parties égales, leurs extrémités sont les extrémités d''angles supplémentaires et isométriques'.
+		
+			e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriques'
+		si:
+			'arcCentré ?arc1 ?o ?a ?b
+arcCentré ?arc2 ?o ?b ?c
+relation:et:nom:  [ ?a ?b ] [  ?c  ?b ] isométrique
+relationCrée:et:nom:  ?arc1 ?arc2  isométrique'
+		alors: 'relationCréée  ?arc1 ?arc2   isométrique'
+		com:
+			'Des arcs centrés de même centre sont isométriques si leur extrémités sont des couples isométriques'.
+	e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriquesAngleDroit1'
+		si:
+			'arcCentré  ?x1 ?x2 ?x3 ?x4
+arcCentré  ?x5  ?x2 ?x7 ?x8
+angle0 [ ?x3 ?x2 ?x4 ] [ supplémentaire: [ ?x7 ?x2 ?x8 ] ]
+relation:et:nom: ?x1 ?x5 isométrique
+different:de: ?x1 ?x5
+relationCrée:et:nom: [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		alors: 'relationCréée [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		com:
+			'Si deux arcs centrés partagent un demi-cercle et sont isométriques, ils partagent le demi-cercle en deux parties égales, leurs extrémités sont les extrémités d''angles supplémentaires et isométriques'.
+e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriquesAngleDroit2'
+		si:
+			'arcCentré  ?x1 ?x2 ?x3 ?x4
+arcCentré  ?x5  ?x2 ?x7 ?x8
+angle0 [ ?x3 ?x2 ?x4 ] [ supplémentaire: [ ?x7 ?x2 ?x8 ] ]
+relation:et:nom: ?x1 ?x5 isométrique
+different:de: ?x1 ?x5
+relationCrée:et:nom: [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		alors: 'relationCréée [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		com:
+			'Si deux arcs centrés partagent un demi-cercle et sont isométriques, ils partagent le demi-cercle en deux parties égales, leurs extrémités sont les extrémités d''angles supplémentaires et isométriques'.
+			
+			e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriques'
+		si:
+			'arcCentré ?arc1 ?o ?a ?b
+arcCentré ?arc2 ?o ?b ?c
+relation:et:nom:  [ ?a ?b ] [  ?c  ?b ] isométrique
+relationCrée:et:nom:  ?arc1 ?arc2  isométrique'
+		alors: 'relationCréée  ?arc1 ?arc2   isométrique'
+		com:
+			'Des arcs centrés de même centre sont isométriques si leur extrémités sont des couples isométriques'.
+	e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriquesAngleDroit1'
+		si:
+			'arcCentré  ?x1 ?x2 ?x3 ?x4
+arcCentré  ?x5  ?x2 ?x7 ?x8
+angle0 [ ?x3 ?x2 ?x4 ] [ supplémentaire: [ ?x7 ?x2 ?x8 ] ]
+relation:et:nom: ?x1 ?x5 isométrique
+different:de: ?x1 ?x5
+relationCrée:et:nom: [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		alors: 'relationCréée [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		com:
+			'Si deux arcs centrés partagent un demi-cercle et sont isométriques, ils partagent le demi-cercle en deux parties égales, leurs extrémités sont les extrémités d''angles supplémentaires et isométriques'.
+e
+		lisRegle: 'figuresNonRectilignes-ArcIsométriquesAngleDroit2'
+		si:
+			'arcCentré  ?x1 ?x2 ?x3 ?x4
+arcCentré  ?x5  ?x2 ?x7 ?x8
+angle0 [ ?x3 ?x2 ?x4 ] [ supplémentaire: [ ?x7 ?x2 ?x8 ] ]
+relation:et:nom: ?x1 ?x5 isométrique
+different:de: ?x1 ?x5
+relationCrée:et:nom: [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		alors: 'relationCréée [ ?x3 ?x2 ?x4  ]  [ ?x7 ?x2 ?x8 ] isométrique'
+		com:
+			'Si deux arcs centrés partagent un demi-cercle et sont isométriques, ils partagent le demi-cercle en deux parties égales, leurs extrémités sont les extrémités d''angles supplémentaires et isométriques'.
+			
+		e
+		lisRegle: 'figuresNonRectilignes-alignementMilieu'
+		si:
+			'milieu ?o [  ?x1 ?x2 ]
+relationCrée:et:nom: [ ?o ?x1 ] [ ?x2 ?o ] isométrique
+different:de: ?x1 ?x2'
+		alors: 'relationCréée [ ?o  ?x1 ] [ ?x2 ?o] isométrique'
+		com:
+			'si un point est le milieu de deux points,  les couples qui le reiie à chaque point sont isométriques.'.	! !
 
 !ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 11/20/2023 16:53'!
 mesure: e
