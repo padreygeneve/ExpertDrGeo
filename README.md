@@ -35,7 +35,7 @@ ll faut charger dans cet ordre:
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
 
-- avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses our distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
+- avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
 Intaller ces Packages
 soit en lâchant ces fichiers dans DrGeo 
