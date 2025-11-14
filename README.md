@@ -1,7 +1,9 @@
+---------------------------------------------------------------------------------------
 Système expert pour DrGeo Pharo version 1909
-Le fichier 
 
+Le fichier ExpertDrGeo1909.cs installe le systèmed expert dans la version DrGeo Pharo 1909.
 
+----------------------------------------------------------------------------------------
 
 Additions in the Erudite section: Expert System
 You need to load in this order
