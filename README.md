@@ -1,6 +1,11 @@
-New update  1.10.2025
+---------------------------------------------------------------------------------------
+DrGeo Pharo version 1909
 
+Système expert pour DrGeo Pharo version 1909
 
+Le fichier ExpertDrGeo1909.cs installe le système expert dans la version DrGeo Pharo 1909.
+
+----------------------------------------------------------------------------------------
 
 Additions in the Erudite section: Expert System
 You need to load in this order
@@ -35,7 +40,7 @@ ll faut charger dans cet ordre:
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
 
-- avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses our distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
+- avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
 Intaller ces Packages
 soit en lâchant ces fichiers dans DrGeo 
