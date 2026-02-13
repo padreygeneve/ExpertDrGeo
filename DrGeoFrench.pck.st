@@ -1,6 +1,7 @@
-'From Cuis7.1 [latest update: #6452] on 30 September 2025 at 12:38:15 am'!
+'From Cuis7.1 [latest update: #6452] on 1 December 2025 at 10:51:57 pm'!
 'Description '!
-!provides: 'DrGeoFrench' 1 17!
+!provides: 'DrGeoFrench' 1 22!
+!requires: 'DrGeo' 1 747 nil!
 SystemOrganization addCategory: #DrGeoFrench!
 
 
@@ -29,13 +30,13 @@ DrGeoFigure class
 Domain Specific Language (DSL) abstraction to construct programmatically interactive sketch. 
 I come with methods with French names.!
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 initialize
     super initialize.
     title _ 'Dr. Geo Tutorial'.
         self addSection: self section_Introduction.
-        self addSection: self section_Général.
         self addSection: self section_Point.
+        self addSection: self section_Général.
         self addSection: self section_Vecteur.
         self addSection: self section_LignesDroites.
         self addSection: self section_LignesCourbes.
@@ -115,9 +116,11 @@ section_ChargerLesFaitsDeLaFigure
 section_Exemples
 ^(EruditeBookSection basicNew title: 'Exemples'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert
 ^(EruditeBookSection basicNew title: 'Expert'; document: ((EruditeDocument contents: 'Avant propos.
+
+Le système expert est associé à [[[ DrGSmalltalkSketchEditor open: '''' label: ''Edit Smalltalk Sketch'' translated ]]] doItWithButton: l''éditeur de figure Smalltalk.
 
 Un système expert effectue des déduction à partir de faits et de règles.
 
@@ -144,7 +147,7 @@ Les règles sont vérifiées à nouveau, le processus se répète jusqu''à ce q
         add: self section_Expert_GéométrieEtSystèmeExpert;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ExemplesDexperts
 ^(EruditeBookSection basicNew title: 'Exemples d''experts'; document: ((EruditeDocument contents: '!!!!!!Exemples d''expert!!!!!!
 
@@ -160,7 +163,7 @@ Placacer les nombres de 1 à 9 dans une grille 3 x 3 pour que toutes les lignes,
         add: self section_Expert_ExemplesDexperts_CarréMagique;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ExemplesDexperts_CarréMagique
 ^(EruditeBookSection basicNew title: 'Carré magique'; document: ((EruditeDocument contents: '!!!!!!Carré magique!!!!!!
 
@@ -197,7 +200,7 @@ Une règle suffirait pour décrire le probème.
 
 La règle pourrait être:
 
-exp lisRegle: ''carré magique''b
+exp lisRegle: ''carré magique''
 si: ''somme:et:rep: ?x1 ?x2 ?int1
 somme:et:rep: ?x3 ?int1 15
 somme:et:rep: ?x4 ?x5 ?int2
@@ -252,12 +255,13 @@ impair 9
 pair 2
 pair 4
 pair 6
-pair 8''.
+pair 8''
 
 exp afficheFaits.
 
-[[[
-fig presenter expertDisplayTutor: ''carré  magique'' string:''e initFaits.
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:  ''carré magique'' string:''
+exp initFaits.
 exp affirmeFaits:''''
 impair 1
 impair 3
@@ -267,12 +271,15 @@ impair 9
 pair 2
 pair 4
 pair 6
-pair 8''''.
-.'' 
-]]] doItWithButton: copier l''exemple.
+pair 8''''
+
+exp afficheFaits
+'' ]]] doItWithButton: copier l''exemple.
+
+
 	**règles**
 
- 	**"Lignes PIP**
+ 	**Lignes PIP**
 
 exp initRegles.
 
@@ -285,8 +292,16 @@ somme:et:rep: ?x12 ?x3 15
 alors: ''lignePIP  [ ?x1 ?x2 ?x3 ]''
 com: ''lignes formées d''''un nombre pair, d''''un nombre impair, d''''un nombre pair.''''.
 
+exp deduis.																																																																																				
+"toutes les lignes"
+exp verifieCondition: ''''lignePIP  [ ?x1 ?x2 ?x3  ]''''.
 
-[[[fig presenter expertDisplayTutor:''carré  magique'' string:''e initRegles.
+"Lignes ne passant pas par le centre(cotés)"
+exp verifieCondition:''''lignePIP   [ ?x1 ?x5 ?x2 ]
+different:de: ?x5 5''''.
+
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor: ''carré magique'' string:''
 "Lignes PIP"
 exp lisRegle: ''''lignePIP''''
 si: ''''pair ?x1
@@ -309,26 +324,28 @@ different:de: ?x5 5''''.
 
 
 "Côtés du carré"
-e lisRegle: ''côtés''
+
+exp lisRegle: ''côtés''
 si:  ''lignePIP [ ?x1 ?x2 ?x3 ]
 different:de: 5 ?x2''
 alors: ''côté [ ?x1 ?x2 ?x3 ]''
 com: ''Lignes des côtés du carré''.
 
-[[[fig presenter expertDisplayTutor:''carré  magique'' string:''"Côtés du carré"
-e lisRegle: ''''côtés''''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''carré magique'' string:''
+exp lisRegle: ''''côtés''''
 si:  ''''lignePIP [ ?x1 ?x2 ?x3 ]
 different:de: 5 ?x2''''
 alors: ''''côté [ ?x1 ?x2 ?x3 ]''''
 com: ''''Lignes des côtés du carré''''.
 
- e deduis.
-e verifieCondition:''''côté [ ?x1 ?x2 ?x3 ]''''.
+ exp deduis.
+exp verifieCondition:''''côté [ ?x1 ?x2 ?x3 ]''''.
 ''
 ]]] doItWithButton: copier l''exemple.
 
 "solution avec les côtés"
-e lisRegle: ''solutionCôtés''
+exp lisRegle: ''solutionCôtés''
 si:  ''côté [ ?x1 ?x2 ?x3 ]
 côté [ ?x3 ?x6 ?x9 ]
 côté [ ?x9 ?x8 ?x7 ]
@@ -348,14 +365,14 @@ somme:et:rep: ?int6 ?x9 015
 tousDifferents: [   ?x1 ?x2 ?x3  ?x4 5 ?x6 ?x7 ?x8  ?x9 ]''  
 alors: ''carréCôtés [ ?x1 ?x2 ?x3 ?x4 5 ?x6 ?x7 ?x8  ?x9 ]''
 com: ''Une solution du carré magique.''. 
-e deduis.
-e modèlesQuestions . 
-e verifieCondition:''carréCôtés ?x1'' 
+exp deduis.
+exp modèlesQuestions . 
+exp verifieCondition:''carréCôtés ?x1'' 
   
-[[[fig presenter expertDisplayTutor:''carré  magique'' string:''
+[[[fig presenter expertDisplayTutor:''carré magique'' string:''
 "solution avec les côtés"
-e lisRegle: ''''solutionCôtés''''
-si:  ''''côté [ ?x1 ?x2 ?x3 ]
+exp lisRegle: ''''solutionCôtés''''
+si:exp  ''''côté [ ?x1 ?x2 ?x3 ]
 côté [ ?x3 ?x6 ?x9 ]
 côté [ ?x9 ?x8 ?x7 ]
 côté [ ?x7 ?x4 ?x1 ]
@@ -374,9 +391,9 @@ somme:et:rep: ?int6 ?x9 015
 tousDifferents: [   ?x1 ?x2 ?x3  ?x4 5 ?x6 ?x7 ?x8  ?x9 ]'''' 
 alors: ''''carréCôtés [ ?x1 ?x2 ?x3 ?x4 5 ?x6 ?x7 ?x8  ?x9 ]''''
 com: ''''Une solution du carré magique.''''. 
-e deduis.
-e modèlesQuestions .
-e verifieCondition:''''carréCôtés ?x1''''  
+exp deduis.
+exp modèlesQuestions .
+exp verifieCondition:''''carréCôtés ?x1''''  
 ''
 ]]] doItWithButton: copier l''exemple.
 
@@ -387,16 +404,16 @@ e verifieCondition:''''carréCôtés ?x1''''
 	
 	**Diagonales**
 
-e lisRegle: ''diagonale''
+exp lisRegle: ''diagonale''
 si:  ''lignePIP [ ?x1 5 ?x3 ]'' 
 alors: ''diagonale [ ?x1 5 ?x3 ]''
 com: ''les lignes diagonales du carré.''.  
 
 	Vérifications des diagonales.
-e deduis.
-e verifieCondition:''diagonale [ ?d1 5 ?d2 ]''.
+exp deduis.
+exp verifieCondition:''diagonale [ ?d1 5 ?d2 ]''.
 
-[[[fig presenter expertDisplayTutor:''carré  magique'' string:''
+[[[fig presenter expertDisplayTutor:''carré magique'' string:''
 "Diagonales."
 exp lisRegle: ''''diagonale''''
 si:  ''''lignePIP [ ?x1 5 ?x3 ]'''' 
@@ -404,7 +421,7 @@ alors: ''''diagonale [ ?x1 5 ?x3 ]''''
 com: ''''les lignes diagonales''''. 
 
 exp deduis.
-e verifieCondition:''''diagonale [ ?d1 5 ?d2 ]''''.
+exp verifieCondition:''''diagonale [ ?d1 5 ?d2 ]''''.
 ''
 ]]] doItWithButton: copier l''exemple.
 
@@ -428,7 +445,7 @@ com: ''les lignes de la croix''.
 exp deduis.
 exp verifieCondition:''croix [ ?x1 5 ?x3 ]''.
 
-[[[fig presenter expertDisplayTutor:''carré  magique'' string:''
+[[[fig presenter expertDisplayTutor:''carré magique'' string:''
 "La croix"
 exp lisRegle:''''croix''''
 si: ''''impair ?x1
@@ -469,7 +486,7 @@ exp deduis.
 exp vérifieCondition: ''carréCroixDiagonales ?x''.
  
    
-[[[ fig presenter expertDisplayTutor:''carré  magique'' string:''
+[[[ fig presenter expertDisplayTutor:''carré magique'' string:''
 "Croix et Diagonales"
 exp lisRegle: ''''solutionCroixEtDiagonales''''
 si:  ''''croix [ ?x2 ?x5 ?x8 ]
@@ -496,10 +513,9 @@ exp deduis.
 exp verifieCondition:''''carréCroixDiagonales  ?x1''''.
 '']]] doItWithButton: copier l''exemple.
 
-
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ExemplesDexperts_accordParticipes
 ^(EruditeBookSection basicNew title: 'accord participes'; document: ((EruditeDocument contents: '!!!!!!accord participes
 
@@ -599,7 +615,7 @@ e afficheFaits.  ''
 Tu as tous les élémemts pour faire ce projet à toi de les assembler.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ExemplesDexperts_leJeuDuMorpion
 ^(EruditeBookSection basicNew title: 'le jeu du morpion'; document: ((EruditeDocument contents: '!!!!!!morpion
 Ce système expert donne des conseils pour le jeu du morpion.
@@ -616,7 +632,8 @@ ExpertRegle morpion: e
 "Voir les règles. " 
 exp afficheRegles.''
 ExpertRegle morpion: e
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Morpion'' string:''
 "initialiser les règles."
 exp initRegles.
 "Charger les règles"
@@ -679,43 +696,32 @@ E.t c''est une partie nulle si toutes les cases sont pleines
 	different:de: ?9 -''
 	alors: ''''partie terminée''.**') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_GéométrieEtSystèmeExpert
-^(EruditeBookSection basicNew title: 'Géométrie et système Expert'; document: ((EruditeDocument contents: '!!!!Géométrie et système Expert
+^(EruditeBookSection basicNew title: 'Géométrie et système Expert'; document: ((EruditeDocument contents: 'Avant propos.
 
-Le groupe de règles **Euclide:** contient des règles pour faire des déductions sur les figure géométriques.
+Le système expert est associé à [[[ DrGSmalltalkSketchEditor open: '''' label: ''Edit Smalltalk Sketch'' translated ]]] doItWithButton: l''éditeur de figure Smalltalk.
 
-Chaque figure est décrite par son script, ce script peut être copié avec le bouton ** copier le script de la figure.** dans une fenêtre **Tutoriel**.
+Un système expert effectue des déduction à partir de faits et de règles.
 
-Il faut cliquer la première fois sur le bouton vert  [[[DrGIcons iconUI: #play]]] embedIt avant de selectionner et executer le script.
+Les faits décrivent une situation.
 
-**Utlliser le systéme expert en mode initeractif avec le menu.**
+Les règles permettent de déduire de nouveaux faits.
 
-Pour utiliser le menu de la figure:  clic sur bouton droit dans la figure.
+L''ensemble des faits constitue la base de données.
 
-Pour examiner une figure que tu as faite avec les autres articles du menu et obtenir le modèle de questions de cette figure utilise l''article du menu **Examiner la figure.**
+Les règles ont deux parties
+ 	La condition.
+ 	La conclusion.
 
-Dans les textes. le bouton **Charger la figure et les modèles de questions.** charge la figure puis ouvre une fenêtre avec les modéles de questions comme **Examiner la figure.**.
+La condition  est une conjonction de termes, les antécédents.(Liés implicitement par l''opérateur logique  et). 
 
-Dans cette fenêtre tu peux:
+Les règles sont vérifiées, si les conditions d''une règle sont satisfaites alors la règle affirme un nouveau fait, sa conclusion.
 
-	Selectionner un modèle de question et l''exécuter avec l''article du menu **Vérifier**.
-	
-	Selectionner le numéro d''un fait, et avoir une explication sur l''origine de ce fait avec l''article **Expliquer**.
- 
-	Selectionner le numéro d''un fait, et remonter jusqu''au faits  issus de la figure avec l''article **Expliquer récursivement**
- 	
-	
-
-
-
-
-
-
-
-') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite;
-        add: self section_Expert_GéométrieEtSystèmeExpert_2Angles;
-        add: self section_Expert_GéométrieEtSystèmeExpert_3Cercles;
+Les règles sont vérifiées à nouveau, le processus se répète jusqu''à ce qu''aucun nouveau faif ne soit trouvé
+[[[ f :=DrGeoFigure new.''''.]]] embedIt') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite;
+        add: self section_Expert_GéométrieEtSystèmeExpert_2Cercles;
+        add: self section_Expert_GéométrieEtSystèmeExpert_3Angles;
  yourself); yourself)! !
 
 !DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 8/28/2025 03:12:33'!
@@ -2503,7 +2509,7 @@ i2:= f intersectionDe: par et: trans.i2 nommer: ''''I2''''.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite
 ^(EruditeBookSection basicNew title: '1 point segment et droite'; document: ((EruditeDocument contents: '!!!! point, segment, droite.
 **1.1 point.**
@@ -2619,21 +2625,19 @@ Les prédicats x:rep: et y:rep:  permettent d''avoir les coordonnées x et y d''
 	Les règles sont des méthodes de la classe ExpertRegle. 
 	On peut sauvegarder une règle par copier /coller.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_11Point
 ^(EruditeBookSection basicNew title: '1.1 Point'; document: ((EruditeDocument contents: '!!!! 1.1 point
 
 Euclide : « Définition 1, le point est ce dont la partie est nulle ».
 
 
-!!!!!!1.1.1 Les points.
-
-**La figure**
+**1.1.1 La figure**
 
 La figure montre un point avec une ordonnée  positive et montre un point avec une ordonnée négative.
 
 [[[ fig :=DrGeoFigure nouveau.
-fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifierun modèle, utilise vérifier du menu Expert'' style: true. .
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert point'' string: ''Pour vérifierun modèle, utilise vérifier du menu Expert'' style: true. .
 fig afficherAxes .
 a := fig point: 0@2.
 a nommer: ''positif''.	
@@ -2647,8 +2651,7 @@ exp modèlesQuestions .
 fig presenter expertInspect. ]]] doItWithButton: Charger la figure et les modèles de questions.
 
 [[[fig := DrGeoFigure  nouveau.
-fig presenter expertDisplayTutor:''Géométrie  et Système Expert''  string: ''
-fig := DrGeoFigure nouveau.
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert point''  string: ''
 fig afficherAxes .
 a := fig point: 0@2.
 a nommer: ''''positif''''.	
@@ -2671,11 +2674,10 @@ y:rep: ?pos ?y. "
 
 On peut vérifier une conjonction de plusieurs conditions ou prédicats.
 
-point ?x1
+**point ?x1
 point:rep: ?x1 ?pos
 x:rep: ?pos ?x
-y:rep: ?pos ?y
-
+y:rep: ?pos ?y**
 [[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
 point ?x1
 point:rep: ?x1 ?pos
@@ -2683,10 +2685,10 @@ x:rep: ?pos ?x
 y:rep: ?pos ?y''
  style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
 
-exp verifieCondition: ''point ?x1
+**exp verifieCondition: ''point ?x1
 point:rep: ?x1 ?pos
 x:rep: ?pos ?x
-y:rep: ?pos ?y''
+y:rep: ?pos ?y''**
 [[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
 exp verifieCondition: ''''point ?x1
 point:rep: ?x1 ?pos
@@ -2695,61 +2697,290 @@ y:rep: ?pos ?y''''.
 '']]] doItWithButton:copier le code pour l''''exécuter.
 
 
-	exp verifieCondition: ''point ?x1
-	point:rep: ?x1 ?pos''. ''
-	2 point A ->interface-DrGPointFreeItem
-	 * Qualification d''''un point
-	point:rep: A 3@5
-	"Les cordonnées d''''un point"
-
-
-**Remarques:**
+	**Remarques:**
 
 	**Objet point.**
-	(3@5) est l''objet numérique point de smallTalk, il contient une paire de coordonnées.
+	**(3@5)** est l''objet numérique point de smallTalk, il contient une paire de coordonnées sèparèes par **@**.
 
 
-	**Prédicats.**
-	point:rep: //?x1 ?pos//
+	**1.1.2 Prédicats.**
+	Un prédicat est formé de la suite des sélecteurs, **point:rep:** suivie des arguments  **?x1 ?pos**/.
 
-Un prédicat est formé de la suite des sélecteurs, //point:rep:// suivie des arguments  //?x1 ?pos//.
+	**Exemples:**
 
-Les prédicats //x:rep:// et //y:rep://  permettent d''avoir les coordonnées x et y d''un objet numérique point.
+	Le prédicat **point:rep:** permet d''obenir la position d''un point.
+	
+	Les prédicats **x:rep:** et **y:rep:**  permettent d''avoir les coordonnées x et y d''un point.
 
-	exp verifieCondition: ''point ?x1
-	point:rep: ?x1 ?pos
-	x:rep: ?pos ?x:
-	y:rep: ?pos ?y''. ''
+**point ?x1
+point:rep: ?x1 ?pos
+x:rep: ?pos ?x
+y:rep: ?pos ?y**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point ?x1
+point:rep: ?x1 ?pos
+x:rep: ?pos ?x
+y:rep: ?pos ?y''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
 
-//	2 point A ->interface-DrGPointFreeItem
- 	* Qualification d''''un point
-	point:rep: A 3@5
-	"Les cordonnées d''''un point"
-	x:rep: 3@5 3
-	"Coordonnée x d''''un point"
-	y:rep: 3@5 5
-	"Coordonnée y d''''un point" //
+**exp verifieCondition: ''point ?x1
+point:rep: ?x1 ?pos
+x:rep: ?pos ?x
+y:rep: ?pos ?y''**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''point ?x1
+point:rep: ?x1 ?pos
+x:rep: ?pos ?x
+y:rep: ?pos ?y''''.
+'']]] doItWithButton:copier le code pour l''''exécuter.
+	
+	**1.1.3 Commentaires.**
 
-	**Commentaires.**
 	Un commentaire qui peut être associé à une règle pour préciser en terme de géométrie l''action de la règle. Ces commentaires sont précédés d''une astérisque.
 	
-	* Qualification d''un point 
+	//* Qualification d''un point,// 
 
-Un commentaire associé à un 	prédicat est entre guillemets.
+	Un commentaire associé à un 	prédicat est entre guillemets.
 	
-	"Les cordonnées d''''un point"
+	//"Les cordonnées d''''un point"//
 
-	**Justification**.
+	**1.1.4 Justification**.
 	->interface-DrGPointFreeItem
 
 	Le noms d''une règle est formé du nom de la méthode où elle figure suivi d''un tiret et du nom propre à la règle, parfois suivi d''un indice. 
 	
-	**Règles.**
-	Les règles sont des méthodes de la classe ExpertRegle. 
+	**1.1.5 Règles prédéfinies.**
+
+	Les règles prédéfinies sont des méthodes de la classe ExpertRegle. 
 	Ces règles sont conservées si l''on sauve la session.
 	
-	On peut aussi sauvegarder une règle par copier /coller dans un éditeur de textes et l''exécuter comme un script.
-      ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+	On peut aussi sauvegarder des règles par copier /coller dans un éditeur de textes et l''exécuter dans un espace de travail comme un script.
+      ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_11Point_112DistanceEntrePoints;
+ yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_11Point_112DistanceEntrePoints
+^(EruditeBookSection basicNew title: '1.1.2 Distance entre points'; document: ((EruditeDocument contents: '!!!! 1.1.2 Distance entre points
+
+	**Rappels:**
+
+	Euclide : Définition 1, « **Le point est ce dont la partie est nulle **».
+	Euclide : Définition 2, «**Une ligne est une longueur sans largeur.** »
+	Euclide : Définition 3, «**Les extrémités d’une ligne sont des points.** »
+	Euclide : Définition 4, ** ligne droite est celle qui est également placée entre ses points.** » 
+
+	1.1.2.1 ** La figure.**
+[[[ fig presenter drawable  ifNil: [ fig := DrGeoFigure nouveau. exp := fig expert ].
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert point'' string: ''Pour vérifierun modèle, utilise vérifier du menu Expert'' style: true. 
+fig afficherAxes .
+a := fig point: 0@0.
+a nommer: ''A''.	
+b := fig point: 4@3.
+b nommer: ''B''.	
+dist :=fig  distanceDe:a à:b.
+dist déplacerA: 0@2.
+fig actualiser.
+fig échelle: 50..
+exp := fig expert.
+exp chargeRegles: ''Euclide''.
+exp chargeRegles: ''mesure''.
+exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+fig presenter expertInspect. ]]] doItWithButton: Charger la figure et les modèles de questions.
+
+[[[fig :=DrGeoFigure nouveau.
+ fig presenter drawable  ifNil: [ fig := DrGeoFigure nouveau. exp := fig expert ].
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert point''  string: ''
+fig afficherAxes .
+a := fig point: 0@0.
+a nommer: ''''A''''.	
+b := fig point: 4@3.
+b nommer: ''''B''''.	
+dist :=fig  distanceDe:a à:b.
+dist déplacerA: 0@2.
+fig actualiser.
+exp := fig expert.
+exp chargeRegles: ''''Euclide''''.
+exp chargeRegles: ''''mesure''''.
+.exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+"
+exp verifieCondition: ''''mesure  ?x1 ?x2''''.
+exp verifieCondition: ''''point ?x1''''. "
+'']]] doItWithButton: copier le script de la figure pour l''''exécuter.
+
+	**1.1.2.2 Mesure**
+
+		**Mesure de la distance.**
+
+       mesure ?x1 ?x2
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+ mesure ?x1 ?x2''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+	exp vérifieCondition:''mesure ?x1 ?x2''.
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''mesure ?x1 ?x2''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+		**Mesure avec la provenance.**
+ 
+      mesure ?x1 ?x2 ?x3  
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+ mesure ?x1 ?x2 ?x3''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+	exp vérifieCondition:''mesure ?x1 ?x2 ?x3''.
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''mesure ?x1 ?x2 ?x3''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+**Remarque:**
+	?x3 indique si la mesure provient d''une 		valeur donnée dans  la fgure ou provient de la conclusion d''une règle.
+
+		**Valeur produite par une règle.**
+
+[[[ fig presenter drawable  ifNil: [ fig := DrGeoFigure nouveau. exp := fig expert ].
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert point'' string: ''Pour vérifierun modèle, utilise vérifier du menu Expert'' style: true. 
+fig afficherAxes .
+a := fig point: 0@0.
+a nommer: ''A''.	
+b := fig point: 4@3.
+b nommer: ''B''.	
+fig échelle: 50..
+exp := fig expert.
+exp chargeRegles: ''Euclide''.
+exp chargeRegles: ''mesure''.
+exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+fig presenter expertInspect. ]]] doItWithButton: Charger la figure sans distance  et les modèles de questions.
+
+[[[ fig presenter drawable  ifNil: [ fig := DrGeoFigure nouveau. exp := fig expert ].
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert point''  string: ''
+fig afficherAxes .
+a := fig point: 0@0.
+a nommer: ''''A''''.	
+b := fig point: 4@3.
+b nommer: ''''B''''.	
+exp := fig expert.
+exp chargeRegles: ''''Euclide''''.
+exp chargeRegles: ''''mesure''''.
+.exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+"
+exp verifieCondition: ''''mesure  ?x1 ?x2''''.
+exp verifieCondition: ''''point ?x1''''. "
+'']]] doItWithButton: copier le script de la figure sans distance pour l''''exécuter.
+
+**Vérification.**
+
+La distance est calculée et placée dans la variable  ?res.
+
+		point  ?x1
+		point  ?x2
+		**distanceDe:à:rep: ?x1 ?x2 ?res**
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+		exp verifieCondition: ''point  ?x1
+		point  ?x2
+		**distanceDe:à:rep: ?x1 ?x2 ?res**
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+
+		On obtient 4 réponses parce  le système expert essaie toutes les combinaisons de deux points.
+		
+		A A   A B   B A   B B
+
+		Tu peux préciser la question en demandant **deux points différents**.
+
+		point  ?x1
+		point  ?x2
+		**different:de: ?x1 ?x2**
+		distanceDe:à:rep: ?x1 ?x2 ?res
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res
+different:de: ?x1 ?x2''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+		
+		exp verifieCondition: ''point  ?x1
+		point  ?x2
+		**different:de: ?x1 ?x2**
+		distanceDe:à:rep: ?x1 ?x2 ?res'' 
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''point  ?x1
+point  ?x2
+different:de: ?x1 ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+		Tu peux encore plus préciser la question en demandant **des points dans l''ordre alphabétique de leurs noms.**
+		
+				
+		point  ?x1
+		point  ?x2
+		different:de: ?x1 ?x2
+		**ordonneMot:et:rep1:rep2:  ?x 1 ?x2 ?x1 ?x2**
+		distanceDe:à:rep: ?x1 ?x2 ?res
+
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point  ?x1
+point  ?x2
+different:de: ?x1 ?x2
+ordonneMot:et:rep1:rep2:  ?x1 ?x2 ?x1 ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+		exp verifieCondition: ''
+		point  ?x1
+		point  ?x2
+		different:de: ?x1 ?x2
+		**ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1  ?x2**
+		distanceDe:à:rep: ?x1 ?x2 ?res
+
+:
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''point  ?x1
+point  ?x2
+different:de: ?x1 ?x2
+ordonneMot:et:rep1:rep2:  ?x1 ?x2 ?x1 ?x2 
+distanceDe:à:rep: ?x1 ?x2 ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+		**Remarque**
+		La valeur de la distance affichée dans la figure se modifie si tu déplaces les points.
+	
+		Le système expert évalue la situation quand il lit la figure, pour une situation changée, il faut une nouvelle lecture.
+
+
+
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
 !DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 3/2/2025 01:48:52'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_121Segment
@@ -3124,31 +3355,31 @@ Les règles sont des méthodes de la classe ExpertRegle.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment
 ^(EruditeBookSection basicNew title: '1.2 Segment'; document: ((EruditeDocument contents: ' ''!!!!1.2. Segments.
 
-**Rappel.**//
+	**Rappel.**//
 
 Euclide : Définition 2, « une ligne est une longueur sans largeur. »
 
 Euclide : Définition 3, « les extrémités d’une ligne sont des points. »
 
-Euclide : Définition 4, « La ligne droite est celle qui est également placée entre ses points. » ( Euclide défini comme droite ce qui est pour nous un segment. Si on marche le long d''''une droite le pied gauche se déplace de la même distance que le pied droit. (-> également placée entre ses points.).
+Euclide : Définition 4, « La ligne droite est celle qui est également placée entre ses points. » 
+	( Euclide défini comme droite ce qui est pour nous un segment. Si on marche le long d''''une droite le pied gauche se déplace de la même distance que le pied droit. (-> également placée entre ses points.).
 
 Euclide : Demande 1, « Entre deux points on peut toujours tracer une droite.(Un segment avec les définitions actuelles). 
 
 Euclide : Demande 2, « On peut toujours prolonger indéfiniment une droite tracée entre deux points.
-(Euclide demande ce qui est actuellement une droite. Si tu trace un segment en appuyant une règle sur deux points, tu peux continuer le tracé au de là des points.
+	(Euclide demande ce qui est actuellement une droite. Si tu trace un segment en appuyant une règle sur deux points, tu peux continuer le tracé au de là des points.
 
-Cette demande est toujours satisfaite pour la géométrie plane, elle n''''est pas toujours vérifiée , par exemple, sur une sphère, les extrémités d''''un segment peuvent se rejoindre en un même point, le pôle).
+	Cette demande est toujours satisfaite pour la géométrie plane, elle n''''est pas toujours vérifiée , par exemple, sur une sphère, les extrémités d''''un segment peuvent se rejoindre en un même point, le pôle).
 
 
 Aide-mémoire  p.90 : « La droite A B est constituée d''''une infinité de points alignés avec A et B »
 Aide-mémoire  p.90 : « Un segment est une portion de droite limitée par deux points. » //
 
-!!!!1.2.1.  Segments.
- 1.2.1.1  Chargement ou Script de la Figure.
+	**1.4.1  La figure.**
 
 [[[fig := DrGeoFigure nouveau.
 
@@ -3165,7 +3396,7 @@ exp   initFaits .
 exp   lisFigure.
 exp   chargeRegles:''Euclide''.
 exp   deduis.
-fig  presenter expertInspect: ''Géométrie  et Système Expert'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+fig  presenter expertInspect: ''Géométrie et Système Expert Segment'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
 
 [[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert''  string: ''
 "1.2.1.1 Segments.".
@@ -3184,65 +3415,259 @@ exp   deduis.
 exp   modèlesQuestions .
 '']]] doItWithButton: copier le script de la figure pour l''''exécuter.
 
-**Les points.**
+	**1.4.2 Les points.**
 
 A et B sont des points libres,ce sont les extrémités du segment, tu peux les déplacer.  
 
 C est un point sur le segment,tu peux le déplacer, mais il reste sur le segment.
 Ce point C reste sur le segment si tu déplace A ou B.
 
-pointSur sAB ?p
+**pointSur sAB ?p**
 [[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''pointSur sAB ?p''
  style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
 
-exp verifieCondition: ''pointsur sAB ?p''
+**exp verifieCondition: ''pointsur sAB ?p''**
 [[[fig presenter expertDisplayTutor:''
 exp verifieCondition: ''''pointSur sAB ?p''''
 '']]] doItWithButton:copier le code pour l''''exécuter.
 
 
-**Le segment**
+	**1.4.3 Le segment.**
+
 Le segment avec ses extrémités.
 
-segment ?x1 ?x2
+**segment ?x1 ?x2**
 [[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''segment ?x1 ?x2''
  style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
 
-exp verifieCondition:''segment ?x1 ?x2''.
+**exp verifieCondition:''segment ?x1 ?x2''.**
 [[[fig presenter expertDisplayTutor:''
 exp verifieCondition: ''''segment ?x1 ?x2''''
 '']]] doItWithButton:copier le code pour l''''exécuter.
 
-**Les parents.**
+	**1.4.4 Les parents.**
 
 Pour un segment, les parents sont les extrémités du segment.
 
-parent1 ?x1 ?x2
-parent2 ?x1 ?x4
-
+**parent1 ?x1 ?x2
+parent2 ?x1 ?x4**
 [[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:
 ''
 parent1 ?x1 ?x2
 parent2 ?x3 ?x4'' style:true]]] doItWithButton: copier pour vérifier avec le menu Expert.
 
-exp verifieCondition:''parent1 ?x1 ?x2
-parent2 ?x3 ?x4''
+**exp verifieCondition:''parent1 ?x1 ?x2
+parent2 ?x3 ?x4''**
 [[[fig presenter expertDisplayTutor:''
 exp verifieCondition: ''''parent1 ?x1 ?x2
 parent2 ?x3 ?x4''''
 '']]] doItWithButton:copier le code pour l''''exécuter.
 
-**Les couples**
+	**1.4.5 Les couples.**
 
-coupleSur ?s ?couple
-
+**coupleSur ?s ?couple**
 [[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:
 ''coupleSur ?s ?couple'' style:true]]] doItWithButton: copier pour vérifier avec le menu Expert.
 
-exp verifieCondition:''coupleSur ?s ?couple''
+**exp verifieCondition:''coupleSur ?s ?couple''**
 [[[fig presenter expertDisplayTutor:''
 exp verifieCondition: ''''coupleSur ?s ?couple''''
 '']]] doItWithButton:copier le code pour l''''exécuter.
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment_121LignePolygonales;
+        add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment_122LignePolygonaleFerméee;
+ yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment_121LignePolygonales
+^(EruditeBookSection basicNew title: '1.2.1 Ligne Polygonales'; document: ((EruditeDocument contents: '!!!!1.2.1 Ligne Polygonale 
+
+Une ligne **polygonale** est une suite de segments adjacents.
+
+
+1.2.1.1 **La Figure**
+
+[[[fig := DrGeoFigure nouveau.
+"1.2.1.1 lignes polygonales"
+a := fig point: 6@0. a nommer: ''A''.
+b := fig point: 0@4.5. b nommer: ''B''.
+c := fig point: -6@3. c nommer: ''C''.
+d := fig point: -6@-4.5. d nommer: ''D''.
+sAB := fig segmentDe: a à: b.sAB  nommer: ''sAB''.
+sBC := fig segmentDe: b à: c. sBC nommer: ''sBC''.
+sCD := fig segmentDe: c à: d. sCD nommer: ''sCD''.
+exp   :=fig expert.
+exp   initFaits .
+exp   lisFigure.
+exp   chargeRegles:''EuclideMinimum''.
+exp   deduis.
+fig  presenter expertInspect: ''Géométrie et Système Expert Segment'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+
+[[[fig :=DrGeoFigure nouveau.
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert''  string: ''
+"1.2.1.1 lignes polygonales"
+a := fig point: 6@0.a nommer: ''''A''''.
+b := fig point: 0@4.5.b nommer: ''''B''''.
+c := fig point: -6@3.c nommer: ''''C''''.
+d := fig point: -6@-4.5.d nommer: ''''D''''.
+sAB := fig segmentDe: a à: b. sAB  nommer: ''''sAB''''.
+sBC := fig segmentDe: b à: c. sBC nommer: ''''sBC''''.
+sCD := fig segmentDe: c à: d. sCD  nommer: ''''sCD''''.
+
+exp   :=fig expert.
+exp   initFaits .
+exp   lisFigure.
+exp   chargeRegles:''''Euclide''''.
+exp   deduis.
+exp   :=fig expert.
+exp   initFaits .
+exp   lisFigure.
+exp   chargeRegles:''''EuclideMinimum''''.
+exp   deduis.
+exp   modèlesQuestions .
+'']]] doItWithButton: copier le script de la figure pour l''''exécuter.
+
+	**La ligne polygonale**
+
+	La ligne polygonale est affichée avec le nom des segments et leurs extrémités.
+
+**lignePolygonale  ?x1**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+lignePolygonale ?x1''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+A
+**adjacent  ?x1 ?x2 ?x3 ?x4 ?x5 ?x1**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+lignePolygonale ?x1''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+**exp verifieCondition: ''adjacent  ?x1 ?x2 ?x3 ?x4 ?x5  ?x1''**
+[[[fig presenter expertDisplayTutor:''
+exp verifieCondition: ''''adjacent  ?x1 ?x2 ?x3 ?x4 ?x5  ?x1''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+	**Sommets de la ligne polygonale**
+
+**sommets  ?x1**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+sommets  ?x1''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+**exp verifieCondition: ''adjacent  ?x1 ?x2 ?x3 ?x4 ?x5''**
+[[[fig presenter expertDisplayTutor:''
+exp verifieCondition: ''''lsommets  ?x1''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+**Remarques**
+
+La base de données est dite **dynamique** parce qu''elle change en raison des retraits, les faits son marqés **retiré** et ne sont plus pris en compte dans les règles. 
+
+	**Retraits**
+**lignePolygonale  ?x1 ?x2**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+lignePolygonale  ?x1 ?x2''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+**exp verifieCondition: ''lignePolygonale  ?x1 ?x2''**
+[[[fig presenter expertDisplayTutor:''
+exp verifieCondition: ''''lignePolygonale  ?x1 ?x2''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+La règle qui consruit la ligne polygonale est récursive, elle utilise sa propre conclusion dans sa condition.
+elle reprend une liste pour ajouter un élément nouveau et allonger cette liste. 
+
+	exp
+		lisRegle: ''polygones-lignePolygonaleSuite1''
+		si:
+			''**lignePolygonale ?l**
+dernier:rep: ?l ?s
+premier:rep: ?s ?sp
+adjacent ?sp ?s2 ?a ?b ?c
+ajouteDernierUnique:el:rep: ?l [ ?s2   ?b ?c ] ?l2''
+		alors: ''**lignePolygonale ?l2**''
+		com: ''Une lignePolygonale qui peut être fermée par un dernier segment''.
+
+
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment_122LignePolygonaleFerméee
+^(EruditeBookSection basicNew title: '1.2.2 Ligne Polygonale ferméee'; document: ((EruditeDocument contents: '!!!!1.2.1 Ligne Polygonale ferméee
+
+Si le **dernier segment** d''une ligne polygonale a une **extrémité en commun** avec le **premier** on a une **ligne polygonale fermée.**
+
+La figure constituée par une **ligne polygonale fermée** est un **polygone**
+
+1.2.1.1 **La Figure**
+
+[[[fig := DrGeoFigure nouveau.
+"1.2.1.1 lignes polygonales"
+a := fig point: 6@0. a nommer: ''A''.
+b := fig point: 0@4.5. b nommer: ''B''.
+c := fig point: -6@3. c nommer: ''C''.
+d := fig point: -6@-4.5. d nommer: ''D''.
+sAB := fig segmentDe: a à: b.sAB  nommer: ''sAB''.
+sBC := fig segmentDe: b à: c. sBC nommer: ''sBC''.
+sCD := fig segmentDe: c à: d. sCD nommer: ''sCD''.
+sDA := fig segmentDe: d à: a. sDA nommer: ''sDA''.
+exp   :=fig expert.
+exp   initFaits .
+exp   lisFigure.
+exp   chargeRegles:''EuclideMinimum''.
+exp   deduis.
+fig  presenter expertInspect: ''Géométrie et Système Expert Segment'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+
+[[[fig :=DrGeoFigure nouveau.
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert''  string: ''
+"1.2.1.1 lignes polygonales"
+a := fig point: 6@0.a nommer: ''''A''''.
+b := fig point: 0@4.5.b nommer: ''''B''''.
+c := fig point: -6@3.c nommer: ''''C''''.
+d := fig point: -6@-4.5.d nommer: ''''D''''.
+sAB := fig segmentDe: a à: b. sAB  nommer: ''''sAB''''.
+sBC := fig segmentDe: b à: c. sBC nommer: ''''sBC''''.
+sCD := fig segmentDe: c à: d. sCD  nommer: ''''sCD''''.
+sDA := fig segmentDe: d à: a. sDA nommer: ''''sDA''''. 
+exp   :=fig expert.
+exp   initFaits .
+exp   lisFigure.
+exp   chargeRegles:''''Euclide''''.
+exp   deduis.
+exp   :=fig expert.
+exp   initFaits .
+exp   lisFigure.
+exp   chargeRegles:''''EuclideMinimum''''.
+exp   deduis.
+exp   modèlesQuestions .
+'']]] doItWithButton: copier le script de la figure pour l''''exécuter.
+
+	**La ligne polygonale**
+
+**lignePolygonaleFermée  ?x1**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+lignePolygonaleFermée  ?x1''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+**exp verifieCondition: ''lignePolygonaleFermée  ?x1''**
+[[[fig presenter expertDisplayTutor:''
+exp verifieCondition: ''''lignePolygonaleFermée  ?x1''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+
+
+	**Les propriétés**
+
+**polygone  ?x1 ?x2**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+polygone  ?x1 ?x2''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+**exp verifieCondition: ''''polygone  ?x1 ?x2''''
+[[[fig presenter expertDisplayTutor:''
+exp verifieCondition: ''''polygone  ?x1 ?x2''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+
+
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
 !DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 3/2/2025 01:48:52'!
@@ -3538,25 +3963,32 @@ Remarque:
 il ne peut pas y avoir que des prédicats dans une condition, il faut au moins une affirmation à vérifier, c''est pour ça que l''affirmation vraie **point A**  est au début de la condition à vérifier-
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite
 ^(EruditeBookSection basicNew title: '1.3 Droite'; document: ((EruditeDocument contents: ' !!!!1.3 Droites
-1.2. Segments et droites.
-Euclide : Définition 2, « **Une ligne est une longueur sans largeur. **»
-Euclide : Définition 3, « **Les extrémités d’une ligne sont des points. **»
-Euclide : Définition 4, « **La ligne droite est celle qui est également placée entre ses points. **» //
-Si on marche le long d''une droite le pied gauche se déplace de la même distance que le pied droit.
-Sur une sphère  les méridiens sont des droites mais pas les parallèles, les pas ne sont pas de même taille de chaque côté d''un parallèle.Tous les paralléles sont de taille différente.)//
-Euclide : Demande 1, « **Entre deux points on peut toujours tracer une droite.* de chaque*»//( Euclide défini comme droite ce qui est pour nous un segment.) //
 
-Euclide : Demande 2, « **On peut toujours prolonger indéfiniment une droite tracée entre deux points.**»
-//(Euclide demande ce qui est pour nous une droite. Cette demande est toujours satisfaite pour la géométrie plane, elle n''est pas toujours vérifiée , par exemple, sur un sphère, les extrémités d''un segment peuvent se rejoindre en un même point.)//
+	**Rappel.**
 
-Aide-mémoire  p.90 : « **La droite A B est constituée d''une infinité de points alignés avec A et B **»
-Aide-mémoire  p.90 : « **Un segment est une portion de droite limitée par deux points. »
+//Euclide : Définition 2: «// **Une ligne est une longueur sans largeur. **»
 
-**Script de la figure**
- 1.2.1Charger la figure ou le Script de la Figure.
+//Euclide :  Définition 3 : «// **Les extrémités d’une ligne sont des points. **»
+
+//Euclide : Définition 4, « //**La ligne droite est celle qui est également placée entre ses points. **» 
+	//Si on marche le long d''une droite le pied gauche se déplace de la même distance que le pied droit.
+	Sur une sphère  les méridiens sont des droites mais pas les parallèles, les pas ne sont pas de même taille de chaque côté d''un parallèle.Tous les paralléles sont de taille différente.//
+
+//Euclide : Demande 1, // « **Entre deux points on peut toujours tracer une droite.**»
+	( Euclide défini comme droite ce qui est pour nous un segment.) 
+	
+//Euclide : Demande 2, //« **On peut toujours prolonger indéfiniment une droite tracée entre deux points.**»
+	(Euclide demande ce qui est pour nous une droite. Cette demande est toujours satisfaite pour la géométrie plane, elle n''est pas toujours vérifiée , par exemple, sur un sphère, les extrémités d''un segment peuvent se rejoindre en un même point.)
+
+//Aide-mémoire  p.90 : « //**La droite A B est constituée d''une infinité de points alignés avec A et B **»
+
+//Aide-mémoire  p.90 : « //**Un segment est une portion de droite limitée par deux points. **»
+
+
+	** 1.3.1  la figure. **
 
 [[[fig := DrGeoFigure nouveau.
 fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifief un modèle, utilise vérifier du menu Expert
@@ -3590,48 +4022,49 @@ exp deduis.
 exp modèlesQuestions .
 '']]] doItWithButton: copier le script de la figure pour l''exécuter.
 
-**Points sur une droite**
+	**1.3.2 Points sur une droite**
 
-Le  prédicat **pointsSur:rep:** permet d''avoir la liste des points sur une droite.
+	Le  prédicat **pointsSur:rep:** permet d''avoir la liste des points sur une droite.
 Les points sont ordonnés dans le sens de la droite.
 
-droite  ?x1 ?x2 ?x3
-pointsSur:rep: ?x1 ?pts
+**droite  ?x1 ?x2 ?x3
+pointsSur:rep: ?x1 ?pts**
 [[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
 droite  ?x1 ?x2 ?x3
 pointsSur:rep: ?x1 ?pts.''style:true]]] doItWithButton: copier le modèle pour le vérifier avec le menu Expert.
 
-exp vérifieCondition: ''droite  ?x1 ?x2 ?x3
-pointsSur:rep: ?x1 ?pts''.
+**exp vérifieCondition: ''droite  ?x1 ?x2 ?x3
+pointsSur:rep: ?x1 ?pts''.**
 [[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''e vérifieCondition: ''''
 droite  ?x1 ?x2 ?x3
 pointsSur:rep: ?x1 ?pts''''.'']]] doItWithButton: copier le code pour l''exécuter.
 
-**Position d''un point par rapport à un autre.**
+	**1.3.3 Position d''un point par rapport à un autre.**
 
-La question **position  ?point  ?position ?pointRéférence ?droite** permet d''obtenir la positions relative ?position  des points  ?point et ?pointRéférence sur la droite ?droite.
+	La question **position  ?point  ?position ?pointRéférence ?droite** permet d''obtenir la positions relative d''un point par rapport à un point de référence
 
-position  ?point  ?position ?pointRéférence ?droite
+**position  ?point  ?position ?pointRéférence ?droite**
 [[[f presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''
 position  ?point  ?position ?pointRéférence ?droite'']style true]]] doItWithButton: copier le modèle pour le vérifier avec le menu Expert.
 
-exp vérifieCondition: ''position  ?point  ?position ?pointRéférence ?droite''.
+**exp vérifieCondition: ''position  ?point  ?position ?pointRéférence ?droite''.**
 [[[fig presenter expertDisplayTutor:''
 exp vérifieCondition: ''''position  ?point  ?position ?pointRéférence ?droite''''.
 '' ]]] doItWithButton: copier ce code pour l''exécuter.
 
-**Parents**
-Les parents d''une droite sont les points sur lesquels s''appuient la droite.
+	**1.3.4 Parents**
 
-parent1 ?x1 ?x2
+	Les parents d''une droite sont les points sur lesquels s''appuient la droite.
+
+**parent1 ?x1 ?x2**
 [[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''parent1 ?x1 ?x2''style:true]]] doItWithButton: copier pour vérifier avec le menu Expert.
 
-exp vérifieCondition:''parent1 ?x1 ?x2''
+**exp vérifieCondition:''parent1 ?x1 ?x2''**
 [[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''
 exp vérifieCondition: ''''parent1 ?x1 ?x2''''
 '']]] doItWithButton:copier le code pour l''exécuter.
 
-parent2 ?x1 ?x2
+**parent2 ?x1 ?x2**
 [[[fig presenter expertDisplayTutor:''parent2 ?x1 ?x2'']]] doItWithButton: copier pour vérifier avec le menu Expert.
 
 exp vérifieCondition:''parent2 ?x1 ?x2''
@@ -3639,18 +4072,18 @@ exp vérifieCondition:''parent2 ?x1 ?x2''
 exp vérifieCondition: ''''parent2 ?x1 ?x2''''
 '']]] doItWithButton:copier le code pour l''exécuter.
 
-**Remarque.**
+	**1.3.5 Remarque.**
  
-On peut remplacer une variable par une valeur pour limiter la recherche aux réponses qui concernent cette variable.
+	On peut remplacer une variable par une valeur pour limiter la recherche aux réponses qui concernent cette variable.
 
-position P ?x2 ?x3 ?x4
+**position P ?x2 ?x3 ?x4**
 [[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
 position P ?x2 ?x3 ?x4
 '' style:true]]] doItWithButton: copier le modèle pour le vérifier avec le menu Expert.
  
-exp vérifieCondition: ''position P ?x2 ?x3 ?x4''.
+**exp vérifieCondition: ''position P ?x2 ?x3 ?x4''.**
 [[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
-exp vérifieCondition: ''''position P ?x2 ?x3 ?x4''''.'' ]]] doItWithButton:copier ce code pour l''exécuter.
+**exp vérifieCondition: ''''position P ?x2 ?x3 ?x4''''.'' ]]] doItWithButton:copier ce code pour l''exécuter.**
 
 
  ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
@@ -3824,12 +4257,14 @@ position  ?x1 ?x2 ?x3 ?dd
 ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3 ''''''
 ]]] doItWithButton: copier le code pour l''exécuter.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_14DemiDroite
-^(EruditeBookSection basicNew title: '1.4 Demi-Droite '; document: ((EruditeDocument contents: '!!!!!! 1.4 Demi-droite.
+^(EruditeBookSection basicNew title: '1.4 Demi-Droite '; document: ((EruditeDocument contents: '!!!! 1.4 Demi-droite.
+
 Aide-mémoire  p.90 : « Une demi-droite est une portion de droite limitée par un point.  Ce point est appelé l’origine de la demi-droite. »
 //On a besoin d''un autre point  pour déterminer la droite, ce point est appelé parent.//
 
+**1.4.1 La figure.**
 [[[fig := DrGeoFigure nouveau.
 fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert
 
@@ -3865,7 +4300,7 @@ exp deduis.
 exp modèlesQuestions.
 '']]] doItWithButton:copier le script de la figure pour l''''exécuter.
 
-**Afficher les points sur la demi-droite.**
+**1.4.2 Afficher les points sur la demi-droite.**
 
 pointsSur d ?pts
 [[[ fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''
@@ -3878,7 +4313,7 @@ fig presenter expertDisplayTutor: ''Géométrie et Système Expert'' string: ''
 exp verifieCondition: ''''pointsSur d ?pts''''.
 '']]] doItWithButton: copier le code pour l''exécuter.
 
-**La position relative de deux points sur la droite.**
+**1.4.3 La position relative de deux points sur la droite.**
 
 position P ?pos B d
 [[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert
@@ -3886,13 +4321,13 @@ position P ?pos B d
 position P ?pos B d
 '']]] doItWithButton: copier le modèle pour le vérifier avec le menu Expert.
 
-expert verifieCondition: ''''position P ?pos B d''''.
+**expert verifieCondition: ''''position P ?pos B d''''.**
 [[[exp := fig expert.
 fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''
 exp verifieCondition: ''''position P ?pos B d''''
 '']]] doItWithButton: copier le code pour l''exécuter.
 
-**Abscisse curviligne.**
+**1.4.4 Abscisse curviligne.**
 Pour la position d''''un point sur une ligne, tu peux utiliser l''''**abscisse curviligne**, cette abscisse repère la longuer de la ligne  qui sépare le point d''''un point origine.
 
 point P
@@ -3914,7 +4349,7 @@ abcisseDe:sur:rep: P d ?abcsP''''.''
  
 Tu peux aussi  afficher l''''abscisse du point sur la ligne avec le menu de la figure: **Edition/Propriété** et cliquer sur le point.
 
-**Trois points sur une droite déterminent deux demi-droites.**
+**1.4.5 Trois points sur une droite déterminent deux demi-droites.**
 
 [[[
 "1.2,4 Demi-droite"
@@ -3961,7 +4396,7 @@ exp: modèlesQuestions .
 ''''
 ]]] doItWithButton:copier le script de la figure pour l''exécuter.
 
-** Montrer les demi-droites**
+**1.4.6  Montrer les demi-droites**
 
 demi-droiteSur  ?x1 ?x2
 [[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert
@@ -3976,29 +4411,43 @@ exp verifieCondition:''''
 demi-droiteSur  ?x1 ?x2''''
 '']]] doItWithButton: copier le code pour l''exécuter.
 
-**position des points sur les demi-droites**
+**1.4.7 position des points sur les demi-droites**
 demi-droite  ?dd 
 position  ?x1 ?x2 ?x3 ?dd
 ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3 
 [[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert
 
-demi-droite  ?dd 
+**demi-droite  ?dd 
 position  ?x1 ?x2 ?x3 ?dd
-ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3 ''
+ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3 ''**
 ]]] doItWithButton: copier le modèle pour le vérifier avec le menu Expert.
 
-exp verifieCondition:''''
+**exp verifieCondition:''
 demi-droite  ?dd 
 position  ?x1 ?x2 ?x3 ?dd
-ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3 ''''
+ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3 ''**
 [[[ fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''
 exp verifieCondition:''''
 demi-droite  ?dd 
 position  ?x1 ?x2 ?x3 ?dd
 ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3'''' ''
-]]] doItWithButton: copier le code pour l''exécuter. ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+]]] doItWithButton: copier le code pour l''exécuter. La position relative de deux points sur la droite.
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+**position P ?pos B d**
+[[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert
+
+**position P ?pos B d**
+'']]] doItWithButton: copier le modèle pour le vérifier avec le menu Expert.
+
+**expert verifieCondition: ''''position P ?pos B d''''.**
+[[[exp := fig expert.
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''
+exp verifieCondition: ''''position P ?pos B d''''
+'']]] doItWithButton: copier le code pour l''exécuter.
+
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/13/2025 04:13:52'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles
 ^(EruditeBookSection basicNew title: '2 Angles '; document: ((EruditeDocument contents: '1.3 Angles
 
@@ -4015,7 +4464,7 @@ appelé l’origine de la demi-droite.. ».') data: ((Dictionary new)); yoursel
         add: self section_Expert_GéométrieEtSystèmeExpert_2Angles_134AngleObtuAigudroit;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/13/2025 04:13:53'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_131AngleEntreDemidroite
 ^(EruditeBookSection basicNew title: '1.3.1 Angle entre demi-droite'; document: ((EruditeDocument contents: '!!!!!!1.3.1 Angle entre demi-droite
 
@@ -4031,9 +4480,7 @@ Un angle plus grand que l''''angle plat ( plus grand que 180 degrés)  est  dit 
 [[[ 
 
 fig := DrGeoFigure nouveau.
-"fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert
-'' style: true.
-exp  := fig expert."
+exp  := fig expert.
 exp   drgeo:fig.
 exp   chargeRegles:''Euclide:''.
 a := fig point: 0@0.a nommer: ''A''.
@@ -4083,7 +4530,7 @@ pd1 cacher.
 pd2 cacher.
 dr cacher.
 fig centrerVueEn: s mathItem  point.
-fig texte: ''déplace le point b
+fig texte: ''déplace le point B
 observe l''''angle bleu'' à: -8@7.7.
 ]]] doItWithButton: Tester les angles.
 
@@ -4192,7 +4639,7 @@ Pour le sytème expert définir une relation d''équivalence est plus efficace q
 Pour vérifier une condition, il faut au moins une affirmation, c''est pour ça que l''affirmation vraie **point A**  est ajoutée au début de la condition à vérifier.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/13/2025 04:13:53'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_132AngleEntreDroites
 ^(EruditeBookSection basicNew title: '1.3.2 Angle entre droites'; document: ((EruditeDocument contents: '!!!!!!1.3.2. Angle entre droites
 
@@ -4286,7 +4733,7 @@ Remarque:
 il ne peut pas y avoir que des prédicats dans une condition, il faut au moins une affirmation à vérifier, c''''est pour ça que l''''affirmation vraie **point A**  est au début de la condition à vérifier-
 ''') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/13/2025 04:13:53'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_133AngleEntreParallèles
 ^(EruditeBookSection basicNew title: '1.3.3 Angle entre parallèles'; document: ((EruditeDocument contents: ' ''!!!!!! 1.3.3 Angle entre parallèles
 
@@ -4423,7 +4870,7 @@ e verifieCondition: ''''angle0  ?x1 [ alterneExterne:  ?x2 ] ]''''.
 
 '') ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/13/2025 04:13:53'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_134AngleObtuAigudroit
 ^(EruditeBookSection basicNew title: '1.3.4 Angle obtu, aigu,droit.'; document: ((EruditeDocument contents: '
 !!!!!!1.3.4 Angle obtu, aigu,droit,perpendiculaire.
@@ -4537,7 +4984,2070 @@ ou
 	mesureangle :=  ang  morph mathItem 	degreeAngle rounded.
 '']]] doItWithButton: Copier le code de la démonstration.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles
+^(EruditeBookSection basicNew title: '2 Cercles.'; document: ((EruditeDocument contents: '!!!!!!3 Cercles
+
+Euclide:Définition 15, « **Un cercle est une figure plane comprise par une seule ligne qu''on nomme circonférence,
+toutes les droites menées à la circonférence d''un point placé dans cette figure étant égales entre elles. **» 
+( Les droites
+définies par Euclide sont les segments selon les définitions actuelles, donc, pour Euclide,les droites sont les rayons du
+cercle).
+Euclide:Définition 16, «** Ce point se nomme le centre du cercle.**»
+Euclide:Définition 17, «**Diamètre du cercle est une ligne droite menée par le centre du cercle et finissant, de part et d''autre, à la circonférence. **»
+Euclide:Définition 18, « **Demi cercle, est une figure comprise d''une ligne droite, et moitié de la circonférence.**»
+Euclide:Définition 19, «**Section de cercle, est une figure comprise d''une droite, et d''une partie de la circonférence.**» Pour Euclide, une figure est une portion du plan limitée par une frontière. Ici la frontière est constituée par un rayon et une partie de la circonférence et est fermée par un autre rayon.
+
+Aide-mémoire p.99 : « **Un cercle est l''ensemble des points du plan situés à égale distance d''un point appelé centre. Cette distance est le rayon du cercle.**» ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_2Cercles_21CercleRayon;
+        add: self section_Expert_GéométrieEtSystèmeExpert_2Cercles_22RapportCirconférenceRayon;
+        add: self section_Expert_GéométrieEtSystèmeExpert_2Cercles_23CercleIsométrie;
+        add: self section_Expert_GéométrieEtSystèmeExpert_2Cercles_24CercleAbscisse;
+ yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/18/2025 23:06:23'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_21Cercle
+^(EruditeBookSection basicNew title: '2.1 Cercle'; document: ((EruditeDocument contents: '
+!!!! 2.1 Cercle.
+
+**Rappel**
+
+Euclide:Définition 15, « **Un cercle est une figure plane comprise par une seule ligne qu''on nomme circonférence,
+toutes les droites menées à la circonférence d''un point placé dans cette figure étant égales entre elles. **» 
+
+** 2.1 La figure.**
+
+[[[ fig := DrGeoFigure nouveau.		
+exp:= fig expert.
+exp chargeRegles:''angles''.
+exp chargeRegles:''figuresNonRectilignes''.
+a := fig point: 3@3. a nommer:''A''.
+o := fig point: 0@0 .
+r := fig segmentDe: o à: a.
+cer := fig cercleCentre: o passantPar:  a.	
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''Sud''.
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+
+**La position d''un point sur le cercle**
+
+**Abscisse curviligne** d''un point sur le cercle.
+
+La position d''un point sur le cercle est donnée par son  curviligne donnée par le prédicat **abscisseDe:sur:rep:**
+
+
+pointSur ?cer  ?x1 
+abscisseDe:sur:rep: ?x1 ?cer ?res
+[[[fig presenter expertDisplayTutor:''Expert et géométrie'' string:''
+
+pointSur ?cer  ?x1 
+abscisseDe:sur:rep: ?x1 ?cer ?res'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+
+L''origine de l''abscisse est le point du cercle le plus à droite, le point Est, son l''abscisse est 0. 
+Les autre points se répartissent en tournant dans le sens inverse des aiguilles d''une montre. 
+Nord Ouest Sud .
+Les valeurs de l''abscisse vont de 0 à 1.
+
+Comme le cercle finit là où il a commencé donc la valeur de Est est aussi 1.
+
+**Remarque.**
+Un prédicat est une métodes smalltalk qui répond true ou false (vrai ou faux).
+
+On peut utiliser un prédicat dans une condition, le premier mot est la suite des sélecteurs suivie des paramétres.
+
+Il faut au moins une question dans une condition, on peut utiliser une question toujours vraie comme **pointSur ?cer  ?x1**   dans l''exemple ci-dessus.
+
+
+
+
+** 2.2 Rapport entre circonférence et rayon**
+Le rapport entre circonférence et rayon est constant mais ce n''est pas un rationel  ( une fraction )  car après la virgule les décimales sont toujours différentes, il n''y a pas de période.
+
+Comme  le nombre de décimales est infini, on ne peut avoir une valeur exacte, c''est un nombre appelé **transcendant** représenté par la lettre greque π (pi).
+
+Les abscisses curvilignes sont des fractions de la circonférence.
+
+L''abscisse de Nord , 0.25 correspond à 1/4 de circonférence.   ( 2 π r ) 1/4 soit ( π . 1/4 ) . 2 r.
+
+L''abscisse de Ouest , 0.5  correspond à 1/2 de circonférence.  ( 2 π r ) 1/2 soit ( π . 1/2 ) . 2 r.
+
+L''abscisse de Sud ,    0.75 correspond à 3/4 de circonférence. ( 2 π r ) 3/4  soit ( π. 3 /2) . 2 r.
+
+L''abscisse de Est ,     1      correspond à la  circonférence.        ( 2 π r ) 1     soit ( π. 1)  .    2 r.
+
+Si on prend π comme unité de mesure on doit diviser tous ces résultats par π  et on élimine ainsi  π .
+
+On n''a alors que des fractions donc des nombres rationels.
+
+Tu retrouvera ça plus tard avec la mesure des angles.
+
+
+[[[ fig := DrGeoFigure nouveau.
+exp:= fig expert.
+fig:= DrGeoFigure nouveau.
+exp:= fig expert.
+exp drgeo: fig.
+fig texte:''déplace le point P pour changer le rayon
+ et observe les valeurs.'' à:-8@9.
+o := fig point: -2@-2 .o nommer:''O''.
+p := fig point: 0@0.p nommer:''P''.
+p couleur: Color green.
+cer := fig cercleCentre:  o passantPar: p. 
+s := fig segmentDe:o  à: p.
+mseg:= fig longueurDe: s. 
+mcer :=  fig longueurDe: cer. 
+vseg  := mseg morph mathItem valueItem .
+vcer := mcer morph mathItem valueItem.
+quot := vcer/vseg.
+res:=fig valeur:quot.
+mseg nommer:''rayon''.
+mcer nommer: ''circonférence''.
+res  nommer: ''quotient circ / rayon''.
+mcer déplacerA: -6@6.
+mseg déplacerA: -6@5.
+res déplacerA: -6@4.
+fig actualiser. ]]] doItWithButton:Charger la démonstration du rapport constant .
+
+
+
+**Couple**
+
+Pour le système expert on définit un un couple par une liste de deux points.
+
+**Rayon du cercle.**
+
+Le rayon du cercle est un couple dont le premier point es le centre du cercle et le second sur la circonférence,
+
+**Segment**
+
+On peut relier le centre du cercle à un point de la circonférence par un segment.
+
+Remarque; Les extrémités d''un segment sont un couple définit par les extrémités du segment dans l''ordre alphabétique, ce couple ne correspond pas nécessairement au rayon, Il faut mettre en ordre alphabétique les points du rayon pour avoir le couple associé au segment et retrouver le segment.
+
+**Isométrie**
+
+La définition du cercle est que la distance d''un point de la circonférence au centre du cercles est la même pour tous les points de la circonférence.
+
+ Deux objets sont isométriques s''ils ont même mesure, donc les rayons d''un cercle sont isométriques et les segments aussi.
+
+**Représentation de la relation  isométrique**.
+
+La relation **isométrique** est une relation d''équivalence, 0n peut représenter  la relation explicitement en décrivant toutes les relation entre deux objets,
+
+Dans notre exemple on a les points: Est Nord Ouest Sud et chacun de ces points forme un rayon avec le centre C, [ C Est ] [ C Nord ]  [ C Ouest ]  [ C Sud ]
+
+**Transitivitè**
+
+**si a relation b et b relation c alors a relation c** . Celà revient à dire que l''un des  éléments est en relation avec  relation btous les autres ce qui peut se résumer par:
+   
+[ C Est ]		 	est isométriique  à 					[ C Nord ] 			[ C Ouest ] 			[ C Sud ]
+[ C Nord ] 		  	est isométriique  à					[ C Ouest ]			[ C Sud ]    			[ C Est ] 
+[ C Ouest ]		 	est isométriique  à					[ C Sud ]		 	[ C Est ] 			[ C Nord ]
+[ C Sud ]			est isométriique  à					[ C Est ] 			[ C Nord ]  			[ C Ouest ]
+
+Chaque ligne représente 3 relations, il y a 4 lignes donc le total est 12 relations.
+
+**Commutativité **
+ 
+si a relation b alors b relation a
+
+[ C Nord ] 			[ C Ouest ] 			[ C Sud ]			sont isométriique  à					[ C Est ]							
+[ C Ouest ]			[ C Sud ]    			[ C Est ]			sont isométriique  à					[ C Nord ] 			
+[ C Sud ]		 	[ C Est ] 			[ C Nord ]			sont isométriique  à					[ C Ouest ]		 relation 
+[ C Est ] 			[ C Nord ]  			[ C Ouest ]			sont isométriique  à					[ C Sud ]			
+
+Chaque ligne représente 3 relations, il y a 4 lignes donc le total est 12 relations.				
+
+**Réflexivité**
+a relation a chaque objet est en relation avec lui-même.
+
+ 4  ojbets donc 4 relations.
+
+Total de toutes les relations  12 + 12 + 4 = 28 relations
+
+Dans une figure avec un cercle on peut avoir d''autres couples qui n''appartiennent pas au cercle, éventuellement à un autre cercle dans ce cas  on aura une autre  relation entre ces couples.
+
+On peut regrouper dans un ensemOn peurble les couples d''un cercle et dans un autre les couples de l''autre cercle, si l''on connait dans quel ensemble est un couple, on peut dire qu''il est en reation avec tous les aurtes couple de cet ensemble.
+
+L''ensemble des objets en relation entre eux est une représentation de la relation qui nest plus simple que de citer tous les objets en relation, c''est cette représentstion qu''utilise le système expert, pour vérifier si deux objets son en relation, il lui suffit de trouver l''ensemble qui contient un objet et de vérifier si cet ensemble contient aussi l''autre objet, C''est beaucoup plus rapide que de chercher dans le liste des relations.
+
+De plus la liste des relations s''allonge très vite.
+avec 4 objets on avait  2 (4 x 3) + 4 =28
+avec 5 objets on a 2 x ( 5 x 4 x 3) + 5  = 120 + 5
+avec 6 objets on a 2 x (6 x 5 x 4 x 3) + 5  = 720 +6
+,,,
+
+Le prédicat **relation:rep:** affiche la liste des sous ensembles d''objets qui répondent à la relation.
+
+Avec un seul cercle, il n''y a qu''un sous ensemble, tous les couples se retrouvent ensembles,
+point A
+relation:rep: isométrique ?res
+[[[fig presenter expertDisplayTutor:''Expert et géométrie'' string:''
+point A
+relation:rep: isométrique ?res'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+point A
+relation:rep: isométrique ?res''
+
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''
+point A
+relation:rep: isométrique ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+[[[ fig := DrGeoFigure nouveau.		
+fig échelle: 15.
+exp:= fig expert.
+exp chargeRegles:''angles''.
+exp chargeRegles:''figuresNonRectilignes''.
+a := fig point: 2@6. a nommer:''A''.
+o := fig point: -3@0 .
+o nommer:''O1''.
+o2 := fig point: 7@3.5 .o2 nommer:''O2''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''cer1''.cer couleur: Color red.
+cer2 := fig cercleCentre: o2 passantPar:  a.	
+cer2 nommer: ''cer2''.cer2 couleur: Color green.
+p1 := fig pointSurLigne: cer2   à: 0.9.
+p1 nommer:''P1''.p1 couleur: Color green.
+p2 := fig pointSurLigne: cer2   à: 0.2.
+p2 nommer:''P2''.p2 couleur: Color green.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''Sud''.
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure de deux cercles et les modèles de questions.
+
+[[[fig := DrGeoFigure  nouveau.
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert''  string: ''
+fig := DrGeoFigure nouveau.		
+fig échelle: 15.
+exp:= fig expert.
+exp chargeRegles:''''figuresNonRectilignes''''.
+a := fig point: 2@6. a nommer:''''A''''.
+o := fig point: -3@0 .
+o nommer:''''O1''''.
+o2 := fig point: 7@3.5 .o2 nommer:''''O2''''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''''cer1''''.cer couleur: Color red.
+cer2 := fig cercleCentre: o2 passantPar:  a.	
+cer2 nommer: ''''cer2''''.cer2 couleur: Color green.
+p1 := fig pointSurLigne: cer2   à: 0.9.
+p1 nommer:''''P1''''.p1 couleur: Color green.
+p2 := fig pointSurLigne: cer2   à: 0.2.
+p2 nommer:''''P2''''.p2 couleur: Color green.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''''Est''''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''''Nord''''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''''Ouest''''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''''Sud''''.
+exp initFaits.
+exp lisFigureDrgeo.
+exp deduis.
+exp modèlesQuestions.
+'']]] doItWithButton: copier le script de la figure pour l''''exécuter.
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/9/2025 19:32:21'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_21CercleAbscisse
+^(EruditeBookSection basicNew title: '2.1 Cercle. abscisse.'; document: ((EruditeDocument contents: '!!!! 2.1 Cercle. abscisse curviligne.
+
+**Rappel**
+
+Euclide:Définition 15, « **Un cercle est une figure plane comprise par une seule ligne qu''on nomme circonférence,
+toutes les droites menées à la circonférence d''un point placé dans cette figure étant égales entre elles. **» 
+
+	**2.1.1 La figure.**
+
+[[[ fig := DrGeoFigure nouveau.
+exp:= fig expert.
+exp chargeRegles:''EuclideMinimum''.
+a := fig point: 2@5. a nommer:''A''.
+o := fig point: 0@0 .
+o nommer:''O1''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''cer1''.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''Sud''.
+exp initFaits.
+exp lisFigureDrgeo.
+exp deduis.
+exp modèlesQuestions.
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+
+	**3 2.2.Abscisse curviligne d''un point sur le cercle.**
+
+	La position d''un point sur le cercle est donnée par son  abscisse curviligne
+
+	Le premier point est le point le plus à droite (Est).
+
+	Les autre points se répartissent en tournant dans le sens inverse des aiguilles d''une montre. Nord Ouest Sud .
+
+	Les valeurs de l''abscisse vont de 0 à 1.
+
+	Comme le cercle finit là où il a commencé,  la valeur de l''abcsisse de Est est aussi 1.
+
+	Le prédicat **abscisseDe:sur:rep:** donne l''abcscisse curviligne d''un point sur une ligne.
+
+	**pointSur ?cercle ?point 
+abscisseDe:sur:rep: ?point ?cercle ?res**
+[[[fig presenter expertDisplayTutor:''Expert et géométrie'' string:''
+pointSur ?cercle ?point 
+abscisseDe:sur:rep: ?point ?cercle ?res'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+	**exp verifieCondition''
+point A
+relation:rep: isométrique ?res''**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''pointSur ?cercle ?point 
+abscisseDe:sur:rep: ?point ?cercle ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+
+	**2.1.5 Remarque.**
+
+	Un **prédicat** est une métodes smalltalk qui répond **true** ou **false** (vrai ou faux).
+	
+	Le premier mot d''un **prédicat** est la suite des sélecteurs suivie des paramétres.
+
+	Il faut au moins une question dans une condition, dans l''exemple ci-dessus c''est : 
+	**pointSur ?cer  ?x1**.
+	( dans cet exempie  la valeur de ?x1 est utilisée aussi dans le prédicat,
+
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_2Cercles_21CercleAbscisse_22CordeDiamètre;
+ yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/24/2025 02:05:45'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_21CercleAbscisse_22CercleRayons
+^(EruditeBookSection basicNew title: '2.2 Cercle, rayons'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/9/2025 19:32:21'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_21CercleAbscisse_22CordeDiamètre
+^(EruditeBookSection basicNew title: '2.2 Corde, diamètre, '; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_21CercleRayon
+^(EruditeBookSection basicNew title: '2.1 Cercle rayon'; document: ((EruditeDocument contents: '!!!! 2.1 Cecle rayon
+	**2.1.1 Rayon du cercle.**
+
+**2.1,1,1 La figure**
+
+	[[[ fig := DrGeoFigure nouveau.
+exp:= fig expert.
+exp chargeRegles:''EuclideMinimum''.
+a := fig point: 2@5. a nommer:''A''.
+o := fig point: 0@0 .
+o nommer:''O1''.
+seg:=fig segmentDe: o à: a.
+seg nommer:''O1A''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''cercle''.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''Sud''.
+exp initFaits.
+exp lisFigureDrgeo.
+exp deduis.
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+
+	**2.1,1,1,1 Rayon défini par une liste de deux points**
+
+  	Le premier point est le **centre du cercle** et le second **un point sur la circonférence.**	
+		**cercle ?x1 [ rayon: ?x2 ]**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''cercle ?x1 [ rayon: ?x2 ]'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+	**exp verifieCondition''relationCréée  ?x1 ?x2 ?x3''**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''cercle ?x1 [ rayon: ?x2 ]''''
+'']]] doItWithButton:copier le code pour l''''exécuter.	
+ 	
+	On obtient tous les rayons soit représentés soit par une liste de points soit par un segment.
+
+	**Remarques**. 
+
+	La liste pour un **rayon** va toujours du **centre** vers la **circonférence.** contrairement à un couple qui est une liste de deux points dans l**dans l''ordre alphabétique des noms des  points** 
+	
+	On peut obtenir les rayons comme des couples.
+
+	**2.1,1,1,2 Rayons comme couples**
+
+		**cercle ?x1 [ rayonCouple: ?x2 ]**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''cercle ?x1 [ rayonCouple: ?x2 ]'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+		**exp verifieCondition''cercle ?x1 [ rayonCouple: ?x2 ]''**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''cercle ?x1 [ rayonCouple: ?x2 ]''''
+'']]] doItWithButton:copier le code pour l''''exécuter.	
+ 
+
+	**2.1,1,1,3 Rayon défini par un segment**
+
+	Un segment est définit par le couple de ses extrémités.
+	Une extrémité du segment est **le centre**, l''autre extrémité est **un point sur la circonférence**.
+
+		**cercle ?x1 [ rayon: ?x2 ]
+		segment ?x2**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''cercle ?x1 [ rayon: ?x2 ]
+segment ?x2'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+		**exp verifieCondition''cercle ?x1 [ rayon: ?x2 ]
+segment ?x2''**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''cercle ?x1 [ rayon: ?x2 ]
+segment ?x2''''
+'']]] doItWithButton:copier le code pour l''''exécuter.	
+
+ ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/9/2025 19:32:21'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_22CercleIsométrie
+^(EruditeBookSection basicNew title: '2.2 Cercle Isométrie'; document: ((EruditeDocument contents: '!!!!2.3 Cercle Isométrie
+
+	**2.3.1 La figure.**
+	
+[[[ fig := DrGeoFigure nouveau.
+exp:= fig expert.
+exp chargeRegles:''EuclideMinimum''.
+a := fig point: 2@5. a nommer:''A''.
+o := fig point: 0@0 .
+o nommer:''O1''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''cer1''..
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''Sud''.
+exp initFaits.
+exp lisFigureDrgeo.
+exp deduis.
+exp modèlesQuestions.
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+
+	**2.3.2 Isométrie**
+
+	La définition du cercle est que la **distance d''un point de la circonférence au centre du cercles** est la même pour tous les points de la circonférence.
+
+ 	Deux objets sont i**sométriques** s''ils ont **même mesure**, donc les **rayons** d''un cercle sont isométriques et les **segments** aussi.
+
+	**2.3.3 Représentation de la relation  isométrique**.
+
+	La relation **isométrique** est une relation d''équivalence, 
+
+	0n peut représenter la relation explicitement en décrivant toutes les relation entre deux objets,
+
+	Dans notre exemple on a les points: **Est Nord Ouest Sud** qui définisseni un **rayon** avec le **centre C: [ C Est ] [ C Nord ]  [ C Ouest ]  [ C Sud ].**
+
+	Ces rayons ont **même mesure**, ils sont **isométriques.**
+
+	**2.3.3 Relation Isométrique**
+
+
+ 		**2.3.3,1 Transitivitè**
+
+		**si a relation b et b relation c alors a relation c** . 
+
+		Celà revient à dire que l''un des  couple est en relation avec tous les autres, ce qui peut se résumer par:
+   
+		[ C Est ]		 	 isométriique  à 	 			[ C Nord ] 			[ C Ouest ] 			[ C Sud ]
+		[ C Nord ] 		  	 isométriique  à				[ C Ouest ]			[ C Sud ]    			[ C Est ] 
+		[ C Ouest ]		 	 isométriique  à				[ C Sud ]		 	[ C Est ] 			[ C Nord ]
+		[ C Sud ]			 isométriique  à				[ C Est ] 			[ C Nord ]  			[ C Ouest ]
+
+		Chaque ligne représente 3 relations, il y a 4 lignes donc le total est 12 relations.
+
+		**2.3.3.2 Commutativité. **
+ 
+		**si a relation b alors b relation a**
+
+		[ C Nord ] 			[ C Ouest ] 			[ C Sud ]			 isométriique  à				[ C Est ]							
+		[ C Ouest ]			[ C Sud ]    			[ C Est ]			 isométriique  à				[ C Nord ] 
+		[ C Sud ]		 	[ C Est ] 			[ C Nord ]			 isométriique  à				[ C Ouest ]		  
+		[ C Est ] 			[ C Nord ]  			[ C Ouest ]			 isométriique  à				[ C Sud ]			
+
+		Chaque ligne représente 3 relations, il y a 4 lignes donc le total est 12 relations.				
+
+		**2.3.3.3 Réflexivité**
+
+		Chaque couple est en relation avec lui-même.
+
+ 		4  ojbets donc 4 relations.
+
+		**2.3.	3.4 Nombre de relations**	
+
+		Total de toutes les relations  12 + 12 + 4 = 28 relations
+		
+	**2.3.4 Représentation d''une relation par un ensenble.**
+	
+	Avec plus de points, le nombre de couples entre 2 points augmente rapidement.
+	Avec 4 points on avait  2 (4 x 3) + 4 =28
+	Avec 5 points on a 2 x ( 5 x 4 x 3) + 5  = 120 + 5
+	Avec 6 points on a 2 x (6 x 5 x 4 x 3) + 5  = 720 +6
+	...
+
+	Comme tous ies couples de points sont en relation avec tous les autres, on peut mettre dans un même ensemble tous les couples d''une relation.
+
+	Pour savoir si deux couples sont en relation, il suffit de vérifier s''ils appartiennent au même ensemble.
+
+	L''ensemble des objets en relation entre eux est une représentation de la relation plus simple que d''énumérer tous les couples en relation, 
+
+	C''est cette représentstion qu''utilise le système expert.
+
+	**2.3.5 Prédicats pour traiter les relations avec le système expert.**
+
+       		**2.3.5.1 relationCrée:et:nom;**
+
+		Ce prédicat est utilisé dans une règle.
+
+		Il établit une nouvelle relation entre deux objets et donne un nom à cette relation.
+		
+		**2.3.5.2 relation:rep:**
+	  	
+		Ce prédicat retourne une liste des ensembles d''une relation.
+
+		**point A
+ 		relation:rep: isométrique ?res**
+[[[fig presenter expertDisplayTutor:''Expert et géométrie'' string:''
+point A
+relation:rep: isométrique ?res'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+exp verifieCondition''
+point A
+relation:rep: isométrique ?res''
+
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''point A
+relation:rep: isométrique ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+Avec un seul cercle, il n''y a qu''un sous ensemble, tous les couples se retrouvent ensembles,
+
+
+[[[
+fig échelle: 15.
+exp:= fig expert.
+exp chargeRegles:''angles''.
+exp chargeRegles:''figuresNonRectilignes''.
+a := fig point: 2@6. a nommer:''A''.
+o := fig point: -3@0 .
+o nommer:''O1''.
+o2 := fig point: 7@3.5 .o2 nommer:''O2''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''cer1''.cer couleur: Color red.
+cer2 := fig cercleCentre: o2 passantPar:  a.	
+cer2 nommer: ''cer2''.cer2 couleur: Color green.
+p1 := fig pointSurLigne: cer2   à: 0.9.
+p1 nommer:''P1''.p1 couleur: Color green.
+p2 := fig pointSurLigne: cer2   à: 0.2.
+p2 nommer:''P2''.p2 couleur: Color green.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''Sud''.
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure de deux cercles et les modèles de questions.
+
+point A
+relation:rep: isométrique ?res
+[[[fig presenter expertDisplayTutor:''Expert et géométrie'' string:''
+point A
+relation:rep: isométrique ?res'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+Les couples d''un cercle sont dans le même ensemble.
+
+[[[fig := DrGeoFigure nouveau.		
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert''  string: ''
+
+fig échelle: 15.
+exp:= fig expert.
+exp chargeRegles:''''figuresNonRectilignes''''.
+a := fig point: 2@6. a nommer:''''A''''.
+o := fig point: -3@0 .
+o nommer:''''O1''''.
+o2 := fig point: 7@3.5 .o2 nommer:''''O2''''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''''cer1''''.cer couleur: Color red.
+cer2 := fig cercleCentre: o2 passantPar:  a.	
+cer2 nommer: ''''cer2''''.cer2 couleur: Color green.
+p1 := fig pointSurLigne: cer2   à: 0.9.
+p1 nommer:''''P1''''.p1 couleur: Color green.
+p2 := fig pointSurLigne: cer2   à: 0.2.
+p2 nommer:''''P2''''.p2 couleur: Color green.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''''Est''''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''''Nord''''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''''Ouest''''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''''Sud''''.
+exp initFaits.
+exp lisFigureDrgeo.
+exp deduis.
+exp modèlesQuestions.
+'']]] doItWithButton: copier le script de la figure avec  deux cercles pour l''''exécuter.
+
+
+point A
+relation:rep: isométrique ?res
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point A
+relation:rep: isométrique ?res
+'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+
+exp verifieCondition''
+point A
+relation:rep: isométrique ?res''
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''point A
+relation:rep: isométrique ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_22RapportCirconférenceRayon
+^(EruditeBookSection basicNew title: '2.2 Rapport circonférence / rayon'; document: ((EruditeDocument contents: '** 2.2 Rapport entre circonférence et rayon**
+
+	**2.2.1 Démonstration**
+[[[
+fig := DrGeoFigure nouveau. 
+exp:= fig expert.
+exp drgeo: fig.
+ExpertRegle EuclideMinimum: exp .
+fig texte:''Déplace le point P pour changer 
+le rayon et observe les valeurs.'' à:-7@6.  
+o := fig point: 0@0 .o nommer:''O''.
+p := fig point: 0@3.p nommer:''A''.
+p couleur: Color green.
+cer := fig cercleCentre:  o passantPar: p. 
+s := fig segmentDe:o  à: p.
+mseg := fig longueurDe: s. 
+mcer  :=  fig longueurDe: cer. 
+fig texte: ''rapport = (circonférence / segment ) ''  à:  -7@-4.
+mcer déplacerA: -7@ -5. mcer nommer:''rapport''.
+mseg déplacerA: -05@ -5.  
+fig texte:'' /'' à: -1@ -5.
+vseg  :=   ((fig longueurDe: s) mathItem ) valueItem . 
+vcer :=  (( fig longueurDe: cer )mathItem ) valueItem .
+res :=vcer / vseg. 6.283185307179586 .
+quot :=fig value: res.
+quot nommer:'' ''  .
+quot déplacerA: 0.8@ -5.  
+fig texte: '' = π'' à: 4.5@ -5. 
+exp deduis.]]] doItWithButton:Charger la démonstration du rapport constant .
+
+	Le rapport entre circonférence et rayon est constant mais ce n''est pas un rationel  ( une fraction )  car après la virgule les décimales sont toujours différentes, il n''y a pas de période.
+
+	Comme  le nombre de décimales est infini, on ne peut avoir une valeur exacte, c''est un nombre appelé **transcendant** représenté par la lettre greque π (pi).
+
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_23CercleIsométrie
+^(EruditeBookSection basicNew title: '2.3 Cercle Isométrie'; document: ((EruditeDocument contents: '!!!!2.2 Cercle Isométrie
+
+!!!!Cercle Isométrie
+	**2.2.1 Isométrie des rayons**
+
+	La définition du cercle est que la **distance d''un point de la circonférence au centre du cercles** est la même pour tous les points de la circonférence.
+	
+	La mesure d''un rayon est la distance entre le centre et un point de la circonférence.
+
+ 	Deux objets sont **isométriques** s''ils ont **même mesure**, donc les **rayons** d''un cercle sont isométriques. 
+
+	Un segment relie deux points, un rayon peut être représenté par le **segment** qui relie **le centre** à l**a ciconférence**, mais ces  deux points suffisent à représenter le rayon,  une liste de deux points est un **couple**
+
+	Pour le rayon,  le **centre** est **le premier élémement** de la liste, le point sur la circonférence est le **dernier élément** de la liste.
+
+	Le couple des **extrémités d''un segment** est ordonné,les éléments sont **dans l''ordre alphabétique du nom des points qui en sont les extrémités**.
+
+	Le **couple** qui représente un **rayon** peut être différent de celui qui représente un **segment**..
+ 
+
+	**2.2.2 La figure.**
+	
+[[[ fig := DrGeoFigure nouveau.
+exp:= fig expert.
+exp initRegles.
+exp chargeRegles:''EuclideMinimum''.
+a := fig point: 2@5. a nommer:''A''.
+o := fig point: 0@0 .
+o nommer:''O1''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer:''Cercle''.
+seg := fig segmentDe: o à: a.
+seg nommer: ''sO1A''.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: '' Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: '' Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: '' Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: '' Sud''.
+dest := fig distanceDe: o à: est.
+dnord := fig distanceDe: o à: nord.
+douest:= fig distanceDe: o à: ouest.
+dsud := fig distanceDe: o à: sud.
+dest  déplacerA:(-7@10.5).
+dnord  déplacerA:(-7@9.5).
+douest  déplacerA:(-7@8.5).
+dsud  déplacerA:(- 7@7.5).
+fig actualiser.
+exp initFaits.
+
+exp lisFigureDrgeo.
+exp deduis.
+exp modèlesQuestions.
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+
+[[[fig := DrGeoFigure nouveau.
+fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''.
+exp:= fig expert.
+exp initRegles.
+exp chargeRegles:''''EuclideMinimum''''.
+a := fig point: 2@5. a nommer:''''A''''.
+o := fig point: 0@0 .
+o nommer:''''O1''''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer:''''Cercle''''.
+seg := fig segmentDe: o à: a.
+seg nommer: ''''sO1A''''.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: '''' Est''''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: '''' Nord''''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: '''' Ouest''''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: '''' Sud''''.
+dest := fig distanceDe: o à: est.
+dnord := fig distanceDe: o à: nord.
+douest:= fig distanceDe: o à: ouest.
+dsud := fig distanceDe: o à: sud.
+dest  déplacerA:(-7@10.5).
+dnord  déplacerA:(-7@9.5).
+douest  déplacerA:(-7@8.5).
+dsud  déplacerA:(- 7@7.5).
+fig actualiser.
+exp initFaits.
+
+exp lisFigureDrgeo.
+exp deduis.
+exp modèlesQuestions.
+'']]] doItWithButton: copier le script de la figure  l''''exécuter.
+
+
+	**relationCréée  ?x1 ?x2 ?x3**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''relationCréée  ?x1 ?x2 ?x3'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+	**exp verifieCondition''relationCréée  ?x1 ?x2 ?x3''**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''relationCréée  ?x1 ?x2 ?x3''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+
+	**2.3.3 Représentation de la relation  isométrique**.
+
+	La relation **isométrique** est une relation d''équivalence, 
+
+	0n peut représenter la relation explicitement en décrivant toutes les relation entre deux objets,
+
+	Dans notre exemple on a les points: **Est Nord Ouest Sud** qui définisseni un **rayon** avec le **centre C: [ C Est ] [ C Nord ]  [ C Ouest ]  [ C Sud ].**
+
+	Ces rayons ont **même mesure**, ils sont **isométriques.**
+
+	**2.3.3 Relation Isométrique**
+
+
+ 		**2.3.3,1 Transitivitè**
+
+		si a **relation** b et b **relation** c alors a **relation c** . 
+
+		Celà revient à dire que, par **transitivité**, l''un des  couple est en relation avec tous les autres, ce qui peut se résumer par:
+   
+		[ C Est ]		 	 isométriique  à 	 			[ C Nord ] 			[ C Ouest ] 			[ C Sud ]
+		[ C Nord ] 		  	 isométriique  à				[ C Ouest ]			[ C Sud ]    			[ C Est ] 
+		[ C Ouest ]		 	 isométriique  à				[ C Sud ]		 	[ C Est ] 			[ C Nord ]
+		[ C Sud ]			 isométriique  à				[ C Est ] 			[ C Nord ]  			[ C Ouest ]
+
+		Chaque ligne représente 3 relations, il y a 4 lignes donc le total est 12 relations.
+
+		**2.3.3.2 Commutativité. **
+ 
+		Si a **relation** b alors b **relation** a.
+
+		[ C Nord ] 			[ C Ouest ] 			[ C Sud ]			 isométriique  à				[ C Est ]							
+		[ C Ouest ]			[ C Sud ]    			[ C Est ]			 isométriique  à				[ C Nord ] 
+		[ C Sud ]		 	[ C Est ] 			[ C Nord ]			 isométriique  à				[ C Ouest ]		  
+		[ C Est ] 			[ C Nord ]  			[ C Ouest ]			 isométriique  à				[ C Sud ]			
+
+		Chaque ligne représente 3 relations, il y a 4 lignes donc le total est 12 autres relations.				
+
+		**2.3.3.3 Réflexivité**
+
+		Chaque couple est en relation avec lui-même, a **relation** a.
+
+ 		4  ojbets donc 4 relations.
+
+		**2.3.	3.4 Nombre de relations**	
+
+		Total de toutes les relations  12 + 12 + 4 = 28 relations
+		
+	**2.3.4 Représentation d''une relation par un ensenble.**
+	
+	Avec plus de points, le nombre de couples entre 2 points augmente rapidement.
+	Avec 4 points on avait  2 (4 x 3) + 4 =28
+	Avec 5 points on a 2 x ( 5 x 4 x 3) + 5  = 120 + 5
+	Avec 6 points on a 2 x (6 x 5 x 4 x 3) + 5  = 720 +6
+	...
+
+	Comme tous ies couples de points sont en relation avec tous les autres, on peut mettre dans un même ensemble tous les couples d''une relation.
+
+	Pour savoir si deux couples sont en relation, il suffit de vérifier s''ils appartiennent au même ensemble.
+
+	L''ensemble des objets en relation entre eux est une représentation de la relation plus simple que d''énumérer tous les couples en relation, 
+
+	C''est cette représentstion qu''utilise le système expert.
+
+	**2.3.5 Prédicats pour traiter les relations avec le système expert.**
+
+       		**2.3.5.1 relationCrée:et:nom;**
+
+		Ce prédicat est utilisé dans une règle.
+
+		Il établit une nouvelle relation entre deux objets et donne un nom à cette relation.
+		
+		**2.3.5.2 relation:rep:**
+	  	
+		Ce prédicat retourne une liste des ensembles d''une relation.
+
+		**point A
+ 		relation:rep: isométrique ?res**
+[[[fig presenter expertDisplayTutor:''Expert et géométrie'' string:''
+point A
+relation:rep: isométrique ?res'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+		**exp verifieCondition''
+		point A
+		relation:rep: isométrique ?res''**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''point A
+relation:rep: isométrique ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+Avec un seul cercle, il n''y a qu''un sous ensemble, tous les couples se retrouvent ensembles,
+Les couples d''un cercle sont dans le même ensemble.
+
+[[[
+fig :=DrGeoFigure nouveau.
+fig échelle: 15.
+exp:= fig expert.
+exp chargeRegles:''EuclideMinimum''.
+exp chargeRegles:''figuresNonRectilignes''.
+a := fig point: 2@6. a nommer:''A''.
+o := fig point: -3@0 .
+o nommer:''O1''.
+o2 := fig point: 7@3.5 .o2 nommer:''O2''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''cer1''.cer couleur: Color red.
+cer2 := fig cercleCentre: o2 passantPar:  a.	
+cer2 nommer: ''cer2''.cer2 couleur: Color green.
+p1 := fig pointSurLigne: cer2   à: 0.9.
+p1 nommer:''P1''.p1 couleur: Color green.
+p2 := fig pointSurLigne: cer2   à: 0.2.
+p2 nommer:''P2''.p2 couleur: Color green.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''cer1''..
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''Sud''.
+
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure de deux cercles et les modèles de questions.
+
+
+[[[fig échelle: 15.
+exp:= fig expert.
+exp chargeRegles:''''EuclideMinimum''''.
+a := fig point: 2@6. a nommer:''''A''''.
+o := fig point: -3@0 .
+o nommer:''''O1''''.
+o2 := fig point: 7@3.5 .o2 nommer:''''O2''''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''''cer1''''.cer couleur: Color red.
+cer2 := fig cercleCentre: o2 passantPar:  a.	
+cer2 nommer: ''''cer2''''.cer2 couleur: Color green.
+p1 := fig pointSurLigne: cer2   à: 0.9.
+p1 nommer:''''P1''''.p1 couleur: Color green.
+p2 := fig pointSurLigne: cer2   à: 0.2.
+p2 nommer:''''P2''''.p2 couleur: Color green.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''''Est''''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''''Nord''''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''''Ouest''''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''''Sud''''.
+exp initFaits.
+exp lisFigureDrgeo.
+exp deduis.
+exp modèlesQuestions.
+'']]] doItWithButton: copier le script de la figure avec deux cercles pour l''''exécuter.
+
+
+	**point A
+	relation:rep: isométrique ?res**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point A
+relation:rep: isométrique ?res
+'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+	**exp verifieCondition''
+	point A
+	relation:rep: isométrique ?res''**
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition:''''point A
+relation:rep: isométrique ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+Il y a deux ensembles l''un avec les rayons du cercle vert l''autre avec les rayons du cercle rouge.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/9/2025 19:32:21'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_23RapportCirconférenceRayon
+^(EruditeBookSection basicNew title: '2.3 Rapport circonférence / rayon'; document: ((EruditeDocument contents: '** 2.2 Rapport entre circonférence et rayon**
+
+	**2.2.1 Démonstration**
+[[[
+fig := DrGeoFigure nouveau. 
+exp:= fig expert.
+exp drgeo: fig.
+ExpertRegle EuclideMinimum: exp .
+fig texte:''Déplace le point P pour changer 
+le rayon et observe les valeurs.'' à:-7@8.  
+o := fig point: 0@-2 .o nommer:''O''.
+p := fig point: 0@0.p nommer:''A''.
+p couleur: Color green.
+cer := fig cercleCentre:  o passantPar: p. 
+s := fig segmentDe:o  à: p.
+mseg := fig longueurDe: s. 
+mcer  :=  fig longueurDe: cer. 
+fig texte: ''rapport = (circonférence / segment ) ''  à:  -7@6.
+mcer déplacerA: -7@5.
+mcer nommer:''rapport''.
+mseg déplacerA: -0.5@5.  
+fig texte:''/'' à: -1@5.
+vseg  :=   ((fig longueurDe: s) mathItem ) valueItem . 
+vcer :=  (( fig longueurDe: cer )mathItem ) valueItem .
+res :=vcer / vseg. 6.283185307179586 .
+quot :=fig value: res.
+quot nommer:'' ''.
+ quot déplacerA: 1.3@5.  
+fig texte: ''= π'' à: 4.5@5. 
+exp deduis.]]] doItWithButton:Charger la démonstration du rapport constant .
+
+	Le rapport entre circonférence et rayon est constant mais ce n''est pas un rationel  ( une fraction )  car après la virgule les décimales sont toujours différentes, il n''y a pas de période.
+
+	Comme  le nombre de décimales est infini, on ne peut avoir une valeur exacte, c''est un nombre appelé **transcendant** représenté par la lettre greque π (pi).
+
+	**2.2.2 abscisses curvilignes **
+
+	Les abscisses curvilignes sont des fractions de la circonférence.
+
+	L''abscisse de Nord , 0.25 est à 1/4 de circonférence.   ( 2 π r ) 1/4 soit ( π . 1/4 ) . 2 r.
+
+	L''abscisse de Ouest , 0.5  est à 1/2 de circonférence.  ( 2 π r ) 1/2 soit ( π . 1/2 ) . 2 r.
+
+	L''abscisse de Sud ,    0.75 est à 3/4 de circonférence. ( 2 π r ) 3/4  soit ( π. 3 /2) . 2 r.
+
+	L''abscisse de Est ,     1     termine la circonférence.  	  	 ( 2 π r ) 1     soit ( π. 1)  .    2 r.
+
+	Si on prend π comme unité de mesure on peut diviser tous ces résultats par π, on élimine ainsi  π . 
+	
+	On n''a alors que des fractions donc des nombres rationels. 
+
+	Tu retrouvera ça plus tard avec la mesure des angles.
+
+	**2.2.3 Couples**
+
+	Souvent une paire de points joue un rôle particulier.
+
+	Pour le système expert on définit un couple par une **liste de deux points**. //[ p1 p3 ]//.
+
+	**2.2.4 Rayon du cercle.**
+
+	Le rayon du cercle est un **couple de points** dont le premier point est le **centre du cercle** et le second **un point sur la circonférence.**
+
+**2.2.5 Segment**
+
+	On peut relier le centre du cercle à un point de la circonférence par un segment.	
+
+	Le couple des extrémités d''un **segment** est ordonné, dans l''ordre alphabétique des noms des  points.
+
+	Le couple d''un **rayon** va toujours du centre vers la circonférence.
+
+	Il faut mettre en ordre alphabétique les points du rayon pour avoir les points du couple associé au segment. dans l''ordre.
+	') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_2Cercles_24CercleAbscisse
+^(EruditeBookSection basicNew title: '2.4 Cercle. abscisse.'; document: ((EruditeDocument contents: '!!!!2.1 Cercle rayon
+
+	**Rayon représeté par une liste de deux points**.
+
+	[[[ fig := DrGeoFigure nouveau.
+exp:= fig expert.
+exp chargeRegles:''EuclideMinimum''.
+a := fig point: 2@5. a nommer:''A''.
+o := fig point: 0@0 .
+o nommer:''O1''.
+seg:=fig segmentDe: o à: a.
+seg nommer:''O1A''.
+cer := fig cercleCentre: o passantPar:  a.	
+cer nommer: ''cecle''.
+est := fig pointSurLigne: cer   à: 0.0.
+est nommer: ''Est''.
+nord := fig pointSurLigne: cer   à: 0.25.
+nord nommer: ''Nord''.
+ouest := fig pointSurLigne: cer   à: 0.5.
+ouest nommer: ''Ouest''.
+sud := fig pointSurLigne: cer   à: 0.75.
+sud nommer: ''Sud''.
+exp initFaits.
+exp lisFigureDrgeo.
+exp deduis.
+fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+
+
+	Le premier élément de la liste est le centre du cercle.
+	
+	Le dernier élément de la liste est un point sur la circonférence.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles
+^(EruditeBookSection basicNew title: '3 Angles '; document: ((EruditeDocument contents: '1.3 Angles
+
+Euclide : Définition 8, «  angle plan est l''inclinaison mutuelle de deux lignes qui se touchent dans un plan, et  qui ne sont pas placées dans la même direction. ».
+
+Euclide : Définition 9, « Lorsque des lignes qui comprennent un angle sont des droites, l''angle se nomme rectiligne ».
+
+Aide-mémoire  p.101 : « Un angle est une portion du plan limitée par deux demi-droites de même origine. L''origine est appelée sommet de l''angle et les demi-droites sont les côtés.
+
+Aide-mémoire  p.  90 : « Une demi-droite est une portion de droite limitée par un point. Ce point est appelé l’origine de la demi-droite.. ».') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_3Angles_31AngleEntreDemidroite;
+        add: self section_Expert_GéométrieEtSystèmeExpert_3Angles_32AngleEntreDroites;
+        add: self section_Expert_GéométrieEtSystèmeExpert_3Angles_33AngleEntreParallèles;
+        add: self section_Expert_GéométrieEtSystèmeExpert_3Angles_34AngleObtuAigudroit;
+ yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles_31AngleEntreDemidroite
+^(EruditeBookSection basicNew title: '3.1 Angle entre demi-droite'; document: ((EruditeDocument contents: '!!!!!!3.1 Angle entre demi-droite
+
+	**3.1.1 Angle nul, plat, saillant ou entrant.**
+
+	Un angle avec les demi-droites confondues est dit **angle nul** (0 degrés).
+
+	Un angle avec les demi-droites opposées est dit **angle plat** (180 degrés).
+
+	Un angle entre l''''angle nul et l''''angle plat ( angle entre 0 et 180 degrés) est dit **angle saillant**.
+
+	Un angle plus grand que l''''angle plat ( plus grand que 180 degrés)  est  dit **angle entrant**.
+
+	**3.1.2 Démonstration Angle Saillant ou Rentrant,**
+
+[[[ 
+
+fig := DrGeoFigure nouveau.
+exp  := fig expert.
+exp   drgeo:fig.
+exp   chargeRegles:''Euclide:''.
+a := fig point: 0@0.a nommer: ''A''.a couleur: Color green.
+s := fig  point:  -3@0.s nommer: ''S''.
+cer:= fig cercleCentre: s rayon: 3.
+cer cacher.
+b  :=fig pointSurLigne: cer à: 0.3755.b nommer: ''B''.b couleur: Color green.
+b couleur: Color green.
+dd1 := fig demiDroiteOrigine: s passantPar:  a.
+dd1 nommer: ''dd1''.
+c := fig pointSurLigne: dd1 à: 0.9.c nommer: ''C''.
+dd2 := fig demiDroiteOrigine: s passantPar:  b.
+dd2 nommer: ''dd2''.
+d := fig pointSurLigne: dd2 à: 0.9.
+d nommer: ''D''.
+d cacher.
+fig segmentDe: s à: d.
+fig angleSommet: s de:  a à: b.
+a1:=fig arcCenter: s  from: a to: b.
+a1 couleur: Color blue.
+a2:=fig arcCenter: s  from: b  to: a.
+a2 couleur: Color red.
+p := fig pointSurLigne: dd1 à: 0.9774.
+dr := fig demiDroiteOrigine: p  passantPar: b.dr nommer:''dr''.
+dr cacher.
+perp := fig perpendiculaireA: dd1 passantPar: s.   
+pd1 := fig pointSurLigne: perp à: 0.9678.
+pd2 := fig pointSurLigne: perp à: 0.0290..
+demiPerp1:=fig demiDroiteOrigine: s passantPar: pd1.
+demiPerp2:=fig demiDroiteOrigine: s passantPar: pd2.
+saillant := fig intersectionDe: demiPerp1 et: dr.
+entrant := fig intersectionDe: demiPerp2 et: dr.
+(saillant  morph mathItem )exist 
+ifTrue:[ saillant nommer:''angle saillant''.saillant couleur: Color blue.].
+entrant := fig intersectionDe: demiPerp2 et: dr.  
+b1:= b mathItem point.
+b déplacerA: -5.4 @-1.8. fig actualiser.
+(entrant  morph mathItem) exist
+ifTrue:[ entrant nommer:''angle entrant''.entrant couleur: Color blue.].
+b déplacerA: b1.
+fig actualiser.
+dd2 morph mathItem .
+demiPerp1 cacher.
+demiPerp2 cacher.
+perp cacher.
+pd1 cacher.
+pd2 cacher.
+dr cacher.
+fig centrerVueEn: s mathItem  point.
+fig texte: ''déplace le point B
+observe l''''angle bleu'' à: -8@7.7.
+]]] doItWithButton: Angle saillant ou entrant.
+
+	**3.1.3 La figure**
+
+[[[fig:= DrGeoFigure nouveau.
+fig expert: exp.
+fig échelle: 18.
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert'' style: true.
+exp   drgeo:f.
+exp  chargeRegles:''Euclide:''.
+a := fig point: 0@0.a nommer: ''A''.a couleur: Color green.
+b := fig point: 0@12.b nommer: ''B''.b couleur: Color green.
+s := fig point:  -9@4.s nommer: ''S''.
+dd1 := fig demiDroiteOrigine: s passantPar:  a.
+dd1 nommer: ''dd1''.
+c := fig pointSurLigne: dd1 à: 0.9.c nommer: ''C''.
+dd2 := fig demiDroiteOrigine: s passantPar:  b.
+dd2 nommer: ''dd2''.
+d := fig pointSurLigne: dd2 à: 0.9.d nommer: ''D''. 
+ang := fig angleSommet: s de: c à: d.   ang nommer:''                 <) ''. 
+fig  presenter expertDisplayModèles ]]] doItWithButton: Charger la figure et les modèles de questions.
+
+[[[fig := DrGeoFigure nouveau.
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+"1.3.1.1  Script de la Figure."
+fig échelle: 18.
+exp  :=fig expert.
+exp  drgeo:fig.
+exp  chargeRegles:''''Euclide:''''.
+a := fig point: 0@0.a nommer: ''''A''''.a couleur: Color green.
+b := fig point: 0@12.b nommer: ''''B''''.a couleur: Color green.
+s := fig point:  -9@4.s nommer: ''''S''''.
+dd1 := fig demiDroiteOrigine: s passantPbr:  a.
+dd1 nommer: ''''dd1''''.
+c := fig pointSurLigne: dd1 à: 0.9.c nommer: ''''C''''.
+dd2 := fig demiDroiteOrigine: s passantPar:  b.
+dd2 nommer: ''''dd2''''.
+d := fig pointSurLigne: dd2 à: 0.9.d nommer: ''''D''''.
+ang := fig angleSommet: s de: c à: d    . ang nommer: ''''         <)''''.exp  initFaits .
+exp  lisFigure.
+exp  deduis.
+exp  modèlesQuestions .
+''
+]]] doItWithButton:Charger le script de la figure.
+
+	**3,1.4 Angles équivalents**
+
+	Des angles avec le même sommets que l''angle de base et des extrémités sur les mêmes demi-droites avec les mêmes positions sont équivalents.
+
+	Une relation **équivalent** est créée entre l''angle de base et un angle.
+
+	**exp  verifieCondition: ''relationCréée ?x1 ?x2 ?x3''.**
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''
+exp  verifieCondition: ''''relationCréée ?x1 ?x2 ?x3''''.
+''
+]]] doItWithButton: copier le code.
+
+Remarque:
+Les angles qui sont équivalents à un angle de base font partie d''une relation d''équivalence. 
+
+	 **3.1.5 Représentation des relations d''équivalence.**
+
+	Les règles qui affirment des relations **équivalent** ont une conclusion **relation créée** pour garder la trace des relations créées.
+
+	Comme la relation **isométrique**,la relation**équivalent** a la propriété de partager l''ensemble des objets en ensembles d''objets équivalents, deux objets équivalents se retrouvent dans le même ensemble, 
+
+	Pour vérifier si deux objets sont équivalents, il suffit de vérifier si ils appartiennent au même ensemble, ce qui est rapide; on n''affirme que certains faits qui sont équivalents, mais la relation a aussi d''autres faits équivalents en raison des propriétés de **transitivité** et de **commutativité** de la relation d''équivalence. 
+
+	On peut comparer tous les éléments d''un ensemble à un élément choisi comme représentant de l''ensemble,
+
+	Pour les angles, le représentant est l''angle0.
+
+	Pour des fractions, le représentant est la fraction irréductible.
+
+	On peut voir l''ensemble des relations avec le prédicat **relation:rep:**
+
+	Dans cet exemple tous les angles sont équivalent et se retrouvent dans le même ensemble représenté par une liste.
+
+	**point A
+relation:rep: équivalent ?res**
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''
+	**point A
+relation:rep: équivalent ?res**''  style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+	**exp verifieCondition: ''
+point A
+relation:rep: équivalent ?res**''
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''
+exp verifieCondition: ''''point A
+relation:rep: équivalent ?res''''
+''
+]]] doItWithButton: copier le code.
+
+
+	On voit que tous les angles équivalents se trouvent dans le même sous ensemble.
+//Dans cet exemple il n''y a qu''un sous ensemble puisqu''''il n''''y qu''''un angle de base.//
+
+	**3,1,6 Remarques:**
+
+	Pour le sytème expert définir une relation d''équivalence est plus efficace que d''affimer tous les faits équivalents dans une conclusion. 
+
+	Pour vérifier une condition, il faut au moins une affirmation, c''est pour ça que l''affirmation vraie **point A**  est ajoutée au début de la condition à vérifier.
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles_32AngleEntreDroites
+^(EruditeBookSection basicNew title: '3.2 Angle entre droites'; document: ((EruditeDocument contents: '!!!!!!1.3.2. Angle entre droites
+
+"1.3.1.1  Script de la Figure."
+Patientez, le chargement de la figure prend du temps.
+
+[[[ fig:= DrGeoFigure new.
+fig presenter expertDisplayTutor:''
+ "1.3.1.1  Script de la Figure."
+exp := fig expert.
+exp chargeRegles:''''Euclide:''''.
+a := fig point:-8@8.a nommer: ''''A''''.a couleur: Color green.
+c := fig  point: 4@-5.c nommer: ''''C''''.
+b := fig  point: -8@-1.b nommer: ''''B''''. b couleur: Color green.
+d:= fig point: 7@7.d nommer: ''''D''''.
+dd1 := fig droitePassantPar: c et: a .
+dd1 nommer: ''''dd1''''.
+dd2 := fig  droitePassantPar: d et: b.
+dd2 nommer: ''''dd2''''.
+i:=fig intersectionDe: dd1 et: dd2.
+i nommer: ''''I''''.
+exp  initFaits .
+exp  lisFigure.
+exp  deduis.
+exp  modèlesQuestions .
+
+
+'']]] doItWithButton: copier code du script.
+
+Remarque:
+Les angles qui sont équivalents à un angle de base font partie d''''une relation d''''équivalence. 
+
+exp  verifieCondition: ''relationCréée ?x1 ?x2 ?x3''.
+[[[fig presenter expertDisplayTutor:''
+exp  verifieCondition: ''''relationCréée ?x1 ?x2 ?x3''''.
+''
+]]] doItWithButton: copier l''''exemple.
+
+
+Pour le sytème expert définir une relation d''équivalence est plus efficace que d''''affimer tous les faits équivalents séparément lorsqu''on vérifie la relation dans une règle.
+ 
+On n''affirme que certains faits sont équivalents mais la relation a aussi d''autres faits équivalents par exemple les angles  [ A S B ] et [ C S B ] sont aussi équivalents et il y a encore d''''autres relations, en fait on peut regrouper dans un ensemble tous les angles qui sont équivalents entre eux et il suffit de tester s''il sont dans le même ensemble pour savoir qu''ils sont équivalents.
+
+exp  verifieCondition: ''''point A
+relation:rep: équivalent ?res''''.
+[[[fig  presenter expertDisplayTutor:''exp verifieCondition: ''''point A
+relation:rep: équivalent ?res''''
+''
+]]] doItWithButton: copier l''''exemple.
+
+On voit que tous lea angles équivalents se trouvent dans le même ensemble.
+
+Remarque:
+il ne peut pas y avoir que des prédicats dans une condition, il faut au moins une affirmation à vérifier, c''''est pour ça que l''affirmation vraie **point A**  est au début de la condition à vérifier
+''') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/24/2025 02:10:21'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles_331AngleEntreDemidroite
+^(EruditeBookSection basicNew title: '3.3.1 Angle entre demi-droite'; document: ((EruditeDocument contents: '!!!!!!1.3.1 Angle entre demi-droite
+
+**Angle nul, plat, saillant ou entrant.**
+Un angle avec les demi-droites confondues est dit **angle nul** (0 degrés).
+
+Un angle avec les demi-droites opposées est dit **angle plat** (180 degrés).
+
+Un angle entre l''''angle nul et l''''angle plat ( angle entre 0 et 180 degrés) est dit **angle saillant**.
+
+Un angle plus grand que l''''angle plat ( plus grand que 180 degrés)  est  dit **angle entrant**.
+
+[[[ 
+
+fig := DrGeoFigure nouveau.
+exp  := fig expert.
+exp   drgeo:fig.
+exp   chargeRegles:''Euclide:''.
+a := fig point: 0@0.a nommer: ''A''.
+s := fig  point:  -3@0.s nommer: ''S''.
+cer:= fig cercleCentre: s rayon: 3.
+cer cacher.
+b  :=fig pointSurLigne: cer à: 0.3755.b nommer: ''B''.
+b couleur: Color green.
+dd1 := fig demiDroiteOrigine: s passantPar:  a.
+dd1 nommer: ''dd1''.
+c := fig pointSurLigne: dd1 à: 0.9.c nommer: ''C''.
+dd2 := fig demiDroiteOrigine: s passantPar:  b.
+dd2 nommer: ''dd2''.
+d := fig pointSurLigne: dd2 à: 0.9.
+d nommer: ''D''.
+d cacher.
+fig segmentDe: s à: d.
+fig angleSommet: s de:  a à: b.
+a1:=fig arcCenter: s  from: a to: b.
+a1 couleur: Color blue.
+a2:=fig arcCenter: s  from: b  to: a.
+a2 couleur: Color red.
+p := fig pointSurLigne: dd1 à: 0.9774.
+dr := fig demiDroiteOrigine: p  passantPar: b.dr nommer:''dr''.
+dr cacher.
+perp := fig perpendiculaireA: dd1 passantPar: s.   
+pd1 := fig pointSurLigne: perp à: 0.9678.
+pd2 := fig pointSurLigne: perp à: 0.0290..
+demiPerp1:=fig demiDroiteOrigine: s passantPar: pd1.
+demiPerp2:=fig demiDroiteOrigine: s passantPar: pd2.
+saillant := fig intersectionDe: demiPerp1 et: dr.
+entrant := fig intersectionDe: demiPerp2 et: dr.
+(saillant  morph mathItem )exist 
+ifTrue:[ saillant nommer:''angle saillant''.saillant couleur: Color blue.].
+entrant := fig intersectionDe: demiPerp2 et: dr.  
+b1:= b mathItem point.
+b déplacerA: -5.4 @-1.8. fig actualiser.
+(entrant  morph mathItem) exist
+ifTrue:[ entrant nommer:''angle entrant''.entrant couleur: Color blue.].
+b déplacerA: b1.
+fig actualiser.
+dd2 morph mathItem .
+demiPerp1 cacher.
+demiPerp2 cacher.
+perp cacher.
+pd1 cacher.
+pd2 cacher.
+dr cacher.
+fig centrerVueEn: s mathItem  point.
+fig texte: ''déplace le point B
+observe l''''angle bleu'' à: -8@7.7.
+]]] doItWithButton: Tester les angles.
+
+**Angles entre demi-droites.**
+
+[[[fig:= DrGeoFigure nouveau.
+fig expert: exp.
+fig échelle: 18.
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert'' style: true.
+exp   drgeo:f.
+exp  chargeRegles:''Euclide:''.
+a := fig point: 0@0.a nommer: ''A''.
+b := fig point: 0@12.b nommer: ''B''.
+s := fig point:  -9@4.s nommer: ''S''.
+dd1 := fig demiDroiteOrigine: s passantPar:  a.
+dd1 nommer: ''dd1''.
+c := fig pointSurLigne: dd1 à: 0.9.c nommer: ''C''.
+dd2 := fig demiDroiteOrigine: s passantPar:  b.
+dd2 nommer: ''dd2''.
+d := fig pointSurLigne: dd2 à: 0.9.d nommer: ''D''. 
+ang := fig angleSommet: s de: c à: d.   ang nommer:''                 <) ''. 
+fig presenter expertInspect]]] doItWithButton: Charger la figure et les modèles de questions.
+
+[[[fig := DrGeoFigure nouveau.
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+"1.3.1.1  Script de la Figure."
+fig échelle: 18.
+exp  :=fig expert.
+exp  drgeo:fig.
+exp  chargeRegles:''''Euclide:''''.
+a := fig point: 0@0.a nommer: ''''A''''.
+b := fig point: 0@12.b nommer: ''''B''''.
+s := fig point:  -9@4.s nommer: ''''S''''.
+dd1 := fig demiDroiteOrigine: s passantPar:  a.
+dd1 nommer: ''''dd1''''.
+c := fig pointSurLigne: dd1 à: 0.9.c nommer: ''''C''''.
+dd2 := fig demiDroiteOrigine: s passantPar:  b.
+dd2 nommer: ''''dd2''''.
+d := fig pointSurLigne: dd2 à: 0.9.d nommer: ''''D''''.
+ang := fig angleSommet: s de: c à: d    . ang nommer: ''''         <)''''.exp  initFaits .
+exp  lisFigure.
+exp  deduis.
+exp  modèlesQuestions .
+''
+]]] doItWithButton:Charger le script de la figure.
+
+**Angles équivalents**
+
+Des angles avec le même sommets que l''angle de base et des extrémités sur les mêmes demi-droites sont équivalents.
+Une relation est créée entre l''angle de base et un angle.
+
+
+
+exp  verifieCondition: ''relationCréée ?x1 ?x2 ?x3''.
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''
+exp  verifieCondition: ''''relationCréée ?x1 ?x2 ?x3''''.
+''
+]]] doItWithButton: copier le code.
+
+Remarque:
+Les angles qui sont équivalents à un angle de base font partie d''une relation d''équivalence. 
+
+ **Représentation des relations d''équivalence.**
+
+Les règles qui affirment des relations d''équivalence ont une conclusion **relation créée** pour garder la trace des relations créées.
+
+Une relation d''équivalence entre objets a la propriété de partager l''ensemble des objets en classes d''objets équivalents, deux objets équivalents se retrouvent dans la même classe, pour vérifier si deux objets sont équivalents, il suffit de vérifier si ils appartiennent à la même classe, ce qui est rapide; on n''affirme que certains faits qui sont équivalents, mais la relation a aussi d''autres faits équivalents en raison des propriétés de transitivité et de commutativité de la relation d''équivalence. 
+
+On peut comparer tous les éléments de la classe à un élément choisi comme représentant de la classe,
+
+Pour les angles, le représentant est l''angle0.
+Pour des fractions, le représentant est la fraction irréductible.
+
+On peut voir l''ensemble des relations avec le prédicat **relation:rep:**
+
+Dans cet exemple tous les angles sont équivalent et se retrouvent dans le même ensemble représenté par une liste.
+
+point A
+relation:rep: équivalent ?res
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''
+point A
+relation:rep: équivalent ?res''  style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+exp verifieCondition: ''
+point A
+relation:rep: équivalent ?res''
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string: ''
+exp verifieCondition: ''''point A
+relation:rep: équivalent ?res''''
+''
+]]] doItWithButton: copier le code.
+
+
+On voit que tous les angles équivalents se trouvent dans le même sous ensemble.
+//Dans cet exemple il n''y a qu''un sous ensemble puisqu''''il n''''y qu''''un angle de base.//
+
+**Remarques:**
+
+Pour le sytème expert définir une relation d''équivalence est plus efficace que d''affimer tous les faits équivalents dans une conclusion. 
+
+Pour vérifier une condition, il faut au moins une affirmation, c''est pour ça que l''affirmation vraie **point A**  est ajoutée au début de la condition à vérifier.
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/24/2025 02:10:21'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles_332AngleEntreDroites
+^(EruditeBookSection basicNew title: '3.3.2 Angle entre droites'; document: ((EruditeDocument contents: '!!!!!!1.3.2. Angle entre droites
+
+"1.3.1.1  Script de la Figure."
+Patientez, le chargement de la figure prend du temps.
+
+[[[ fig:= DrGeoFigure new.
+fig presenter expertDisplayTutor:''
+ "1.3.1.1  Script de la Figure."
+exp := fig expert.
+exp chargeRegles:''''Euclide:''''.
+a := fig point:-8@8.a nommer: ''''A''''.
+c := fig  point: 4@-5.c nommer: ''''C''''.
+b := fig  point: -8@-1.b nommer: ''''B''''.
+d:= fig point: 7@7.d nommer: ''''D''''.
+dd1 := fig droitePassantPar: c et: a .
+dd1 nommer: ''''dd1''''.
+dd2 := fig  droitePassantPar: d et: b.
+dd2 nommer: ''''dd2''''.
+i:=fig intersectionDe: dd1 et: dd2.
+i nommer: ''''I''''.
+exp  initFaits .
+exp  lisFigure.
+exp  deduis.
+exp  modèlesQuestions .
+
+
+'']]] doItWithButton: copier code du script.
+
+Remarque:
+Les angles qui sont équivalents à un angle de base font partie d''''une relation d''''équivalence. 
+
+exp  verifieCondition: ''relationCréée ?x1 ?x2 ?x3''.
+[[[fig presenter expertDisplayTutor:''
+exp  verifieCondition: ''''relationCréée ?x1 ?x2 ?x3''''.
+''
+]]] doItWithButton: copier l''''exemple.
+
+
+Pour le sytème expert définir une relation d''équivalence est plus efficace que d''''affimer tous les faits équivalents séparément lorsqu''on vérifie la relation dans une règle.
+ 
+On n''affirme que certains faits sont équivalents mais la relation a aussi d''autres faits équivalents par exemple les angles  [ A S B ] et [ C S B ] sont aussi équivalents et il y a encore d''''autres relations, en fait on peut regrouper dans un ensemble tous les angles qui sont équivalents entre eux et il suffit de tester s''il sont dans le même ensemble pour savoir qu''ils sont équivalents.
+
+exp  verifieCondition: ''''point A
+relation:rep: équivalent ?res''''.
+[[[fig  presenter expertDisplayTutor:''exp verifieCondition: ''''point A
+relation:rep: équivalent ?res''''
+''
+]]] doItWithButton: copier l''''exemple.
+
+On voit que tous lea angles équivalents se trouvent dans le même ensemble.
+
+Remarque:
+il ne peut pas y avoir que des prédicats dans une condition, il faut au moins une affirmation à vérifier, c''''est pour ça que l''affirmation vraie **point A**  est au début de la condition à vérifier
+''') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/24/2025 02:10:21'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles_333AngleEntreParallèles
+^(EruditeBookSection basicNew title: '3.3.3 Angle entre parallèles'; document: ((EruditeDocument contents: ' ''!!!!!! 1.3.3 Angle entre parallèles
+
+1.3.3.1  Script de la Figure.
+
+**Les déductions prennent du temps,Patientez.**
+
+[[[fig:=DrGeoFigure nouveau.
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert'' style: true.
+exp:=fig expert.
+exp initRegles.
+exp := fig expert.exp chargeRegles: ''Euclide''.
+fig afficherAxes .
+a := fig  point: -4.5@1.5.a nommer: ''A''.		
+b:= fig  point: 4.5@5.b nommer: ''B''.
+c:= fig  point: 0@-4.5.c nommer: ''C''.
+dr:=fig droitePassantPar: a et: b.dr nommer: ''dr''.
+par:= fig parallèleA: dr passantPar: c.par nommer: ''par''.
+d := fig  pointSurLigne: par à: 0.9484.d nommer: ''D''.
+pe:= fig  point: 4.5@-6.pe nommer: ''E''.
+pf:=fig point: -3@6.pf nommer: ''F''.
+trans := fig droitePassantPar: pe et: pf.trans nommer: ''trans''.
+i1:= fig intersectionDe: dr et: trans.i1 nommer: ''I1''.
+i2:= fig intersectionDe: par et: trans.i2 nommer: ''I2''. 
+fig presenter expertInspect]]] doItWithButton: Charger la figure et les modèles de questions.
+ 
+[[[fig :=DrGeoFigure nouveau.
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+"1.3.3.1  Script de la Figure."
+
+exp := fig expert.
+exp chargeRegles:''''Euclide:''''.
+a := fig point:-8@8.a nommer: ''''A''''.
+c := fig point: 4@-5.c nommer: ''''C''''.
+b := fig point: -8@-1.b nommer: ''''B''''.
+d:= fig point: 7@7.d nommer: ''''D''''.
+dd1 := fig droitePassantPar: c et: a .
+dd1 nommer: ''''dd1''''.
+dd2 := fig droitePassantPar: d et: b.
+dd2 nommer: ''''dd2''''.
+i:=fig  intersectionDe: dd1 et: dd2.
+i nommer: ''''I''''.
+exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+'']]] doItWithButton: Copier le code de la figure.
+
+**Angles non plats**
+
+angle0  ?x1 [ classement: nonPlat ].
+[[[
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:
+''angle0  ?x1 [ classement: nonPlat ].''
+
+]]] doItWithButton:Vérifier ce modèle.
+
+exp verifieCondition: ''angle0  ?x1 [ classement: nonPlat ]''.
+[[[
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+exp verifieCondition: ''''angle0  ?x1 [ classement: nonPlat ]''''.
+''
+]]] doItWithButton:copier le code pour l''exécuter.
+
+**Angles adjacents.**
+
+angle0  ?x1 [ adjacent:  ?x2 ] 
+[[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string:''
+angle0  ?x1 [ adjacent:  ?x2 ] 
+''  
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+e verifieCondition: ''angle0  ?x1 [ adjacent:  ?x2 ] ''
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert''  string:''
+e verifieCondition: ''''angle0  ?x1 [ adjacent:  ?x2 ] ''''.
+''
+]]] doItWithButton:copier le code pour l''exécuter.
+
+**Angles supplémentaires**
+
+angle0  ?x1 [ supplémentaire:  ?x2 ] 
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+angle0  ?x1 [ supplémentaire:  ?x2 ] 
+'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+ep xverifieCondition: ''angle0  ?x1 [ supplémentaire:  ?x2 ]''.
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+exp verifieCondition: ''''angle0  ?x1 [ supplémentaire:  ?x2 ] ]''''.
+''
+]]] doItWithButton:copier le code pour l''exécuter.
+
+**Angles opposés.**
+
+angle0  ?x1 [ opposé:  ?x2 ] 
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+angle0  ?x1 [ opposé:  ?x2 ] 
+''  style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+exp verifieCondition: ''angle0  ?x1 [ opposé:  ?x2 ] ''.
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+exp verifieCondition: ''''angle0  ?x1 [ opposé:  ?x2 ] ]''''.
+''
+]]] doItWithButton:copier le code pour l''exécuter.
+
+
+**Angles alterneInternes**
+angle0  ?x1 [ alterneinterne:  ?x2 ] 
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+angle0  ?x1 [ alterneInterne:  ?x2 ] 
+'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+e verifieCondition: ''angle0  ?x1 [ alterneInterne:  ?x2 ] ''.
+[[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''exp verifieCondition: ''''angle0  ?x1 [ alterneInterne:  ?x2 ]''''.''
+
+]]] doItWithButton:copier le code pour l''''exécuter.
+
+
+
+**Angles alterneExternes**
+ angle0  ?x1  [ alterneExterne:  ?x2 ]
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+angle0  ?x1  [ alterneExterne:  ?x2 ] 
+'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+e verifieCondition: ''angle0  ?x1 [ alterneExterne:  ?x2 ] ]''.
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+e verifieCondition: ''''angle0  ?x1 [ alterneExterne:  ?x2 ] ]''''.
+''
+]]] doItWithButton:copier le code pour l''''exécuter.
+
+'') ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/24/2025 02:10:21'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles_334AngleObtuAigudroit
+^(EruditeBookSection basicNew title: '3.3.4 Angle obtu, aigu,droit.'; document: ((EruditeDocument contents: '
+!!!!!!1.3.4 Angle obtu, aigu,droit,perpendiculaire.
+
+
+Euclide : Définition 11, « L''angle obtus est celui qui est plus grand qu''un droit. » 
+Euclide : Définition 12, « L''angle aigu est celui qui est plus petit qu''un droit »
+Euclide : Définition 10, « Lorsqu''une droite tombant sur une droite fait deux angles de suite égaux, chacun des angles égaux est droit, et la droite placée au-dessus est dite perpendiculaire à celle sur laquelle elle est placée.»
+
+Aide-mémoire p.103: « Un angle obtus est un angle dont la mesure est omprise entre 90° et 180°. »
+Aide-mémoire p.103: « Un angle aigu est un angle dont la mesure est comprise entre 0° et 90°. »
+
+Aide-mémoire p.103: « Un angle droit est un angle dont la mesure est 90°. »
+Aide-mémoire p.  93: « Deux droites perpendiculaires sont deux droites qui se coupent à angles droits .»
+
+**Remarque: **« La définition de Euclide pour l''angle droit est l''angle qui partage en deux angles égaux.
+Pour Euclide l''égalité de deux objets géométriques, se constate si on peut superposer exactement ces objets, éventuellement en en retournant un »
+
+
+**1.3.4.1  Démonstration.**
+
+[[[f :=DrGeoFigure  nouveau.
+
+" Angle obtu, aigu,droit,perpendiculaire."
+	f texte: ''Déplacer le point A'' à: -9.5@8.5 .
+	o:= f point: (-6@0). o nommer: ''O''.
+	f centrerVueEn: o.
+	f centrerVueEn: o.
+	o1:= f point: (-6.1@0). o1 nommer: ''O1''.o1 cacher.
+	o2:= f point: (-5.9@0). o2 nommer: ''O2''.o2 cacher.
+	seg := f segmentDe:-5.8@7 à: -6.1@7.
+	seg nommer:''''.seg cacher.
+	b:=f point: 0@0. b nommer: ''B''.
+	d1:=f droitePassantPar: o et: b.
+	perp:= f perpendiculaireA: d1 passantPar: o.
+	perp  pointillé.
+	a:=f point: -6@6. a nommer: ''A''.
+	d2:=f demiDroiteOrigine:  o passantPar:  a.	
+	perp1:= f perpendiculaireA: d1 passantPar: o1.
+	perp2:= f perpendiculaireA: d1 passantPar: o2.
+	perp  pointillé.
+	perp nommer:''perp''.
+	droit := f intersectionDe: d2 et: seg.
+	droit nommer:''droit''.
+	p1 :=f point: (-3 @6).
+	p2 :=f point: (-9 @6).
+	s1:=f segmentDe: p1 à: a.
+	s2:=f segmentDe: p2 à: a.
+	p1 cacher.
+	p2 cacher.
+	s1 cacher.
+	s2 cacher.
+	a déplacerA: -2 @5.
+		f actualiser.
+	aigu:= f intersectionDe:  perp2 et: s2.
+	aigu nommer: ''aigu''.
+	perp1 cacher.
+	perp2 cacher.
+	a déplacerA: -9  @5.
+	f actualiser.
+	obtu:= f intersectionDe:  perp1 et: s1.
+	obtu nommer: ''obtus''.
+	ang:=f angleGéométriqueSommet:  o de: b à: a.
+	ang nommer:''<)''.
+	mesureangle :=  ang  morph mathItem 	degreeAngle rounded
+	]]] doItWithButton: Charger la démonstration.
+ou
+[[[f presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string:''
+" Angle obtu, aigu,droit,perpendiculaire."
+	f :=DrGeoFigure  nouveau. 
+	f texte: ''''Déplacer le point A'''' à: -9.5@8.5 .
+	o:= f point: (-6@0). o nommer: ''''O''''.
+	f centrerVueEn: o.
+	f centrerVueEn: o.
+	o1:= f point: (-6.1@0). o1 nommer: ''''O1''''.o1 cacher.
+	o2:= f point: (-5.9@0). o2 nommer: ''''O2''''.o2 cacher.
+	seg := f segmentDe:-5.8@7 à: -6.1@7.
+	seg nommer:''''seg''''.seg cacher.
+	b:=f point: 0@0. b nommer: ''''B''''.
+	d1:=f droitePassantPar: o et: b.
+	perp:= f perpendiculaireA: d1 passantPar: o.
+	perp  pointillé.
+	a:=f point: -6@6. a nommer: ''''A''''.
+	d2:=f demiDroiteOrigine:  o passantPar:  a.	
+	perp1:= f perpendiculaireA: d1 passantPar: o1.
+	perp2:= f perpendiculaireA: d1 passantPar: o2.
+	perp  pointillé.
+	perp nommer:''''perp''''.
+	droit := f intersectionDe: d2 et: seg.
+	droit nommer:''''droit''''.
+	p1 :=f point: (-3 @6).
+	p2 :=f point: (-9 @6).
+	s1:=f segmentDe: p1 à: a.
+	s2:=f segmentDe: p2 à: a.
+	p1 cacher.
+	p2 cacher.
+	s1 cacher.
+	s2 cacher.
+	a déplacerA: -2 @5.
+		f actualiser.
+	aigu:= f intersectionDe:  perp2 et: s2.
+	aigu nommer: ''''aigu''''.
+	perp1 cacher.
+	perp2 cacher.
+	a déplacerA: -9  @5.
+	f actualiser.
+	obtu:= f intersectionDe:  perp1 et: s1.
+	obtu nommer: ''''obtus''''.
+	ang:=f angleGéométriqueSommet:  o de: b à: a.
+	ang nommer:''''<)''''.
+	mesureangle :=  ang  morph mathItem 	degreeAngle rounded.
+'']]] doItWithButton: Copier le code de la démonstration.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles_33AngleEntreParallèles
+^(EruditeBookSection basicNew title: '3.3 Angle entre parallèles'; document: ((EruditeDocument contents: ' ''!!!!!! 1.3.3 Angle entre parallèles
+
+1.3.3.1  Script de la Figure.
+
+**Les déductions prennent du temps,Patientez.**
+
+[[[fig:=DrGeoFigure nouveau.
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''Pour vérifier un modèle, utilise vérifier du menu Expert'' style: true.
+exp:=fig expert.
+exp initRegles.
+exp := fig expert.exp chargeRegles: ''Euclide''.
+fig afficherAxes .
+a := fig  point: -4.5@1.5.a nommer: ''A''.		
+b:= fig  point: 4.5@5.b nommer: ''B''.
+c:= fig  point: 0@-4.5.c nommer: ''C''.
+dr:=fig droitePassantPar: a et: b.dr nommer: ''dr''.
+par:= fig parallèleA: dr passantPar: c.par nommer: ''par''.
+d := fig  pointSurLigne: par à: 0.9484.d nommer: ''D''.
+pe:= fig  point: 4.5@-6.pe nommer: ''E''.
+pf:=fig point: -3@6.pf nommer: ''F''.
+trans := fig droitePassantPar: pe et: pf.trans nommer: ''trans''.
+i1:= fig intersectionDe: dr et: trans.i1 nommer: ''I1''.
+i2:= fig intersectionDe: par et: trans.i2 nommer: ''I2''. 
+fig presenter expertInspect]]] doItWithButton: Charger la figure et les modèles de questions.
+ 
+[[[fig :=DrGeoFigure nouveau.
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+"1.3.3.1  Script de la Figure."
+
+exp := fig expert.
+exp chargeRegles:''''Euclide:''''.
+a := fig point:-8@8.a nommer: ''''A''''.
+c := fig point: 4@-5.c nommer: ''''C''''.
+b := fig point: -8@-1.b nommer: ''''B''''.
+d:= fig point: 7@7.d nommer: ''''D''''.
+dd1 := fig droitePassantPar: c et: a .
+dd1 nommer: ''''dd1''''.
+dd2 := fig droitePassantPar: d et: b.
+dd2 nommer: ''''dd2''''.
+i:=fig  intersectionDe: dd1 et: dd2.
+i nommer: ''''I''''.
+exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+'']]] doItWithButton: Copier le code de la figure.
+
+**Angles non plats**
+
+angle0  ?x1 [ classement: nonPlat ].
+[[[
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:
+''angle0  ?x1 [ classement: nonPlat ].''
+
+]]] doItWithButton:Vérifier ce modèle.
+
+exp verifieCondition: ''angle0  ?x1 [ classement: nonPlat ]''.
+[[[
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+exp verifieCondition: ''''angle0  ?x1 [ classement: nonPlat ]''''.
+''
+]]] doItWithButton:copier le code pour l''exécuter.
+
+**Angles adjacents.**
+
+angle0  ?x1 [ adjacent:  ?x2 ] 
+[[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string:''
+angle0  ?x1 [ adjacent:  ?x2 ] 
+''  
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+e verifieCondition: ''angle0  ?x1 [ adjacent:  ?x2 ] ''
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert''  string:''
+e verifieCondition: ''''angle0  ?x1 [ adjacent:  ?x2 ] ''''.
+''
+]]] doItWithButton:copier le code pour l''exécuter.
+
+**Angles supplémentaires**
+
+angle0  ?x1 [ supplémentaire:  ?x2 ] 
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+angle0  ?x1 [ supplémentaire:  ?x2 ] 
+'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+ep xverifieCondition: ''angle0  ?x1 [ supplémentaire:  ?x2 ]''.
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+exp verifieCondition: ''''angle0  ?x1 [ supplémentaire:  ?x2 ] ]''''.
+''
+]]] doItWithButton:copier le code pour l''exécuter.
+
+**Angles opposés.**
+
+angle0  ?x1 [ opposé:  ?x2 ] 
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+angle0  ?x1 [ opposé:  ?x2 ] 
+''  style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+exp verifieCondition: ''angle0  ?x1 [ opposé:  ?x2 ] ''.
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+exp verifieCondition: ''''angle0  ?x1 [ opposé:  ?x2 ] ]''''.
+''
+]]] doItWithButton:copier le code pour l''exécuter.
+
+
+**Angles alterneInternes**
+angle0  ?x1 [ alterneinterne:  ?x2 ] 
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+angle0  ?x1 [ alterneInterne:  ?x2 ] 
+'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+e verifieCondition: ''angle0  ?x1 [ alterneInterne:  ?x2 ] ''.
+[[[fig presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string: ''exp verifieCondition: ''''angle0  ?x1 [ alterneInterne:  ?x2 ]''''.''
+
+]]] doItWithButton:copier le code pour l''''exécuter.
+
+
+
+**Angles alterneExternes**
+ angle0  ?x1  [ alterneExterne:  ?x2 ]
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+angle0  ?x1  [ alterneExterne:  ?x2 ] 
+'' style: true.
+]]] doItWithButton: vérifier ce modèle de question  par le menu Expert.
+
+e verifieCondition: ''angle0  ?x1 [ alterneExterne:  ?x2 ] ]''.
+[[[fig presenter expertDisplayTutor:''Géométrie  et Système Expert'' string:''
+e verifieCondition: ''''angle0  ?x1 [ alterneExterne:  ?x2 ] ]''''.
+''
+]]] doItWithButton:copier le code pour l''''exécuter.
+
+'') ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_GéométrieEtSystèmeExpert_3Angles_34AngleObtuAigudroit
+^(EruditeBookSection basicNew title: '3.4 Angle obtu, aigu,droit.'; document: ((EruditeDocument contents: '
+!!!!!!1.3.4 Angle obtu, aigu,droit,perpendiculaire.
+
+
+Euclide : Définition 11, « L''angle obtus est celui qui est plus grand qu''un droit. » 
+Euclide : Définition 12, « L''angle aigu est celui qui est plus petit qu''un droit »
+Euclide : Définition 10, « Lorsqu''une droite tombant sur une droite fait deux angles de suite égaux, chacun des angles égaux est droit, et la droite placée au-dessus est dite perpendiculaire à celle sur laquelle elle est placée.»
+
+Aide-mémoire p.103: « Un angle obtus est un angle dont la mesure est omprise entre 90° et 180°. »
+Aide-mémoire p.103: « Un angle aigu est un angle dont la mesure est comprise entre 0° et 90°. »
+
+Aide-mémoire p.103: « Un angle droit est un angle dont la mesure est 90°. »
+Aide-mémoire p.  93: « Deux droites perpendiculaires sont deux droites qui se coupent à angles droits .»
+
+**Remarque: **« La définition de Euclide pour l''angle droit est l''angle qui partage en deux angles égaux.
+Pour Euclide l''égalité de deux objets géométriques, se constate si on peut superposer exactement ces objets, éventuellement en en retournant un »
+
+
+**1.3.4.1  Démonstration.**
+
+[[[f :=DrGeoFigure  nouveau.
+
+" Angle obtu, aigu,droit,perpendiculaire."
+	f texte: ''Déplacer le point A'' à: -9.5@8.5 .
+	o:= f point: (-6@0). o nommer: ''O''.
+	f centrerVueEn: o.
+	f centrerVueEn: o.
+	o1:= f point: (-6.1@0). o1 nommer: ''O1''.o1 cacher.
+	o2:= f point: (-5.9@0). o2 nommer: ''O2''.o2 cacher.
+	seg := f segmentDe:-5.8@7 à: -6.1@7.
+	seg nommer:''''.seg cacher.
+	b:=f point: 0@0. b nommer: ''B''.
+	d1:=f droitePassantPar: o et: b.
+	perp:= f perpendiculaireA: d1 passantPar: o.
+	perp  pointillé.
+	a:=f point: -6@6. a nommer: ''A''.
+	d2:=f demiDroiteOrigine:  o passantPar:  a.	
+	perp1:= f perpendiculaireA: d1 passantPar: o1.
+	perp2:= f perpendiculaireA: d1 passantPar: o2.
+	perp  pointillé.
+	perp nommer:''perp''.
+	droit := f intersectionDe: d2 et: seg.
+	droit nommer:''droit''.
+	p1 :=f point: (-3 @6).
+	p2 :=f point: (-9 @6).
+	s1:=f segmentDe: p1 à: a.
+	s2:=f segmentDe: p2 à: a.
+	p1 cacher.
+	p2 cacher.
+	s1 cacher.
+	s2 cacher.
+	a déplacerA: -2 @5.
+		f actualiser.
+	aigu:= f intersectionDe:  perp2 et: s2.
+	aigu nommer: ''aigu''.
+	perp1 cacher.
+	perp2 cacher.
+	a déplacerA: -9  @5.
+	f actualiser.
+	obtu:= f intersectionDe:  perp1 et: s1.
+	obtu nommer: ''obtus''.
+	ang:=f angleGéométriqueSommet:  o de: b à: a.
+	ang nommer:''<)''.
+	mesureangle :=  ang  morph mathItem 	degreeAngle rounded
+	]]] doItWithButton: Charger la démonstration.
+ou
+[[[f presenter expertDisplayTutor: ''Géométrie  et Système Expert'' string:''
+" Angle obtu, aigu,droit,perpendiculaire."
+	f :=DrGeoFigure  nouveau. 
+	f texte: ''''Déplacer le point A'''' à: -9.5@8.5 .
+	o:= f point: (-6@0). o nommer: ''''O''''.
+	f centrerVueEn: o.
+	f centrerVueEn: o.
+	o1:= f point: (-6.1@0). o1 nommer: ''''O1''''.o1 cacher.
+	o2:= f point: (-5.9@0). o2 nommer: ''''O2''''.o2 cacher.
+	seg := f segmentDe:-5.8@7 à: -6.1@7.
+	seg nommer:''''seg''''.seg cacher.
+	b:=f point: 0@0. b nommer: ''''B''''.
+	d1:=f droitePassantPar: o et: b.
+	perp:= f perpendiculaireA: d1 passantPar: o.
+	perp  pointillé.
+	a:=f point: -6@6. a nommer: ''''A''''.
+	d2:=f demiDroiteOrigine:  o passantPar:  a.	
+	perp1:= f perpendiculaireA: d1 passantPar: o1.
+	perp2:= f perpendiculaireA: d1 passantPar: o2.
+	perp  pointillé.
+	perp nommer:''''perp''''.
+	droit := f intersectionDe: d2 et: seg.
+	droit nommer:''''droit''''.
+	p1 :=f point: (-3 @6).
+	p2 :=f point: (-9 @6).
+	s1:=f segmentDe: p1 à: a.
+	s2:=f segmentDe: p2 à: a.
+	p1 cacher.
+	p2 cacher.
+	s1 cacher.
+	s2 cacher.
+	a déplacerA: -2 @5.
+		f actualiser.
+	aigu:= f intersectionDe:  perp2 et: s2.
+	aigu nommer: ''''aigu''''.
+	perp1 cacher.
+	perp2 cacher.
+	a déplacerA: -9  @5.
+	f actualiser.
+	obtu:= f intersectionDe:  perp1 et: s1.
+	obtu nommer: ''''obtus''''.
+	ang:=f angleGéométriqueSommet:  o de: b à: a.
+	ang nommer:''''<)''''.
+	mesureangle :=  ang  morph mathItem 	degreeAngle rounded.
+'']]] doItWithButton: Copier le code de la démonstration.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/13/2025 04:13:52'!
 section_Expert_GéométrieEtSystèmeExpert_3Cercles
 ^(EruditeBookSection basicNew title: '3 Cercles.'; document: ((EruditeDocument contents: '!!!!!!3 Cercles
 
@@ -4557,12 +7067,45 @@ centre.
 Cette distance est le rayon du cercle. »') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_3Cercles_11Cercle;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/13/2025 04:13:52'!
 section_Expert_GéométrieEtSystèmeExpert_3Cercles_11Cercle
-^(EruditeBookSection basicNew title: '1.1 Cercle'; document: ((EruditeDocument contents: ' ''!!!!3.1 Cercle
-') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+^(EruditeBookSection basicNew title: '1.1 Cercle'; document: ((EruditeDocument contents: '!!!!!!Cercle selon centre et point
+//<cercle>// **cercleCentre:passantPar:** //c p//
+//c//, point ou coordonnées centre du cercle
+//p//, point ou coordonnées sur le cercle
+⇒ cercle défini par son centre et un point
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+[[[| fig a |
+fig _ DrGeoFigure nouveau.
+a _ fig point: 1@5.
+fig cercleCentre: a passantPar: 10@4]]] withDrGeoActions
+
+!!!!!!Cercle selon centre et rayon
+//<cercle>// **cercleCentre:rayon:** //c r//
+//c//, point ou coordonnées, centre du cercle
+//r//, objet ou valeur numérique, rayon du cercle
+⇒ cercle défini par son centre et son rayon
+
+[[[| fig a r |
+fig _ DrGeoFigure nouveau.
+a _ fig point: 1@5.
+r _ fig valeurLibre: 4.
+fig cercleCentre: a rayon: r.
+fig cercleCentre: 4@4 rayon: 5]]] withDrGeoActions
+
+!!!!!!Cercle selon centre et segment
+//<cercle>// **cercleCentre:segment:** //c s//
+//c//, point ou coordonnées, centre du cercle
+//r//, segment rayon du cercle
+⇒ cercle défini par son centre et de rayon la longueur du segment
+
+[[[| fig a s |
+fig _ DrGeoFigure nouveau.
+a _ fig point: 1@5.
+s _ fig segmentDe: 0@0 à: 3@0.
+fig cercleCentre: a segment: s]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Introduction
 ^(EruditeBookSection basicNew title: 'Introduction'; document: ((EruditeDocument contents: '!!!!!!Introduction.
 
@@ -4647,14 +7190,227 @@ Les termes correspondants sont comparés.
 	Si elle est instanciée, on compare les valeurs correspondantes qui doivent être 	les mêmes.
 	Si non l''unification échoue.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats
-^(EruditeBookSection basicNew title: 'Liste des prédicats'; document: ((EruditeDocument contents: '!!!!!!Liste des prédicats
+^(EruditeBookSection basicNew title: 'Liste des prédicats'; document: ((EruditeDocument contents: '!!!! 1.1.2 Distance entre points
 
-Les prédicats sont  des méthodes que tu peux appeler depuis le système expert.
+	**Rappels:**
 
-Le nom du  prédicat est formé du nom de la méthode suivi de ses sélecteurs puis des valeurs des paramètres.
-comme un fait vérifié ou non.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_ListeDesPrédicats_Actions;
+	Euclide : Définition 1, « **Le point est ce dont la partie est nulle **».
+	Euclide : Définition 2, «**Une ligne est une longueur sans largeur.** »
+	Euclide : Définition 3, «**Les extrémités d’une ligne sont des points.** »
+	Euclide : Définition 4, ** ligne droite est celle qui est également placée entre ses points.** » 
+
+	1.1.2.1 ** La figure.**
+[[[ fig presenter drawable  ifNil: [ fig := DrGeoFigure nouveau. exp := fig expert ].
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert point'' string: ''Pour vérifierun modèle, utilise vérifier du menu Expert'' style: true. 
+fig afficherAxes .
+a := fig point: 0@0.
+a nommer: ''A''.	
+b := fig point: 4@3.
+b nommer: ''B''.	
+dist :=fig  distanceDe:a à:b.
+dist déplacerA: 0@2.
+fig actualiser.
+fig échelle: 50..
+exp := fig expert.
+exp chargeRegles: ''Euclide''.
+exp chargeRegles: ''mesure''.
+exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+fig presenter expertInspect. ]]] doItWithButton: Charger la figure et les modèles de questions.
+
+[[[ fig presenter drawable  ifNil: [ fig := DrGeoFigure nouveau. exp := fig expert ].
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert point''  string: ''
+DrGeoFigure nouveau.
+fig afficherAxes .
+a := fig point: 0@0.
+a nommer: ''''A''''.	
+b := fig point: 4@3.
+b nommer: ''''B''''.	
+dist :=fig  distanceDe:a à:b.
+dist déplacerA: 0@2.
+fig actualiser.
+exp := fig expert.
+exp chargeRegles: ''''Euclide''''.
+exp chargeRegles: ''''mesure''''.
+.exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+"
+exp verifieCondition: ''''mesure  ?x1 ?x2''''.
+exp verifieCondition: ''''point ?x1''''. "
+'']]] doItWithButton: copier le script de la figure pour l''''exécuter.
+
+	**1.1.2.2 Mesure**
+
+		**Mesure de la distance.**
+
+       mesure ?x1 ?x2
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+ mesure ?x1 ?x2''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+	exp vérifieCondition:''mesure ?x1 ?x2''.
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''mesure ?x1 ?x2''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+		**Mesure avec la provenance.**
+ 
+      mesure ?x1 ?x2 ?x3  
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+ mesure ?x1 ?x2 ?x3''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+	exp vérifieCondition:''mesure ?x1 ?x2 ?x3''.
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''mesure ?x1 ?x2 ?x3''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+**Remarque:**
+	?x3 indique si la mesure provient d''une 		valeur donnée dans  la fgure ou provient de la conclusion d''une règle.
+
+		**Valeur produite par une règle.**
+
+[[[ fig presenter drawable  ifNil: [ fig := DrGeoFigure nouveau. exp := fig expert ].
+fig presenter expertDisplayTutor: ''Géométrie  et Système Expert point'' string: ''Pour vérifierun modèle, utilise vérifier du menu Expert'' style: true. 
+fig afficherAxes .
+a := fig point: 0@0.
+a nommer: ''A''.	
+b := fig point: 4@3.
+b nommer: ''B''.	
+fig échelle: 50..
+exp := fig expert.
+exp chargeRegles: ''Euclide''.
+exp chargeRegles: ''mesure''.
+exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+fig presenter expertInspect. ]]] doItWithButton: Charger la figure sans distance  et les modèles de questions.
+
+[[[ fig presenter drawable  ifNil: [ fig := DrGeoFigure nouveau. exp := fig expert ].
+fig presenter expertDisplayTutor:''Géométrie  et Système Expert point''  string: ''
+fig afficherAxes .
+a := fig point: 0@0.
+a nommer: ''''A''''.	
+b := fig point: 4@3.
+b nommer: ''''B''''.	
+exp := fig expert.
+exp chargeRegles: ''''Euclide''''.
+exp chargeRegles: ''''mesure''''.
+.exp initFaits .
+exp lisFigure.
+exp deduis.
+exp modèlesQuestions .
+"
+exp verifieCondition: ''''mesure  ?x1 ?x2''''.
+exp verifieCondition: ''''point ?x1''''. "
+'']]] doItWithButton: copier le script de la figure sans distance pour l''''exécuter.
+
+**Vérification.**
+
+La distance est calculée et placée dans la variable  ?res.
+
+		point  ?x1
+		point  ?x2
+		**distanceDe:à:rep: ?x1 ?x2 ?res**
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+		exp verifieCondition: ''point  ?x1
+		point  ?x2
+		**distanceDe:à:rep: ?x1 ?x2 ?res**
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+
+		On obtient 4 réponses parce  le système expert essaie toutes les combinaisons de deux points.
+		
+		A A   A B   B A   B B
+
+		Tu peux préciser la question en demandant **deux points différents**.
+
+		point  ?x1
+		point  ?x2
+		distanceDe:à:rep: ?x1 ?x2 ?res
+		**different:de: ?x1 ?x2**
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res
+different:de: ?x1 ?x2''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+		
+exp verifieCondition: ''point  ?x1
+		point  ?x2
+		distanceDe:à:rep: ?x1 ?x2 ?res
+		**different:de: ?x1 ?x2**'' 
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res
+different:de: ?x1 ?x29''''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+		Tu peux encore plus préciser la question en demandant **des points dans l''ordre alphabétique de leurs noms.**
+		
+				
+		point  ?x1
+		point  ?x2
+		distanceDe:à:rep: ?x1 ?x2 ?res
+		different:de: ?x1 ?x2
+		**ordonneMot:et:rep1:rep2:  ?x 1 ?x2 ?x1 ?x2**
+
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res
+different:de: ?x1 ?x2
+ordonneMot:et:rep1:rep2:  ?x1 ?x2 ?x1 ?x2 ''
+ style: true. ]]] doItWithButton: copier pour vérifier avec le menu Expert.
+
+		exp verifieCondition: ''
+		point  ?x1
+		point  ?x2
+		distanceDe:à:rep: ?x1 ?x2 ?res
+		different:de: ?x1 ?x2
+		**ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1  ?x2**''
+:
+[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
+exp verifieCondition: ''''point  ?x1
+point  ?x2
+distanceDe:à:rep: ?x1 ?x2 ?res
+different:de: ?x1 ?x2
+ordonneMot:et:rep1:rep2:  ?x 1 ?x2 ?x1 ?x2 ''
+'']]] doItWithButton:copier le code pour l''''exécuter.
+
+		**Remarque**
+		La valeur de la distance affichée dans la figure se modifie si tu déplaces les points.
+	
+		Le système expert évalue la situation quand il lit la figure, pour une situation changée, il faut une nouvelle lecture.
+
+
+
+') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_ListeDesPrédicats_Actions;
         add: self section_Expert_ListeDesPrédicats_Géométrie;
         add: self section_Expert_ListeDesPrédicats_Listes;
         add: self section_Expert_ListeDesPrédicats_Nombres;
@@ -4662,7 +7418,7 @@ comme un fait vérifié ou non.') data: ((Dictionary new)); yourself); subsectio
         add: self section_Expert_ListeDesPrédicats_Relations;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions
 ^(EruditeBookSection basicNew title: 'Actions'; document: ((EruditeDocument contents: '!!!!!!Action
 
@@ -4681,74 +7437,74 @@ Ce peut être par exemple une alerte mais aussi une construction sur la figure.'
         add: self section_Expert_ListeDesPrédicats_Actions_polyAjouteSommets;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_affiche
 ^(EruditeBookSection basicNew title: 'affiche:	'; document: ((EruditeDocument contents: '!!!!!!afficheTexte:a:
 
 Affiche à une position et nomme un texte dans la 	figure"
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_afficheTextea
 ^(EruditeBookSection basicNew title: 'afficheTexte:a:'; document: ((EruditeDocument contents: '!!!!!!afficheTexte:a:
 
 Affiche à une position et nomme un texte dans la 	figure"
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_afficheTextecontenua
 ^(EruditeBookSection basicNew title: 'afficheTexte:contenu:a:	'; document: ((EruditeDocument contents: '!!!!!!afficheTexte:contenu:a:	
 
 Affiche à une position et nomme un texte dans 	la figure.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_angleCentredeacou
 ^(EruditeBookSection basicNew title: 'angleCentre:de:a:cou'; document: ((EruditeDocument contents: '!!!!!!angleCentre:de:a:coul:
 
 angleCentre:de:a:coul:	
 Marque la valeur d''un angle en couleur') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_angleGeometriqueCentredeacoul
 ^(EruditeBookSection basicNew title: 'angleGeometriqueCentre:de:a:coul:  '; document: ((EruditeDocument contents: 'angleGeometriqueCentre:de:a:coul:  
 
 Marque la valleur d''un angle géométrique en couleur
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_couleurPointcouleur
 ^(EruditeBookSection basicNew title: 'couleurPoint:couleur:'; document: ((EruditeDocument contents: 'couleurPoint:couleur:
 
 Mets en couleur un point.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_créePointMilieuPointet
 ^(EruditeBookSection basicNew title: 'créePointMilieu:Point:et'; document: ((EruditeDocument contents: 'créePointMilieu:Point:et
 
 Crée le point au milieu d''une médiatrice.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_execute
 ^(EruditeBookSection basicNew title: 'execute:	'; document: ((EruditeDocument contents: 'execute:	
 
 Evalue une action.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_polyAjouteETNuméroteSommets
 ^(EruditeBookSection basicNew title: 'polyAjouteETNuméroteSommets:	'; document: ((EruditeDocument contents: '
 polyAjouteETNuméroteSommets:	
 
 Ajoute et numérote les sommets d''un objet polygone régulier.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Actions_polyAjouteSommets
 ^(EruditeBookSection basicNew title: 'polyAjouteSommets:	'; document: ((EruditeDocument contents: 'polyAjouteSommets:	
 
 Ajoute les sommets d''un polygone') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers
 ^(EruditeBookSection basicNew title: 'Divers'; document: ((EruditeDocument contents: 'Diverses actions.direction:rep:	
 
@@ -4782,7 +7538,7 @@ Le deuxième parent d''un segment ou d''une droite.
         add: self section_Expert_ListeDesPrédicats_Divers_égauxet;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_alignésavecetVérifieQueTroisPointsSontAlignés
 ^(EruditeBookSection basicNew title: 'alignés:avec:et:
 
@@ -4790,13 +7546,13 @@ Vérifie que trois points sont alignés.'; document: ((EruditeDocument contents:
 
 Vérifie que trois points sont alignés.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_compteFaitsrep
 ^(EruditeBookSection basicNew title: 'compteFaits:rep:	'; document: ((EruditeDocument contents: 'compteFaits:rep:	
 
 Compte le nombre de mêmes faits correspondant à un modèle de question pour un faits sous forme de liste.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_constructionsrep
 ^(EruditeBookSection basicNew title: 'constructions:rep:	'; document: ((EruditeDocument contents: 'constructions:rep:	
 
@@ -4808,34 +7564,34 @@ section_Expert_ListeDesPrédicats_Divers_contrairecontrairerep
 
 décrit le contraire d''''un mot') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_créeNomMinrep
 ^(EruditeBookSection basicNew title: 'créeNomMin:rep:	'; document: ((EruditeDocument contents: 'créeNomMin:rep:	
 
 Crée un nom pour une permutation minimum des éléments de la liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_créeNomUniquerep
 ^(EruditeBookSection basicNew title: 'créeNomUnique:rep:	'; document: ((EruditeDocument contents: 'créeNomUnique:rep:	
 
 Crée un nom suivi d''un numéro unique.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_créeNomrep
 ^(EruditeBookSection basicNew title: 'créeNom:rep:'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_differentde
 ^(EruditeBookSection basicNew title: 'different:de:	'; document: ((EruditeDocument contents: 'different:de:	
 
 Vérifie que deux objets sont différents.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_directionrep
 ^(EruditeBookSection basicNew title: 'direction:rep:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_distancearep
 ^(EruditeBookSection basicNew title: 'distance:a:rep:	
 '; document: ((EruditeDocument contents: 'distance:a:rep:	
@@ -4844,69 +7600,69 @@ La distance entre deux points.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_extrémitérep
 ^(EruditeBookSection basicNew title: 'extrémité:rep:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_égauxet
 ^(EruditeBookSection basicNew title: 'égaux:et:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_instanciedValue
 ^(EruditeBookSection basicNew title: 'instanciedValue:'; document: ((EruditeDocument contents: 'instanciedValue:
 Valeur attribuée à une variable, retourne faux si la 	variable n''a  pas reçu de valeur.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_maxrep
 ^(EruditeBookSection basicNew title: 'max:rep:	'; document: ((EruditeDocument contents: 'max:rep:	
 
 Le maximum d''une liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_minMotrep
 ^(EruditeBookSection basicNew title: 'minMot:rep:	'; document: ((EruditeDocument contents: 'minMot:rep:	
 
 Le plus  petit caractère d''un mot.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_minimumrep
 ^(EruditeBookSection basicNew title: 'minimum:rep:	'; document: ((EruditeDocument contents: 'minimum:rep:	
 
 Le plus  petit caractère d''un mot.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_motetetrep
 ^(EruditeBookSection basicNew title: 'mot:et:et:rep:	'; document: ((EruditeDocument contents: 'mot:et:et:rep:	
 
 Forme un mot à partir de trois mots.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_ordonneMotetrep
 ^(EruditeBookSection basicNew title: 'ordonneMot:et:rep:	'; document: ((EruditeDocument contents: 'ordonneMot:et:rep:	
 
 Forme un mot à partir de deuxmots, en les  mettant 	dans l''ordre alphabètique .
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_ordonneMotetrep1rep2
 ^(EruditeBookSection basicNew title: 'ordonneMot:et:rep1:rep2:'; document: ((EruditeDocument contents: 'ordonneMot:et:rep1:rep2:
 
 Place deux mots en ordre alphabétique.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_renommenom
 ^(EruditeBookSection basicNew title: 'renomme:nom:	'; document: ((EruditeDocument contents: 'renomme:nom:	
 
 Renomme un  objet.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_retablitFait
 ^(EruditeBookSection basicNew title: 'retablitFait:	'; document: ((EruditeDocument contents: 'retablitFait:	
 
@@ -4915,34 +7671,34 @@ section_Expert_ListeDesPrédicats_Divers_retablitFait
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_retireFait
 ^(EruditeBookSection basicNew title: 'retireFait:	'; document: ((EruditeDocument contents: 'retireFait:	
 
 Retire un fait, le fait est marqué retiré et plus vu 	parmis les faits.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_suivantrep
 ^(EruditeBookSection basicNew title: 'suivant:rep:'; document: ((EruditeDocument contents: 'suivant:rep:	
 Génère le nom suivant un nom unique.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_total
 ^(EruditeBookSection basicNew title: 'total:	'; document: ((EruditeDocument contents: 'total:	
 
 Remplace le dernier élément d''une liste de 	nombres par le total des précédents.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Divers_trierep
 ^(EruditeBookSection basicNew title: 'trie:rep:	'; document: ((EruditeDocument contents: 'trie:rep:	
 
 Trie les lettres d''un mot.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie
 ^(EruditeBookSection basicNew title: 'Géométrie'; document: ((EruditeDocument contents: 'Des prédicats pour traiter les objets géométriques,') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_ListeDesPrédicats_Géométrie_abcisseDesurrep;
         add: self section_Expert_ListeDesPrédicats_Géométrie_aireTriangleavecavecrep;
@@ -4970,111 +7726,111 @@ section_Expert_ListeDesPrédicats_Géométrie
         add: self section_Expert_ListeDesPrédicats_Géométrie_vecteurrep;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_abcisseDesurrep
 ^(EruditeBookSection basicNew title: '-abcisseDe:sur:rep:'; document: ((EruditeDocument contents: '!!!!!! -abcisseDe:sur:rep:
 "Abcisse d''un point sur une droite"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTriangleNegativeavecavec
 ^(EruditeBookSection basicNew title: '-aireTriangleNegative:avec:avec:'; document: ((EruditeDocument contents: 'reTriangleNegative: p1 avec: p2 avec: p3 vars: lvar
 	"Aire calculée à partir des coordonnées de 3 points,double de l''aire du triangle formé par les 3 points,
 es négative, le triangle est orienté à droite, sens trigonométrique inverse"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTriangleNegativeavecavecrep
 ^(EruditeBookSection basicNew title: '-aireTriangleNegative:avec:avec:rep:'; document: ((EruditeDocument contents: '"vérifie si l''aire du triangle formé par les 3 points est négative,
 le triangle est orienté à droite, sens trigonométrique inverses"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTrianglePositiveavecavec
 ^(EruditeBookSection basicNew title: '-aireTrianglePositive:avec:avec:'; document: ((EruditeDocument contents: '	"vérifie si l''aire du triangle formé par les 3 points est positive,
 le triangle est orienté à gauche, sens trigonométrique"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTrianglePositiveavecavecrep
 ^(EruditeBookSection basicNew title: '-aireTrianglePositive:avec:avec:rep:'; document: ((EruditeDocument contents: '	"vérifie si l''aire du triangle formé par les 3 points est positive,
 le triangle est orienté à gauche, sens trigonométrique"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTriangleavecavecrep
 ^(EruditeBookSection basicNew title: '-aireTriangle:avec:avec:rep:'; document: ((EruditeDocument contents: '"Aire calculée à partir des coordonnées de 3 points,double de l''aire du triangle formé par les 3 points,
 positive si le triangle est orienté à gauche, sens trigonométrique"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_degrésrep
 ^(EruditeBookSection basicNew title: '-degrés:rep:'; document: ((EruditeDocument contents: '"retourne la valeur d''un angle qui a le  point pour sommet."') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_justeAprèselrep
 ^(EruditeBookSection basicNew title: '-justeAprès:el:rep:'; document: ((EruditeDocument contents: '	"L''élément qui suit un élément d''une liste"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_justeAvantelrep
 ^(EruditeBookSection basicNew title: '-justeAvant:el:rep:'; document: ((EruditeDocument contents: '	"L''élément qui précède un élément d''une liste"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_nomPolygonerep
 ^(EruditeBookSection basicNew title: '-nomPolygone:rep:'; document: ((EruditeDocument contents: '"Retourne le nom d''un polygone de moins de cent côtés"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_nonPointConfonduavec
 ^(EruditeBookSection basicNew title: '-nonPointConfondu:avec:'; document: ((EruditeDocument contents: '"Vérifie que deux pointsne sont pas confodus "') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_originerep
 ^(EruditeBookSection basicNew title: '-origine:rep:'; document: ((EruditeDocument contents: '"le premier parent d''un segment ou d''une droite"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_parentsrep
 ^(EruditeBookSection basicNew title: '-parents:rep:'; document: ((EruditeDocument contents: '"les parents d''un objet."') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_penterep
 ^(EruditeBookSection basicNew title: '-pente:rep:'; document: ((EruditeDocument contents: '"Ccalcule la pente d''une droite"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_pointConfonduavec
 ^(EruditeBookSection basicNew title: '-pointConfondu:avec:'; document: ((EruditeDocument contents: '"Signale des pointscofondus, des points avec les mêmecoordonnées"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_pointDifferentde
 ^(EruditeBookSection basicNew title: '-pointDifferent:de:'; document: ((EruditeDocument contents: '"Vérifie que deux points sont difflérents, non confondus"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_pointentreet
 ^(EruditeBookSection basicNew title: '-point:entre:et:'; document: ((EruditeDocument contents: '"un point entre deux autres. "') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_pointrep
 ^(EruditeBookSection basicNew title: '-point:rep:'; document: ((EruditeDocument contents: '	"retourne un objet point"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_pointsSurCerclerep
 ^(EruditeBookSection basicNew title: '-pointsSurCercle:rep:'; document: ((EruditeDocument contents: '"Les points sur le cercle, ordonnés suivant leur abcisse"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_pointsSurrep
 ^(EruditeBookSection basicNew title: '-pointsSur:rep:'; document: ((EruditeDocument contents: '"Vérifie que deux points sont difflérents, non confondus"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_pointxrep
 ^(EruditeBookSection basicNew title: '-pointx:rep:'; document: ((EruditeDocument contents: '"La coordonnée x d''un point"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_pointyrep
 ^(EruditeBookSection basicNew title: '-pointy:rep:'; document: ((EruditeDocument contents: '"La coordonnée x d''un point"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_triangleAreawithwithrep
 ^(EruditeBookSection basicNew title: '-triangleArea:with:with:rep:'; document: ((EruditeDocument contents: '	"Aire à partir des coordonnées de 3  points"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Géométrie_vecteurrep
 ^(EruditeBookSection basicNew title: '-vecteur:rep:
 '; document: ((EruditeDocument contents: '"Le point à l''extrémité du vecteur d''origine 0@0 de même direction  qu''une sorte de droite"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes
 ^(EruditeBookSection basicNew title: 'Listes'; document: ((EruditeDocument contents: '!!$!!!!!!Listes
 Des méthodes pour agir sur les listes.justeAprès:el:rep:	
@@ -5107,7 +7863,7 @@ L''élément qui suit un élément d''une liste.
         add: self section_Expert_ListeDesPrédicats_Listes_triePointsSurdroiterep;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_addFirstelrep
 ^(EruditeBookSection basicNew title: 'addFirst:el:rep:	'; document: ((EruditeDocument contents: 'addFirst:el:rep:	
 
@@ -5117,44 +7873,44 @@ Ajoute en premier un élément à une liste') data: ((Dictionary new)); yourself
 section_Expert_ListeDesPrédicats_Listes_addFirstelrep_addFirstelrep
 ^(EruditeBookSection basicNew title: 'addFirst:el:rep:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_addLastelrep
 ^(EruditeBookSection basicNew title: 'addLast:el:rep:'; document: ((EruditeDocument contents: 'addLast:el:rep:
 
 Ajoute un élément à la fin d''une liste
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_ajouteDernierUniqueelrep
 ^(EruditeBookSection basicNew title: 'ajouteDernierUnique:el:rep:	'; document: ((EruditeDocument contents: 'ajouteDernierUnique:el:rep:	
 
 Ajoute un élément à la fin d''une liste, s''il n''est pas déjà dans la liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_ajouteDernierelrep
 ^(EruditeBookSection basicNew title: 'ajouteDernier:el:rep:	'; document: ((EruditeDocument contents: 'ajouteDernier:el:rep:	
 
 Ajoute un élément à la fin d''une liste') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_ajoutePremierUniqueelrep
 ^(EruditeBookSection basicNew title: 'ajoutePremierUnique:el:rep:	'; document: ((EruditeDocument contents: 'ajoutePremierUnique:el:rep:	
 
 Ajoute un élément à la tête d''une liste, s''il n''est pas déjà dans la liste') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_ajoutePremierelrep
 ^(EruditeBookSection basicNew title: 'ajoutePremier:el:rep:	'; document: ((EruditeDocument contents: 'ajoutePremier:el:rep:	
 
 Ajoute un élément à la tête d''une liste, 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_ajoutelisterep
 ^(EruditeBookSection basicNew title: 'ajoute:liste:rep:'; document: ((EruditeDocument contents: 'ajoute:liste:rep:') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_contientliste
 ^(EruditeBookSection basicNew title: 'contient:liste:	'; document: ((EruditeDocument contents: '
 contient:liste:	
@@ -5163,13 +7919,13 @@ Vérifie si un objet est présent dans une liste.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_couplesrep
 ^(EruditeBookSection basicNew title: 'couples:rep:	'; document: ((EruditeDocument contents: 'couples:rep:	
 
 Associe une liste de deux points à un nom pour former 	un couple.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_dernierrep
 ^(EruditeBookSection basicNew title: 'dernier:rep:'; document: ((EruditeDocument contents: '
 dernier:rep:
@@ -5178,91 +7934,91 @@ Le dernier élément d''une liste.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_excludesel
 ^(EruditeBookSection basicNew title: 'excludes:el:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_includesel
 ^(EruditeBookSection basicNew title: 'includes:el:	'; document: ((EruditeDocument contents: 'includes:el:	
 
 Vérifie qu''une liste contient un élément.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_indexelrep
 ^(EruditeBookSection basicNew title: 'index:el:rep:'; document: ((EruditeDocument contents: 'index:el:rep:
 
 Retourne l''indice d''un élément dans une liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_jointavecrep
 ^(EruditeBookSection basicNew title: 'joint:avec:rep:'; document: ((EruditeDocument contents: 'joint:avec:rep:
 
 Réunit les éléments de deux listes.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_minrep
 ^(EruditeBookSection basicNew title: 'min:rep:	'; document: ((EruditeDocument contents: 'min:rep:	
 
 Le plus petit élément d''une  liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_nonContientel
 ^(EruditeBookSection basicNew title: 'nonContient:el:	'; document: ((EruditeDocument contents: 'nonContient:el:	
 
 Vérifie qu''un élément n''est pas dans une liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_nonTousPositifs
 ^(EruditeBookSection basicNew title: 'nonTousPositifs:	'; document: ((EruditeDocument contents: 'nonTousPositifs:	
 
 Vérifie que les éléments d''une liste ne sont pas tous 	positifs.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_premierrep
 ^(EruditeBookSection basicNew title: 'premier:rep:'; document: ((EruditeDocument contents: 'premier:rep:
 
 Le premier élément d''une liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_saufDernierrep
 ^(EruditeBookSection basicNew title: 'saufDernier:rep:	'; document: ((EruditeDocument contents: 'saufDernier:rep:	
 
 Les éléments d''une liste sauf le dernier.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_saufPremierrep
 ^(EruditeBookSection basicNew title: 'saufPremier:rep:'; document: ((EruditeDocument contents: 'saufPremier:rep:
 
 Les éléments d''une liste sauf le premier.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_sommerep
 ^(EruditeBookSection basicNew title: 'somme:rep:'; document: ((EruditeDocument contents: 'somme:rep:
 
 La somme de tous les éléments d''une liste.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_sortblockrep
 ^(EruditeBookSection basicNew title: 'sort:block:rep'; document: ((EruditeDocument contents: 'sort:block:rep
 
 Trie sort:block:reples éléments d''une liste selon un critère décrit 	dans le block.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_taillerep
 ^(EruditeBookSection basicNew title: 'taille:rep'; document: ((EruditeDocument contents: 'taille:rep
 
 Le nombre d''éléments de la liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_tousNégatifs
 ^(EruditeBookSection basicNew title: 'tousNégatifs:	
 '; document: ((EruditeDocument contents: 'tousNégatifs:	
@@ -5270,13 +8026,13 @@ section_Expert_ListeDesPrédicats_Listes_tousNégatifs
 Vérifie que tous les éléments de la liste sont 	négatifs.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Listes_triePointsSurdroiterep
 ^(EruditeBookSection basicNew title: 'triePointsSur:droite:rep:	'; document: ((EruditeDocument contents: 'triePointsSur:droite:rep:	
 
 Trie les points sur une droite') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Nombres
 ^(EruditeBookSection basicNew title: 'Nombres'; document: ((EruditeDocument contents: 'Des opérations avec les nombresl') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_ListeDesPrédicats_Nombres_différenceetrep;
         add: self section_Expert_ListeDesPrédicats_Nombres_xrepvars;
@@ -5286,7 +8042,7 @@ section_Expert_ListeDesPrédicats_Nombres
         add: self section_Expert_ListeDesPrédicats_Nombres_supérieurOuEgalà;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Nombres_différenceetrep
 ^(EruditeBookSection basicNew title: 'différence:et:rep:'; document: ((EruditeDocument contents: 'différence:et:rep:vars: 
 
@@ -5300,20 +8056,20 @@ section_Expert_ListeDesPrédicats_Nombres_différenceetrepvars
 La différence de deux nombres.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Nombres_égalà
 ^(EruditeBookSection basicNew title: 'égal:à:'; document: ((EruditeDocument contents: 'égal:à:
 
 égalité numérique de deux nombres ou de deux points.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Nombres_racineFractionrep
 ^(EruditeBookSection basicNew title: 'racineFraction:rep:'; document: ((EruditeDocument contents: 'racineFraction:rep:
 
 Racine sous forme de fraction.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Nombres_supérieurOuEgalà
 ^(EruditeBookSection basicNew title: 'supérieurOuEgal:à:'; document: ((EruditeDocument contents: 'supérieurOuEgal:à:
 
@@ -5324,7 +8080,7 @@ section_Expert_ListeDesPrédicats_Nombres_supérieurOuEgalà
 section_Expert_ListeDesPrédicats_Nombres_supérieurOuEgalà_supérieurOuEgalà
 ^(EruditeBookSection basicNew title: 'supérieurOuEgal:à'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Nombres_supérieurà
 ^(EruditeBookSection basicNew title: 'supérieur:à:'; document: ((EruditeDocument contents: 'supérieur:à:vars:
  
@@ -5334,12 +8090,12 @@ section_Expert_ListeDesPrédicats_Nombres_supérieurà
 section_Expert_ListeDesPrédicats_Nombres_supérieurà_supérieuràvars
 ^(EruditeBookSection basicNew title: 'supérieur:à:vars:'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Nombres_xrepvars
 ^(EruditeBookSection basicNew title: 'x:rep:vars: '; document: ((EruditeDocument contents: 'x:rep:vars: 
 Coordonnée x d''''un point.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Relations
 ^(EruditeBookSection basicNew title: 'Relations'; document: ((EruditeDocument contents: ' DrGeo relations permettent de représenter les relations  d''équivalences sous forme de partition d''un ensemble pour un traitement plus rapide.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_ListeDesPrédicats_Relations_ajouteensemble;
         add: self section_Expert_ListeDesPrédicats_Relations_nonRelationetnom;
@@ -5349,41 +8105,41 @@ section_Expert_ListeDesPrédicats_Relations
         add: self section_Expert_ListeDesPrédicats_Relations_relationsClés;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Relations_ajouteensemble
 ^(EruditeBookSection basicNew title: 'ajoute:ensemble:	'; document: ((EruditeDocument contents: 'ajoute:ensemble:	
 
 Ajoute un élément à  un ensemble.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Relations_nonRelationetnom
 ^(EruditeBookSection basicNew title: 'nonRelation:et:nom:	'; document: ((EruditeDocument contents: 'nonRelation:et:nom:	
 
 Vérifie qu''il n''y a pas de relation.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Relations_relationCréeetnom
 ^(EruditeBookSection basicNew title: 'relationCrée:et:nom:'; document: ((EruditeDocument contents: 'relationCrée:et:nom:
 
 Etablit une relation.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Relations_relationetnom
 ^(EruditeBookSection basicNew title: 'relation:et:nom:'; document: ((EruditeDocument contents: 'relation:et:nom:	
 
 Relation entre deux objets, nom de la relation.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Relations_relationrep
 ^(EruditeBookSection basicNew title: 'relation:rep:	'; document: ((EruditeDocument contents: 'relation:rep:	
 
 Affiche les éléments en relation sous forme de 	listes.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_ListeDesPrédicats_Relations_relationsClés
 ^(EruditeBookSection basicNew title: 'relationsClés:	'; document: ((EruditeDocument contents: 'relationsClés:	
 
@@ -6318,7 +9074,7 @@ Supprime ou rétablit l''affichage des commentairs des règles.
 inverrse entre menu DrGeo et menu  World.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Tutoriel
 ^(EruditeBookSection basicNew title: 'Tutoriel'; document: ((EruditeDocument contents: '!!!!!!Tutoriel
 
@@ -6333,11 +9089,10 @@ La combinaison de touches **cmd/d** exécute seulement le code de la sélection.
 
 Tu peux aussi cliquer le bouton droit et cliquer  **print it** ou **do it** 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_Tutoriel_OuvirUneFigureOuUnExpert;
-        add: self section_Expert_Tutoriel_InitialiserLesFaits;
-        add: self section_Expert_Tutoriel_AfficherInitialiserEtAffirmerDesFaits;
+        add: self section_Expert_Tutoriel_ExempleGénéral;
+        add: self section_Expert_Tutoriel_InitialiserAffirmerEtAfficherDesFaits;
+        add: self section_Expert_Tutoriel_InitialiserDéfinirDesRèglesDéductions;
         add: self section_Expert_Tutoriel_VérifierUneCondition;
-        add: self section_Expert_Tutoriel_InitialiserEtDéfinirDesRègles;
-        add: self section_Expert_Tutoriel_Déductions;
         add: self section_Expert_Tutoriel_ModèlesDeQuestions;
         add: self section_Expert_Tutoriel_Explications;
         add: self section_Expert_Tutoriel_AfficherLesRègles;
@@ -6467,7 +9222,7 @@ e afficheRegles
 e afficheRegles.''
 ]]] doItWithButton: copier l''exemple.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/27/2025 22:15:13'!
 section_Expert_Tutoriel_AfficherInitialiserEtAffirmerDesFaits
 ^(EruditeBookSection basicNew title: 'Afficher,Initialiser et affirmer des faits'; document: ((EruditeDocument contents: '!!!!!!IAfficher,Initialiser et affirmer des faits
 
@@ -6480,7 +9235,8 @@ Exemple:
 
 "Supprimer les faits existants"
 exp initFaits.
-[[[ fig  presenter expertDisplayTutor:''
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Supprimer les faits actuels"
 exp initFaits.''
 ]]] doItWithButton: copier l''exemple. 
@@ -6502,7 +9258,8 @@ La justification peut être :
 exp affirmeFaits: ''père Pierre Jean
 mère Pierre Léa''.**
 
-[[[fig presenter expertDisplayTutor:''
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 
 "Affirmer les faits."
 exp affirmeFaits: ''''père Pierre Jean
@@ -6514,7 +9271,8 @@ mère Pierre Léa''''.
 
 "Afficher les faits"
 expert afficheFaits.
-[[[ fig  presenter expertDisplayTutor:''
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Afficher les faits"
 exp afficheFaits.''.
 ]]] doItWithButton: copier l''exemple. 
@@ -6524,7 +9282,8 @@ Exercices :
 	Affirmer les faits pour Marie.
 	Affirmer les faits pour que Jules et Eric soit les grandpères de Pierre et de Marie.
 
-[[[fig presenter expertDisplayTutor:''
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Solution"
 
 "Pas de initFaits pour garder les faits existants"
@@ -6556,7 +9315,7 @@ e afficheFaits.''.
 ]]] doItWithButton: copier l''exemple.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Tutoriel_AfficherLesRègles
 ^(EruditeBookSection basicNew title: 'Afficher les règles
 '; document: ((EruditeDocument contents: '!!!!!!Afficher les règles
@@ -6567,7 +9326,8 @@ Affiche les règles actives.
 Exemple:
 
 **exp afficheRegles. **
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp afficheRegles.''.
 ]]] doItWithButton: copier l''exemple.
 
@@ -6687,7 +9447,7 @@ e afficheFaits."Affiche tous les faits"
 "La solution est aussi acceptable avec les noms inversés."''
 ]]] doItWithButton: Solutions.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Tutoriel_ChargerDesRègles
 ^(EruditeBookSection basicNew title: 'Charger des règles'; document: ((EruditeDocument contents: '!!!!!!Charger des règles
 //<Expert>//**ChargeRegle:**  Règles_à_charger
@@ -6697,7 +9457,8 @@ Ces règles sont dans la classe ExpertRegle.
 
 Pour voir ces règles exécute le message: **règlesPrédéfinies**.
 
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp règlesPrédéfinies.''.
 ]]] doItWithButton: copier l''exemple.
 
@@ -6705,7 +9466,8 @@ Chargement d''une règle:
 exp initRegles.
 exp chargeRegles: ''famille''.
 
-[[[f presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp initRegles.
 exp chargeRegles: ''''famille''''.
 exp afficheRegles.''
@@ -6714,7 +9476,8 @@ exp afficheRegles.''
 Pour voir les règles chargées.
 
 exp mesRegles.
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp mesRegles.''
 
 ]]] doItWithButton: copier l''exemple.
@@ -6894,7 +9657,7 @@ E.t c''est une partie nulle si toutes les cases sont pleines
 	different:de: ?9 -''
 	alors: ''''partie terminée''.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/27/2025 22:15:14'!
 section_Expert_Tutoriel_Déductions
 ^(EruditeBookSection basicNew title: 'Déductions'; document: ((EruditeDocument contents: '!!!!!!Déductions
 //<expert>//**deduis**
@@ -6941,7 +9704,8 @@ exp deduis
 
 "affichage des faits après déductions."
 exp afficheFaits.
-[[[fig presenter expertDisplayTutor:''
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 
 "Tu peux sélectionner le tout, ce qui affiche le résultat final  ou  sélectionner et exécuter chaque partie ce qui  affichele résultat de chaque étapes."
 "Initialiser les règle"
@@ -7082,7 +9846,47 @@ Aller plus loin :
 Ecris d''autre règles sur la famile.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_Tutoriel_ExempleGénéral
+^(EruditeBookSection basicNew title: 'Exemple général'; document: ((EruditeDocument contents: '!!!!Exemple Général
+Pour observer les méthodes du système expert, il faut les mettre en situation parmi les autres méthodes, avec l''Exemple général on peut utiliser les méthodes en ce concentrant sur chaque méthode.
+
+
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
+"Tu peux sélectionner le tout, ce qui affiche le résultat final  ou  sélectionner et exécuter chaque partie ce qui  affichele résultat de chaque étapes."
+"Initialiser les règle"
+exp initRegles.
+
+"Définition de la règle"
+exp lisRegle: ''''parents''''
+si:''''père ?e ?p
+mère ?e ?m''''
+alors:''''parents ?e ?p  ?m'''' 
+com:''''Les parents d''''''''un enfant sont son père et sa mère''''.
+
+"Essai de la règle: Faits donnés"
+"Initialiser les faits."
+exp initFaits.
+
+"Affirmer les faits."
+exp affirmeFaits: ''''père Pierre Jean
+mère Pierre Léa
+père Marie Jean
+mère Marie Léa
+père Pierre Jean''''.
+
+"Examiner les règles"
+exp deduis.
+
+"affichage des modéles de questions,"
+exp modèlesQuestions. 
+'' 
+]]] doItWithButton: copier l''exemple génélral.
+
+Tu retrouvera ce bouton dans chaque section et portera son attention sur une partie de l''exemple pour chaque méthode.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Tutoriel_Explications
 ^(EruditeBookSection basicNew title: 'Explications'; document: ((EruditeDocument contents: '!!!!!!Explications
 
@@ -7122,7 +9926,8 @@ e afficheFaits.
 
 Tu peux sélectionner le tout et l''exécuter ou sélectionner et exécuter chaque partie.
 
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Faits donnés"
 exp initFaits.
 exp affirmeFaits: ''''père Pierre Jean
@@ -7154,7 +9959,8 @@ Explique  aussi les faits trouvés dans la condition jusqu''à remonter à l''é
 On dit expliquer récursivement.
 
 e causeFaitNo:5.
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp causesFaitNo: 5 .
 ''
 ]]] doItWithButton: copier cet exemple à la suite de l''exemple précédant.
@@ -7162,23 +9968,79 @@ exp causesFaitNo: 5 .
 Cet exemple sera repris dans la section **Les prédicats** dans le cas où un fait dépend de plusieurs règles.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
-section_Expert_Tutoriel_InitialiserEtDéfinirDesRègles
-^(EruditeBookSection basicNew title: 'Initialiser et définir des règles.'; document: ((EruditeDocument contents: '!!!!!!Initialiser et définir des règles.
-**Initialiser les règles**
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_Tutoriel_InitialiserAffirmerEtAfficherDesFaits
+^(EruditeBookSection basicNew title: 'Initialiser, affirmer et Afficher des faits '; document: ((EruditeDocument contents: '!!!!Initialiser, affirmer et Afficher des faits.
+
+**Initialiser des faits**
+
+<expert>**iniFaits.** 
+Supprime les faits actuels
+
+
+**Affirmer des faits**
+//<expert>//**affirmeFaits:** faits 
+
+Les faits sont affirmés avec la justification **énoncé**
+la justification permet de savoir d''où provient l''affirmation.
+La justification peut être :
+
+	**énoncé** 						
+	pour un fait **affirmé**.
+
+	**Le nom d''une règle**						
+	pour un fait qui provient d''une 	**règle**.
+
+	**DrGeo** 						
+	pour un fait qui provient d''une **figure**.
+
+**Exemple:	**
+
+[[[fig presenter expertDisplayTutor:''
+"Initialiser les faits"
+exp initFaits.
+
+" Affirmer les faits."
+exp affirmeFaits: ''''père Pierre Jean
+mère Pierre Léa''''.
+
+" Afficher les faits"
+exp afficheFaits.
+''
+]]] doItWithButton: copier l''exemple.
+
+
+Exercices : 
+	Conserver les faits existants.
+	Affirmer les faits pour Marie.
+	Affirmer les faits pour que Jules et Eric soit les grandpères de Pierre et de Marie.
+
+[[[fig presenter expertDisplayTutor:''
+"Solution"
+
+"Pas de initFaits pour garder les faits existants"
+
+"Jules est le grandpère paternel"
+exp affirmeFaits: ''''père Jean Jules''''.
+ 
+"Eric est le grandpère maternel"
+exp affirmeFaits: ''''père Léa Eric''''.
+
+
+exp afficheFaits.
+"La solution est aussi acceptable avec les noms inversés."''
+]]] doItWithButton: Solutions.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
+section_Expert_Tutoriel_InitialiserDéfinirDesRèglesDéductions
+^(EruditeBookSection basicNew title: 'Initialiser, définir des règles, déductions.'; document: ((EruditeDocument contents: '!!!!!!Initialiser,  définir des règles, déductions
+	**Initialiser les règles**
 
 //<expert>//**initRegles**
 
 Initialise les règles en mémoire.
 
-[[[fig presenter expertDisplayTutor:''
-"Initialise les règles"
-exp initRegles.
-'' 
-]]] doItWithButton: copier l''exemple.
-
-**Défnir une règle.**
-
+	**Défnir une règle.**
 
 //<expert>//**lisRegle:si:alors:com:** nom  cond concl com
 ou
@@ -7188,17 +10050,31 @@ cond		condition
 concl		conclusion
 com		commentaire
 
-Exemple:
+	**Exemple:**
 
+**Initialiser les règles**
 "Initialiser les règles"
 exp initRegles.
-**"Définition de la règle"
+
+**Définir une règle**
+"Définition de la règle"
 e lisRegle: ''parents''
 si:''père ?e ?p
 mère ?e ?m''
 alors:''parents ?e ?p  ?m'' .
-com:''Les parents d''''un enfant sont son père et sa mère''.**
-[[[fig presenter expertDisplayTutor:''
+com:''Les parents d''''un enfant sont son père et sa mère''.
+
+**Examiner les règles**
+"Examiner les règles"
+exp deduis.
+
+**Afficher les faits**
+" Afficher les faits"
+exp afficheFaits.
+
+
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Initialiser les règles"
 exp initRegles.
 
@@ -7208,10 +10084,18 @@ si:''''père ?e ?p
 mère ?e ?m''''
 alors:''''parents ?e ?p  ?m''''
 com:''''Les parents d''''''''un enfant sont son père et sa mère''''.
+
+"Examiner les règles"
+exp deduis.
+
+" Afficher les faits"
+exp afficheFaits.
+
+
 ''
 ]]] doItWithButton: copier l''exemple.
 
-Exercices :
+	**Exercices :**
 
 On affirme les faits suivants :
 
@@ -7222,7 +10106,8 @@ mère Marie Léa
 père Jean Jules
 père Léa Eric
 
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Faits donnés à affirmer"
 exp initFaits.
 exp affirmeFaits: ''''
@@ -7239,7 +10124,8 @@ père Léa Eric
 
 Ecris la règle pour déduire un grandpère
 
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Solution"
 
 "définition de la règle"
@@ -7253,7 +10139,7 @@ com:''''Le grandPère est le père du père d''''''''un enfant.''''.
 exp deduis.
 
 " Affichage des faits"
-e afficheFaits.
+exp afficheFaits.
 ''.
 ]]] doItWithButton: Solution .// (la solution est suivie de l''essai de la règle)//.
 
@@ -7262,7 +10148,84 @@ Aller plus loin :
 Ecris d''autres règles sur la famile.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/27/2025 22:15:14'!
+section_Expert_Tutoriel_InitialiserEtDéfinirDesRègles
+^(EruditeBookSection basicNew title: 'Initialiser et définir des règles.'; document: ((EruditeDocument contents: '!!!!!!IAfficher,Initialiser et affirmer des faits
+
+**Initialiser des faits**
+
+<expert>**iniFaits.** 
+Supprime les faits actuels
+
+Exemple:
+
+"Supprimer les faits existants"
+exp initFaits.
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
+"Supprimer les faits actuels"
+exp initFaits.''
+]]] doItWithButton: copier l''exemple. 
+
+**Affirmer des faits**
+//<expert>//**affirmeFaits:** faits 
+
+Les faits sont affirmés avec la justification **énoncé**
+la justification permet de savoir d''où provient l''affirmation.
+La justification peut être :
+
+	**énoncé** 						pour un fait **affirmé**.
+	**Le nom d''une règle**						pour un fait qui provient d''une 	**règle**.s
+	**DrGeo** 						pour un fait qui provient d''une **figure**,
+
+**Exemple:	**
+
+**"Affirmer les faits."
+exp affirmeFaits: ''père Pierre Jean
+mère Pierre Léa''.**
+
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
+
+"Affirmer les faits."
+exp affirmeFaits: ''''père Pierre Jean
+mère Pierre Léa''''.
+''
+]]] doItWithButton: copier l''exemple.
+
+**Afficher les faits**
+
+"Afficher les faits"
+expert afficheFaits.
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
+"Afficher les faits"
+exp afficheFaits.''.
+]]] doItWithButton: copier l''exemple. 
+
+Exercices : 
+	Conserver les faits existants.
+	Affirmer les faits pour Marie.
+	Affirmer les faits pour que Jules et Eric soit les grandpères de Pierre et de Marie.
+
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
+"Solution"
+
+"Pas de initFaits pour garder les faits existants"
+
+"Jules est le grandpère paternel"
+exp affirmeFaits: ''''père Jean Jules''''.
+ 
+"Eric est le grandpère maternel"
+exp affirmeFaits: ''''père Léa Eric''''.
+
+
+exp afficheFaits.
+"La solution est aussi acceptable avec les noms inversés."''
+]]] doItWithButton: Solutions.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
+
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/27/2025 22:15:13'!
 section_Expert_Tutoriel_InitialiserLesFaits
 ^(EruditeBookSection basicNew title: 'Initialiser les faits'; document: ((EruditeDocument contents: '
 //<expert>//**iniFaits.** 
@@ -7273,7 +10236,8 @@ Supprime toutes les affirnations.
 "Supprimer les faits actuels"
 exp initFaits.
  ''.
-[[[ fig  presenter expertDisplayTutor:''"Supprimer les faits actuels"
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp initFaits.
 ''.
 ]]] doItWithButton: copier l''exemple. 
@@ -7380,7 +10344,7 @@ Aller plus loin :
 Ecris d''autre règles sur la famile.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Tutoriel_LesPrédicats
 ^(EruditeBookSection basicNew title: 'Les prédicats'; document: ((EruditeDocument contents: '!!!!!!Les prédicats
 //<expert> //** sélecteur  **//arguents//
@@ -7557,7 +10521,7 @@ exp verifieCondition: ''''frèreOuSoeur ?e1 ?e2''''.''.]]] doItWithButton: copie
 Il n''y a qu''une réponse."
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Tutoriel_ModèlesDeQuestions
 ^(EruditeBookSection basicNew title: 'Modèles de questions'; document: ((EruditeDocument contents: '!!!!!!Modèles de questions
 
@@ -7573,13 +10537,15 @@ Exemple:
 tu peux faire cet exemple si tu viens de faire la section **Initialiser et définir des règles**, sinon fais l''exemple complet.
 
 exp modèlesQuestions. 
-[[[fig presenter expertDisplayTutor:''
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp modèlesQuestions. .''.
 ]]] doItWithButton: copie cet exemple si tu viens de faire la section Initialiser et définir des règles. .
 
 
 sinon copie l''exemple complet.
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Tu peux sélectionner le tout, ce qui affiche le résultat final  ou  sélectionner et exécuter chaque partie ce qui  affichele résultat de chaque étapes."
 "Initialiser les règle"
 exp initRegles.
@@ -7642,15 +10608,17 @@ Exercice:
 Affirne les faits père et mère avec les efants dans une liste comme cet exemple.
 
 
-[[[fig presenter expertDisplayTutor:''	
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Faits donnés"
 exp initFaits.
-exp affirmeFaits: ''''père [ Pierre Marie ] Jean''''.'']]] doItWithButton: copier l''exemple..
+exp affirmeFaits: ''''père [ Pierre Marie ] Jean''''.'']]] doItWithButton: copier l''exemple pour l''exercice.
 
 complète les affirmations pour la mère, 
 deduis et affiche le modèle de  questions.
 
-[[[fig presenter expertDisplayTutor:''	
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "solution"
 "Faits donnés"
 exp initFaits.
@@ -7701,7 +10669,7 @@ Dans la suite de ce tutoriel, un espace de travail s''ouvre avec les variables *
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Tutoriel_OuvirUneFigureOuUnExpert
 ^(EruditeBookSection basicNew title: 'Ouvir une figure ou un expert
 
@@ -7718,29 +10686,27 @@ Si l''on clique le bouton vert avant d''exécuter le code ci-dessous la figure l
 fig:= DrGeoFigure nouveau.
 exp := fig expert.
 {exp .fig}
-[[[
-fig presenter expertDisplayTutor:''
-fig := DrGeoFigure nouveau.
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp := fig expert.
 {exp .fig}'']]] doItWithButton: copier l''exemple.
-
 //{exp .fig} des variables entre { et } séparées par . sont remplacées par un tableau avec leurs valeurs.//
 	
-Créér une instance de Expert.
+Créér seulement une instance de Expert.
 exp :=Expert nouveau.
 exp
-[[[fig presenter expertDisplayTutor:''
+[[[ fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 exp :=Expert nouveau.
-exp''
-]]] doItWithButton: copier l''exemple.
+exp'']]] doItWithButton: copier l''exemple.
 
 Dans la suite de ce tutoriel, si tu copies un exemple un espace de travail s''ouvre , s''il n''est pas déjà ouvert, avec les variables **fig** et **exp** déjà initialisées.
 **fig** contient une DrGeoFigure et **exp** une Expert.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_Tutoriel_VérifierUneCondition
-^(EruditeBookSection basicNew title: 'Vérifier une condition.'; document: ((EruditeDocument contents: '!!!!!!Vérifier une question
+^(EruditeBookSection basicNew title: 'Vérifier une condition.'; document: ((EruditeDocument contents: '!!!!Vérifier une condition.
 //<expert>//**vérifieCondition:**cond
 
 **Variables**
@@ -7784,7 +10750,8 @@ exp unifie: ''père ?x1 ?x2'' avec: ''père Pierre Jean'' vars:lVar.
 "Afficher le dictionnaire lvar"
 lvar.
 
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "lvar est le dictionaire qui contient les valeurs des variables."
 "créer un dictionaire vide"
 lvar:=IdentityDictionary new.
@@ -7827,7 +10794,8 @@ mère Marie ?x3''
 "Vérification d''''une condition"
 exp vérifieCondition:''père ?x1 ?x2
 mère ?x1 ?x3''.
-[[[fig presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Affirmer les faits."
 exp affirmeFaits: ''''père Pierre Jean
 mère Pierre Léa
@@ -7854,7 +10822,8 @@ exp vérifieCondition:''père Marie ?x2''
 "Recherche des parents de Marie"
 exp vérifieCondition:''père Marie ?x2
 mère Marie ?x3''.
-[[[fig  presenter expertDisplayTutor:''
+[[[  fig ifNil: [ fig := DrGeoFigure nouveau.].
+fig presenter expertDisplayTutor:''Tutoriel'' string:''
 "Une valeur à la place d''''une variable"exp
 
 "Recherche du père de Pierre"
@@ -7868,9 +10837,13 @@ exp vérifieCondition:''''père Marie ?x2
 mère Marie ?x3''''
 '']]] doItWithButton: copier l''exemple.
 
+
+**Afficher les valeurs o
+//<expert>//**vérifieConditionSolution:**cond 
+
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_UtilisationInteractive
 ^(EruditeBookSection basicNew title: 'Utilisation interactive'; document: ((EruditeDocument contents: '!!!!!! Utilisation intreractive
 
@@ -7899,7 +10872,7 @@ Pour expliquer un fait, selectionne le numéro du fait et clique sur **Expliquer
 Pour avoir la documentation d''un article du menu, laisse la souris dessus sans cliquer.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_UtilisationInteractive_MenuExpert;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Expert_UtilisationInteractive_MenuExpert
 ^(EruditeBookSection basicNew title: 'Menu Expert'; document: ((EruditeDocument contents: '!!!!!!!!Examiner la figure
 Rassemble plusieurs actions:
@@ -7968,9 +10941,9 @@ Supprime ou rétablit l''affichage des commentairs des règles.
 inverrse entre menu DrGeo et menu  World.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Général
-^(EruditeBookSection basicNew title: 'Général'; document: ((EruditeDocument contents: '!!!!!!!!Commandes générales
+^(EruditeBookSection basicNew title: 'Général'; document: ((EruditeDocument contents: '!!!!!!Commandes générales
 **faire:** //bloc//
 //bloc//, bloc de code contenant des instructions de construction et/ou d’animation de la figure interactive
 
@@ -8018,7 +10991,7 @@ fig échelle: 5]]] withDrGeoActions
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Introduction
 ^(EruditeBookSection basicNew title: 'Introduction'; document: ((EruditeDocument contents: 'Les Figures Smalltalk de Dr.Geo – ou plus simplement figure dans la suite de ce texte – sont des figures écrites en langage Smalltalk. Il ne s’agit donc plus de construire une figure à l’aide de l’interface graphique de Dr.Geo mais plutôt de décrire une figure avec le langage Smalltalk et des instructions dédiées. Cette documentation décrit ces instructions.
 
@@ -8046,7 +11019,7 @@ Les icônes de la barre ont les fonctions suivantes :
 //Stopper la construction d''une figure. Utile lorsqu''une figure prend beaucoup de temps à s''exécuter entièrement.//') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Introduction_Exemples;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Introduction_Exemples
 ^(EruditeBookSection basicNew title: 'Exemples'; document: ((EruditeDocument contents: '!!!!!!Examples simples
 //La figure la plus simple, une figure vide.//
@@ -8109,7 +11082,7 @@ d tiret]]] withDrGeoActions
 Deux points et une droite sont créés. Ensuite des messages sont envoyés pour modifier l’aspect des objets, voire pour en cacher.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesCourbes
 ^(EruditeBookSection basicNew title: 'Lignes courbes'; document: ((EruditeDocument contents: 'La famille des lignes courbres regroupe les cercle, arc de cercle, polygone et lieu de points.
 
@@ -8120,7 +11093,7 @@ Déplie la section **▶ Lignes courbes** pour explorer ces types de ligne !!') 
         add: self section_LignesCourbes_CourbeFonction;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_LignesCourbes_ArcDeCercle
 ^(EruditeBookSection basicNew title: 'Arc de cercle'; document: ((EruditeDocument contents: '!!!!!!Arc passant par trois points
 //<arc>// **arcDe:à:passantPar:** //p1 p2 p3//
@@ -8148,7 +11121,7 @@ a _ fig point: 1@5.
 b _ fig point: 0@5.
 fig arcCentre: a de: b à: -1 @ -2]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesCourbes_Cercle
 ^(EruditeBookSection basicNew title: 'Cercle'; document: ((EruditeDocument contents: '!!!!!!Cercle selon centre et point
 //<cercle>// **cercleCentre:passantPar:** //c p//
@@ -8186,7 +11159,7 @@ a _ fig point: 1@5.
 s _ fig segmentDe: 0@0 à: 3@0.
 fig cercleCentre: a segment: s]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_LignesCourbes_CourbeFonction
 ^(EruditeBookSection basicNew title: 'Courbe fonction'; document: ((EruditeDocument contents: '!!!!!!Courbe d''une fonction
 //<lieu>// **courbeDe:de:à:** //bloc x0 x1//
@@ -8199,7 +11172,7 @@ section_LignesCourbes_CourbeFonction
 fig _ DrGeoFigure nouveau.
 fig courbeDe: [:x | x * x] de: -3 à: 3]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_LignesCourbes_LieuDePoint
 ^(EruditeBookSection basicNew title: 'Lieu de point'; document: ((EruditeDocument contents: '!!!!!!Lieu d''un point
 //<lieu>// **lieuDe:lorsqueBouge:** //c m//
@@ -8217,7 +11190,7 @@ fig lieuDe: c lorsqueBouge: m]]] withDrGeoActions
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_LignesCourbes_Polygone
 ^(EruditeBookSection basicNew title: 'Polygone'; document: ((EruditeDocument contents: '!!!!!!Polygone
 //<polygone>// **polygone:** //collection//
@@ -8250,7 +11223,7 @@ s _ fig segmentDe: b à: 0@0.
 v _ fig longueurDe: s.
 fig polygoneRégulierCentre: 0@0 sommet: b côtés: v]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites
 ^(EruditeBookSection basicNew title: 'Lignes droites'; document: ((EruditeDocument contents: 'La famille des lignes droites regroupe les droites passant par deux points, parallèle, perpendiculaire,... ainsi que les demi-droites et les segments.
 
@@ -8264,7 +11237,7 @@ Déplie la section **▶ Lignes droites** pour explorer ces types de ligne !!') 
         add: self section_LignesDroites_Explications;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites_Bissectrice
 ^(EruditeBookSection basicNew title: 'Bissectrice'; document: ((EruditeDocument contents: '!!!!!!Bissectrice d''un angle
 //<droite>// **bissectriceDe:** //a//
@@ -8285,7 +11258,7 @@ fig bissectriceDe: angle]]] withDrGeoActions
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites_Demidroite
 ^(EruditeBookSection basicNew title: 'Demi-droite'; document: ((EruditeDocument contents: '!!!!!!Demi-droite
 //<demi-droite>// **demiDroiteOrigine:passantPar:** //o p//
@@ -8295,7 +11268,7 @@ fig _ DrGeoFigure nouveau.
 a _ fig point: 1@5.
 fig demiDroiteOrigine: 0@0 passantPar: a]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites_Droite
 ^(EruditeBookSection basicNew title: 'Droite'; document: ((EruditeDocument contents: '!!!!!!Passant par deux points
 //<droite>// **droitePassantPar:et:** //p1 p2//
@@ -8310,11 +11283,11 @@ point _ figure point: 1@2.
 figure droitePassantPar: 0@0 et: point]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites_Explications
 ^(EruditeBookSection basicNew title: 'Explications'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites_Médiatrice
 ^(EruditeBookSection basicNew title: 'Médiatrice'; document: ((EruditeDocument contents: '!!!!!!Médiatrice d''un segment
 //<droite>// **médiatriceDe:** //s//
@@ -8344,7 +11317,7 @@ fig médiatriceDe: ptA à: (fig point: 0@5)]]] withDrGeoActions
 section_LignesDroites_Parallel
 ^(EruditeBookSection basicNew title: 'Parallel'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites_Parallèle
 ^(EruditeBookSection basicNew title: 'Parallèle'; document: ((EruditeDocument contents: '!!!!!!Droite parallèle
 //<droite>// **parallèleA:passantPar:** //d p//
@@ -8363,7 +11336,7 @@ fig
 	parallèleA: (fig droitePassantPar: 0@0 et: 5@1)
 	passantPar: 0@3]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites_Perpendiculaire
 ^(EruditeBookSection basicNew title: 'Perpendiculaire'; document: ((EruditeDocument contents: '!!!!!!Droite perpendiculaire
 //<droite>// **perpendiculaireA:passantPar:** //d p//
@@ -8384,7 +11357,7 @@ section_LignesDroites_Perpendicular
 section_LignesDroites_Ray
 ^(EruditeBookSection basicNew title: 'Ray'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_LignesDroites_Segment
 ^(EruditeBookSection basicNew title: 'Segment'; document: ((EruditeDocument contents: '!!!!!!Segment
 //<segment>// **segmentDe:à:** //p1 p2//
@@ -8645,7 +11618,7 @@ Variante à valeur décimale.
 //<bloc>// **decimal:a:min:max:nom:** //v1 p v2 v3 s//
 //<bloc>// **decimal:a:min:max:nom:affciherValeur:** //v1') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_NumériqueTexte
 ^(EruditeBookSection basicNew title: 'Numérique & Texte'; document: ((EruditeDocument contents: 'Cette section regroupe les commandes pour obtenir des valeurs numériques et texte : angles, coordonnées, pente, distance, valeurs libres, etc.
 
@@ -8657,7 +11630,7 @@ Déplie la section **▶ Numérique & Texte** pour explorer ces types de valeurs
         add: self section_NumériqueTexte_Texte;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_NumériqueTexte_Angle
 ^(EruditeBookSection basicNew title: 'Angle'; document: ((EruditeDocument contents: '!!!!!!Angle géométrique
 //<angle>// **angleGéométriqueSommet:de:à** //a b c//
@@ -8703,7 +11676,7 @@ v2 _ fig vecteurOrigine: 0@0 extrémité: -1@-3.
 a _ fig angleVecteur: v1 et: v2]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_NumériqueTexte_Coordonnée
 ^(EruditeBookSection basicNew title: 'Coordonnée'; document: ((EruditeDocument contents: '!!!!!!Abscisse
 //<valeur>// **abscisseDe:** //item//
@@ -8734,7 +11707,7 @@ p _ fig pointSurLigne: seg à: 0.5.
 c _ p coordonnées.
 c x]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_NumériqueTexte_Equation
 ^(EruditeBookSection basicNew title: 'Equation'; document: ((EruditeDocument contents: '!!!!!!Equation
 //<equation>// **équationDe:** //item//
@@ -8748,7 +11721,7 @@ d _ fig droitePassantPar: 0@0 et: 15@13.
 e _ fig équationDe: e]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_NumériqueTexte_Mesure
 ^(EruditeBookSection basicNew title: 'Mesure'; document: ((EruditeDocument contents: '!!!!!!Longueur
 //<valeur>// **longueurDe:** //objet//
@@ -8784,7 +11757,7 @@ fig _ DrGeoFigure nouveau.
 d _ fig droitePassantPar: 0@0 et: 3@8.
 p _ fig penteDe: d]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_NumériqueTexte_Texte
 ^(EruditeBookSection basicNew title: 'Texte'; document: ((EruditeDocument contents: '!!!!!!Texte
 //<texte>// **texte:** //string//
@@ -8815,7 +11788,7 @@ fig _ DrGeoFigure nouveau.
 monTexte _ fig texte: ''Hello''.
 monTexte texte: ''Au revoir'']]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_NumériqueTexte_ValeurRéglette
 ^(EruditeBookSection basicNew title: 'Valeur & Réglette'; document: ((EruditeDocument contents: '!!!!!!Valeur libre
 //<valeur>// **valeurLibre:** //v//
@@ -8870,7 +11843,7 @@ Variante à valeur décimale.
 //<bloc>// **décimal:à:min:max:nom:** //v1 p v2 v3 s//
 //<bloc>// **décimal:à:min:max:nom:affciherValeur:** //v1') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Point
 ^(EruditeBookSection basicNew title: 'Point'; document: ((EruditeDocument contents: 'Tu peux créer toutes sortes de point : point libre que tu peux ensuite déplacer à la souris, point mobile sur une ligne, point milieu ou d''intersection entre deux lignes. Il est même possible de créer un point dont la position est déterminée par un bloc de code !!
 
@@ -8882,7 +11855,7 @@ Déplie la section **▶ Point** pour explorer ces types de point !!') data: ((D
         add: self section_Point_BlocDeCode;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Point_BlocDeCode
 ^(EruditeBookSection basicNew title: 'Bloc de code'; document: ((EruditeDocument contents: '!!!!!!Bloc de code
 Fonctionalité avancée où la position du point est définie par un bloc de code.
@@ -8913,7 +11886,7 @@ p _ figure
 	parents first closestPointTo: parents second point]
    parents: {d . m}]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Point_Fixe
 ^(EruditeBookSection basicNew title: 'Fixe'; document: ((EruditeDocument contents: '!!!!!!Point valeur
 //<point>// **pointX:Y:** //v1 v2//
@@ -8929,7 +11902,7 @@ fig
 	Y: (fig longueurDe: segment)]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Point_Intersection
 ^(EruditeBookSection basicNew title: 'Intersection'; document: ((EruditeDocument contents: '!!!!!!Intersection entre deux lignes
 //<point>// **intersectionDe:et:** //l1 l2//
@@ -8952,7 +11925,7 @@ cercle _ f cercleCentre: 0@0 rayon: 5.
 f intersectionDe: droite et: cercle.
 f autreIntersectionDe: droite et: cercle]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Point_Libre
 ^(EruditeBookSection basicNew title: 'Libre'; document: ((EruditeDocument contents: '!!!!!!Point libre
 //<point>// **point:** //pointOuBloc//
@@ -8963,7 +11936,7 @@ section_Point_Libre
 	point: [ 5 auHasard @ 5 auHasard ] ]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Point_Milieu
 ^(EruditeBookSection basicNew title: 'Milieu'; document: ((EruditeDocument contents: '!!!!!!Milieu de deux points
 //<point>// **milieuDe:et:** //p1 p2//
@@ -8984,7 +11957,7 @@ s _ f segmentDe: 0@0 à: 5@3.
 f milieuDe: s]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Point_SurLigne
 ^(EruditeBookSection basicNew title: 'Sur ligne'; document: ((EruditeDocument contents: '!!!!!!Point sur ligne
 //<point>// **pointSurLigne:à:** //curve a//
@@ -9060,7 +12033,7 @@ s _ f segmentDe: 0@0 a: 5@3.
 f pointSurLigne: s a: 0.5]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Styles
 ^(EruditeBookSection basicNew title: 'Styles'; document: ((EruditeDocument contents: '!!!!!!Style
 Pour modifier les attributs d’un objet déjà créé, nous lui envoyons le message approprié. La modification des attributs se fait donc toujours à posteriori.
@@ -9126,7 +12099,7 @@ fig actualiser]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsec
         add: self section_Styles_Texte;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Styles_Ligne
 ^(EruditeBookSection basicNew title: 'Ligne'; document: ((EruditeDocument contents: ' !!!!!!1.3.1. Angle entre demi-droites
 
@@ -9256,7 +12229,7 @@ a1 couleur: Color blue.
 
 ]]] doItWithButton: chager la figure.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Styles_Point
 ^(EruditeBookSection basicNew title: 'Point'; document: ((EruditeDocument contents: '!!!!!!Point
 
@@ -9293,7 +12266,7 @@ fig _ DrGeoFigure nouveau.
 (fig point: 2@0) large ]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Styles_Segment
 ^(EruditeBookSection basicNew title: 'Segment'; document: ((EruditeDocument contents: '!!!!!!Segment
 
@@ -9331,7 +12304,7 @@ fig _ DrGeoFigure nouveau.
 segment _ fig segmentDe: 0@0 à: 5@1.
 segment flècheDebut]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Styles_Texte
 ^(EruditeBookSection basicNew title: 'Texte'; document: ((EruditeDocument contents: '!!!!!!Texte
 **couleurFond:** //uneCouleur//
@@ -9343,7 +12316,7 @@ t _ fig texte: ''Hello''.
 t couleurFond: Color green]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Transformations
 ^(EruditeBookSection basicNew title: 'Transformations'; document: ((EruditeDocument contents: 'Avec les transformations géométriques construis des tranformés d''objets tels des point, segment, droite, demi-droite, vecteur, cercle, arc de cercle, polygone et lieu de point.
 
@@ -9358,7 +12331,7 @@ Déplie la section **▶ Transformations** pour les découvrir !!') data: ((Dict
 section_TransformationsGéométriques
 ^(EruditeBookSection basicNew title: 'Transformations géométriques'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Transformations_Homothétie
 ^(EruditeBookSection basicNew title: 'Homothétie'; document: ((EruditeDocument contents: '!!!!!!Homothétie
 //<objet>// **homothétieDe:centre:facteur:** //i c k//
@@ -9377,7 +12350,7 @@ l _ fig cercleCentre: 0@0 passantPar: 3@3.
 fig homothétieDe: l centre: c facteur: 1.5.
 fig homothétieDe: l centre: c facteur: n]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Transformations_Rotation
 ^(EruditeBookSection basicNew title: 'Rotation'; document: ((EruditeDocument contents: '!!!!!!Rotation
 //<objet>// **rotationDe:centre:angle:** //i c a//
@@ -9396,7 +12369,7 @@ l _ fig droitePassantPar: 1@0 et: 5@5.
 fig rotationDe: l centre: c angleDegrés: 30.
 fig rotationDe: l centre: c angle: n]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Transformations_SymétrieAxiale
 ^(EruditeBookSection basicNew title: 'Symétrie axiale'; document: ((EruditeDocument contents: '!!!!!!Symétrie axiale (réflexion)
 //<objet>// **symétriqueDe:selonAxe:** //o c//
@@ -9411,7 +12384,7 @@ fig
 	symétriqueDe: a 
 	selonAxe: (fig droitePassantPar: 0@0 et: 4@5)]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Transformations_SymétrieCentrale
 ^(EruditeBookSection basicNew title: 'Symétrie centrale'; document: ((EruditeDocument contents: '!!!!!!Symétrie centrale
 //<objet>// **symétriqueDe:selonCentre:** //o c//
@@ -9424,7 +12397,7 @@ fig _ DrGeoFigure nouveau.
 a _ fig point: 4@2.
 fig symétriqueDe: a selonCentre: 0@0]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:41'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:32'!
 section_Transformations_Translation
 ^(EruditeBookSection basicNew title: 'Translation'; document: ((EruditeDocument contents: '!!!!!!Translation
 //<objet>// **translationDe:parVecteur:** //o v//
@@ -9451,7 +12424,7 @@ a _ fig translationDe: c parVecteur: u]]] withDrGeoActions
 section_ValeursNumériques
 ^(EruditeBookSection basicNew title: 'Valeurs numériques'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 9/29/2025 23:36:40'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/29/2025 00:01:31'!
 section_Vecteur
 ^(EruditeBookSection basicNew title: 'Vecteur'; document: ((EruditeDocument contents: '!!!!!!Vecteur par deux points
 //<vecteur>// **vecteurOrigine:extremité:** //o e//

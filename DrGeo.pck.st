@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6452] on 29 September 2025 at 7:06:57 pm'!
+'From Cuis7.1 [latest update: #6452] on 1 December 2025 at 10:51:18 pm'!
 'Description '!
-!provides: 'DrGeo' 1 746!
+!provides: 'DrGeo' 1 750!
 !requires: 'Gettext' 1 17 nil!
 !requires: 'SVG' 1 16 nil!
 !requires: 'YAXO' 1 19 nil!
@@ -2412,7 +2412,7 @@ DrGUIMinimalControlsManager class
 
 !classDefinition: #DrGeo category: #'DrGeo-Presenter'!
 Object subclass: #DrGeo
-	instanceVariableNames: 'domain controlsManager tool gridStuck isCreateMultipleMode selectedTool selection sketchName exportImageName saved notInteractive stSketch x1'
+	instanceVariableNames: 'domain controlsManager tool gridStuck isCreateMultipleMode selectedTool selection sketchName exportImageName saved notInteractive stSketch x1 affichage ig'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'DrGeo-Presenter'!
@@ -7586,9 +7586,9 @@ expand
 	super expand.
 	self fullScreen! !
 
-!DrGSmalltalkSketchEditor methodsFor: 'geometry' stamp: 'hlsf 4/2/2024 18:58:11'!
+!DrGSmalltalkSketchEditor methodsFor: 'geometry' stamp: 'drgeo 10/24/2025 10:42:38'!
 minimumExtent
-	^ Theme current scale: 800@600! !
+	^ Theme current scale: 1380@800! !
 
 !DrGSmalltalkSketchEditor methodsFor: 'testing' stamp: 'hlsf 5/18/2023 17:07:27'!
 shouldAutoHighlight
@@ -18422,10 +18422,10 @@ scriptName
 newArgumentsType
 	^{DrGValueItem.DrGValueItem}! !
 
-!DrGeoScript164164955 methodsFor: 'public' stamp: 'drgeo 11/19/2024 23:59:14'!
+!DrGeoScript164164955 methodsFor: 'public' stamp: 'drgeo 10/12/2025 20:02:14'!
 compute
 "Edit me"
-	^(self arg1 valueItem)*(self arg2 valueItem)! !
+	^((self arg1 valueItem)*(self arg2 valueItem)).! !
 
 !DrGeoScript164164955 class methodsFor: 'public' stamp: 'drgeo 11/19/2024 23:58:52'!
 description
@@ -30011,9 +30011,10 @@ updateSelection
 			ifTrue: [self tool morph: nil]
 			ifFalse: [	self tool morph: (self drawable viewOf: aMathItem)]]! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 5/6/2025 01:06:48'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 14:54:33'!
 expertAddRule
 |rgl pm  res e|
+.
 e :=self  stSketch expert .
 rgl :=ExpertRegle class  methodDict keys sort .
 pm := PopUpMenu labelArray: rgl.
@@ -30024,12 +30025,12 @@ self expertDisplayTutor: 'Règles ',res asString,' chargées.
 			ExpertRegle perform: res  withArguments: 
 				(Array with:e ) . ! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 5/6/2025 03:13:45'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 14:35:33'!
 expertAffichePressePapier
 |f |
 f:=stSketch.
 self halt.
-^(((f expert affichage submorphs first)submorphs first)submorphs at: 3 ) editor clipboardStringOrText
+^(((f  affichage submorphs first)submorphs first)submorphs at: 3 ) editor clipboardStringOrText
 
 ! !
 
@@ -30108,16 +30109,16 @@ self expertDisplayTutor: '
 expertDisplayRules
 self expertDisplay:  self  stSketch expert afficheRegles	! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/12/2025 10:08:45'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 13:37:20'!
 expertDisplayTutor:  str
-self expertDisplayTutor: 'Tutoriel' string: str style: true.
+self expertDisplayTutor: 'Expert' string: str style: true.
 ! !
 
 !DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/12/2025 10:05:30'!
 expertDisplayTutor: titre string: str
 self expertDisplayTutor: titre string: str style: false.! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/15/2025 00:41:15'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 12/1/2025 19:59:26'!
 expertDisplayTutor: titre string: str style: st
 |fig  exp|
 "self halt."
@@ -30125,16 +30126,18 @@ fig :=self  stSketch .
 exp := fig expert.
 exp ifNil:[ exp := Expert new. exp drgeo: fig].
 
-(exp affichage  isNil or: [exp  affichage model isNil] ) ifTrue:  
-	[exp affichage: (ExpertWorkspace openLabel:  titre).
-	st ifTrue: [exp affichage model toggleStyling].
-	exp affichage model bindings  at:#exp put: exp.
-	exp affichage model bindings  at:#fig put: fig.
-	exp affichage model actualContents:' " Espace de travail " '  ].
-	exp affichage model actualContents: ( exp affichage model actualContents), '
+(fig affichage  isNil or: [ fig affichage model isNil]) ifTrue:  
+	[fig affichage: (ExpertWorkspace openLabel:  titre).
+	st ifTrue: [fig affichage model toggleStyling].
+	fig affichage model bindings  at:#exp put: exp.
+	fig affichage model bindings  at:#fig put: fig.
+	fig affichage model actualContents:'  '  ].
+fig affichage model actualContents: ( fig affichage model actualContents), '
 	',str.
-	exp affichage moveTopRight .
-	(((exp affichage submorphs first )submorphs first) submorphs at:2)scrollDown:5000.
+fig affichage moveTopRight .
+fig affichage windowLeft: 2090@0.
+	
+(((fig affichage submorphs first )submorphs first) submorphs at:2)scrollDown:15000.
 .! !
 
 !DrGeo methodsFor: 'callback expert' stamp: 'drgeo 6/1/2025 00:54:16'!
@@ -30192,40 +30195,39 @@ expertInitRules
 	Règles initialisées'.
 ! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/10/2025 02:25:28'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 15:23:44'!
 expertInspect
 |f  e|
-"self halt."
+
 f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
-f  expert affichage ifNil:[ self expertDisplayTutor: 'Initialisation de l''affichage.' ].
+f   affichage ifNil:[ self expertDisplayTutor: 'Initialisation de l''affichage.' ].
 self expertDisplayTutor: 'Examen de la figure.
 '.
-e affichage ifNotNil:[
+f affichage ifNotNil:[
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
 
 self   expertDisplayModèles.]! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/12/2025 20:35:55'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 18:21:28'!
 expertInspect: titre
 |f  e|
 "self halt."
 f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
-"f  expert affichage ifNil:[ self expertDisplayTutor: 'Initialisation de l''affichage.' ]."
-self expertDisplayTutor:titre string:'Examen de la figure.'.
-e affichage ifNotNil:[
+"f  exert affichage ifNil:[ self expertDisplayTutor: 'Initialisation de l''affichage.' ]."
+self expertDisplayTutor:titre string:'Examen de la figure.
+'.
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
+self   expertDisplayModèles.! !
 
-self   expertDisplayModèles.]! !
-
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/12/2025 20:47:52'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 18:21:04'!
 expertInspect: titre style: st
 |f  e|
 "self halt."
@@ -30233,28 +30235,28 @@ f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
 self expertDisplayTutor:titre string:'Examen de la figure.' style: st.
-e affichage ifNotNil:[
+f affichage ifNotNil:[
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
 
 self   expertDisplayModèles.]! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/10/2025 02:02:16'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 11/5/2025 10:56:51'!
 expertLoadFactsFigure
 |f  |
 f :=self stSketch .
-f expert lisFigure: f.
+f expert lisFigure.
 self expertDisplayTutor: 'exp lisFigure.
 	Faits de la figure chargés.
 	'! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 5/5/2025 22:05:59'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 18:19:48'!
 expertPressePapier 
 |f |
 f:=stSketch.
 "self halt."
-^(((f expert affichage submorphs first)submorphs first)submorphs at: 3 ) editor clipboardStringOrText
+^(((f  affichage submorphs first)submorphs first)submorphs at: 3 ) editor clipboardStringOrText
 
 ! !
 
@@ -30263,22 +30265,22 @@ expertRemoveRule
 self expertDisplay:'expertRemoveRule
 Not yet implemented'! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 5/5/2025 18:56:56'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 15:03:11'!
 expertSelection
 |f  txtmodel inertxt ed |
 f:= self stSketch.
-txtmodel :=( f expert affichage  submorphs at:1)submorphs at:1 .  
+txtmodel :=( f  affichage  submorphs at:1)submorphs at:1 .  
 inertxt := txtmodel  submorphs at:3 .
 ed := inertxt    editor . 
 ^ed  selection ! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/6/2025 02:00:51'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 15:22:06'!
 expertVerify 
 |ver res f  | 
 "self halt."
 f:=stSketch.
 f expert ifNil:[f expert:  Expert nouveau].
-f expert affichage ifNil:[  self expertDisplayTutor: 'vetrification'].
+f  affichage ifNil:[  self expertDisplayTutor: 'vetrification'].
 ver:=self expertSelection.
 ver ifEmpty: [ ver := ''].
 res :=(  f  expert  )verifieCondition: ver.
@@ -30304,15 +30306,6 @@ fig wmenu ifFalse:[Preferences
 		at: #worldMenu put: DrGeo;
 		at: #fullScreenLeavesDeskMargins put: false.
 		fig wmenu:false]! !
-
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 5/5/2025 18:45:48'!
-selfexpertVerify 
-|f |
-f:=stSketch.
-self halt.
-^(((f expert affichage submorphs first)submorphs first)submorphs at: 3 ) editor clipboardStringOrText
-
-! !
 
 !DrGeo class methodsFor: 'file' stamp: 'hlsf 8/4/2023 18:07:28'!
 file: fileEntry
