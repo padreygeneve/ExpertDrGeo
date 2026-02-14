@@ -1,15 +1,18 @@
-La version en fichier compressé pour  windows se trouve à l'adresse 
-https://launchpad.net/drgeo/+download
-
-il y a aussi la version 1909 Pharo à la même adresse.
-
- fichier  de présentation du système expert:
+---------------------------------------------------------------------------------------
+ **fichier  de présentation du système expert:**
 
   en .pdf avec geoEtexpert.pdf
   en raw sous le nom presentation.
 
 
+-----------------------------------------------------------------------------------------
 
+**Téléchargements**
+
+La version de DrGeoCuis en fichier compressé pour windows se trouve à l'adresse: 
+https://launchpad.net/drgeo/+download
+
+il y a aussià cette la version 1909 Pharo à la même adresse.
 
 ---------------------------------------------------------------------------------------
 DrGeo Pharo version 1909
