@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6452] on 1 December 2025 at 10:52:56 pm'!
+'From Cuis7.1 [latest update: #6452] on 14 February 2026 at 12:58:06 am'!
 'Description '!
-!provides: 'Myexpert' 1 18!
+!provides: 'Myexpert' 1 19!
 !requires: 'DrGeo' 1 747 nil!
 !requires: 'DrGeoFrench' 1 18 nil!
 SystemOrganization addCategory: #Myexpert!
@@ -48,7 +48,7 @@ ExpertOutils class
 
 !classDefinition: #Expert category: #Myexpert!
 ExpertOutils subclass: #Expert
-	instanceVariableNames: 'stw nl regles aVerifier faits vars trouve affirmations ordreRegles deductions lrgl drgeo relations retablit constructions com indtexte titre affichage'
+	instanceVariableNames: 'stw nl regles aVerifier faits vars trouve affirmations ordreRegles deductions lrgl drgeo relations retablit constructions com indtexte titre affichage indexNom'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Myexpert'!
@@ -161,11 +161,12 @@ rel isEmpty ifTrue:[ ^ rel].
 ^rel asArray first.
 ! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 12/1/2023 01:41'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'drgeo 12/23/2025 01:55:32'!
 relationCrée: obj1 et: obj2 nom: n
-	| rel1 rel2 rel e |
+	| rel1 rel2 rel e  nom |
 	e := self expert.
-	rel := e relationsAt: n.
+	nom:= n asSymbol.
+	rel := e relationsAt: nom.
 	rel1 := rel detect: [ :x | x includes: obj1 ] ifNone: [ nil ].
 	rel2 := rel detect: [ :x | x includes: obj2 ] ifNone: [ nil ].
 	
@@ -175,7 +176,7 @@ relationCrée: obj1 et: obj2 nom: n
 				add: obj1 copy;
 				add: obj2 copy.
 			rel add: rel1.
-			e relations at: n put: rel.
+			e relations at: nom put: rel.
 			^ true ].
 	(rel1 notNil and: [ rel2 isNil ])
 		ifTrue: [ (rel includes: rel1)
@@ -1620,11 +1621,13 @@ affirmeFaits: just faits: aText
  	^(self makeFactCollectionFromString:  aText) collect: [:t|self affirme: just fait: t asString].
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 9/15/2020 10:23'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 12/12/2025 13:37:57'!
 ajouteNoms
-|  s index x |
-self  do:[:m|s:=''.((((m name )='')or: [ ' '  = m name])or:(m name)isNil)
-	ifTrue: [index:=index+1. x:=((m  asString  findTokens: #($ $( $) ))first),(index asString) .m name:x]
+|  s x pool |
+
+pool := self drgeo domain factory pool.  
+pool  do:[:m|s:=''.((((m name )='')or: [ ' '  = m name])or:(m name)isNil)
+	ifTrue: [self indexNom: self indexNom+1. x:=((m  asString  findTokens: #($ $( $) ))first),(indexNom asString) .m name:x]
 	 ifFalse: [x:=m name].
 	x ifNil: [ x:='' ]].
 ! !
@@ -2022,6 +2025,12 @@ indTexte
 indTexte: txt
 indtexte :=txt! !
 
+!Expert methodsFor: 'accessing' stamp: 'drgeo 12/12/2025 12:37:34'!
+indexNom
+
+indexNom 		 ifNil:  [ indexNom:= 0].
+^indexNom! !
+
 !Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/1/2022 01:53'!
 initConstructions
 
@@ -2153,19 +2162,15 @@ lisFigureDrgeo
 			self affirme: 'Drgeo' fait: s ].
 	^ pool! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/22/2025 23:32:17'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 12/16/2025 16:02:16'!
 lisFigureDrgeo: w
-	| pool s x px p index nb f pnts pnts2 |
-	"f := DrGeoFigure viewLess.
-	f drgeo: self drgeo."
-	pool := w domain factory pool.
-	"lbmorphs := w area submorphs select: [ :i | DrGLabelMorph = i class ].
-	lbmorphs do: [ :i | i costume mathItem name: i contents ]."
-	index := 0.
+	| pool s x px p index nb f pnts pnts2 morphs |
+
+
 	x := ''.
-	self ajouteNoms: pool.
-	"pool :=( w app costumes select: [  :cost| cost style hidden = false ]) collect: [ :cost | cost mathItem ].
-	pool := pool select: [ :it | it exist ]."
+	self ajouteNoms.
+       pool := self drgeo domain factory pool.
+	"morphs :=pool collect:[:item|self drgeo morphOf:item]."
 	pool
 		do: [ :m | 
 			s := ''.m name ifNil: [ m name:'' ].
@@ -2180,8 +2185,7 @@ lisFigureDrgeo: w
 						new:
 							(pnts
 								collect:
-									[ :ptn | (pnts detect: [ :i | ptn point = i point ] ifNone: [  ]) name ])
-								allButFirst.
+									[ :x1 | x1 name  ])allButFirst.
 					s := s , ' ' , '[ ' , pnts2 asString , ' ]' ].
 			(m isKindOf: DrGPolygonNptsItem)
 				ifTrue: [ s := s , ' ' , (self polySommets: m name) ].
@@ -2221,6 +2225,7 @@ lisFigureDrgeo: w
 												ifTrue: [ nb := nb asInteger ].
 											s := s , ' ' , nb asString ] ] ] ].
 			self affirme: 'DrGeo' fait: s ].
+		
 	^ pool! !
 
 !Expert methodsFor: 'accessing' stamp: 'DrGeoUser 6/30/2019 09:16'!
@@ -2755,6 +2760,10 @@ Display:wTitle String: aString
 !Expert methodsFor: 'initialize' stamp: 'drgeo 11/15/2024 16:26:40'!
 apppfficheCode
 ((self affirmations collect:[:x|x fait] )select:[:y|y first beginsWith:'f'] )! !
+
+!Expert methodsFor: 'initialize' stamp: 'drgeo 12/11/2025 18:43:57'!
+indexNom: ind
+indexNom := ind! !
 
 !Expert methodsFor: 'initialize' stamp: 'drgeo 5/5/2025 23:28:02'!
 initialize
@@ -3576,17 +3585,19 @@ relation: obj1 et: obj2 nom: n vars: lvars
 	rel expert: expert.
 	^ rel relation: ob1 et: ob2 nom: nom! !
 
-!ExpertRegle methodsFor: 'relations' stamp: 'drgeo 10/10/2025 14:05:15'!
+!ExpertRegle methodsFor: 'relations' stamp: 'drgeo 12/23/2025 02:43:48'!
 relation: nom rep: res vars: lvars
 "Affiche les éléments en relation sous forme de listes"
-	| rel n e result |
-	
-	self expert relations ifEmpty: [ ^ false ].
+
+	| rel n result exp  key  keys|
+
+	exp := self expert.
+	 exp relations ifEmpty: [ ^ false ].
 	result := ExpertList new.
-	e := self expert.
-	n := self instanciedValue: nom asString vars: lvars.
-	n
-		ifNotNil: [ rel := self expert relations at: n asSymbol.
+	n := (self instanciedValue: nom asString vars: lvars)asString.
+	keys := exp  relations keys.
+	key :=  keys detect: [:x| x = n ].
+	key ifNotNil: [ rel := exp  relations at:   key.
 			rel := rel collect: [ :r | ExpertList new: r ].
 			self affecte: res valeur: (ExpertList new: rel) vars: lvars.
 			^ true ].
@@ -3798,9 +3809,9 @@ justeAvant: list el: el rep: res vars: lvars
 		ifTrue: [ ^ self affecte: res valeur: (t1 at: r) vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 11/6/2023 21:23'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 12/18/2025 13:02:06'!
 nomPolygone: n rep: res vars: lvars
-"Retourne le nom d'un polygone de moins de cent côtés"
+"Retourne le nom grec d'un polygone de moins de cent côtés"
 	| r nb |
 	nb := (self instanciedValue: n vars: lvars) asNumber.
 	^ self affecte: res valeur: (self nomPolygone: nb) vars: lvars! !
@@ -4507,11 +4518,17 @@ couleurObjet: n couleur: coul vars: lvars
 	obj style color: col.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/6/2023 21:00'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 12/7/2025 17:28:33'!
 couleurPoint: n couleur: coul vars: lvars
 "Mets en couleur un point"
-	| col nom points app |
-	app := self expert drgeo app.
+
+	|col nom app obj|
+	col := self   instanciedValue: coul vars: lvars.
+	nom := self  instanciedValue: n vars: lvars.
+	app := self expert drgeo domain factory pool.
+      
+       obj := app detect: [ :x | nom = x name ]. 
+	
 	col := self valeur: coul vars: lvars.
 	col = 'vert'
 		ifTrue: [ col := Color green ].
@@ -4527,10 +4544,10 @@ couleurPoint: n couleur: coul vars: lvars
 		ifTrue: [ col := Color cyan ].
 	col = 'noir'
 		ifTrue: [ col := Color black ].
-	nom := self valeur: n vars: lvars.
-	points := app costumes select: [ :x | x class = DrGPointCostume ].
-	(points detect: [ :x | nom = x name ] ifNone: [ ^ false ]) style
-		color: col.
+	nom := self valeur: n vars: lvars. 
+	
+			(self expert drgeo morphOf: obj )style color: col.
+	
 	^ true! !
 
 !ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/6/2023 21:00'!
@@ -4611,34 +4628,30 @@ execute: acte vars: lvars
 		evaluate.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/7/2023 01:41'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 12/15/2025 20:07:43'!
 polyAjouteETNuméroteSommets: pol vars: lvars
 	"Ajoute et numérote les sommets d'un objet polygone régulier"
-
-	| f drg poly nomPoly nSom costumes sommets mit pt |
-	drg := self expert drgeo app.
-	f := DrGeoFigure viewLess.
-	f drgeo: drg.
+	| drg poly  polyMorph nomPoly nSom pool  mit length abscis pt|
+	drg := self expert drgeo .
 	nomPoly := self valeur: pol vars: lvars.
 	(nomPoly = pol and: [ nomPoly beginsWith: '?' ])
 		ifTrue: [ ^ false ].
-	costumes := drg costumes.
-	poly := costumes detect: [ :x | x name = nomPoly ].
-	nSom := poly mathItem parents last valueItem - 1.
-	sommets := costumes
-		select: [ :x | 
-			mit := x mathItem.
-			mit class = DrGPointOncurveItem
-				and: [ poly mathItem = mit parents first ] ].
-	"n:=-1.
-test:=true.
-test:=sommets collect:[:x |test ifTrue: [n:=n+1] .test := (( x mathItem abscissa )=(n/6))].
-((nSom-1 )=test size)"
-	sommets size = nSom
-		ifFalse: [ 0 to: nSom - 1 do: [ :nb | 
-				pt := f pointSurLigne: poly a: nb / (nSom + 1).
-				pt nommer: 'P' , (nb + 1) asString ] ].
-	^ true! !
+	((drg expert  vérifieCondition:'pointSur ', nomPoly,' P2' )= '
+	faux')   ifFalse: [
+	pool := drg domain factory pool.
+	poly := pool detect: [ :x | x name = nomPoly ].
+	nSom:=1.
+	length 	:=poly sidesLength first .
+		abscis :=0.
+	polyMorph := drg morphOf: poly.
+	mit :=  poly points allButLast.
+ 	mit do: [:x| pt:= drg pointSurLigne: polyMorph  à: abscis/(poly length). 
+		abscis :=abscis  + length .
+		nSom:=nSom +1. 
+		pt nommer: 'P',nSom asString . 
+		self expert affirmeFaits: 'pointSur ', nomPoly,' ',pt mathItem name  ]			].
+	self expert modèlesQuestions .
+	^true! !
 
 !ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/7/2023 01:40'!
 polyAjouteSommets: pol vars: lvars
@@ -5544,6 +5557,27 @@ saufDernier: list rep: res vars: lvars
 		ifFalse: [ ^ self affecte: rep valeur: l allButLast vars: lvars ].
 	^ self affecte: rep valeur: ExpertList new vars: lvars! !
 
+!ExpertRegle methodsFor: 'list' stamp: 'drgeo 12/18/2025 12:03:10'!
+saufDerniers: list rep: res vars: lvars
+	"Les derniers des éléments d'une liste de listes"
+
+	| lst |
+	lst := self valeur: list vars: lvars.
+	(lst isString
+		and: [ lst = list and: [ lst asString beginsWith: '?' ] ])
+		ifTrue: [ ^ false ].
+	^ self
+		affecte: res
+		valeur:
+			(lst
+				collect: [ :x | 
+					x isList
+						ifTrue: [ x allButLast ]
+						ifFalse: [ (ExpertList
+								new: (self expert verifieCondition: 'segment ' , x , ' ?s'))
+								allButLast allButLast last allButLast asString ] ])
+		vars: lvars! !
+
 !ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/6/2023 21:05'!
 saufPremier: list rep: res vars: lvars
 	"Les éléments d'une liste sauf le premier"
@@ -5556,9 +5590,9 @@ saufPremier: list rep: res vars: lvars
 		ifTrue: [ ^ self affecte: rep valeur: l allButFirst vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'drgeo 11/23/2025 15:15:58'!
+!ExpertRegle methodsFor: 'list' stamp: 'drgeo 12/18/2025 12:05:14'!
 saufPremiers: list rep: res vars: lvars
-	"Les premiers des éléments d'une liste de listes"
+	"Les  éléments d'une liste de listes sauf les premiers"
 
 	| lst |
 	lst := self valeur: list vars: lvars.
@@ -5991,13 +6025,13 @@ mot: mot1 et: mot2 et: mot3 rep: rep vars: lVars
 		valeur: t5 asString , t6 asString , t7 asString
 		vars: lVars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:56'!
-mot: mot1 et: mot2 rep: rep vars: lVars
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 12/22/2025 21:49:14'!
+mot: mot1 et: mot2 rep: rep vars: lVars 
 "Forme un mot à partir de deux mots"
-	| t5 t6 |
-	t5 := self valeur: mot1 vars: lVars.
-	t6 := self valeur: mot2 vars: lVars.
-	^ self affecte: rep valeur: t5 asString , t6 asString vars: lVars! !
+	| t5 t6  res|
+	t5 :=self instanciedValue: mot1 vars: lVars.  
+	t6 :=self instanciedValue: mot2  vars: lVars.
+	res := t5,t6.	^ self affecte: rep valeur: res vars: lVars ! !
 
 !ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 4/12/2025 14:26:22'!
 mot: m1 rep:res vars: lvar
@@ -6254,8 +6288,70 @@ EuclideMinimum: e
 	ExpertRegle figuresNonRectilignes: e.
 	^ 'Règles EuclideMinimum: chargées'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/28/2025 23:22:01'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/19/2026 01:03:17'!
 angleSuite: e
+
+
+	e lisRegle: 'angle-demi-droiteAprès1'
+	 si:  'intersection  ?x1 ?x2 ?x3
+pointsSur ?x2 ?pts2
+justeAprès:el:rep: ?pts2 ?x1 ?xx2
+mot:et:rep: ?x1 ?xx2 ?res' 
+	alors:  'demi-droite ?res ?x1 ?xx2'
+	com: 'une demi-droite qui suit une intersection'.
+	
+		e lisRegle: 'angle-demi-droiteAvant1'
+	 si:  'intersection  ?x1 ?x2 ?x3
+pointsSur ?x2 ?pts2
+justeAvant:el:rep: ?pts2 ?x1 ?xx2
+mot:et:rep: ?x1 ?xx2 ?res' 
+	alors:  'demi-droite ?res ?x1 ?xx2'
+	com: 'une demi-droite qui suit une intersection'.
+	
+	e lisRegle: 'angle-demi-droiteAprès2'
+	 si:  'intersection  ?x1 ?x2 ?x3
+pointsSur ?x3 ?pts3
+justeAprès:el:rep: ?pts3 ?x1 ?xx3
+mot:et:rep: ?x1 ?xx3 ?res' 
+	alors:  'demi-droite ?res ?x1 ?xx3'
+	com: 'une demi-droite qui suit une intersection'.
+	
+		e lisRegle: 'angle-demi-droiteAvant2'
+	 si:  'intersection  ?x1 ?x2 ?x3
+pointsSur ?x3 ?pts3
+justeAvant:el:rep: ?pts3 ?x1 ?xx3
+mot:et:rep: ?x1 ?xx3 ?res' 
+	alors:  'demi-droite ?res ?x1 ?xx3'
+	com: 'une demi-droite qui suit une intersection'.
+	
+	e lisRegle: 'angle-pointSurAvant' 
+	si:  'demi-droite  ?x1 ?x2 ?x3
+droite ?d	 
+pointsSur ?d ?pts
+pointSur ?d ?p
+index:el:rep: ?pts ?x2 ?res1
+index:el:rep: ?pts ?x3 ?res2
+supérieur:à: ?res1  ?res2
+index:el:rep: ?pts  ?p ?resp
+inférieur:à: ?resp ?res1
+different:de: ?p ?x3'
+	alors: 'pointSur ?x1 ?p'
+ com: 'Un point sur une droite qui doit aussi être sur la demi-droite'.
+	
+	
+	e lisRegle: 'angle-pointSurAprès' 
+	si:  'demi-droite  ?x1 ?x2 ?x3
+droite ?d	 
+pointsSur ?d ?pts
+pointSur ?d ?p
+index:el:rep: ?pts ?x2 ?res1
+index:el:rep: ?pts ?x3 ?res2
+inférieur:à: ?res1  ?res2
+index:el:rep: ?pts  ?p ?resp
+supérieur:à: ?resp ?res1
+different:de: ?p ?x3'
+	alors: 'pointSur ?x1 ?p'
+ com: 'Un point sur une droite qui doit aussi être sur la demi-droite'	
 "	e
 		lisRegle: 'angle-angleEquivalent1'
 		si: 'angle0 [ ?x1 ?s ?x2 ]
@@ -6293,22 +6389,25 @@ relationCrée:et:nom: [ ?x1 ?s ?x2 ] [ ?p ?s ?x2 ]  équivalent'
 		alors: 'relationCréée [ ?x1 ?s ?x2 ] [ ?x3 ?s ?x4 ] équivalent '
 		com: 'Affirmation d''une relation céée'".! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/21/2025 21:44:23'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/22/2026 19:43:47'!
 angles: e
 	
 e		lisRegle: 'angles-alignés1'
-		si: 'droite ?d
-demi-droite ?dd1 ?x1 ?x2
-demi-droite ?dd2 ?x1 ?x3
+		si: 'sorteDeDroite ?d
 pointSur ?d ?x1
 pointSur ?d ?x2
 pointSur ?d ?x3
-tousDifferents: [  ?x1 ?x2 ?x3 ]
-pointsSur ?d ?pts
-justeAvant:el:rep: ?pts  ?x1  ?x3
-justeAprès:el:rep: ?pts ?x1  ?x2'
-		alors: 'angle0 [ ?x2 ?x1 ?x3 ] [ classement:  plat ]'
-		com: 'Si les trois points qui définissent un angle sont alignés, l''angle est plat'.
+different:de: ?x1 ?x2
+different:de: ?x1 ?x3
+different:de: ?x2 ?x3'
+	alors: 'alignement [ ?x2 ?x1 ?x3 ]'
+		com: 'trois points sur une même droite sont alignés'.
+		
+	e lisRegle: 'angles-plat' 
+	si:   'angle [ ?x2 ?x1 ?x3 ]
+alignement [  ?x2 ?x1 ?x3 ]'
+	alors: 'angle0 [ ?x2 ?x1 ?x3 ]   [ classement: plat ]'
+	com: 'Trois points alignés forment un angle plat'.
 	e
 		lisRegle: 'angles-angle0'
 		si: 'angle0 [ ?x1 ?o ?x2 ] [ classement: nonPlat ]'
@@ -6317,7 +6416,9 @@ justeAprès:el:rep: ?pts ?x1  ?x2'
 	e
 		lisRegle: 'angles-nul'
 		si: 'angle0 [ ?x1 ?s ?x2 ]
-égaux:et: ?x1 ?x2'
+sorteDeDroite ?d
+position ?x1 ?pos ?s ?d
+position ?x2 ?pos ?s ?d'
 		alors: 'angle0  [ ?x ?s ?x ] [ classement:  nul ]'
 		com: 'Si deux points qui définissent un angle sont les mêmes, l''angle est nul'.
 	e
@@ -6833,11 +6934,11 @@ relationCrée:et:nom: [ ?x1 ?o ?m ] [ ?m ?o ?x3 ] isométrique
 different:de: ?o ?m'
 		alors: 'relationCréée   [ ?x1 ?o ?m ] [ ?m ?o ?x3 ] isométrique'
 		com: 'La bissectrice d''un angle divise cet angle en deux angles isométriques.'.
-	e
+"	e
 		lisRegle: 'angles-AnglePlatDef'
 		si: 'alignement  [ ?x1 ?o ?x2 ]'
 		alors: 'angle0  [ ?x1 ?o ?x2 ]  [ classement: plat ]'
-		com: 'Un angle plat est un angle de 180°, les côtés de  l''angle sont sur une même droite ainsi que les points qui définissent l''angle'.
+		com: 'Un angle plat est un angle de 180°, les côtés de  l''angle sont sur une même droite ainsi que les points qui définissent l''angle'."
 	e
 		lisRegle: 'angles-AnglePlusProche'
 		si: 'pointSur ?d1 ?x1
@@ -6852,13 +6953,9 @@ abs:rep: ?diff1 ?absdiff1
 abs:rep: ?diff2 ?absdiff2
 égal:à: ?absdiff1 1
 égal:à: ?absdiff2 1'
-		alors: 'angle0  [ ?x1 ?o ?x2 ]'
-		com: 'L'' angle le plus proche, l''angle avec ses extrémiés les plus proches de soc sommet'.
-	e
-		lisRegle: 'angles-Angle platDef2'
-		si: 'angle0  [ classement: plat ]'
-		alors: 'angle0 [ classement: nonPlat  ]'
-		com: 'L'' angle qui sert à la définition de l''angle plat  est aussi le plus proche'.
+		alors: 'angle  [ ?x1 ?o ?x2 ] [ plusProche ]'
+		com: 'L'' angle le plus proche, l''angle avec ses extrémiés les plus proches de son sommet'.
+	
 	e
 		lisRegle: 'angles-droit->perpendiculaire'
 		si: 'angle0 [ ?x ?O ?y ] [  d roit ]
@@ -6924,13 +7021,11 @@ ordonneMot:et:rep1:rep2: ?d1 ?d3 ?dd1 ?dd3
 ordonneMot:et:rep1:rep2: ?d2 ?d3 ?dd2 ?ddd3
 intersection ?o1 ?dd1 ?dd3
 intersection ?o2 ?dd2 ?ddd3
-ordonneMot:et:rep1:rep2: ?o1 ?o2  ?o1 ?o2
 relation:et:nom: ?d1 ?d2 parallèle
 angle0  [ ?x1 ?o1 ?y1 ]   [ mêmePosition: [ ?x2 ?o2 ?y2  ]  ]
 relation:et:nom: ?d1 ?d2 parallèle
-ordonneMot:et:rep1:rep2: [ ?x1 ?o1 ?y1 ] [ ?x2 ?o2 ?y2  ] ?a1 ?a2 ]
 different:de: ?o1 ?o2'
-		alors: 'angle0 ?a1 [  correspondant  ?a2 ]'
+		alors: 'angle0 [ ?x1 ?o1 ?y1 ]  [  correspondant:  [ ?x2 ?o2 ?y2  ] ]'
 		com: 'Des angles entre parallèles de même position sont correspondants'.
 	e
 		lisRegle: 'angles-alterneExterne1'
@@ -9051,7 +9146,7 @@ Si un triangle est isocèle en un sommet, les couples reliant ce sommet à chacu
 
 	ExpertRegle figuresRectilignesuite: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/22/2025 17:51:58'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/8/2025 15:58:00'!
 figuresRectilignesSuite2: e
 
 
@@ -9129,124 +9224,6 @@ different:de: ?I ?S'
 			'égal  [ somme  [ mesure [ ?A ?S ?O ]  ]  [ mesure    [ ?O ?A ?S  ] ]  ]   [ mesure [ ?A ?O ?I ]  ]'
 		com:
 			'La somme des mesures de  deux angles d''un triangle est égale à la mesure du supplémentaire du  troisième angle'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneRayons'
-		si:
-			'polygoneRégulier?p [  sommets: ?s ]
-polygone ?p [  centre: ?c ]
-point ?x
-contient:el: ?s ?x
-ordonneMot:et:rep1:rep2: ?c ?x ?cc ?xx'
-		alors: 'polygone ?p [ rayon: [ ?cc ?xx  ] ]'
-		com:
-			'Un rayon de polygone relie un sommet au centre du polygone, c''est aussi un rayon du cercle circonscrit au polygone'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneNbcôtés'
-		si: 'polygoneRégulier ?x1 [ nombre_de_sommets: ?x6 ] ]'
-		alors: 'polygoneRégulier ?x1 [ nombre_de_côtés: ?x6 ] ]'
-		com:
-			'Un polygoneRégulier régulier: a un nombre de côtés égal au nombre de sommets'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneSommets'
-		si: 'DrGPolygonRegularItem  ?x1 ?x2 ?x3 ?x4 ?x5 ?x6'
-		alors: 'polygoneRégulier ?x1  [ sommets: ?x2 ] ]'
-		com:
-			'Les sommets d''un polygone régulier de n côtés, en vert le sommet qui définit le polygone, ajoute les sommets, si nécessaires'.
-	e
-		lisRegle: 'figuresRectilignes-Polygone3def'
-		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: 3 ] ]'
-		alors: 'polygoneRégulier  ?x1 [  quadrilatère ]'
-		com: 'Un polygone de 3sommets définit un triangle'.
-	e
-		lisRegle: 'figuresRectilignes-Polygone4def'
-		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: 4] ]'
-		alors: 'polygoneRégulier  ?x1 [  quadrilatère ]'
-		com: 'Un polygone de 4 sommets définit un quadrilatère'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneNomCôté<=100'
-		si:
-			'polygoneRégulier ?x1 [ nombre_de_côtés: ?nc ]
-inférieurOuEgal:à: ?nc  100
-nomPolygone:rep: ?nc ?res'
-		alors: 'polygoneRégulier  ?x1 [ nom:   ?res ]'
-		com: 'nomme un polygone de moins de cent côtés selon la nomenclatutre'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneNomGénéral'
-		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: ?nc ]'
-		alors: 'polygoneRégulier  ?x1 [ PolygoneRégulier ]'
-		com: 'nomme un polygone régulier'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneCréeDernierCôtés1'
-		si:
-			'créeCôtés ?c [ ?x ]
-premier:rep: ?c ?p
-premier:rep: ?p ?p1
-addLast:el:rep: ?c  [ ?x ?p1 ] ?res
-retireFait: créeCôtés ?c [ ?x ]'
-		alors: 'créeCôtés ?res'
-		com:
-			'Crée le dernier côtés d''un polygone à partir de ses sommets reliant le dernier sommet au premier'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneCôtés'
-		si: 'créeCôtés ?res'
-		alors: 'polygoneRégulier ?x1  [ côtés: ?res ] ]'
-		com: 'Les côtés d''un polygone régulier de n côtés.'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneCréeCôtés'
-		si:
-			'créeCôtés ?c ?som
-retireFait: créeCôtés ?c ?som
-premier:rep: ?som ?p
-saufPremier:rep: ?som ?sp
-premier:rep: ?sp ?p2
-addLast:el:rep: ?c  [  ?p ?p2 ] ?res'
-		alors: 'créeCôtés ?res ?sp'
-		com: 'Crée les côtés d''un polygone à partir de ses sommets'.
-	e
-		lisRegle: 'figuresRectilignes-quadrilatèrePérimètre'
-		si: 'polygone Tetragone?q [ périmètre:  ?p ]'
-		alors: 'quadrilatère ?q [  périmètre:  ?p ]'
-		com: 'Le périmètre d''un quadrilatèe'.
-	e
-		lisRegle: 'figuresRectilignes-polygoneCréeCôté'
-		si:
-			'DrGPolygonRegularItem  ?x1 ?x2 ?x3 ?x4 ?x5 ?x6
-premier:rep: ?x2 ?p
-saufPremier:rep: ?x2 ?sp
-premier:rep: ?sp ?p2'
-		alors: 'créeCôtés [  [  ?p ?p2  ]  ] ?sp '.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneCôtésDef'
-		si:
-			'créeCôtés  ?c ?x
-polygoneRégulier ?p [  nombre_de_côtés: ?nc ]
-taille:rep: ?c ?tc
-égaux:et: ?nc ?tc
-retireFait: créeCôtés  ?c ?x'
-		alors: 'polygoneRégulier ?p [ côtés: ?c ]'
-		com: 'Arrête la création des côtés d''un polygone à partir de ses sommets'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneAngleAuCentre'
-		si:
-			'polygoneRégulier ?p [  nombre_de_sommets: ?n ]
-quotient:et:rep: 360 ?n ?angle'
-		alors: 'polygoneRégulier ?p [ angle_au_centre: ?angle ]'
-		com: 'L''angle au centre = 360 / nombre_de_côtés'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneAngleEntreCôtés'
-		si:
-			'polygoneRégulier ?p [ angle_au_centre: ?angle ]
-difference:et:rep: 180 ?angle ?rep1'
-		alors: 'polygoneRégulier ?p [ angle_entre_côtés: ?rep1 ]'
-		com:
-			'L''angle entre côtés  = 180 - angle_au_centre, somme des angles entre rayon et côté'.
-	e
-		lisRegle: 'figuresRectilignes-PolygoneAngleEntreRayonEtCôtés'
-		si:
-			'polygoneRégulier ?p [ angle_entre_côtés: ?angle ]
-quotient:et:rep:  ?angle 2 ?rep1'
-		alors: 'polygoneRégulier ?p  [ angle_entre_rayon_et_côté: ?rep1 ]'
-		com: 'L''angle entre rayon et côtés  = moitié de angle_entre_côtés'.
 
 	"	e
 		lisRegle: 'figuresRectilignes-adjacent2'
@@ -10400,7 +10377,7 @@ different:de: [ ?y3 ?O ]  [  ?y4 ?O ]'
 		com:
 			'Si de l''intersection de deux droites on a des segments reliant deux points de chaque droite, dans un même rapport, un des points est l''image par une homothétie ayant ce point pour centre et de rapport le quotient des mesures des segments correspondant pour chaque droite.'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/5/2025 16:40:35'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/25/2025 11:27:03'!
 interface: e 
 	| t2 |
 	e
@@ -10413,6 +10390,7 @@ interface: e
 		si: 'DrGTextItem ?x ?y ?z ?u  ?w'
 		alors: '?y ?z ?u  ?w'
 		com: 'Donnée sous forme de  texte.'.
+		
 	t2 := e creeRegle: 'interface-DrGPointFreeItem'.
 	t2 antecedents: 'DrGPointFreeItem  ?p '.
 	t2 concl: 'point ?p'.
@@ -10756,6 +10734,8 @@ relationCrée:et:nom: ?dirPar ?dirdd	 parallèle'.
 	t2 concl: 'droite ?d'.
 	t2 com: 'Qualification d''une  droite'.
 	
+	
+	
 	t2 := e creeRegle: 'interface-demi-Droite'.
 	t2 antecedents: 'DrGRay2ptsItem ?dd ?p1 ?p2'.
 	t2 concl: 'demi-droite ?dd ?p1 ?p2'.
@@ -10984,8 +10964,89 @@ trie:rep: [ ?p1 ?p2 ?p3 ] ?rep'
 		alors: 'sorteDeCercle ?a'
 		com: 'Qualification d''une sorte de Cercle'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/5/2025 14:26:34'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 2/13/2026 17:59:06'!
 interfacesuite2:e
+|t2|
+
+
+t2 := e creeRegle: 'interface-Droite2-def2'.
+	t2 antecedents: 'DrGLine2ptsItem ?d ?a  ?b'.
+	t2 concl: 'droite ?a ?b'.
+	t2 com: 'Qualification d''une  droite'.
+	
+e
+		lisRegle: 'interface-droiteParents'
+		si: 'DrGLine2ptsItem ?d ?a  ?b'
+		alors: 'parents ?d  [ ?a  ?b ]'
+		com: 'les intersections de la figure'.
+		
+e
+		lisRegle: 'interface-droiteIntersectionParents1'
+		si: 'parents ?d1 ?par1
+dernier:rep: ?par1 ?dr
+parents ?d2 ?par2
+contient:el: ?par2 ?dr
+different:de: ?d1  ?d2
+'
+		alors: 'intersectionParent ?dr ?d1  ?d2'
+		com: 'les intersections de la figure'.
+		
+e
+		lisRegle: 'interface-droiteIntersectionParents2'
+		si: 'parents ?d1 ?par1
+premier:rep: ?par1 ?pr
+parents ?d2 ?par2
+contient:el: ?par2 ?pr
+different:de: ?d1  ?d2'
+		alors: 'intersectionParent ?pr ?d1  ?d2'
+		com: 'les intersections de la figure'.
+
+			
+
+
+e
+		lisRegle: 'interface-intersectionDroitesConcourantesIntersection1'
+		si: 'intersectionPointCommun ?i ?d1 ?d2
+different:de: ?d1 ?d2'
+ 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
+		com: 'Des droites concourantes  et leur point d''intersection'.
+		
+e
+		lisRegle: 'interface-intersectionDroitesConcourantesIntersection2'
+		si: 'intersection ?i ?d1 ?d2
+different:de: ?d1 ?d2'
+ 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
+		com: 'Des droites concourantes  et leur point d''intersection'.
+		
+e
+		lisRegle: 'interface-intersectionDroitesConcourantesIntersection3'
+		si: 'intersectionParent ?i ?d1 ?d2
+different:de: ?d1 ?d2'
+ 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
+		com: 'Des droites concourantes  et leur point d''intersection'.
+
+	
+		
+		
+e
+		lisRegle: 'interface-intersections'
+		si: 'intersection ?i ?d1 ?d2'
+		alors: 'intersection ?i'
+		com: 'les intersections de la figure'.
+""e
+		lisRegle: 'interface-intersectionPointCommun'
+		si: 'pointSur ?d1 ?i 
+pointSur ?d2 ?i
+different:de: ?d1 ?d2
+ordonneMot:et:rep1:rep2:  ?d1 ?d2  ?d1 ?d2'
+		alors: 'intersectionPointCommun ?i ?d1 ?d2'
+		com: 'Une intersection de ligner qui ont un point en commun. '."
+"
+e
+		lisRegle: 'interface-valeur'
+		si: 'DrGValueValueItem  ?x1 ?x2'
+		alors: 'valeur ?x1 ?x2'
+		com: 'Une valeur affichée'.
 
 e    		lisRegle:'pointSur demi-droite'
 		si:' demi-droite ?dd ?p1 ?p2
@@ -11066,7 +11127,7 @@ com: 'L''origine de la droite est après le parent'.
 "
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 6/7/2025 23:37:09'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/12/2026 23:29:56'!
 interfacesuite: e
 	| t2 |
 	e
@@ -11159,6 +11220,7 @@ pointsSurVirt:droite:rep:  ?dd  ?d  ?x1'
 		com:
 			'Les points sur une demi-droite dans l''ordre suivant le sens de la droite.'.
 "
+
 	e
 		lisRegle: 'interface-pointsSur'
 		si:
@@ -11167,6 +11229,16 @@ pointsSur:rep: ?d ?pts'
 		alors: 'pointsSur ?d ?pts'
 		com:
 			'Les points sur une sorte de droite dans l''ordre suivant le sens de la droite.'.
+			
+				e
+		lisRegle: 'interface-pointsSurCercle'
+		si:
+			'sorteDeCercle ?c ?x2 ?x3
+pointsSurCercle:rep: ?c ?pts'
+		alors: 'pointsSur ?c ?pts'
+		com:
+			'Les points sur une sorte de cercle dans l''ordre suivant le sens de la droite.'.
+			
 			
 			
 	e
@@ -11235,15 +11307,20 @@ ordonneMot:et:rep1:rep2: ?L1 ?L2 ?LL1 ?LL2'.
 	t2 antecedents: 'DrGPointIntersectionItem ?pt ?L1 ?L2 '.
 	t2 concl: 'pointSur ?L2 ?pt'.
 	t2 com: 'Point2 intersection sur un élément géométrique'.
-	t2 := e creeRegle: 'interface-PointSur'.
-	t2 antecedents: 'DrGLine2ptsItem ?D1 ?A ?B'.
-	t2 concl: 'pointSur ?D1 ?A'.
-	t2 com: 'Point sur un élément géométrique'.
-	t2 := e creeRegle: 'interface-PointSurDroite2'.
+	t2 := e creeRegle: 'interface-PointSur1'.
 	t2 antecedents: 'DrGLine2ptsItem ?D1 ?A ?B'.
 	t2 concl: 'pointSur ?D1 ?B'.
 	t2 com: 'Point sur un élément géométrique'.
-
+	
+	t2 := e creeRegle: 'interface-PointSur2'.
+	t2 antecedents: 'DrGLine2ptsItem ?D1 ?A ?B'.
+	t2 concl: 'pointSur ?D1 ?A'.
+	t2 com: 'Point sur un élément géométrique'.
+"	t2 := e creeRegle: 'interface-PointSurDroite2'.
+	t2 antecedents: 'DrGLine2ptsItem ?D1 ?A ?B'.
+	t2 concl: 'pointSur ?D1 ?B'.
+	t2 com: 'Point sur un élément géométrique'.
+"
 	"t2 := e creeRegle: 'interface-Intersection'.
 t2 antecedents: 'pointSur ?o1 ?pt
 pointSur ?o2 ?pt
@@ -11551,7 +11628,8 @@ mot:et:rep: ?i ?res1 ?nom1'
 alors: 'demi-droite ?nom1 ?i ?res1'.
 		 
 e lisRegle: 'interface-demi-droite1' 
-si:  'intersection ?i ?d1 ?d2
+si:  'demi-droite crée
+intersection ?i ?d1 ?d2
 droite ?d1
 droite ?d2
 pointsSur:rep: ?d1 ?l1
@@ -11561,7 +11639,8 @@ alors: 'demi-droite ?nom1 ?i ?res1'
 com: 'Demi-droite sur une droite'.
 
 e lisRegle: 'interface-demi-droite2' 
-si:  'intersection ?i ?d1 ?d2
+si:  'demi-droite crée
+intersection ?i ?d1 ?d2
 droite ?d1
 droite ?d2
 pointsSur:rep: ?d2 ?l2
@@ -11571,7 +11650,8 @@ alors: 'demi-droite ?nom2 ?i ?res2'
 com: 'Demi-droite sur une droite'.
 
 e lisRegle: 'interface-demi-droite3' 
-si:  'intersection ?i ?d1 ?d2
+si:  'demi-droite crée
+intersection ?i ?d1 ?d2
 droite ?d1
 droite ?d2
 pointsSur:rep: ?d1 ?l1
@@ -11581,7 +11661,8 @@ alors: 'demi-droite ?nom1 ?i ?res1'
 com: 'Demi-droite sur une droite'.
 
 e lisRegle: 'interface-demi-droite4' 
-si:  'intersection ?i ?d1 ?d2
+si:  'demi-droite crée
+intersection ?i ?d1 ?d2
 droite ?d1
 droite ?d2
 pointsSur:rep: ?d2 ?l2
@@ -12009,10 +12090,21 @@ ordonneMot:et:rep1:rep2: [  ?b1 ?c1 ?a1  ]    [ ?b2 ?c2 ?a2  ] ?ang1 ?ang2
 different:de: ?t1 ?t2'
 		alors: 'isométrique [ ?ang1 ] [  ?ang2 ]'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/25/2025 22:12:35'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 2/8/2026 19:48:24'!
 isometrieRegles: e
 	| r |
 	"Angles"
+	
+	e lisRegle: 'isométrie-Relation'
+	 si:  'médiatrice ?m   [ ?a ?c ]
+pointSur ?m ?b
+ordonneMot:et:rep1:rep2:  ?b ?a ?aa ?bb
+segment ?s1 [ ?aa ?bb ]
+ordonneMot:et:rep1:rep2:  ?b ?c ?cc ?bbb
+segment ?s2 [ ?cc ?bbb ]'
+
+	alors:  'relationCréée ?s1 ?s2 isométrique'
+	com:  'Relation créée à partir d''un fait: isométrique ?x1 ?x2'.
 	e
 		lisRegle: 'isométrie-milieu'
 		si:
@@ -12023,12 +12115,12 @@ relationCrée:et:nom:  [ ?x ?m ] [ ?y ?m ] isométrique '
 			'Le segmentqui relie l''origine d''un segment à son milieu est isométrique au segment qui relie son milieu à son extrémité.'.
 	e
 		lisRegle: 'isométrie-AlternesInternes'
-		si: 'angle ?a1 [  alterneInterne: ?a2 ]'
+		si: 'angle0 ?a1 [  alterneInterne: ?a2 ]'
 		alors: 'isométrique ?a1 ?a2'
 		com: 'Des angles Alternes Internes sont isométriques'.
 	e
 		lisRegle: 'isométrie-AlternesExternes'
-		si: 'angle ?a1 [  alterneExterne: ?a2 ]'
+		si: 'angle0 ?a1 [  alterneExterne: ?a2 ]'
 		alors: 'isométrique ?a1 ?a2'
 		com: 'Des angles Alternes Internes sont isométriques'.
 
@@ -12094,12 +12186,11 @@ different:de: ?s1 ?s2'
 		alors: 'relationCréée  ?s1 ?s2 isométrique'
 		com:
 			'Si les extrémités de deux segments sont des couples isométriques, alors les segments sont isométriques.'."
-	"
+	
 	e
 		lisRegle: 'isométrie-segmentsIsocèles'
 		si:
-			'adjacent  ?s1 ?s2 ?a ?b ?c
-médiatrice ?m   End of statement list encountered ->[ ?a ?c ]
+			'médiatrice ?m   [ ?a ?c ]
 pointSur ?m ?b'
 		alors: 'isométrique ?s1 ?s2'
 		com:
@@ -12124,7 +12215,7 @@ médiatrice ?m  [ ?c ?a ]
 pointSur ?m ?b'
 		alors: 'isométrique [ ?a ?b ] [ ?b ?c ]'
 		com:
-			'Des couples adjacents dont le sommet est sur la médiatrice de leur autre extrémité sont isométriques.'."
+			'Des couples adjacents dont le sommet est sur la médiatrice de leur autre extrémité sont isométriques.'.
 	e
 		lisRegle: 'isométrie-CoupleExplicite'
 		si:
@@ -13949,7 +14040,7 @@ alors:'joueur ?j'.
 
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/28/2025 23:00:47'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/12/2026 13:03:47'!
 objetsSur: e
 	| i |
 	"e lisRegle: 'interface-Polygone6' 
@@ -14041,14 +14132,14 @@ different:de: ?x ?y'
 		alors: 'intersection ?i ?y ?x'
 		com:
 			'Si il y a une intersection sur un segment et ce segment sur cette droite, alors l''intersection est aussi sur la droite'.
-	e
+"	e
 		lisRegle: 'objetsSur-pointSurAlignement'
 		si:
 			'angle  [ ?x ?y ?z ] plat
 segment ?s [ ?x ?z ]'
 		alors: 'pointSur ?s ?y '
 		com:
-			'Le sommet d''un angle plat est sur le segment qui a pour extrémités les points de l''angle autres que le sommet,'.
+			'Le sommet d''un angle plat est sur le segment qui a pour extrémités les points de l''angle autres que le sommet,'."
 	e
 		lisRegle: 'objetsSur-Milieu'
 		si:
@@ -14767,7 +14858,7 @@ justeAprès:el:rep: ?pts ?O ?x'
 			'position  ?x Avant ?y ?d1
 position  ?x Après ?z ?d1
 different:de: ?y ?z'
-		alors: 'entre ?x ?y  ?z ?d1'
+		alors: 'entre ?x ?z  ?y ?d1'
 		com: 'Un point sur une droite entre deux points.'.
 	e
 		lisRegle: 'objetsSur-PerpendiculaireCouple'
@@ -15778,10 +15869,10 @@ different:de: ?i1 ?i2'
 		com: 'Des segments de même directions  sont parallèles.'
 "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/1/2025 22:44:57'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/18/2025 15:48:46'!
 polygones: e
 
-	e lisRegle: 'polygones-lignePolygonaleFerméeSegment'
+	e lisRegle: 'polygones-lignePolygonaleFermée2'
 		si:	'lignePolygonale ?lp
 dernier:rep: ?lp ?der
 premier:rep: ?lp ?prem 
@@ -15794,40 +15885,65 @@ premier:rep: ?ptsPrem ?debut
 segment ?sf [ ?debut ?fin ]
 ajouteDernierUnique:el:rep: ?lp  [ ?sf ?debut ?fin ] ?lf'
 	alors: 'lignePolygonaleFermée ?lf'
-	com:  'Une ligne polygonale de segments  fermée'.
-	
-
+	com:  'Une ligne polygonale fermée'.
 	
 	e lisRegle: 'polygones-Sommets0' 
-si:  'lignePolygonale ?lf 
+si:  'lignePolygonaleFermée ?lf 
 saufPremiers:rep: ?lf ?lsp
 premiers:rep: ?lsp ?lso
 derniers:rep: ?lsp ?lsd
 dernier:rep: ?lsd ?dder
-ajouteDernier:el:rep: ?lso ?dder ?res'
-alors:  'sommets  ?res'
+ajouteDernier:el:rep: ?lso ?dder ?res
+saufDernier:rep: ?res  ?res1
+saufDernier:rep: ?res1  ?res2
+dernier:rep: ?res ?fin2
+ajouteDernier:el:rep: ?res2 ?fin2 ?res3
+'
+alors:  'sommets ?lf ?res3'
+com:  'Les points de la lignePolygonale sont les sommets
+du polygone formé par cette ligne'.
+
+	e lisRegle: 'polygones-Sommets0' 
+si:  'lignePolygonaleFermée ?lf 
+saufPremiers:rep: ?lf ?lsp
+premiers:rep: ?lsp ?lso
+derniers:rep: ?lsp ?lsd
+dernier:rep: ?lsd ?dder
+ajouteDernier:el:rep: ?lso ?dder ?res
+saufDernier:rep: ?res  ?res1
+saufDernier:rep: ?res1  ?res2
+dernier:rep: ?res ?fin2
+ajouteDernier:el:rep: ?res2 ?fin2 ?res3
+'
+alors:  'sommets ?lf  ?res3'
+com:  'Les points de la lignePolygonale sont les sommets
+du polygone formé par cette ligne'.
+
+e lisRegle: 'polygones-Sommets' 
+si:  'lignePolygonaleFermée ?lf 
+sommets ?lf  ?res3
+créeNom:rep: ?res3 ?res'
+alors:  'polygone ?res [ sommets:  ?res3 ]'
 com:  'Les points de la lignePolygonale sont les sommets
 du polygone formé par cette ligne'.
 	
 e
-		lisRegle: 'polygones-créeNomPolygone2'
-		si:'lignePolygonaleFermée ?l
-sommets ?som
-créeNom:rep: ?som  ?nomPoly'
-		alors: 'polygone  ?nomPoly' 
+		lisRegle: 'polygones-NomGrecPolygoneRégulier'
+		si:'polygoneRégulier ?x1  [ sommets: ?x2 ] ] 
+taille:rep: ?xparf1 ?t
+nomPolygone:rep: ?t ?res'
+		alors: 'polygone  ?x1 ?res' 
 		com: 'Un nom pour le polygone'.
 	
 	e
 		lisRegle: 'polygones-NomGrecPolygone'
-		si:' polygone ?nom 
-sommets ?s
+		si:'polygone ?nom [ sommets: ?s ]
 taille:rep: ?s ?t
-nomPolygone:rep: ?t ?res
-polygone  ?nomPoly'
-alors:'polygone ?nomPoly [ nomGrec: ?res ]'
+nomPolygone:rep: ?t ?res'
+alors:'polygone ?nom [ nomGrec: ?res ]'
 		com: 'Le  nom grec du polygone'.
 e lisRegle: 'polygones-côtés' 
-si:  'polygone ?nom 
+si:  'polygone ?nom ?x
 lignePolygonaleFermée ?lf
 premiers:rep: ?lf ?cot'
 alors:  'polygone ?nom [ côtés: ?cot ]'
@@ -15872,33 +15988,6 @@ adjacent ?sp ?s2 ?a ?b ?c
 ajouteDernierUnique:el:rep: ?l [ ?s2   ?b ?c ] ?l2'
 		alors: 'lignePolygonale ?l2'
 		com: 'Une lignePolygonale qui peut être fermée par un dernier segment'.
-		
-			
-		e lisRegle: 'polygones-lignePolygonaleOuverte'
-		si: 'lignePolygonale ?l'	
-		alors:'lignePolygonaleOuverte ?l'
-		com: 'Une lignePolygonale ouverte'.
-	
- 	
-		e lisRegle: 'polygones-lignePolygonaleSegments'
-		si: 'lignePolygonaleOuverte ?l
-premier:rep: ?l ?prem
-premier:rep: ?prem ?pprem
-segment ?pprem'	
-		alors:'lignePolygonaleSegments ?l'
-		com: 'Une lignePolygonale de segments'.
-		
-		e lisRegle: 'polygones-lignePolygonalecouples'
-		si:  'lignePolygonaleOuverte  ?l
-premier:rep: ?l ?prem
-premier:rep: ?prem ?pprem
-saufPremier:rep: ?prem  ?couple
-égaux:et: ?pprem ?couple'	
-		alors:'lignePolygonaleCouples ?l'
-		com: 'Une lignePolygonale de couples'.		
-		
-		
-		
 	e
 		lisRegle: 'polygones-lignePolygonaleRetrait1'
 		si:
@@ -15911,6 +16000,124 @@ retireFait: lignePolygonale ?l1'
 		alors: 'lignePolygonale0 ?l1'
 		com:'Des parties de lignePolygonales retirées pour ne garder que la lignePolygonale la plus longue'.
 		
+	e
+		lisRegle: 'polygones-PolygoneRégulierRayons'
+		si:
+			'polygoneRégulier?p [  sommets: ?s ]
+polygone ?p [  centre: ?c ]
+point ?x
+contient:el: ?s ?x
+ordonneMot:et:rep1:rep2: ?c ?x ?cc ?xx'
+		alors: 'polygone ?p [ rayon: [ ?cc ?xx  ] ]'
+		com:
+			'Un rayon de polygone relie un sommet au centre du polygone, c''est aussi un rayon du cercle circonscrit au polygone'.
+	e
+		lisRegle: 'polygones-PolygoneRégulieNbcôtés'
+		si: 'polygoneRégulier ?x1 [ nombre_de_sommets: ?x6 ] ]'
+		alors: 'polygoneRégulier ?x1 [ nombre_de_côtés: ?x6 ] ]'
+		com:
+			'Un polygoneRégulier régulier: a un nombre de côtés égal au nombre de sommets'.
+	e
+		lisRegle: 'polygones-PolygoneRégulieSommets'
+		si: 'DrGPolygonRegularItem  ?x1 ?x2 ?x3 ?x4 ?x5 ?x6'
+		alors: 'polygoneRégulier ?x1  [ sommets: ?x2 ] ]'
+		com:
+			'Les sommets d''un polygone régulier de n côtés, en bleu le sommet qui définit le polygone, ajoute les sommets, si nécessaires'.
+	e
+		lisRegle: 'polygones-Polygone3def'
+		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: 3 ] ]'
+		alors: 'polygoneRégulier  ?x1 [  quadrilatère ]'
+		com: 'Un polygone de 3sommets définit un triangle'.
+	e
+		lisRegle: 'polygones-Polygone4def'
+		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: 4] ]'
+		alors: 'polygoneRégulier  ?x1 [  quadrilatère ]'
+		com: 'Un polygone de 4 sommets définit un quadrilatère'.
+	e
+		lisRegle: 'polygones-PolygoneNomCôté<=100'
+		si:
+			'polygoneRégulier ?x1 [ nombre_de_côtés: ?nc ]
+inférieurOuEgal:à: ?nc  100
+nomPolygone:rep: ?nc ?res'
+		alors: 'polygoneRégulier  ?x1 [ nom:   ?res ]'
+		com: 'nomme un polygone de moins de cent côtés selon la nomenclatutre'.
+	e
+		lisRegle: 'polygones-PolygoneNomGénéral'
+		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: ?nc ]'
+		alors: 'figure  ?x1  PolygoneRégulier'
+		com: 'nomme un polygone régulier'.
+	e
+		lisRegle: 'polygones-PolygoneCréeDernierCôtés1'
+		si:
+			'créeCôtés ?c [ ?x ]
+premier:rep: ?c ?p
+premier:rep: ?p ?p1
+addLast:el:rep: ?c  [ ?x ?p1 ] ?res
+retireFait: créeCôtés ?c [ ?x ]'
+		alors: 'créeCôtés ?res'
+		com:
+			'Crée le dernier côtés d''un polygone à partir de ses sommets reliant le dernier sommet au premier'.
+	e
+		lisRegle: 'polygones-PolygoneCôtés'
+		si: 'créeCôtés ?res'
+		alors: 'polygoneRégulier ?x1  [ côtés: ?res ] ]'
+		com: 'Les côtés d''un polygone régulier de n côtés.'.
+	e
+		lisRegle: 'polygones-PolygoneCréeCôtés'
+		si:
+			'créeCôtés ?c ?som
+retireFait: créeCôtés ?c ?som
+premier:rep: ?som ?p
+saufPremier:rep: ?som ?sp
+premier:rep: ?sp ?p2
+addLast:el:rep: ?c  [  ?p ?p2 ] ?res'
+		alors: 'créeCôtés ?res ?sp'
+		com: 'Crée les côtés d''un polygone à partir de ses sommets'.
+	e
+		lisRegle: 'polygones-quadrilatèrePérimètre'
+		si: 'polygone Tetragone?q [ périmètre:  ?p ]'
+		alors: 'quadrilatère ?q [  périmètre:  ?p ]'
+		com: 'Le périmètre d''un quadrilatèe'.
+	e
+		lisRegle: 'polygones-polygoneCréeCôté'
+		si:
+			'DrGPolygonRegularItem  ?x1 ?x2 ?x3 ?x4 ?x5 ?x6
+premier:rep: ?x2 ?p
+saufPremier:rep: ?x2 ?sp
+premier:rep: ?sp ?p2'
+		alors: 'créeCôtés [  [  ?p ?p2  ]  ] ?sp '.
+	e
+		lisRegle: 'polygones-PolygoneCôtésDef'
+		si:
+			'créeCôtés  ?c ?x
+polygoneRégulier ?p [  nombre_de_côtés: ?nc ]
+taille:rep: ?c ?tc
+égaux:et: ?nc ?tc
+retireFait: créeCôtés  ?c ?x'
+		alors: 'polygoneRégulier ?p [ côtés: ?c ]'
+		com: 'Arrête la création des côtés d''un polygone à partir de ses sommets'.
+	e
+		lisRegle: 'polygones-PolygoneAngleAuCentre'
+		si:
+			'polygoneRégulier ?p [  nombre_de_sommets: ?n ]
+quotient:et:rep: 360 ?n ?angle'
+		alors: 'polygoneRégulier ?p [ angle_au_centre: ?angle ]'
+		com: 'L''angle au centre = 360 / nombre_de_côtés'.
+	e
+		lisRegle: 'polygones-PolygoneAngleEntreCôtés'
+		si:
+			'polygoneRégulier ?p [ angle_au_centre: ?angle ]
+difference:et:rep: 180 ?angle ?rep1'
+		alors: 'polygoneRégulier ?p [ angle_entre_côtés: ?rep1 ]'
+		com:
+			'L''angle entre côtés  = 180 - angle_au_centre, somme des angles entre rayon et côté'.
+	e
+		lisRegle: ' polygones-PolygoneAngleEntreRayonEtCôtés'
+		si:
+			'polygoneRégulier ?p [ angle_entre_côtés: ?angle ]
+quotient:et:rep:  ?angle 2 ?rep1'
+		alors: 'polygoneRégulier ?p  [ angle_entre_rayon_et_côté: ?rep1 ]'
+		com: 'L''angle entre rayon et côtés  = moitié de angle_entre_côtés'.
 
 	
 	
@@ -16329,7 +16536,7 @@ créeNom:rep: ?som ?nomPoly
 '
 		alors: '?nomPoly  [ côtés:  ?l2  ]' "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 8/17/2023 09:47'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/29/2025 15:26:56'!
 relations: e
 	e
 		lisRegle: 'relations-RelationExplicite'
@@ -16338,19 +16545,34 @@ relations: e
 relationCréée  ?obj1 ?obj2 ?rel
 ordonneMot:et:rep1:rep2:  ?obj1 ?obj2  ?oobj1 ?oobj2'
 		alors: '?rel ?oobj1 ?oobj2'
-		com: 'Affirmaion explicite d''une relation.'.
-	e
+		com: 'Affirmations explicites d''une relation.'.
+	"e
 		lisRegle: 'relations-def'
 		si:
 			'relation ?rel 
 relation:rep: ?rel ?rep'
-		alors: 'relation ?rel ?rep'.
+		alors: 'relation ?rel ?rep'."
 	e
 		lisRegle: 'relations-isométrieCréation'
 		si:
 			'isométrique ?a ?b
 relationCrée:et:nom: ?a ?b isométrique'
 		alors: 'relation isométrique  ?a ?b créée'.
+		
+		
+		e
+		lisRegle: 'relation-DroitesConcourantesRelation'
+		si: 'relation ?d1 ?d2 [ concourante: ?i ]
+mot:et:rep: ?d1 _ ?r1
+mot:et:rep: ?d2 _ ?r2
+mot:et:rep: ?r1 ?i  ?dd1
+mot:et:rep: ?r2 ?i  ?dd2
+relationCrée:et:nom: ?dd1 ?dd2 concourante' 
+		alors: ' relationCréée ?dd1 ?dd2 concourante '
+		com: 'Des droites concourantes  sont en relation par leur point d''intersection'.
+		
+
+
 	e
 		lisRegle: 'relations-angleEquivalentCréation'
 		si:
