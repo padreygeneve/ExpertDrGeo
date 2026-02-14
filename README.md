@@ -1,3 +1,8 @@
+La version en fichier compressé pour  windows se trouve à l'adresse 
+https://launchpad.net/drgeo/+download
+
+il y a aussi la version 1909 Pharo à la même adresse.
+
 le fichier  présentation
 Donne une brève introduction au système expert et décrit les ajouts à DrGeo
 Mais il y a une meilleure version en .pdf avec geoEtexpert.pdf
