@@ -1,3 +1,9 @@
+le fichier  présentation
+
+Donne une brève introduction au système expert et décrit les ajouts à DrGeo
+
+
+
 ---------------------------------------------------------------------------------------
 DrGeo Pharo version 1909
 
