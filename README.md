@@ -3,9 +3,10 @@ https://launchpad.net/drgeo/+download
 
 il y a aussi la version 1909 Pharo à la même adresse.
 
-le fichier  présentation
-Donne une brève introduction au système expert et décrit les ajouts à DrGeo
-Mais il y a une meilleure version en .pdf avec geoEtexpert.pdf
+ fichier  de présentation du système expert:
+
+  en .pdf avec geoEtexpert.pdf
+  en raw sous le nom presentation.
 
 
 
