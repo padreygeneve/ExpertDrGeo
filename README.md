@@ -20,7 +20,7 @@ tèlècharger depuis ce site les fichiers, ouvrir  CUIS DrGeo et laisser draguer
 - Myexpert.pck.st
 
 ---------------------------------------------------------------------------------------
-Le système expert est une adaptation ne cours de la version 1909 de DrGeo Pharo,
+Le système expert est une adaptation en cours de la version 1909 pour DrGeo Pharo,
 
 **Système expert pour DrGeo Pharo version 1909**
 le lien pour installer  DrGeo Pharo en fichier compressé :
@@ -34,20 +34,13 @@ Pour installer le système expert,télécharger et laisser tomber dans DrGeo Pha
 ExpertDrGeo1909.cs
 
 ----------------------------------------------------------------------------------------
+** Installing the Expert system for CUIS DrGeo**
 
-Additions in the Erudite section: Expert System
-You need to load in this order
+You need to download in this order from this site the files:
 - DrGeo.pck.st
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
-- Be sure that filename ends with .pck.st
-
-
-Install these packages either by:
-- Dragging these files into DrGeo
-- Or placing them in the DrGeo/NewPackage folder and using Open a file / Install package to install them.
-
-new update 26 07 202
+- Be sure that filename ends with .pck.st and just drop the files into DrGeo.
 
 This expert system is an extension of DrGeo. It contains rules to make deductions from DrGeo figures. It is used with the DrGeo script editor, adding a submenu "Expert" to the figure menu for a user-friendly experience, but can also be used with script commands. Different sets of rules allow it to be used for applications other than geometry; one set of rules allows it to handle problems on resistance circuits in e
 
