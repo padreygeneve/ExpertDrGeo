@@ -2,26 +2,36 @@
  **fichier  de présentation du système expert:**
 
   en .pdf avec geoEtexpert.pdf
-  en raw sous le nom presentation.
+  ( aussi en raw sous le nom presentation.)
 
 
 -----------------------------------------------------------------------------------------
 
-**Téléchargements**
+**Téléchargements de Cuis DrGeo**
 
-La version de DrGeoCuis en fichier compressé pour windows se trouve à l'adresse: 
-https://launchpad.net/drgeo/+download
+La version 24.06a de DrGeoCuis en fichier compressé pour windows ou mlinuse trouve à l'adresse: 
+https://github.com/Dynamic-Book/DrGeo/releases
 
-il y a aussià cette la version 1909 Pharo à la même adresse.
+**Installation du système expert dana CUIS DrGeo**
+
+tèlècharger depuis ce site les fichiers, ouvrir  CUIS DrGeo et laisser draguer ces fichiers et les lâcher dans CUIS DrGeo dans l'ordre ci-dessous.
+- DrGeo.pck.st
+- DrGeoFrench.pck.st
+- Myexpert.pck.st
 
 ---------------------------------------------------------------------------------------
-DrGeo Pharo version 1909
+Le système expert est une adaptation ne cours de la version 1909 de DrGeo Pharo,
 
-Système expert pour DrGeo Pharo version 1909
+**Système expert pour DrGeo Pharo version 1909**
+le lien pour installer  DrGeo Pharo en fichier compressé :
+https://launchpad.net/drgeo/+download
 
-Le fichier ExpertDrGeo1909.cs installe le système expert dans la version DrGeo Pharo 1909.
 
+**Installation du système expert**
 
+Pour installer le système expert,télécharger et laisser tomber dans DrGeo Pharo le fichier ci-dessous depuis ce site.
+
+ExpertDrGeo1909.cs
 
 ----------------------------------------------------------------------------------------
 
