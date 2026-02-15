@@ -20,12 +20,12 @@ tèlècharger depuis ce site les fichiers, ouvrir  CUIS DrGeo et laisser draguer
 - Myexpert.pck.st
 
 ---------------------------------------------------------------------------------------
-Le système expert est une adaptation en cours de la version 1909 pour DrGeo Pharo,
+Ce système expert est une adaptation en cours de la version 1909 pour DrGeo Pharo,
 
 **Système expert pour DrGeo Pharo version 1909**
 le lien pour installer  DrGeo Pharo en fichier compressé :
-https://launchpad.net/drgeo/+download
 
+https://launchpad.net/drgeo/+download
 
 **Installation du système expert**
 
