@@ -24,8 +24,10 @@ le package Foctionne pour:
    - droites
    - angles
    - cercle
+   - 
 .......................................................................................................................
- **fichier  de présentation du système expert:**
+     
+ **Présentation plus complète du système expert:**
 
   en .pdf avec geoEtexpert.pdf
   ( aussi en raw sous le nom presentation.)
@@ -78,6 +80,12 @@ testExpertNew3Drivebackup2.pdf
 Pour obtenir unfigure dans DrGeo Pharo deuis le pdf, copier le script de la figure dans le pdf, puis, dans DrGeo Pharo, coller dans un espace de travail.
 
 ----------------------------------------------------------------------------------------
+
+**Abstract**
+
+ntroduction This expert system contains rules for making deductions from DrGeo figures. It is used with DrGeo’s script editor; it adds an Expert submenu to the figure’s menu for user-friendly use, but it can also be used with scripting commands. Different rule sets allow it to be used for applications beyond geometry; one rule set can handle problems on electrical resistance circuits and to process circuits drawn with DrGeo.
+
+It is possible to work on one’s own topic by creating one’s own rules. In the context of an IT course, it helps illustrate the logical path of AI, as opposed to the path of neuromimetism. It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
 ----------------------------------------------------------------------------------------
 **Installing the Expert system for CUIS DrGeo**
 
