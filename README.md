@@ -33,6 +33,8 @@ Pour installer le système expert, télécharger depuis ce site et draguer dans 
 
 ExpertDrGeo1909.cs
 
+Pour la documentaation 
+
 ----------------------------------------------------------------------------------------
 ** Installing the Expert system for CUIS DrGeo**
 
