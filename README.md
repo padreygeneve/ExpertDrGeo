@@ -19,6 +19,9 @@ tèlècharger depuis ce site les fichiers, ouvrir  CUIS DrGeo et laisser draguer
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
 
+Remarque:
+  - avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
+
 ---------------------------------------------------------------------------------------
 Ce système expert est une adaptation en cours de la version 1909 pour DrGeo Pharo,
 
@@ -31,18 +34,25 @@ https://launchpad.net/drgeo/+download
 
 Pour installer le système expert, télécharger depuis ce site et draguer dans DrGeo Pharo le fichier ci-dessous.
 
+Remarque: 
+
+
+
 ExpertDrGeo1909.cs
 
-**Pour la documentaation **
+Remarque:
+  - avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
-télécahrgerdepuis ce site le pdf :
+**Pour la documentaation**
+
+télécahrger depuis ce site le pdf :
 
 testExpertNew3Drivebackup2.pdf
 
-Pour obtenir une  figure dans DrGeo Pharo deuis le pdf, copier le script de la figure dans le pdf, puis dans DrGeo Pharo, coller dans un espace de travail.
+Pour obtenir unfigure dans DrGeo Pharo deuis le pdf, copier le script de la figure dans le pdf, puis, dans DrGeo Pharo, coller dans un espace de travail.
 
 ----------------------------------------------------------------------------------------
-** Installing the Expert system for CUIS DrGeo**
+**Installing the Expert system for CUIS DrGeo**
 
 You need to download in this order from this site the files:
 - DrGeo.pck.st
@@ -58,31 +68,9 @@ It is possible to pas process any subject by creating your own rules. In the con
 
 !!! Experimental version: the package works for: The tutorial, interactive use, the first chapters of Geometry and Expert System, not all predicates are verified !!!
 
-********************************************************************************************************************************
-Nouvelle mise à jour  1.10.2025
+******************************************************************************************************************************
 
-
-Ajouts dans Erudite  section: Système Expert.
-
-ll faut charger dans cet ordre:
-- DrGeo.pck.st
-- DrGeoFrench.pck.st
-- Myexpert.pck.st
-
-- avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
-
-Intaller ces Packages
-soit en lâchant ces fichiers dans DrGeo 
-soit en les mettant dans le dossier DrGeo/NewPackage et en utilisant /ouvrir un fichier/ installe package  pour les installer.
-
-Dernière mise à jour 26 07 2025 
-
-Ce site permet d'ajouter un système expert au programme DrGeo ce qui permet d'obtenir 
-des déductons à partir d'une figure.
-
-Vous pouvez télécharger CUIS DrGeo-windows-24.06a-beta  à: https://github.com/Dynamic-Book/drgeo
-
-  
+**Introduction**  
 Ce système expert contient des règles pour faire des deductions à partir de figures DrGeo.
 Il s'utilise avec l'éditeur de script de DrGeo, il ajoute au menu de la figure un sous menu Expert pour son  utilisation conviviale mais peut aussi s'utiliser avec des commandes de script.
 Différents jeux de règles permettent de l'utiliser pour d'autres applications que la géométrie; un jeu de règles permet de traiter des problèmes sur les circuits de résistances en électricité est
@@ -93,21 +81,19 @@ Dans le cadre d'un cours d'informatique il permet d'illustrer la voie logique de
 Il peut aussi être  considéré  comme une simplification de Prolog, de la même manière que Logo est une simplification de LISP.
 
 
-!!! version expérimentale  le package Foctionne pour:
-  Le tutoriel,
-  l'utilisation interactive,
-  Les premiers chapitres de Géométrie et système Expert,
-  Les prédicats ne sont pas tous vérifiés.
+!!! version expérimentale.
 
-Installation.
-  
-Télécharger et installer CUIS DrGeo-windows-24.06a-beta  à: https://github.com/Dynamic-Book/drgeo
+- Les prédicats ne sont pas tous vérifiés.
 
-Telecharger les fichiers:m
-Ovrir Drgeo et lâcher  DrGeoFrench.pck.st 
-dans la fenêtre. Dans le menu qui s'ouvre choisir installPackage.
+le package Foctionne pour:
+ - Le tutoriel.
+ - L'utilisation interactive.
+ - Les premiers chapitres de **Géométrie et système Exper**
+   - point
+   - segment
+   - droites
+   - angles
+   - cercle
 
-faire de même avec le fivhier Myexpert.pck.st
 
-cliquer dans le fond et choirOutils/Editer une figure Smalltalkp
-Ouvrir Erudite et utilisr les articles du sous menu Expert.
+
