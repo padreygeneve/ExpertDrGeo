@@ -33,7 +33,13 @@ Pour installer le système expert, télécharger depuis ce site et draguer dans 
 
 ExpertDrGeo1909.cs
 
-Pour la documentaation 
+**Pour la documentaation **
+
+télécahrgerdepuis ce site le pdf :
+
+testExpertNew3Drivebackup2.pdf
+
+Pour obtenir une  figure dans DrGeo Pharo deuis le pdf, copier le script de la figure dans le pdf, puis dans DrGeo Pharo, coller dans un espace de travail.
 
 ----------------------------------------------------------------------------------------
 ** Installing the Expert system for CUIS DrGeo**
