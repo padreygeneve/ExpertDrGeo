@@ -83,8 +83,7 @@ Pour obtenir unfigure dans DrGeo Pharo deuis le pdf, copier le script de la figu
 
 **Abstract**
 
-ntroduction This expert system contains rules for making deductions from DrGeo figures. It is used with DrGeo’s script editor; it adds an Expert submenu to the figure’s menu for user-friendly use, but it can also be used with scripting commands. Different rule sets allow it to be used for applications beyond geometry; one rule set can handle problems on electrical resistance circuits and to process circuits drawn with DrGeo.
-
+This expert system contains rules for making deductions from DrGeo figures. It is used with DrGeo’s script editor; it adds an Expert submenu to the figure’s menu for user-friendly use, but it can also be used with scripting commands. Different rule sets allow it to be used for applications beyond geometry; one rule set can handle problems on electrical resistance circuits and to process circuits drawn with DrGeo.
 It is possible to work on one’s own topic by creating one’s own rules. In the context of an IT course, it helps illustrate the logical path of AI, as opposed to the path of neuromimetism. It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
 ----------------------------------------------------------------------------------------
 **Installing the Expert system for CUIS DrGeo**
