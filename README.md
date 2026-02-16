@@ -48,7 +48,7 @@ tèlècharger depuis ce site les fichiers, ouvrir  CUIS DrGeo et laisser draguer
 - Myexpert.pck.st
 
 Remarque:
-  - avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
+  - avec Windows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
 ---------------------------------------------------------------------------------------
 Ce système expert est une adaptation en cours de la version 1909 pour DrGeo Pharo,
@@ -69,7 +69,7 @@ Remarque:
 ExpertDrGeo1909.cs
 
 Remarque:
-  - avec Wnidows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
+  - avec windows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
 **Pour la documentaation**
 
