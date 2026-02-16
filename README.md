@@ -2,14 +2,24 @@
 
 **Introduction**  
 Ce système expert contient des règles pour faire des deductions à partir de figures DrGeo.
-Il s'utilise avec l'éditeur de script de DrGeo, il ajoute au menu de la figure un sous menu Expert pour son  utilisation conviviale mais peut aussi s'utiliser avec des commandes de script.
-Différents jeux de règles permettent de l'utiliser pour d'autres applications que la géométrie; un jeu de règles permet de traiter des problèmes sur les circuits de résistances en électricité est
+Il s'utilise avec l'éditeur de script de DrGeo, avec des commandes de script.
+Pour une utilisation conviviale, au menu de la figure un sous menu Expert est ajouté.
+mais peut aussi s'utiliser.
+Différents jeux de règles permettent de l'utiliser pour d'autres applications que la géométrie.
+
+Un jeu de règles permet de traiter des problèmes sur les circuits de résistances en électricité et
 de traiter des circuits dessinés avec DrGeo.
+Des exemples simples avec peu de règles.
 
-Il est possibles de traiter son propre sujet en créant ses des règles.
+  - Accord de participes passés.
+  - Jeu du morpion.
+  - Carré magique.
+
+Un trutoriel permet d'apprendre à traiter son propre sujet en créant ses propres règles.
+
 Dans le cadre d'un cours d'informatique il permet d'illustrer la voie logique de l'AI, opposée à la voie du neuro-mimétisme.
-Il peut aussi être  considéré  comme une simplification de Prolog, de la même manière que Logo est une simplification de LISP.
 
+Il peut aussi être  considéré  comme une simplification de Prolog, de la même manière que Logo est une simplification de LISP.
 
 !!! version expérimentale.
 
