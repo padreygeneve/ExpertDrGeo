@@ -83,8 +83,9 @@ Pour obtenir unfigure dans DrGeo Pharo deuis le pdf, copier le script de la figu
 
 **Abstract**
 
-This expert system contains rules for making deductions from DrGeo figures. It is used with DrGeo’s script editor; it adds an Expert submenu to the figure’s menu for user-friendly use, but it can also be used with scripting commands. Different rule sets allow it to be used for applications beyond geometry; one rule set can handle problems on electrical resistance circuits and to process circuits drawn with DrGeo.
+ This expert system contains rules for making deductions from DrGeo figures. It is used with DrGeo’s script editor; it adds an Expert submenu to the figure’s menu for user-friendly use, but it can also be used with scripting commands. Different rule sets allow it to be used for applications beyond geometry; one rule set can handle problems on electrical resistance circuits and to process circuits drawn with DrGeo.
 It is possible to work on one’s own topic by creating one’s own rules. In the context of an IT course, it helps illustrate the logical path of AI, as opposed to the path of neuromimetism. It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
+
 ----------------------------------------------------------------------------------------
 **Installing the Expert system for CUIS DrGeo**
 
@@ -93,10 +94,6 @@ You need to download in this order from this site the files:
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
 - Be sure that filename ends with .pck.st and just drop the files into DrGeo.
-
-This expert system is an extension of DrGeo. It contains rules to make deductions from DrGeo figures. It is used with the DrGeo script editor, adding a submenu "Expert" to the figure menu for a user-friendly experience, but can also be used with script commands. Different sets of rules allow it to be used for applications other than geometry; one set of rules allows it to handle problems on resistance circuits in electricity and to handle circuits drawn with DrGeo.
-
-It is possible to pas process any subject by creating your own rules. In the context of a computer science course, it helps illustrate the logical pathway of AI, as opposed to the neuro-mimetic approach. It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
 
 !!! Experimental version: the package works for: The tutorial, interactive use, the first chapters of Geometry and Expert System, not all predicates are verified !!!
 
