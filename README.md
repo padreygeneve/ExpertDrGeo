@@ -18,7 +18,7 @@ Il peut aussi être  considéré  comme une simplification de Prolog, de la mêm
 le package Foctionne pour:
  - Le tutoriel.
  - L'utilisation interactive.
- - Les premiers chapitres de **Géométrie et système Exper**
+ - Les premiers chapitres de **Géométrie et système Expert**
    - point
    - segment
    - droites
