@@ -3,7 +3,7 @@
 Ce système expert contient des règles pour faire des deductions à partir de figures DrGeo.
 Il s'utilise avec l'éditeur de script de DrGeo, avec des commandes de script.
 Pour une utilisation conviviale, au menu de la figure un sous menu Expert est ajouté.
-mais peut aussi s'utiliser.
+
 Différents jeux de règles permettent de l'utiliser pour d'autres applications que la géométrie.
 
 Un jeu de règles permet de traiter des problèmes sur les circuits de résistances en électricité et
@@ -68,7 +68,7 @@ télécahrger depuis ce site le pdf :
 
 testExpertNew3Drivebackup2.pdf
 
-Pour obtenir unfigure dans DrGeo Pharo deuis le pdf, copier le script de la figure dans le pdf, puis, dans DrGeo Pharo, coller dans un espace de travail.
+Pour obtenir une figure dans DrGeo Pharo dans le pdf, copier le script de la figure dans le pdf, puis, dans DrGeo Pharo, coller dans un espace de travail.
 
 ----------------------------------------------------------------------------------------
 
