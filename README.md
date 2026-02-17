@@ -1,4 +1,3 @@
----------------------------------------------------------------------------------------
 
 **Introduction**  
 Ce système expert contient des règles pour faire des deductions à partir de figures DrGeo.
@@ -21,31 +20,11 @@ Dans le cadre d'un cours d'informatique il permet d'illustrer la voie logique de
 
 Il peut aussi être  considéré  comme une simplification de Prolog, de la même manière que Logo est une simplification de LISP.
 
-!!! version expérimentale.
-
-- Les prédicats ne sont pas tous vérifiés.
-
-le package Foctionne pour:
- - Le tutoriel.
- - L'utilisation interactive.
- - Les premiers chapitres de **Géométrie et système Expert**
-   - point
-   - segment
-   - droites
-   - angles
-   - cercle
-   - 
-.......................................................................................................................
-     
- **Présentation plus complète du système expert:**
-
-  en .pdf avec geoEtexpert.pdf
-  ( aussi en raw sous le nom presentation.)
-
-
 -----------------------------------------------------------------------------------------
 
 **Téléchargements de Cuis DrGeo**
+
+*Si vous 'navez pas déjà DrGeo CUIS*
 
 La version 24.06a de DrGeoCuis en fichier compressé pour windows ou mlinuse trouve à l'adresse: 
 https://github.com/Dynamic-Book/DrGeo/releases
@@ -64,7 +43,9 @@ Remarque:
 Ce système expert est une adaptation en cours de la version 1909 pour DrGeo Pharo,
 
 **Système expert pour DrGeo Pharo version 1909**
-le lien pour installer  DrGeo Pharo en fichier compressé :
+
+*Si vous n'navez pas déjà DrGeo Pharo,
+le lien pour installer  DrGeo Pharo en fichier compressé :*
 
 https://launchpad.net/drgeo/+download
 
