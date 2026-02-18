@@ -1,4 +1,4 @@
-'From Cuis7.1 [latest update: #6452] on 14 February 2026 at 12:58:06 am'!
+'From Cuis7.1 [latest update: #6452] on 18 February 2026 at 2:01:18 am'!
 'Description '!
 !provides: 'Myexpert' 1 19!
 !requires: 'DrGeo' 1 747 nil!
@@ -10964,7 +10964,7 @@ trie:rep: [ ?p1 ?p2 ?p3 ] ?rep'
 		alors: 'sorteDeCercle ?a'
 		com: 'Qualification d''une sorte de Cercle'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 2/13/2026 17:59:06'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 2/17/2026 20:10:51'!
 interfacesuite2:e
 |t2|
 
@@ -11005,18 +11005,18 @@ different:de: ?d1  ?d2'
 
 
 e
-		lisRegle: 'interface-intersectionDroitesConcourantesIntersection1'
+		lisRegle: 'interface-intersectionLignesConcourantesIntersection1'
 		si: 'intersectionPointCommun ?i ?d1 ?d2
 different:de: ?d1 ?d2'
  		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
-		com: 'Des droites concourantes  et leur point d''intersection'.
+		com: 'Des lignes concourantes  et leur point d''intersection'.
 		
 e
-		lisRegle: 'interface-intersectionDroitesConcourantesIntersection2'
+		lisRegle: 'interface-intersectionlignesConcourantesIntersection2'
 		si: 'intersection ?i ?d1 ?d2
 different:de: ?d1 ?d2'
  		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
-		com: 'Des droites concourantes  et leur point d''intersection'.
+		com: 'Des lignes concourantes  et leur point d''intersection'.
 		
 e
 		lisRegle: 'interface-intersectionDroitesConcourantesIntersection3'
@@ -15869,7 +15869,7 @@ different:de: ?i1 ?i2'
 		com: 'Des segments de même directions  sont parallèles.'
 "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/18/2025 15:48:46'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 2/18/2026 01:50:30'!
 polygones: e
 
 	e lisRegle: 'polygones-lignePolygonaleFermée2'
@@ -15919,7 +15919,7 @@ alors:  'sommets ?lf  ?res3'
 com:  'Les points de la lignePolygonale sont les sommets
 du polygone formé par cette ligne'.
 
-e lisRegle: 'polygones-Sommets' 
+e lisRegle: 'polygones-FerméeSommets' 
 si:  'lignePolygonaleFermée ?lf 
 sommets ?lf  ?res3
 créeNom:rep: ?res3 ?res'
@@ -15942,6 +15942,19 @@ taille:rep: ?s ?t
 nomPolygone:rep: ?t ?res'
 alors:'polygone ?nom [ nomGrec: ?res ]'
 		com: 'Le  nom grec du polygone'.
+		
+e lisRegle: 'lignePolygonale-côtés' 
+si:  'lignePolygonaleSegments  ?x1'
+alors:  'lignePolygonaleOuverte  [ côtés: ?x1 ]'
+com:  'Les côtés d''une ligne polygonale ouverte'.		
+
+e lisRegle: 'lignePolygonale-sommets' 
+si:  'lignePolygonaleCouples  ?x1
+premiers:rep: ?x1 ?prems'
+alors:  'lignePolygonaleOuverte  [ sommets: ?prems ]'
+com:  'Les sommets d''une ligne polygonale ouverte'.		
+		
+		
 e lisRegle: 'polygones-côtés' 
 si:  'polygone ?nom ?x
 lignePolygonaleFermée ?lf
@@ -15988,7 +16001,83 @@ adjacent ?sp ?s2 ?a ?b ?c
 ajouteDernierUnique:el:rep: ?l [ ?s2   ?b ?c ] ?l2'
 		alors: 'lignePolygonale ?l2'
 		com: 'Une lignePolygonale qui peut être fermée par un dernier segment'.
+		
+			e
+		lisRegle: 'polygones-lignePolygonaleSegments'
+		si:
+			'lignePolygonale ?lp
+premier:rep: ?lp ?prem
+premier:rep:  ?prem ?PPrem
+segment ?PPrem
+premiers:rep: ?lp ?lseg'
+		alors: 'lignePolygonaleSegments ?lseg'
+		com: 'Une lignePolygonale de segments'.
+		
+					e
+		lisRegle: 'polygones-lignePolygonaleCouples'
+		si:
+			'lignePolygonale ?lp
+premier:rep: ?lp ?prem
+premier:rep:  ?prem ?PPrem
+couple ?PPrem
+premiers:rep: ?lp ?lc'
+		alors: 'lignePolygonaleCouples ?lc'
+		com: 'Une lignePolygonale de segments'.
+		
+		
 	e
+		lisRegle: 'polygones-lignePolygonaleRetraitSeg'
+		si:
+			'lignePolygonaleSegments ?l1
+lignePolygonaleSegments ?l2
+taille:rep: ?l1 ?t1
+taille:rep: ?l2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleSegments ?l1
+'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la ligne la plus longue'.
+		
+		e
+		lisRegle: 'polygones-lignePolygonaleRetraitSeg'
+		si:
+			'lignePolygonaleSegments ?l1
+lignePolygonaleSegments ?l2
+taille:rep: ?l1 ?t1
+taille:rep: ?l2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleSegments ?l1
+'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la ligne la plus longue'.
+		
+		e
+		lisRegle: 'polygones-lignePolygonaleRetraitCouples'
+		si:
+			'lignePolygonaleCouples ?x1
+lignePolygonaleCouples ?x2
+taille:rep: ?x1 ?t1
+taille:rep: ?x2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleCouples ?x1'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la ligne la plus longue'.
+	
+		e
+		lisRegle: 'polygones-lignePolygonaleRetraitOuvertes'
+		si:
+			'lignePolygonaleOuverte ?x1
+lignePolygonaleOuverte ?x2
+dernier:rep: ?x1 ?xx1
+dernier:rep: ?x2 ?xx2
+taille:rep: ?xx1 ?t1
+taille:rep: ?xx2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleOuverte ?x1'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales ouvertes retirées pour ne garder que la ligne la plus longue'.
+	
+		e
 		lisRegle: 'polygones-lignePolygonaleRetrait1'
 		si:
 			'lignePolygonale ?l1
@@ -15997,6 +16086,18 @@ taille:rep: ?l1 ?t1
 taille:rep: ?l2 ?t2
 inférieur:à: ?t1 ?t2
 retireFait: lignePolygonale ?l1'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la lignePolygonale la plus longue'.
+		
+		e
+		lisRegle: 'polygones-lignePolygonaleRetrait2'
+		si:
+			'lignePolygonaleCouple ?l1
+lignePolygonaleCouple ?l2
+taille:rep: ?l1 ?t1
+taille:rep: ?l2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleCouple ?l1'
 		alors: 'lignePolygonale0 ?l1'
 		com:'Des parties de lignePolygonales retirées pour ne garder que la lignePolygonale la plus longue'.
 		
