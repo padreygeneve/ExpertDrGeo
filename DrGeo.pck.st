@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6452] on 1 December 2025 at 10:51:18 pm'!
+'From Cuis7.1 [latest update: #6452] on 18 February 2026 at 2:00:36 am'!
 'Description '!
-!provides: 'DrGeo' 1 750!
+!provides: 'DrGeo' 1 751!
 !requires: 'Gettext' 1 17 nil!
 !requires: 'SVG' 1 16 nil!
 !requires: 'YAXO' 1 19 nil!
@@ -12773,10 +12773,10 @@ delete
 	self view deleteWithoutConfirmation.
 	self release! !
 
-!DrGeoSketch methodsFor: 'initialize-release' stamp: 'drgeo 5/25/2025 02:20:01'!
+!DrGeoSketch methodsFor: 'initialize-release' stamp: 'drgeo 12/11/2025 18:45:59'!
 initialize
 	expert ifNil:[expert := Expert new. expert drgeo: self].	
-	
+	expert indexNom:0.
 	wmenu :=false.
 	presenter := DrGeo service
 		stSketch: self;
@@ -30118,7 +30118,7 @@ self expertDisplayTutor: 'Expert' string: str style: true.
 expertDisplayTutor: titre string: str
 self expertDisplayTutor: titre string: str style: false.! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 12/1/2025 19:59:26'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 1/16/2026 22:43:10'!
 expertDisplayTutor: titre string: str style: st
 |fig  exp|
 "self halt."
@@ -30137,7 +30137,7 @@ fig affichage model actualContents: ( fig affichage model actualContents), '
 fig affichage moveTopRight .
 fig affichage windowLeft: 2090@0.
 	
-(((fig affichage submorphs first )submorphs first) submorphs at:2)scrollDown:15000.
+(((fig affichage submorphs first )submorphs first) submorphs at:2)scrollDown:5000000.
 .! !
 
 !DrGeo methodsFor: 'callback expert' stamp: 'drgeo 6/1/2025 00:54:16'!
