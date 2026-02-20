@@ -53,10 +53,6 @@ https://launchpad.net/drgeo/+download
 
 Pour installer le système expert, télécharger depuis ce site et draguer dans DrGeo Pharo le fichier ci-dessous.
 
-Remarque: 
-
-
-
 ExpertDrGeo1909.cs
 
 Remarque:
