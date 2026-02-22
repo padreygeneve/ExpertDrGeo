@@ -26,10 +26,10 @@ Il peut aussi être  considéré  comme une simplification de Prolog, de la mêm
 
 *Si vous n'avez pas déjà DrGeo CUIS*
 
-Ce lien télécharge la version 24.06a de DrGeoCuis en fichier compressé pour windows-
+Ce lien télécharge la version 24.06a de DrGeoCuis en fichier compressé pour windows:
 [https://github.com/Dynamic-Book/DrGeo/releases](https://github.com/Dynamic-Book/DrGeo/releases/download/24.06/DrGeo-windows-24.06a-beta.zip)
 
-Ce lien télécharge la version 24.06a de DrGeoCuis en fichier compressé pour linux
+Ce lien télécharge la version 24.06a de DrGeoCuis en fichier compressé pour linux:
 https://github.com/Dynamic-Book/DrGeo/releases/download/24.06/DrGeo-gnulinux-24.06a-beta.zip
 
 Site DrGeo:
