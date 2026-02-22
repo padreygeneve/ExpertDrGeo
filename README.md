@@ -24,10 +24,11 @@ Il peut aussi être  considéré  comme une simplification de Prolog, de la mêm
 
 **Téléchargements de Cuis DrGeo**
 
-*Si vous 'navez pas déjà DrGeo CUIS*
+*Si vous n'avez pas déjà DrGeo CUIS*
 
 Ce lien télécharge la version 24.06a de DrGeoCuis en fichier compressé pour windows-
 [https://github.com/Dynamic-Book/DrGeo/releases](https://github.com/Dynamic-Book/DrGeo/releases/download/24.06/DrGeo-windows-24.06a-beta.zip)
+
 Site DrGeo:
 https://github.com/Dynamic-Book/drgeo
 **Installation du système expert dana CUIS DrGeo**
