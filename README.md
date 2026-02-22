@@ -161,34 +161,8 @@ dans la classe DrGeoItem
 
 DrGeoCore >>Model-Smalltalk >>  DrGeoItem 
 
-fig := DrGeoFigure open.
-a := fig point: 2@5. a nommer:'A'.
-o := fig point: 0@0 .
-o nommer:'O1'.
-seg:=fig segmentDe: o à: a.
-seg nommer:'O1A'.
-cer := fig cercleCentre: o passantPar:  a.	
-cer nommer: 'cercle'.
-est := fig pointSurLigne: cer   à: 0.0.
-est nommer: 'Est'.
-nord := fig pointSurLigne: cer   à: 0.25.
-nord nommer: 'Nord'.
-ouest := fig pointSurLigne: cer   à: 0.5.
-ouest nommer: 'Ouest'.
-sud := fig pointSurLigne: cer   à: 0.75.
-sud nommer: 'Sud'.
-exp := Expert nouveau.
-exp drgeo: fig.
-exp chargeRegles:'EuclideMinimum'.
-exp initFaits.
-exp lisFigureDrgeo.
-exp deduis.
-"exp modèlesQuestions."
-exp vérifieCondition: 'rayon ?x ?y'.
-
-
-
-
+---------------------------------------------------------------------------------------------------------
+*********************************************************************************************************
 
 **Abstract**
 
