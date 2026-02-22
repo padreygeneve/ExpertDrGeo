@@ -64,15 +64,32 @@ ExpertDrGeo1909.cs
 Remarque:
   - avec windows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
-**Pour la documentaation**
+**Pour la documentation**
 
-télécahrger depuis ce site le pdf :
+télécharger depuis ce site le pdf :
 
 testExpertNew3Drivebackup2.pdf
 
 Pour obtenir une figure dans DrGeo Pharo dans le pdf, copier le script de la figure dans le pdf, puis, dans DrGeo Pharo, coller dans un espace de travail.
 
 ----------------------------------------------------------------------------------------
+
+**Istoa**
+
+Dans Istoa, on peut programmer par script une figure dans un espace de travail.
+
+Pour ouvrir un miniDrgeo:
+
+**DrGeoFigure open**
+
+en suite le script.
+
+**Installation du système expert**
+Téléchager le fichier 
+
+
+
+
 
 **Abstract**
 
