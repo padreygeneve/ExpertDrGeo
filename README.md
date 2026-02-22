@@ -146,16 +146,17 @@ exp vérifieCondition: 'rayon ?x ?y'.
 
 "exp modèlesQuestions."
 
-On peut enlever les " à modèlesQuestions pour voir les modàles de questions à utilise dans **vérifieCondition: **
+On peut enlever les **"** à modèlesQuestions pour voir les modàles de questions à utilise dans **vérifieCondition: **
 
 **Remarque:**
 
-Pour nommer un objet la  méthode est **nom:** au lieu de "*nommer:
+Pour nommer un objet la  méthode est **nom:** au lieu de **nommer:**
+
 Pour rester compatible on peut définir la méthode :
 
 nommer: aString
 
-	self nom: aString
+self nom: aString
 
 dans la classe DrGeoItem 
 
