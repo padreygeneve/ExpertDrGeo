@@ -27,7 +27,7 @@ Il peut aussi être  considéré  comme une simplification de Prolog, de la mêm
 *Si vous 'navez pas déjà DrGeo CUIS*
 
 La version 24.06a de DrGeoCuis en fichier compressé pour windows ou mlinuse trouve à l'adresse: 
-https://github.com/Dynamic-Book/DrGeo/releases
+[https://github.com/Dynamic-Book/DrGeo/releases](https://github.com/Dynamic-Book/DrGeo/releases/download/24.06/DrGeo-windows-24.06a-beta.zip)
 
 **Installation du système expert dana CUIS DrGeo**
 
