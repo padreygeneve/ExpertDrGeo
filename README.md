@@ -85,7 +85,81 @@ Pour ouvrir un miniDrgeo:
 en suite le script.
 
 **Installation du système expert**
-Téléchager le fichier 
+
+Téléchager le fichier Myexpertistoa.pck.st ,le draquer et le lâcher dans istoa.
+
+Ajouter dans la classe **objet**, catégorie **test** la méthode:
+
+isList
+
+^false.
+
+** Exemple de script**
+
+fig := DrGeoFigure open.
+
+a := fig point: 2@5. a nommer:'A'.
+
+o := fig point: 0@0 .
+
+o nommer:'O1'.
+
+seg:=fig segmentDe: o à: a.
+
+seg nommer:'O1A'.
+
+cer := fig cercleCentre: o passantPar:  a.
+
+cer nom: 'cercle'.
+
+est := fig pointSurLigne: cer   à: 0.0.
+
+est nom: 'Est'.
+
+nord := fig pointSurLigne: cer   à: 0.25.
+
+nord nom: 'Nord'.
+
+ouest := fig pointSurLigne: cer   à: 0.5.$
+
+ouest nom: 'Ouest'.
+
+sud := fig pointSurLigne: cer   à: 0.75.
+
+sud nom: 'Sud'.
+
+exp := Expert nouveau.
+
+exp drgeo: fig.
+
+exp chargeRegles:'EuclideMinimum'.
+
+exp initFaits.
+
+exp lisFigureDrgeo.
+
+exp deduis.
+
+"exp modèlesQuestions."
+
+exp vérifieCondition: 'rayon ?x ?y'.
+
+"exp modèlesQuestions."
+
+On peut enlever les " à modèlesQuestions pour voir les modàles de questions à utilise dans **vérifieCondition: **
+
+**Remarque:**
+
+Pour nommer un objet la  méthode est **nom:** au lieu de "*nommer:
+Pour rester compatible on peut définir la méthode :
+
+nommer: aString
+
+	self nom: aString
+
+dans la classe DrGeoItem 
+
+DrGeoCore >>Model-Smalltalk >>  DrGeoItem 
 
 
 
