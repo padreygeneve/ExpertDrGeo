@@ -37,7 +37,7 @@ https://github.com/Dynamic-Book/drgeo
 
 **Installation du système expert dans CUIS DrGeo**
 
-tèlècharger depuis ce site les fichiers, ouvrir  CUIS DrGeo et laisser draguer ces fichiers et les lâcher dans CUIS DrGeo dans l'ordre ci-dessous.
+tèlècharger depuis ce site les fichiers, ouvrir  CUIS DrGeo et  draguer ces fichiers et les lâcher dans CUIS DrGeo dans l'ordre ci-dessous.
 - DrGeo.pck.st
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
