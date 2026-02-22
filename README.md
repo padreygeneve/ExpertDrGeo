@@ -31,7 +31,8 @@ Ce lien télécharge la version 24.06a de DrGeoCuis en fichier compressé pour w
 
 Site DrGeo:
 https://github.com/Dynamic-Book/drgeo
-**Installation du système expert dana CUIS DrGeo**
+
+**Installation du système expert dans CUIS DrGeo**
 
 tèlècharger depuis ce site les fichiers, ouvrir  CUIS DrGeo et laisser draguer ces fichiers et les lâcher dans CUIS DrGeo dans l'ordre ci-dessous.
 - DrGeo.pck.st
