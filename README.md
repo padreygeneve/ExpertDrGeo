@@ -42,7 +42,7 @@ tèlècharger depuis ce site les fichiers ci-dessous, ouvrir  CUIS DrGeo, drague
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
 
-- Pour un premier chargement, il faut ajouter dans **object/Testing** la méthode
+- Pour un premier chargement, il faut ajouter dans ***DrGeo** la méthode
   
   **isListe**
   
@@ -67,7 +67,7 @@ Pour installer le système expert, télécharger depuis ce site et draguer dans 
 
 ExpertDrGeo1909.cs
 
-- Pour un premier chargement, il faut ajouter dans **object/Testing** la méthode
+- Pour un premier chargement, il faut ajouter dans ***DrGeo** la méthode
   
   **isListe**
   
