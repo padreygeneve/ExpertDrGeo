@@ -45,6 +45,7 @@ tèlècharger depuis ce site les fichiers ci-dessous, ouvrir  CUIS DrGeo, drague
 - Pour un premier chargement, il faut ajouter dans objet/Testing la méthode
 -   isListe
 -   ^false
+- 
 
 Remarque:
   - avec Windows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
