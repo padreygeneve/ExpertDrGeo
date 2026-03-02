@@ -42,9 +42,9 @@ tèlècharger depuis ce site les fichiers ci-dessous, ouvrir  CUIS DrGeo, drague
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
 
-- Pour un premier chargement, il faut ajouter dans objet/Testing la méthode
--   isListe
--   ^false
+- Pour un premier chargement, il faut ajouter dans **object/Testing** la méthode
+-  **isListe**
+-  **^false**
 - 
 
 Remarque:
@@ -66,9 +66,9 @@ Pour installer le système expert, télécharger depuis ce site et draguer dans 
 
 ExpertDrGeo1909.cs
 
-- Pour un premier chargement, il faut ajouter dans objet/Testing la méthode
--   isListe
--   ^false
+- Pour un premier chargement, il faut ajouter dans **object/Testing** la méthode
+-   **isListe**
+-   **^false**
 
 Remarque:
   - avec windows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
