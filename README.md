@@ -100,7 +100,7 @@ en suite le script.
 
 Téléchager le fichier Myexpertistoa.pck.st ,le draquer et le lâcher dans istoa.
 
-Ajouter dans la classe **objet**, catégorie **test** la méthode:
+Ajouter dans la classe **Kernel/Objet**, catégorie ***DrGeoCore** la méthode:
 
 isList
 
