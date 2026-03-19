@@ -1,4 +1,4 @@
-'From Cuis7.1 [latest update: #6452] on 18 March 2026 at 5:03:05 am'!
+'From Cuis7.1 [latest update: #6452] on 19 March 2026 at 1:38:22 am'!
 'Description '!
 !provides: 'DrGeo' 1 752!
 !requires: 'Gettext' 1 17 nil!
