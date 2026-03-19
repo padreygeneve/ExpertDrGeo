@@ -84,6 +84,8 @@ testExpertNew3Drivebackup2.pdf
 
 Pour Istoa une documentation qui contient des scripts à copier/coller sur le système expert qui traite les cicuits de résistance.
 
+Résistances électriques.pdf
+
 Pour obtenir une figure dans DrGeo Pharo dans le pdf, copier le script de la figure dans le pdf, puis, dans DrGeo Pharo, coller dans un espace de travail.
 
 ----------------------------------------------------------------------------------------
