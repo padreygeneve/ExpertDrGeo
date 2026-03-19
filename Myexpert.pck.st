@@ -1,4 +1,4 @@
-'From Cuis7.1 [latest update: #6452] on 18 March 2026 at 5:02:40 am'!
+'From Cuis7.1 [latest update: #6452] on 19 March 2026 at 1:38:54 am'!
 'Description '!
 !provides: 'Myexpert' 1 21!
 SystemOrganization addCategory: #Myexpert!
