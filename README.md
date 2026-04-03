@@ -52,6 +52,7 @@ Remarque:
   - avec Windows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
 ---------------------------------------------------------------------------------------
+
 **version originale 1909 pour DrGeo Pharo**
 
 **Système expert pour DrGeo Pharo version 1909**
@@ -81,8 +82,11 @@ Remarque:
 télécharger depuis ce site le pdf pour Pharo :
 
 testExpertNew3Drivebackup2.pdf
+
 -----------------------------------------------------------------------------------------------------------------------
-**Istoa **
+
+**Istoa**
+
 Istoa regroupe plusieurs modèles de connaissances appelés DKM
 En MATH on y retrouve DrGeo. 
 
@@ -90,7 +94,8 @@ Les fichiers :
 DrGeoCore.pck.st  et MyExpert.pck.st  ajoutent à ce DrGeo le système Expert.
 
 En plus on peut ajouter un nouveau DKM à la Physique qui traitent des circuits de résistances en série ou en parallèle.
-c'est un DrGeo avec système expert et les règles Electricité dèjà chargées.
+
+C'est un DrGeo avec système expert et les règles Electricité dèjà chargées.
 Les fichiers à charger en plus sont istoaApp.pck.st et DKM-Physics-ElectricalCircuits.pck.st
 
 **Documentation**
