@@ -214,6 +214,7 @@ DrGeoCore.pck.st and MyExpert.pck.st add the Expert system to this DrGeo.
 Additionally, you can add a new DKM to Physics that handles series or parallel resistance circuits.
 
 It is a DrGeo with expert system and Electricity rules already loaded.
+
 The files to load additionally are istoaApp.pck.st and DKM-Physics-ElectricalCircuits.pck.st
 
 **Documentation**
