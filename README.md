@@ -109,10 +109,115 @@ Résistances électriques.pdf
 
 **Abstract**
 
- This expert system contains rules for making deductions from DrGeo figures. It is used with DrGeo’s script editor; it adds an Expert submenu to the figure’s menu for user-friendly use, but it can also be used with scripting commands. Different rule sets allow it to be used for applications beyond geometry; one rule set can handle problems on electrical resistance circuits and to process circuits drawn with DrGeo.
-It is possible to work on one’s own topic by creating one’s own rules. In the context of an IT course, it helps illustrate the logical path of AI, as opposed to the path of neuromimetism. It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
+ This expert system contains rules for making deductions from DrGeo figures. 
+It is used with DrGeo’s script editor; it adds an Expert submenu to the figure’s menu for user-friendly use, but it can also be used with scripting commands. 
+Different rule sets allow it to be used for applications beyond geometry; one rule set can handle problems on electrical resistance circuits and to process circuits drawn with DrGeo.
+It is possible to work on one’s own topic by creating one’s own rules. In the context of an IT course, it helps illustrate the logical path of AI, as opposed to the path of neuromimetism.
+It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
 
-----------------------------------------------------------------------------------------
-with Windows if a file has already been loaded, Windows adds a number in parentheses to distinguish the new file, you must remove this number and its parentheses from the filename before dropping it into DrGeo, otherwise DrGeo will not recognize it as a package file.
+**Introduction**
 
+This expert system contains rules for making deductions from DrGeo figures.
+It is used with DrGeo's script editor, using script commands.
+For user-friendly use, an Expert submenu is added to the figure's menu.
+
+Different rule sets allow it to be used for applications other than geometry.
+
+A rule set allows handling problems on electrical resistance circuits and
+processing circuits drawn with DrGeo.
+Simple examples with few rules.
+
+  - Past participle agreement.
+  - Tic-tac-toe game.
+  - Magic square.
+
+A tutorial allows you to learn how to handle your own subject by creating your own rules.
+
+In the context of a computer science course, it helps illustrate the logical path of AI, as opposed to the path of neuro-mimicry.
+
+It can also be considered as a simplification of Prolog, in the same way that Logo is a simplification of LISP.
+
+-----------------------------------------------------------------------------------------
+
+**Cuis DrGeo Downloads**
+
+*If you don't already have DrGeo CUIS*
+
+This link downloads version 24.06a of DrGeoCuis in compressed file for windows:
+[https://github.com/Dynamic-Book/DrGeo/releases](https://github.com/Dynamic-Book/DrGeo/releases/download/24.06/DrGeo-windows-24.06a-beta.zip)
+
+This link also downloads version 24.06a of DrGeoCuis in compressed file for linux:
+https://github.com/Dynamic-Book/DrGeo/releases/download/24.06/DrGeo-gnulinux-24.06a-beta.zip
+
+DrGeo site:
+https://github.com/Dynamic-Book/drgeo
+
+**Installation of the expert system in CUIS DrGeo**
+
+Download the files below from this site, open CUIS DrGeo, drag these files and drop them into CUIS DrGeo in the order below.
+- DrGeo.pck.st
+- DrGeoFrench.pck.st
+- Myexpert.pck.st
+
+- For the first load, you must add the method in **Kernel/Object/** ***DrGeo**
+  
+  **isListe**
+  
+  **^false**
+
+Note:
+  - with Windows if a file has already been loaded, Windows adds a number in parentheses to distinguish the new file, you must remove this number and its parentheses from the filename before dropping it into DrGeo, otherwise DrGeo will not recognize it as a package file.
+
+---------------------------------------------------------------------------------------
+
+**Original version 1909 for DrGeo Pharo**
+
+**Expert system for DrGeo Pharo version 1909**
+
+*If you don't already have DrGeo Pharo,
+the link to install DrGeo Pharo in compressed file:*
+
+https://launchpad.net/drgeo/+download
+
+**Installation of the expert system**
+
+To install the expert system, download from this site and drag the file below into DrGeo Pharo.
+
+ExpertDrGeo1909.cs
+
+- For the first load, you must add the method in **Kernel/Object/** ***DrGeo**
+  
+  **isListe**
+  
+  **^false**
+
+Note:
+  - with Windows if a file has already been loaded, Windows adds a number in parentheses to distinguish the new file, you must remove this number and its parentheses from the filename before dropping it into DrGeo, otherwise DrGeo will not recognize it as a package file.
+
+**For documentation**
+
+Download the pdf for Pharo from this site:
+
+testExpertNew3Drivebackup2.pdf
+
+-----------------------------------------------------------------------------------------------------------------------
+
+**Istoa**
+
+Istoa brings together several knowledge models called DKM
+In MATH you will find DrGeo.
+
+The files:
+DrGeoCore.pck.st and MyExpert.pck.st add the Expert system to this DrGeo.
+
+Additionally, you can add a new DKM to Physics that handles series or parallel resistance circuits.
+
+It is a DrGeo with expert system and Electricity rules already loaded.
+The files to load additionally are istoaApp.pck.st and DKM-Physics-ElectricalCircuits.pck.st
+
+**Documentation**
+
+For Istoa a documentation containing scripts to copy/paste about the expert system that handles resistance circuits.
+
+Electrical Resistances.pdf
 
