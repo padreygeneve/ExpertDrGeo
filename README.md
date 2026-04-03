@@ -1,3 +1,4 @@
+(English translation below)
 
 **Introduction**  
 Ce système expert contient des règles pour faire des deductions à partir de figures DrGeo.
