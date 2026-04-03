@@ -1,4 +1,4 @@
-'From Cuis7.7 [latest update: #7822] on 27 March 2026 at 8:03:24 pm'!
+'From Cuis7.7 [latest update: #7822] on 3 April 2026 at 9:35:28 pm'!
 'Description '!
 !provides: 'Myexpert' 1 22!
 SystemOrganization addCategory: #Myexpert!
@@ -2252,6 +2252,18 @@ r com: c.
 ^'Règle ''',nom,''' définie'
 ! !
 
+!Expert methodsFor: 'accessing' stamp: 'pad 3/Apr/2026 21:33:02'!
+loadRules: desRegles
+|rgl|
+rgl :=desRegles.
+(rgl endsWith: ':')ifFalse:[ rgl:=rgl,':'].
+rgl:=rgl asSymbol.
+((ExpertRegle class methodDict keys) includes: rgl) ifFalse:[^ 'Pas de règle : ',rgl].
+(self stw includes: rgl) ifTrue:[^ 'Règle déjà installée: ',rgl].
+ExpertRegle perform: (rgl    ) withArguments:{self}.
+self stw add:rgl.
+^'Règles : ',self stw asArray printString,' Installées.'.! !
+
 !Expert methodsFor: 'accessing' stamp: 'DrGeoUser 23/Feb/2013 12:37:00'!
 lregles
 ^lregles! !
@@ -3384,7 +3396,7 @@ produit: mot1 et: mot2 rep: rep vars: lVars
 				ifTrue: [ ^ self affecte: rep valeur: (t5 * t6) asString vars: lVars ] ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:47:00'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 11/Mar/2026 17:06:02'!
 quotient: mot1 et: mot2 rep: rep vars: lVars
 	"le quotient de deux nombres"
 
@@ -3397,7 +3409,8 @@ quotient: mot1 et: mot2 rep: rep vars: lVars
 	t6 := self makeNumber: t6.
 	(t5 isNumber and: [ t6 isNumber ])
 		ifFalse: [ ^ false ].
-	res := t5 / t6.
+	t6 =0 ifTrue: [ self expert drgeo presenter expertDisplayModèles. self halt]
+		ifFalse:[ res := t5 / t6].
 	^ self affecte: rep valeur: res asString vars: lVars! !
 
 !ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 26/Oct/2023 02:47:00'!
@@ -7128,7 +7141,7 @@ different:de: ?o1 ?o2'
 		com: 'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''intérieur de ces parallèles sont alternes internes.'.
 ExpertRegle  angleSuite: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 18/Dec/2023 13:11:00'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 16/Mar/2026 01:48:33'!
 circuitRegles: e
 	e retablit: false.
 	ExpertRegle interface: e.
@@ -7220,7 +7233,7 @@ retireFait: arete ?r2 ?n1 ?n2
 retireFait: PAR ?r1  ?r2  ?n1 ?n2'
 		alors: 'arete [ parallele ?r1 ?r2 ] ?n1 ?n2'
 		com:
-			'On remplace les deux résistances en parallèle par une arête nommée: arete [ parallele ?r1 ?r2 ] ?n1 ?n2.'.
+			'On remplace deux résistances en parallèle par une arête nommée: arete [ parallele ?r1 ?r2 ] ?n1 ?n2.'.
 	e
 		lisRegle: 'Circuits-SER'
 		si:
@@ -7246,7 +7259,7 @@ retireFait: arete ?r1 ?n1 ?x
 retireFait: arete ?r2 ?x ?n2'
 		alors: 'arete [ serie ?r1 ?r2 ] ?n1 ?n2'
 		com:
-			'On remplace les deux résistances en série par une arête nommée: arete [ serie ?r1 ?r2 ] ?n1 ?n2.'.
+			'On remplace  deux résistances en série par une arête nommée: arete [ serie ?r1 ?r2 ] ?n1 ?n2.'.
 	e
 		lisRegle: 'Circuits-ElementDeCircuit'
 		si:
@@ -8219,7 +8232,7 @@ different:de: ?p1 ?p2'
 		com: 'Le couple qui reiie deux points sur un cercle est une  corde de ce cercle'.
 	! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 24/Apr/2025 17:14:05'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 18/Mar/2026 03:16:58'!
 figuresRectilignes: e
 	e
 		lisRegle: 'égalitéParallèleParallèleDirection'
@@ -8889,29 +8902,59 @@ different:de: ?t1 ?t2
 		alors: 'isométrique ?t1 ?t2'
 		com:
 			'Deux triangles ayant respectivement leus côtés isométriques sont isométrique'.
-	e
+		
+			e
+		lisRegle: 'figuresRectilignes-triangleIsocèle01'
+		si:
+			'triangle ?t  [ côtés:  [ ?c1 ?c2 ?c3 ] 
+relation:et:nom:  ?c1 ?c2 isométrique'
+		alors: 'triangle ?t [ isocèle:  [ ?c1 ?c2 ] ]'
+		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'.
+			e
+		lisRegle: 'figuresRectilignes-triangleIsocèle02'
+		si:
+			'triangle ?t  [ côtés:  [ ?c1 ?c2 ?c3 ] 
+relation:et:nom:  ?c1 ?c3 isométrique'
+		alors: 'triangle ?t [ isocèle: [ ?c1 ?c3 ] ]'
+		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'.
+		
+			e
+		lisRegle: 'figuresRectilignes-triangleIsocèle03'
+		si:
+			'triangle ?t  [ côtés:  [ ?c1 ?c2 ?c3 ]  ] 
+relation:et:nom: ?c2 ?c3 isométrique'
+		alors: 'triangle ?t [ isocèle: [ ?c2 ?c3 ] ]'
+		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'.
+		
+		e
 		lisRegle: 'figuresRectilignes-triangleEquilatéral'
 		si:
-			'triangle ?t [  isocèle: [ sommet: ?s1 ] ]
-triangle ?t [  isocèle: [ sommet: ?s2 ] ]
+			'triangle ?t [ isocèle: [ ?s1 ?s2 ] ]
+triangle ?t [ isocèle: [ ?s2 ?s3 ] ]
 different:de: ?s1 ?s2
-'
-		alors: 'triangle ?t [ équilatéral ]'
-		com: 'Si un triangle est isocèle en deux sommets, il est équilatéral.'.
-	e
-		lisRegle: 'figuresRectilignes-triangleEquilateral2'
+different:de: ?s2 ?s3'
+
+		alors: 'triangle ?t [ équilatéral: [ [ ?s1 ?s2 ] [ ?s2 ?s3 ] ]'
+		com: 'Si un triangle a deux paires de côtés isocéles différentes, il est équilatéral,'.
+		e
+		lisRegle: 'figuresRectilignes-triangleEquilatéralHauteur'
 		si:
-			'triangle ?t  [  côtés: [ [ ?x1 ?y1 ] [ ?x2 ?y2 ] [ ?x3 ?y3 ]  ] ]
-triangle ?t [ non_plat  ]
-ordonneMot:et:rep1:rep2:   ?x1 ?y1  ?xx1 ?yy1 
-ordonneMot:et:rep1:rep2:   ?x2 ?y2  ?xx2 ?yy2  
-ordonneMot:et:rep1:rep2:   ?x3 ?y3  ?xx3 ?yy3  
-relation:et:nom:  [ ?xx2 ?yy2 ] [ ?xx1 ?yy1 ]  isométrique
-relation:et:nom:  [ ?xx3 ?yy3 ] [ ?xx1 ?yy1 ]  isométrique
-'
-		alors: 'triangle ?t [ équilatéral ]'
-		com:
-			'Un triangle qui a les trois côtés isométriques est un triangle équilatéral.'.
+			'intersection ?x ?s ?z
+segment ?z ?sz
+segmentSur ?s ?obj
+perpendiculaire ?obj ?z
+couple ?obj
+triangle ?t [ sommets: ?smts ]
+neContientPas:liste: ?x ?smts
+segment ?nom ?couple
+contient:liste: ?x ?couple'
+
+		alors: 'triangle ?t [ hauteur:  ?couple ]'
+		com: 'Une hauteur du triangle équilatéral,'.
+		
+		
+
+
 	"	e
 		lisRegle: 'figuresRectilignes-Hauteurs1'
 		si:
@@ -14942,14 +14985,14 @@ inférieur:à: ?rep ?rep2
 retireFait: pointsSur ?x1 ?x2'
 alors: 'pointsSur ?x1 ?x2 retiré'. "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 20/Dec/2023 17:27:00'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/Mar/2026 03:42:29'!
 ohmRegles: e
 	e
 		lisRegle: 'Ohm-Regles-texte'
 		si: 'DrGTextItem ?x ?y ?z ?v ?u'
 		alors: '?y ?z  ?v ?u'
 		com: 'lecture de données texte.'.
-	"e
+	e
 		lisRegle: 'valeurResistance'
 		si: 'DrGItem ?nom resistance ?n ?v'
 		alors: 'resistance ?n ?v Ohm-s'.
@@ -14960,7 +15003,7 @@ ohmRegles: e
 	e
 		lisRegle: 'valeurTension'
 		si: 'DrGValueValueItem ?nom tension  ?n ?v'
-		alors: 'tension ?n ?v V'."
+		alors: 'tension ?n ?v V'.
 	e
 		lisRegle: 'Ohm-ResistanceEqSerie'
 		si:
@@ -14983,7 +15026,8 @@ courant ?r1 ?i A'
 		lisRegle: 'Ohm-CourantSerie2'
 		si:
 			'serie ?r1 ?r2
-courant ?r2 ?i A'
+courant ?r2 ?i A
+different:de: 0 ?i'
 		alors: 'courant ?r1 ?i A'
 		com:
 			'Dans des résistance en série, le courant  est le même pour  chaque résistance.'.
@@ -14991,7 +15035,8 @@ courant ?r2 ?i A'
 		lisRegle: 'Ohm-CourantSerie3'
 		si:
 			'serie ?r1 ?r2
-courant ?r2 ?i A'
+courant ?r2 ?i A
+different:de: 0 ?i'
 		alors: 'courant [ serie ?r1 ?r2 ] ?i A'
 		com:
 			'Dans un circuit de deux résistance en série, le courant  est le même que pour chaque résistance.'.
@@ -15028,8 +15073,7 @@ resistance ?R2 ?r2 ?u
 quotient:et:rep: 1 ?r1 ?q1
 quotient:et:rep: 1 ?r2 ?q2
 somme:et:rep: ?q1 ?q2 ?q
-quotient:et:rep: 1 ?q ?req
-~ resistance [ parallele ?R1 ?R2 ] ?xreq Ohm-s'
+quotient:et:rep: 1 ?q ?req'
 		alors: 'resistance [ parallele ?R1 ?R2 ] ?req Ohm-s'
 		com:
 			'La résistance équvalente au circuit de deux résistances en parallèle est l''inverse de la somme des inverses des résistances.'.
@@ -15054,8 +15098,7 @@ somme:et:rep: ?i1 ?i2 ?i'
 		si:
 			'courant [ parallele ?r1  ?r2 ] ?i A
 courant ?r2 ?i2 A
-difference:et:rep: ?i ?i2 ?i1
-~ courant ?r1 ?xi1 A'
+difference:et:rep: ?i ?i2 ?i1'
 		alors: 'courant ?r1 ?i1 A'
 		com:
 			'Si l''on connait le courant dans une résistance, et  le courant dans un circuit de deux résistances en parallèles
@@ -15066,7 +15109,7 @@ difference:et:rep: ?i ?i2 ?i1
 			'courant [ parallele ?r1  ?r2 ] ?i A
 courant ?r1 ?i1 A
 difference:et:rep: ?i ?i1 ?i2
-~ courant ?r2 ?xi2 A'
+different:de: 0 ?i2'
 		alors: 'courant ?r2 ?i2 A'
 		com:
 			'Si l''on connait le courant dans une résistance, et  le courant dans un circuit de deux résistances en parallèles
@@ -15076,8 +15119,7 @@ difference:et:rep: ?i ?i1 ?i2
 		si:
 			'tension [ serie ?r1 ?r2 ] ?u  V
 tension ?r2 ?u2 V
-difference:et:rep: ?u ?u2 ?u1
-~ tension ?r1 ?xu1 V'
+difference:et:rep: ?u ?u2 ?u1'
 		alors: 'tension ?r1 ?u1 V'
 		com:
 			'Si l''on connait la tension dans une résistance, et  la tension du circuit de deux résistances en série
@@ -15094,8 +15136,7 @@ on peut affirmer que les résistances sont en série.'.
 		si:
 			'tension [ serie ?r1 ?r2 ] ?u  V
 tension ?r1 ?u1 V
-difference:et:rep: ?u ?u1 ?u2
-~ tension ?r2 ?xu2 V'
+difference:et:rep: ?u ?u1 ?u2'
 		alors: 'tension ?r2 ?u2 V'
 		com:
 			'Si l''on connait la tension dans une résistance, et  la tension du circuit de deux résistances en série,
@@ -15106,8 +15147,7 @@ difference:et:rep: ?u ?u1 ?u2
 			'serie ?r1 ?r2
 tension ?r1 ?u1 V
 tension ?r2 ?u2 V
-somme:et:rep: ?u1 ?u2 ?u
-~ tension [ serie ?r1 ?r2 ] ?xu  V'
+somme:et:rep: ?u1 ?u2 ?u'
 		alors: 'tension [ serie ?r1 ?r2 ] ?u  V'
 		com:
 			'La tension d''un circuit de deux résistances en série est la somme des tensions des résistances.'.
@@ -15115,40 +15155,35 @@ somme:et:rep: ?u1 ?u2 ?u
 		lisRegle: 'Ohm-TensionParallele1'
 		si:
 			'parallele ?r1 ?r2
-tension ?r2 ?u V
-~ tension ?r1 ?xu V'
+tension ?r2 ?u V'
 		alors: 'tension ?r1 ?u V'
 		com: ' Des résistances  en parallèle ont la même  tension.'.
 	e
 		lisRegle: 'Ohm-TensionParallele2'
 		si:
 			'parallele ?r1 ?r2
-tension ?r1 ?u V
-~ tension ?r2 ?xu V'
+tension ?r1 ?u V'
 		alors: 'tension ?r2 ?u V'
 		com: 'Des résistances en parallèle ont la même tension.'.
 	e
 		lisRegle: 'Ohm-TensionParallele3'
 		si:
 			'parallele ?r1 ?r2
-tension ?r1 ?u V
-~ tension [ parallele ?r1 ?r2  ] ?xu V'
+tension ?r1 ?u V'
 		alors: 'tension [ parallele ?r1 ?r2  ] ?u V'
 		com:
 			'Dans un circuit de résistances en parallèle, le circuit a la même tension que chaque résistance.'.
-	e
+	"e
 		lisRegle: 'Ohm-TensionParallele5'
 		si:
-			'tension [ parallele ?r1 ?r2  ] ?u V
-~ tension ?r1 ?xu V'
+			'tension [ parallele ?r1 ?r2  ] ?u V'
 		alors: 'tension ?r1 ?u V'
 		com:
-			'Dans un circuit de résistances en parallèle, chaque résistance a la même tension que le circuit.'.
+			'Dans un circuit de résistances en parallèle, chaque résistance a la même tension que le circuit.'."
 	e
 		lisRegle: 'Ohm-TensionParallele6'
 		si:
-			'tension [ parallele ?r1 ?r2  ] ?u V
-~ tension ?r2 ?xu V'
+			'tension [ parallele ?r1 ?r2  ] ?u V'
 		alors: 'tension ?r2 ?u V'
 		com:
 			'Dans un circuit de résistances en parallèle, chaque résistance a la même tension que le circuit.'.
@@ -15156,8 +15191,7 @@ tension ?r1 ?u V
 		lisRegle: 'Ohm-TensionParallele4'
 		si:
 			'parallele ?r1 ?r2
-tension ?r2 ?u V
-~ tension [ parallele ?r1 ?r2  ] ?xu V'
+tension ?r2 ?u V'
 		alors: 'tension [ parallele ?r1 ?r2  ] ?u V'
 		com:
 			'Dans un circuit de résistances en parallèle, le circuit a la même tension que chaque résistance.'.
@@ -15206,8 +15240,7 @@ tension ?r2 ?u V
 		si:
 			'courant ?r1 ?i A
 tension ?r1 ?u V
-quotient:et:rep:   ?u ?i ?r
-~ resistance ?r1 ?xr Ohm-s'
+quotient:et:rep:   ?u ?i ?r'
 		alors: 'resistance ?r1 ?r Ohm-s'
 		com: 'loi d''Ohm : R = U / I'.
 	e
@@ -15215,8 +15248,7 @@ quotient:et:rep:   ?u ?i ?r
 		si:
 			'resistance ?r1 ?r Ohm-s
 tension ?r1 ?u V
-quotient:et:rep:   ?u ?r ?i
-~ courant ?r1 ?xi A'
+quotient:et:rep:   ?u ?r ?i'
 		alors: 'courant ?r1 ?i A'
 		com: 'loi d''Ohm : I = U / R'.
 	e
@@ -15224,8 +15256,7 @@ quotient:et:rep:   ?u ?r ?i
 		si:
 			'resistance ?r1 ?r Ohm-s
 courant ?r1 ?i A
-produit:et:rep:   ?i ?r ?u
-~ tension ?r1 ?u V'
+produit:et:rep:   ?i ?r ?u'
 		alors: 'tension ?r1 ?u V'
 		com: 'loi d''Ohm : U = R * I'! !
 
@@ -15880,7 +15911,7 @@ different:de: ?i1 ?i2'
 		com: 'Des segments de même directions  sont parallèles.'
 "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 18/Feb/2026 01:50:30'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 17/Mar/2026 19:25:10'!
 polygones: e
 
 	e lisRegle: 'polygones-lignePolygonaleFermée2'
@@ -15952,7 +15983,32 @@ nomPolygone:rep: ?t ?res'
 taille:rep: ?s ?t
 nomPolygone:rep: ?t ?res'
 alors:'polygone ?nom [ nomGrec: ?res ]'
+
+
 		com: 'Le  nom grec du polygone'.
+		
+		e
+		lisRegle: 'PolygoneTriangle'
+		si:
+			'polygone ?poly  [ nomGrec: Trigone ]'
+		alors: 'polygone ?poly [ nom: Triangle ]' 
+		com: 'Nom courant de la  figure'.
+		
+			e
+		lisRegle: 'PolygoneTriangle'
+		si:
+			'polygone  ?poly ?prop'
+		alors: 'triangle ?poly ?prop'
+		com: 'transfert propriétè'.
+		
+		
+		e
+		lisRegle: 'PolygoneQuadrilatère'
+		si:
+			'polygone ?poly  [ nomGrec: Tetragone ] '
+		alors: 'polygone ?nom [ nom: quadrilatère ]' 
+		com: 'Nom courant de la  figure'.
+		
 		
 e lisRegle: 'lignePolygonale-côtés' 
 si:  'lignePolygonaleSegments  ?x1'
@@ -16636,17 +16692,8 @@ contient:el: ?cot  [  ?p1 ?p2  ]
 mot:et:rep: ?p1 ?p2 ?nom0 
 mot:et:rep: s ?nom0 ?nom'
 		alors: 'segment ?nom [  ?p1 ?p2 ]'.
-	e
-		lisRegle: 'PolygoneTriangle'
-		si:
-			'lignePolygonaleFermée ?l2
-premiers:rep: ?l2 ?som
-taille:rep: ?l2 ?x
-égal:à: ?x 3
-nomPolygone:rep: ?x ?nom
-créeNom:rep: ?som ?nomPoly
-'
-		alors: '?nomPoly  [ côtés:  ?l2  ]' "! !
+"	
+		! !
 
 !ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 29/Dec/2025 15:26:56'!
 relations: e
