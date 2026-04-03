@@ -113,18 +113,6 @@ Résistances électriques.pdf
 It is possible to work on one’s own topic by creating one’s own rules. In the context of an IT course, it helps illustrate the logical path of AI, as opposed to the path of neuromimetism. It can also be considered a simplification of Prolog, in the same way that Logo is a simplification of LISP.
 
 ----------------------------------------------------------------------------------------
-**Installing the Expert system for CUIS DrGeo**
-
-You need to download in this order from this site the files:
-- DrGeo.pck.st
-- DrGeoFrench.pck.st
-- Myexpert.pck.st
-- Be sure that filename ends with .pck.st and just drop the files into DrGeo.
-
-!!! Experimental version: the package works for: The tutorial, interactive use, the first chapters of Geometry and Expert System, not all predicates are verified !!!
-
-******************************************************************************************************************************
-
-
+with Windows if a file has already been loaded, Windows adds a number in parentheses to distinguish the new file, you must remove this number and its parentheses from the filename before dropping it into DrGeo, otherwise DrGeo will not recognize it as a package file.
 
 
