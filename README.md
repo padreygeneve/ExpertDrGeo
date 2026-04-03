@@ -52,7 +52,7 @@ Remarque:
   - avec Windows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
 ---------------------------------------------------------------------------------------
-Ce système expert est une adaptation en cours de la version 1909 pour DrGeo Pharo,
+**version originale 1909 pour DrGeo Pharo**
 
 **Système expert pour DrGeo Pharo version 1909**
 
@@ -78,108 +78,29 @@ Remarque:
 
 **Pour la documentation**
 
-télécharger depuis ce site le pd pour Pharof :
+télécharger depuis ce site le pdf pour Pharo :
 
 testExpertNew3Drivebackup2.pdf
+-----------------------------------------------------------------------------------------------------------------------
+**Istoa **
+Istoa regroupe plusieurs modèles de connaissances appelés DKM
+En MATH on y retrouve DrGeo. 
 
-Pour Istoa une documentation qui contient des scripts à copier/coller sur le système expert qui traite les cicuits de résistance.
+Les fichiers :
+DrGeoCore.pck.st  et MyExpert.pck.st  ajoutent à ce DrGeo le système Expert.
+
+En plus on peut ajouter un nouveau DKM à la Physique qui traitent des circuits de résistances en série ou en parallèle.
+c'est un DrGeo avec système expert et les règles Electricité dèjà chargées.
+Les fichiers à charger en plus sont istoaApp.pck.st et DKM-Physics-ElectricalCircuits.pck.st
+
+**Documentation**
+
+Pour Istoa une documentation qui contient des scripts à copier/coller au sujet du système expert qui traite les cicuits de résistance.
 
 Résistances électriques.pdf
 
-Pour obtenir une figure dans DrGeo Pharo dans le pdf, copier le script de la figure dans le pdf, puis, dans DrGeo Pharo, coller dans un espace de travail.
-
-----------------------------------------------------------------------------------------
-
-**Istoa**
-
-Dans Istoa, on peut programmer par script une figure dans un espace de travail.
-
-Pour ouvrir un miniDrgeo:
-
-**DrGeoFigure open**
-
-en suite le script.
-
-**Installation du système expert**
-
-Téléchager le fichier Myexpertistoa.pck.st ,le draquer et le lâcher dans istoa.
-
-Ajouter dans la classe **Kernel/Objet**, catégorie ***DrGeoCore** la méthode:
-
-isList
-
-^false.
-
-** Exemple de script**
-
-fig := DrGeoFigure open.
-
-a := fig point: 2@5. a nommer:'A'.
-
-o := fig point: 0@0 .
-
-o nommer:'O1'.
-
-seg:=fig segmentDe: o à: a.
-
-seg nommer:'O1A'.
-
-cer := fig cercleCentre: o passantPar:  a.
-
-cer nom: 'cercle'.
-
-est := fig pointSurLigne: cer   à: 0.0.
-
-est nom: 'Est'.
-
-nord := fig pointSurLigne: cer   à: 0.25.
-
-nord nom: 'Nord'.
-
-ouest := fig pointSurLigne: cer   à: 0.5.$
-
-ouest nom: 'Ouest'.
-
-sud := fig pointSurLigne: cer   à: 0.75.
-
-sud nom: 'Sud'.
-
-exp := Expert nouveau.
-
-exp drgeo: fig.
-
-exp chargeRegles:'EuclideMinimum'.
-
-exp initFaits.
-
-exp lisFigureDrgeo.
-
-exp deduis.
-
-"exp modèlesQuestions."
-
-exp vérifieCondition: 'rayon ?x ?y'.
-
-"exp modèlesQuestions."
-
-On peut enlever les **"** à modèlesQuestions pour voir les modàles de questions à utilise dans **vérifieCondition: **
-
-**Remarque:**
-
-Pour nommer un objet la  méthode est **nom:** au lieu de **nommer:**
-
-Pour rester compatible on peut définir la méthode :
-
-nommer: aString
-
-self nom: aString
-
-dans la classe DrGeoItem 
-
-DrGeoCore >>Model-Smalltalk >>  DrGeoItem 
-
----------------------------------------------------------------------------------------------------------
-*********************************************************************************************************
+********************************************************************************************************
+********************************************************************************************************
 
 **Abstract**
 
