@@ -1,18 +1,8 @@
-'From Cuis7.1 [latest update: #6452] on 19 March 2026 at 1:38:54 am'!
+'From Cuis7.7 [latest update: #7822] on 27 March 2026 at 8:03:24 pm'!
 'Description '!
-!provides: 'Myexpert' 1 21!
+!provides: 'Myexpert' 1 22!
 SystemOrganization addCategory: #Myexpert!
 
-
-!classDefinition: #ExpertWorkspace category: #Myexpert!
-Workspace subclass: #ExpertWorkspace
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Myexpert'!
-!classDefinition: 'ExpertWorkspace class' category: #Myexpert!
-ExpertWorkspace class
-	instanceVariableNames: ''!
 
 !classDefinition: #ExpertRelations category: #Myexpert!
 Set subclass: #ExpertRelations
@@ -23,6 +13,16 @@ Set subclass: #ExpertRelations
 !classDefinition: 'ExpertRelations class' category: #Myexpert!
 ExpertRelations class
 	instanceVariableNames: 'relations'!
+
+!classDefinition: #ExpertWorkspace category: #Myexpert!
+Workspace subclass: #ExpertWorkspace
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Myexpert'!
+!classDefinition: 'ExpertWorkspace class' category: #Myexpert!
+ExpertWorkspace class
+	instanceVariableNames: ''!
 
 !classDefinition: #ExpertList category: #Myexpert!
 Object subclass: #ExpertList
@@ -121,23 +121,19 @@ Internal Representation and Key Implementation Points.
 
     Implementation Points!
 
-!ExpertWorkspace methodsFor: 'accessing' stamp: 'drgeo 11/19/2024 14:41:22'!
-bindings
- ^ bindings! !
-
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 5/14/2020 21:48'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 14/May/2020 21:48:00'!
 expert 
 ^expert! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 5/14/2020 21:48'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 14/May/2020 21:48:00'!
 expert: ex
 expert := ex! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 4/15/2020 02:21'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 15/Apr/2020 02:21:00'!
 includes: obj
 ^(self select:[:x|x=obj] )notEmpty ! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 5/16/2020 03:39'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 16/May/2020 03:39:00'!
 relation: obj1 et:  obj2 nom: n
 |rel rel1 rel2|
 rel:= expert relationsAt: n.
@@ -149,7 +145,7 @@ rel2 ifNil: [ ^false ] .
 ^( rel1 = rel2 )
 ! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 5/14/2020 11:07'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 14/May/2020 11:07:00'!
 relation: obj nom: n
 |rel|
 
@@ -159,7 +155,7 @@ rel isEmpty ifTrue:[ ^ rel].
 ^rel asArray first.
 ! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'drgeo 12/23/2025 01:55:32'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'drgeo 23/Dec/2025 01:55:32'!
 relationCrée: obj1 et: obj2 nom: n
 	| rel1 rel2 rel e  nom |
 	e := self expert.
@@ -196,46 +192,50 @@ relationCrée: obj1 et: obj2 nom: n
 	rel remove: rel1 ifAbsent: [].
 	^ true! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 5/14/2020 21:43'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 14/May/2020 21:43:00'!
 relations
 ^expert relations! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 5/15/2020 00:24'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 15/May/2020 00:24:00'!
 relations: r
 expert relations: r
 ! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 3/31/2023 13:25'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 31/Mar/2023 13:25:00'!
 relationsAt: clef
 	^ self relations
 		at: clef asSymbol
 		ifAbsentPut: [ OrderedCollection new ]! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 5/15/2020 00:56'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'DrGeoUser 15/May/2020 00:56:00'!
 selectRelation: nom
 ^(self expert relations) select: [:r|r includes: nom]  .
 ! !
 
-!ExpertRelations class methodsFor: 'accessing' stamp: 'DrGeoUser 4/25/2020 17:39'!
+!ExpertRelations class methodsFor: 'accessing' stamp: 'DrGeoUser 25/Apr/2020 17:39:00'!
 initRelations 
 relations :=IdentityDictionary  new.! !
 
-!ExpertRelations class methodsFor: 'accessing' stamp: 'DrGeoUser 4/13/2020 13:03'!
+!ExpertRelations class methodsFor: 'accessing' stamp: 'DrGeoUser 13/Apr/2020 13:03:00'!
 relations 
 ^relations! !
 
-!ExpertRelations class methodsFor: 'accessing' stamp: 'DrGeoUser 5/14/2020 17:37'!
+!ExpertRelations class methodsFor: 'accessing' stamp: 'DrGeoUser 14/May/2020 17:37:00'!
 relationsAt: clef
 ^relations at:( clef  asSymbol )ifAbsentPut: [ OrderedCollection new ]! !
 
-!ExpertRelations class methodsFor: 'initialize' stamp: 'DrGeoUser 4/13/2020 13:50'!
+!ExpertRelations class methodsFor: 'initialize' stamp: 'DrGeoUser 13/Apr/2020 13:50:00'!
 new: rel
 |n|
 n:=self new.
 n add:rel.
 ^n! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/7/2021 12:11'!
+!ExpertWorkspace methodsFor: 'accessing' stamp: 'drgeo 19/Nov/2024 14:41:22'!
+bindings
+ ^ bindings! !
+
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 7/Jun/2021 12:11:00'!
 < alist
 |t1 t2|
 t1:= self printString .
@@ -244,7 +244,7 @@ t2 := alist printString.
 
 	! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/7/2023 10:49'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 7/Mar/2023 10:49:00'!
 = aList
 	(aList isKindOf: ExpertList)
 		ifFalse: [ ^ false ].
@@ -259,14 +259,14 @@ t2 := alist printString.
 			[ ^ self tail = aList tail and: [ self head - aList head < 0.0000001 ] ].
 	^ self head = aList head and: [ self tail = aList tail ]! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/16/2013 14:01'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 16/Apr/2013 14:01:00'!
 add:v  
 
 
 self addLast0:v.
 ^v! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/31/2013 15:51'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 31/Mar/2013 15:51:00'!
 addFirst:v
 |n|
 n:=self class new.
@@ -274,7 +274,7 @@ n head:v.
 n tail: self.
 ^n! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 7/13/2021 08:36'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 13/Jul/2021 08:36:00'!
 addFirstIfNotIncluded: v  
 |n|
 (self includes: v)ifTrue: [ ^self ].
@@ -282,20 +282,20 @@ n:=self veryDeepCopy .
 ^ n addFirst: v.
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/1/2013 12:40'!
-addLast0:v  
-self tail ifNil: [self head:v.self tail: self class new. ^self ].
-self tail addLast0: v
-! !
-
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 8/23/2024 15:08:05'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 23/Aug/2024 15:08:05'!
 addLast:v  
 
 
 self addLast0:v.
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 7/13/2021 08:32'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/Apr/2013 12:40:00'!
+addLast0:v  
+self tail ifNil: [self head:v.self tail: self class new. ^self ].
+self tail addLast0: v
+! !
+
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 13/Jul/2021 08:32:00'!
 addLastIfNotIncluded: v  
 |n|
 (self includes: v)ifTrue: [ ^self ].
@@ -303,24 +303,24 @@ n:=self veryDeepCopy .
 ^ n addLast0:v.
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/11/2021 17:47'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 11/Jun/2021 17:47:00'!
 all:condition
 |cond |
 cond := true.
 self do: [ :x |(condition value: x)   ifFalse: [  cond:=false ]  ].
 ^cond.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/2/2013 16:51'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 2/Apr/2013 16:51:00'!
 allButFirst
 ^ self tail! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 9/16/2024 18:37:22'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 16/Sep/2024 18:37:22'!
 allButLast 
 |c|
 c:=self  copyList.
 ^c allButLast0: c! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/5/2019 18:44'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 5/Apr/2019 18:44:00'!
 allButLast0:l
 |last|
 self tail ifNil: [^nil].
@@ -333,48 +333,48 @@ last:=self tail.
 
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 11/20/2020 11:43'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 20/Nov/2020 11:43:00'!
 append: l
 ^  ExpertList new append: self deepCopy with: l! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 11/20/2020 11:23'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 20/Nov/2020 11:23:00'!
 append: l1 with: l2
 |res|
 res:=l1.
 l2 doFirstLevel: [ :el | res add: el ].
 ^    res.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/16/2013 13:03'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 16/Apr/2013 13:03:00'!
 asArray
 ^self asOrderedCollection asArray .! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/11/2021 13:39'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 11/Mar/2021 13:39:00'!
 asCollection
 ^self asOrderedCollection! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/14/2013 01:22'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 14/Apr/2013 01:22:00'!
 asOrderedCollection 
 |col |
 col:=OrderedCollection new .
 self doFirstLevel: [:x|col addLast: x].
 ^col! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 8/3/2020 17:06'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/Aug/2020 17:06:00'!
 asSetlist
 ^ExpertList new: self asOrderedCollection asSet! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/2/2013 17:54'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 2/Apr/2013 17:54:00'!
 asString
 ^self printString! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/7/2021 15:45'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 7/Jun/2021 15:45:00'!
 at:n
 (n > self size)ifTrue: [  ^nil ].
 (n<1 )ifTrue:[^nil].
 (n=	1)ifTrue: [ ^self first].
 	^ self allButFirst  at:n - 1.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 8/3/2020 16:08'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/Aug/2020 16:08:00'!
 collect: aBlock
 |res|
 res:=self class new.
@@ -382,17 +382,17 @@ self doFirstLevel: [ :el | res add: ( aBlock value:el)  ].
 ^res
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 11/21/2025 15:20:51'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 21/Nov/2025 15:20:51'!
 copyList
 |c  |
 self isEmpty ifTrue: [^self ].
 ^self veryDeepCopy ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/14/2021 01:58'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 14/Jun/2021 01:58:00'!
 couples 
 ^ self couples: ExpertList new.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/14/2021 01:49'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 14/Jun/2021 01:49:00'!
 couples: l2
 |p1 p2 couple  l3|
 l3:=l2.
@@ -408,11 +408,11 @@ l3 add: couple.
 
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 7/12/2025 01:04:02'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 12/Jul/2025 01:04:02'!
 difference:l2
 ^self difference:l2 inter:ExpertList new.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 7/12/2025 01:28:36'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 12/Jul/2025 01:28:36'!
 difference:l2 inter: int
 |bf inter ll1 ll2|
 inter:=int.
@@ -443,7 +443,7 @@ ll1 isEmpty
 	
  ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/3/2013 22:34'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/Apr/2013 22:34:00'!
 do: aBlock
 |el|
 self isEmpty ifTrue: [^self].
@@ -453,7 +453,7 @@ ifFalse:[ el head:(aBlock value:self head)].
 el tail:((self  tail )doRecursively: aBlock).
 ^el! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/14/2013 01:25'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 14/Apr/2013 01:25:00'!
 doFirstLevel: aBlock
 |el|
 self isEmpty ifTrue: [^self].
@@ -461,7 +461,7 @@ aBlock value:self head.
 (self  tail )doFirstLevel:  aBlock.
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/2/2013 22:28'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 2/Apr/2013 22:28:00'!
 doRecursively: aBlock
 |el|
 self isEmpty ifTrue: [^self].
@@ -471,7 +471,7 @@ ifFalse:[ el head:(aBlock value:self head)].
 el tail:((self  tail )doRecursively: aBlock).
 ^el! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/6/2013 13:40'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/Apr/2013 13:40:00'!
 faitAsList:aFait
 |l|
 aFait isList ifTrue: [^aFait].
@@ -479,37 +479,37 @@ aFait isList ifTrue: [^aFait].
 aFait isString ifTrue: [^ExpertList  new: aFait ]
  ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/31/2013 15:53'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 31/Mar/2013 15:53:00'!
 first
 ^self head! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/30/2013 21:24'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 30/Mar/2013 21:24:00'!
 head
 ^head
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/30/2013 21:24'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 30/Mar/2013 21:24:00'!
 head: v
 head :=v
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 5/21/2021 12:54'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 21/May/2021 12:54:00'!
 ifEmpty: aBlock
 ^ self isEmpty 
 		ifTrue: [ aBlock value ]
 		ifFalse: [ self ]! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/1/2020 23:22'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/Apr/2020 23:22:00'!
 includes:obj 
 self  isEmpty  ifTrue:[ ^false ].
 (( self first)=obj) ifFalse: [ ^ self allButFirst  includes:  obj  ].
 ^true! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 5/21/2021 13:08'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 21/May/2021 13:08:00'!
 index: el
 ^ self index: el n:0.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 5/21/2021 13:50'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 21/May/2021 13:50:00'!
 index: el n:ind
 |i|
 self isEmpty ifTrue: [ ^ nil ].
@@ -517,7 +517,15 @@ self isEmpty ifTrue: [ ^ nil ].
 i := ind+1.
 ^ (self allButFirst) index: el    n: i! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/17/2020 01:02'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/Jan/2020 17:35:00'!
+instancie: lvars
+^self do:[:xx|(xx asString beginsWith: '?')ifTrue:[ Expert new valeur: xx vars: lvars] ifFalse:[xx]].! !
+
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 24/Nov/2019 11:21:00'!
+instancie: lvars expert:e
+^self do:[:xx|(xx asString beginsWith: '?')ifTrue:[e valeur: xx vars: lvars] ifFalse:[xx]].! !
+
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 17/Apr/2020 01:02:00'!
 instancie2: lvars 
 | e val|
 self ifNil: [ ^self ].
@@ -528,15 +536,7 @@ self allButFirst ifNil: [^ nil ].
 	ifFalse: [ val ] ).
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/6/2020 17:35'!
-instancie: lvars
-^self do:[:xx|(xx asString beginsWith: '?')ifTrue:[ Expert new valeur: xx vars: lvars] ifFalse:[xx]].! !
-
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 11/24/2019 11:21'!
-instancie: lvars expert:e
-^self do:[:xx|(xx asString beginsWith: '?')ifTrue:[e valeur: xx vars: lvars] ifFalse:[xx]].! !
-
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 7/11/2025 14:02:57'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 11/Jul/2025 14:02:57'!
 intersection:l1 with:l2 inter: int
 |bf|
 bf :=l1 allButFirst.
@@ -562,7 +562,7 @@ l1 size < l2 size ifTrue: [l1 isEmpty
 	
  ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 7/11/2025 18:31:18'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 11/Jul/2025 18:31:18'!
 intersectionWith:l2 inter: int
 |bf inter frst ll1 ll2|
 frst:= self first.
@@ -594,30 +594,30 @@ ll1 isEmpty
 	
  ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/31/2013 18:49'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 31/Mar/2013 18:49:00'!
 isEmpty 
 ^(self tail isNil )and:[self head isNil ]! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/2/2013 18:03'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 2/Apr/2013 18:03:00'!
 isList
 ^true! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/31/2013 16:09'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 31/Mar/2013 16:09:00'!
 last
 self tail ifNil: [^nil].
 self  tail tail ifNil: [^self head].
 ^self tail last! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/4/2013 02:59'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/Apr/2013 02:59:00'!
 makeCollectionOfLists:aString
 ^((aString subStrings: '
 ')collect:[:m|ExpertList new: m])asOrderedCollection .! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/1/2013 03:25'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/Apr/2013 03:25:00'!
 makeList:  aStream  
 ^self makeList:aStream list:ExpertList new .! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/1/2013 14:17'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/Apr/2013 14:17:00'!
 makeList:st list:alist
 |n  lst|
 lst:=alist .
@@ -630,7 +630,7 @@ lst:=alist  addLast: n.
 
 ^self  makeList:st  list: lst ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/6/2020 19:07'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/Jan/2020 19:07:00'!
 makeNom
 |rstr wstr|
 rstr:=ReadStream  on: self.
@@ -639,7 +639,7 @@ wstr nextPutAll: rstr next.
 [ wstr nextPut: $:. wstr nextPutAll: rstr next. rstr atEnd ]whileFalse .
 ^wstr contents.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 7/30/2024 09:28:45'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 30/Jul/2024 09:28:45'!
 makeWordCollection: aString 
 
 |res|
@@ -649,24 +649,24 @@ res :=((aString  subStrings: ' ' 	)collect:[:t |t asSymbol])asOrderedCollection 
 ('[' =	res last ) ifTrue:[ res := res allButLast].			
 					^res! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/6/2020 14:18'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/Jan/2020 14:18:00'!
 max 
 ^ self sort last! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/6/2020 14:16'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/Jan/2020 14:16:00'!
 min 
 ^ self sort first.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/4/2013 12:46'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/Apr/2013 12:46:00'!
 notEmpty
 ^self isEmpty not! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/6/2020 18:17'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/Jan/2020 18:17:00'!
 permute
 
 ^(self  addLast: self first) allButFirst .! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/6/2020 18:41'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 6/Jan/2020 18:41:00'!
 permuteMin
 |m l | 
 m:=self min.
@@ -674,14 +674,14 @@ l:=self.
 [  l:= l permute . m = (l first)] whileFalse .
 ^l! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 8/3/2020 15:58'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/Aug/2020 15:58:00'!
 reject: ablock
 |res|
 res:=self class new.
 self doFirstLevel: [ :el | (ablock value: el ) ifFalse: [res add: el]].
 ^res! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/1/2013 18:40'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 1/Apr/2013 18:40:00'!
 removeFirst
 |h r|
 r:=self first.
@@ -691,43 +691,43 @@ h tail:  h tail tail.
 
 ^r! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 8/3/2020 16:32'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/Aug/2020 16:32:00'!
 select: aBlock
 |res|
 res:=self class new.
 self doFirstLevel: [ :el | (aBlock value: el ) ifTrue:   [res add: el]].
 ^res! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/16/2013 12:55'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 16/Apr/2013 12:55:00'!
 size
 ^self size:0! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 4/16/2013 12:55'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 16/Apr/2013 12:55:00'!
 size:n
 self isEmpty ifTrue: [^n].
 ^self tail size:n+1.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 12/20/2021 13:10'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 20/Dec/2021 13:10:00'!
 sum
 	| s |
 	s := 0.0.
 	self do: [ :x | s := s + x  asNumber ].
 	^ s! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/31/2013 15:41'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 31/Mar/2013 15:41:00'!
 tail
 ^tail! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 3/31/2013 15:42'!
+!ExpertList methodsFor: 'accessing' stamp: 'DrGeoUser 31/Mar/2013 15:42:00'!
 tail: v
 tail :=v! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 7/11/2025 03:41:00'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 11/Jul/2025 03:41:00'!
 tousDifferents: aList
  ^aList tousDifferents 
 ! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 7/27/2025 23:50:10'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 27/Jul/2025 23:50:10'!
 tousDifférents
 	| suite |
 	suite := self allButFirst.
@@ -735,12 +735,21 @@ tousDifférents
 	(self allButFirst tousDifférentsDe: self first) ifTrue: [ ^ suite tousDifférents ].
 	^ false.! !
 
-!ExpertList methodsFor: 'accessing' stamp: 'drgeo 7/27/2025 23:52:25'!
+!ExpertList methodsFor: 'accessing' stamp: 'drgeo 27/Jul/2025 23:52:25'!
 tousDifférents: aList
  ^aList tousDifférents 
 ! !
 
-!ExpertList methodsFor: 'printing' stamp: 'drgeo 9/19/2024 14:39:23'!
+!ExpertList methodsFor: 'printing' stamp: 'drgeo 19/Sep/2024 14:39:48'!
+printOn: aStream
+	"aStream nextPutAll: '[ '  ."
+
+	self isEmpty
+		ifTrue: [ aStream nextPutAll: '[ ]'.
+			^ self ].
+	self printOn0: aStream! !
+
+!ExpertList methodsFor: 'printing' stamp: 'drgeo 19/Sep/2024 14:39:23'!
 printOn0: aStream 
 
 self isEmpty
@@ -751,7 +760,7 @@ self isEmpty
 	
 ! !
 
-!ExpertList methodsFor: 'printing' stamp: 'drgeo 11/8/2024 03:34:28'!
+!ExpertList methodsFor: 'printing' stamp: 'drgeo 8/Nov/2024 03:34:28'!
 printOn1: aStream 
 
 self isEmpty
@@ -762,7 +771,7 @@ self isEmpty
 	aStream nextPutAll: ' ] '.	
 ! !
 
-!ExpertList methodsFor: 'printing' stamp: 'drgeo 9/19/2024 14:45:24'!
+!ExpertList methodsFor: 'printing' stamp: 'drgeo 19/Sep/2024 14:45:24'!
 printOn2: aStream 
 	self isEmpty
 		ifTrue: [ ^ '[  ]' ].
@@ -779,26 +788,17 @@ printOn2: aStream
 				ifTrue: [ aStream nextPut: $  ] ].
 	self tail printOn2: aStream ! !
 
-!ExpertList methodsFor: 'printing' stamp: 'drgeo 9/19/2024 14:39:48'!
-printOn: aStream
-	"aStream nextPutAll: '[ '  ."
-
-	self isEmpty
-		ifTrue: [ aStream nextPutAll: '[ ]'.
-			^ self ].
-	self printOn0: aStream! !
-
-!ExpertList methodsFor: 'sorting' stamp: 'drgeo 7/27/2025 23:58:24'!
+!ExpertList methodsFor: 'sorting' stamp: 'drgeo 27/Jul/2025 23:58:24'!
 asList
 ^ ExpertList new: self! !
 
-!ExpertList methodsFor: 'sorting' stamp: 'DrGeoUser 5/10/2021 21:17'!
+!ExpertList methodsFor: 'sorting' stamp: 'DrGeoUser 10/May/2021 21:17:00'!
 sort 
 |lst|
 lst:=self.
 ^lst  sort: [ :x :y |x < y ] ! !
 
-!ExpertList methodsFor: 'sorting' stamp: 'DrGeoUser 5/10/2021 17:45'!
+!ExpertList methodsFor: 'sorting' stamp: 'DrGeoUser 10/May/2021 17:45:00'!
 sort: aBlock
 |col rstr wstr |
 col:=self  asOrderedCollection .
@@ -810,15 +810,15 @@ wstr nextPutAll: rstr next.
 [  wstr  nextPutAll:' '.wstr nextPutAll: rstr next. rstr atEnd ]whileFalse .
 ^ExpertList new: wstr contents.! !
 
-!ExpertList methodsFor: 'as yet unclassified' stamp: 'drgeo 7/27/2025 23:48:12'!
+!ExpertList methodsFor: 'as yet unclassified' stamp: 'drgeo 27/Jul/2025 23:48:12'!
 tousDifférentsDe: x
 	^ (self includes: x asString) not.! !
 
-!ExpertList class methodsFor: 'opening' stamp: 'DrGeoUser 4/1/2013 12:21'!
+!ExpertList class methodsFor: 'opening' stamp: 'DrGeoUser 1/Apr/2013 12:21:00'!
 emptyList
 ^self new! !
 
-!ExpertList class methodsFor: 'opening' stamp: 'DrGeoUser 12/21/2021 20:19'!
+!ExpertList class methodsFor: 'opening' stamp: 'DrGeoUser 21/Dec/2021 20:19:00'!
 new: aCollection
 |l st|
 l:=self new.
@@ -830,7 +830,7 @@ l:= l makeList: st  .^l].
 aCollection  do:[:el|l :=l addLast: el].
 ^l ! !
 
-!ExpertOutils methodsFor: 'accessing' stamp: 'drgeo 8/17/2024 00:19:01'!
+!ExpertOutils methodsFor: 'accessing' stamp: 'drgeo 17/Aug/2024 00:19:01'!
 floatString: str
 	^ str asString  size
 		=
@@ -839,7 +839,7 @@ floatString: str
 					((((x  asciiValue  between: 48 and: 57) or: [ x = $. ]) or: [ x = $- ])or:( x= $/))
 						or: [ x = $e ] ]) size! !
 
-!ExpertOutils methodsFor: 'accessing' stamp: 'drgeo 1/23/2025 03:19:43'!
+!ExpertOutils methodsFor: 'accessing' stamp: 'drgeo 23/Jan/2025 03:19:43'!
 instancie: lVars fait: f
 	| res fts |
 	lVars ifNil: [ ^ f ].
@@ -855,7 +855,7 @@ instancie: lVars fait: f
 self halt.
 	^ res! !
 
-!ExpertOutils methodsFor: 'accessing' stamp: 'drgeo 1/16/2025 20:34:13'!
+!ExpertOutils methodsFor: 'accessing' stamp: 'drgeo 16/Jan/2025 20:34:13'!
 instancie: f vars:lVars
 	| res fts |
 	lVars ifNil: [ ^ f ].
@@ -870,15 +870,15 @@ instancie: f vars:lVars
 "
 	^ res! !
 
-!ExpertOutils methodsFor: 'accessing' stamp: 'DrGeoUser 4/14/2020 14:06'!
+!ExpertOutils methodsFor: 'accessing' stamp: 'DrGeoUser 14/Apr/2020 14:06:00'!
 relations
 ^ ExpertRelations new  relations! !
 
-!ExpertOutils methodsFor: 'accessing' stamp: 'DrGeoUser 4/14/2020 14:08'!
+!ExpertOutils methodsFor: 'accessing' stamp: 'DrGeoUser 14/Apr/2020 14:08:00'!
 relations: rel
 ExpertRelations new class relations: rel.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 12/21/2021 22:54'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 21/Dec/2021 22:54:00'!
 affecte: aVariable valeur: aValue vars: newVars
 	| t4 t5 tt4 |
 	newVars ifNil: [ ^ aVariable ].
@@ -898,17 +898,17 @@ affecte: aVariable valeur: aValue vars: newVars
 						ifTrue: [ ^ true ] ] ].
 	^ aValue = t5! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'pad 2/5/2012 18:39'!
+!ExpertOutils methodsFor: 'tools' stamp: 'pad 5/Feb/2012 18:39:00'!
 appendCollection: t1 with: t2 
 (t2  isNil )ifTrue: [^t1].
 t1 addAll: t2.
 ^ t1! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'pad 2/20/2012 23:47'!
+!ExpertOutils methodsFor: 'tools' stamp: 'pad 20/Feb/2012 23:47:00'!
 applatis: acollection 
 ^ ((self applatisSuite: acollection)asSet)asOrderedCollection .! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'pad 2/20/2012 23:59'!
+!ExpertOutils methodsFor: 'tools' stamp: 'pad 20/Feb/2012 23:59:00'!
 applatisSuite: acollection 
 	| first allButF |
 	acollection = false
@@ -929,7 +929,7 @@ applatisSuite: acollection
 		appendCollection: acollection
 		with: (self applatisSuite: allButF))reject:[:t|t isNil ]! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'pad 2/20/2012 09:57'!
+!ExpertOutils methodsFor: 'tools' stamp: 'pad 20/Feb/2012 09:57:00'!
 colAsString:col 
 	| t1 |
 	t1 := (String new: 200) writeStream.
@@ -945,12 +945,12 @@ col 	do: [:t2 | t2 isString
 	^ t1 contents.
 ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 9/11/2024 01:49:24'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 11/Sep/2024 01:49:24'!
 colAsString:col debut: deb
 
 ^  col collect: [ :c| self string:c asString  debut:deb]! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 10/2/2024 23:14:57'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 2/Oct/2024 23:14:57'!
 colAsStringWithCr:col 
 	| t1 |
 	t1 := (String new) writeStream.
@@ -967,7 +967,7 @@ col 	do: [:t2 |t2 isString
 	^ t1 contents.
 ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 10/2/2024 23:20:28'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 2/Oct/2024 23:20:28'!
 colAsStringWithCrForSet:col 
 	| t1 |
 	t1 := (String new) writeStream.
@@ -986,13 +986,13 @@ col 	do: [:t2 |t2 isString
 	^ t1 contents.
 ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 9/8/2024 21:08:57'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 8/Sep/2024 21:08:57'!
 commentaireDe: aMethod
 |ind1 ind2|
 
 ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 5/8/2020 01:47'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 8/May/2020 01:47:00'!
 concat: aCollection
 | col  res nxt|
 aCollection ifEmpty:  [ ^aCollection ].
@@ -1001,7 +1001,7 @@ res:=WriteStream on: OrderedCollection new .
 [ (nxt:=col next) ifNotNil:[ res nextPutAll: nxt] . col atEnd ]whileFalse .
 ^res contents.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 5/10/2022 03:32'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 10/May/2022 03:32:00'!
 evaluate: expr
 |exp|
 exp:= expr.
@@ -1009,7 +1009,7 @@ exp:= expr.
 		source:expr ;
 		evaluate.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 4/3/2020 14:31'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 3/Apr/2020 14:31:00'!
 faitAsString:col 
 	| t1 st|
 	
@@ -1026,24 +1026,24 @@ col 	do: [:t2 | t2 isString
 	^ t1 contents.
 ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 2/16/2022 15:14'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 16/Feb/2022 15:14:00'!
 keyOf: val lval: lv
 ^	lv keys at: (lv values indexOf: val)! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 10/8/2024 01:43:02'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 8/Oct/2024 01:43:02'!
 label: obj 
 
 ^((self drgeo view drawable itemViews)detect:[:x|(x mathItem) =obj])  labelMorph  ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 10/8/2024 01:13:07'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 8/Oct/2024 01:13:07'!
 label: obj figure:f
 ^((f view drawable itemViews)detect:[:x|(x mathItem) =obj])  labelMorph  ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 1/6/2020 13:21'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 6/Jan/2020 13:21:00'!
 list: aString
 ^ExpertList new: aString.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 7/31/2024 16:18:08'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 31/Jul/2024 16:18:08'!
 makeFactCollection: arg1
 	| temp2 temp3 |
 	temp3 := OrderedCollection new.
@@ -1057,7 +1057,7 @@ makeFactCollection: arg1
 	temp3 ifNotEmpty: [ temp2 add: temp3 ].
 	^ temp2.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 1/19/2025 14:48:53'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 19/Jan/2025 14:48:53'!
 makeFactCollectionFromString: aString
 |r|
 r:= self creeRegle: 'temp'.
@@ -1066,11 +1066,11 @@ r antecedents: aString.
 "^(self makeFactCollection:( self makeWordCollection:aString))collect: [:c | ExpertList new: c]"
    ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 4/1/2013 14:28'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 1/Apr/2013 14:28:00'!
 makeList: aString
 ^ExpertList new: aString.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 9/6/2024 18:32:51'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 6/Sep/2024 18:32:51'!
 makeNumber: aString 
 |res|
 aString isPoint ifTrue:[^aString].
@@ -1080,14 +1080,14 @@ res:=Compiler evaluate:aString.
 res  isNumber ifTrue:[^res	 ].
 ^aString! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 8/16/2014 12:49'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 16/Aug/2014 12:49:00'!
 makeTokenCollection: aString 
 
 
 	
 ^aString  findTokens: #($ $( $) ) 	! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 9/16/2014 15:08'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 16/Sep/2014 15:08:00'!
 makeTokenCollection: aString  index:n
 |s ind rep|
 ind :=n asString.
@@ -1095,7 +1095,7 @@ rep:=''.
 s:=aString  findTokens: #($ $( $) ) .
 ^s first.	! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 9/6/2024 21:20:28'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 6/Sep/2024 21:20:28'!
 makeWordCollection: arg1
 	| temp2 temp3 temp5 |
 	arg1 class = OrderedCollection ifTrue: [ ^ arg1 ].
@@ -1121,12 +1121,12 @@ makeWordCollection: arg1
 	temp3 ~= '' ifTrue: [ temp2 add: temp3 ].
 	^ temp2.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 4/4/2020 18:25'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 4/Apr/2020 18:25:00'!
 minimum: str
 (str isList) ifTrue: [^( str  asOrderedCollection    sorted) first ].
 ^ (str   findTokens:  #($; )  )sorted first! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 9/21/2020 19:48'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 21/Sep/2020 19:48:00'!
 nomDizainesPolygone: n
 (n =0) ifTrue: [^ '' ].
 ( n = 1) ifTrue: [^ 'Deca' ].
@@ -1134,33 +1134,33 @@ nomDizainesPolygone: n
 (n > 2) ifTrue: [ ^  (self nomUnitéPolygone: n), 'Conta']
 ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 9/21/2020 16:43'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 21/Sep/2020 16:43:00'!
 nomPolygone: n
 (n= 100) ifTrue:[^ 'Hectogone'].
 ^(self nomUnitéPolygone: n\\10  )    , ( self nomDizainesPolygone: n //10),'gone'.
  ! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 9/21/2020 16:39'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 21/Sep/2020 16:39:00'!
 nomUnitéPolygone: n
 | unités |
 unités:= #( ''  Hen Do  Tri Tetra Penta Hexa Hepta Octo Enea) asOrderedCollection .
 ^(unités at:((n asNumber)+ 1) )asString! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 2/10/2020 11:46'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 10/Feb/2020 11:46:00'!
 nomsComRegles: listRegles
 |n|
 n:=0.
 ^listRegles collect:[:r| n:=n+	1.(( (r com) isNil )or: [(r com) ='']  ) ifTrue:   [ n asString, ' ',r name] 
 ifFalse:[  n asString, ' ',r  com] ]! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 2/10/2020 11:43'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 10/Feb/2020 11:43:00'!
 nomsRegles: listRegles
 |n|
 n:=0.
 
 ^listRegles collect:[:r|n:=n+1.  n asString,' ', r name]! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 11/21/2025 13:01:43'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 21/Nov/2025 13:01:43'!
 perform: t1 vars: t2 
 	| t3 t4 t5 t6 |
 	t6:=t1 veryDeepCopy .
@@ -1171,7 +1171,7 @@ perform: t1 vars: t2
 	t4 := t5 asArray.
 	^ self perform: t3 withArguments: t4! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 1/6/2020 13:12'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 6/Jan/2020 13:12:00'!
 sort: str
 |r s|
 str isString ifTrue: [ 
@@ -1183,12 +1183,56 @@ r allButFirst  do: [ :m | s nextPutAll:  (';',m)].
 ^ s contents. ].
 ^str sort! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 9/11/2024 01:09:46'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 11/Sep/2024 01:09:46'!
 string:str debut: deb
 
 ^  str asString copyReplaceFrom: 1  to: deb with: ' '! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 8/22/2020 00:03'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 16/Feb/2022 15:52:00'!
+unifie: t1 avec: t2 vars: t3
+	| t4 t5 t4f t5f |
+	t4 := ExpertList new: t1.
+	t5 := ExpertList new: t2.
+	(t4 isEmpty and: [ t5 isEmpty ])
+		ifTrue: [ ^ true ].
+	(t4 isEmpty or: [ t5 isEmpty ])
+		ifTrue: [ ^ false ].
+	t4f := t4 removeFirst.
+	t5f := t5 removeFirst.
+	t4f = t5f
+		ifTrue: [ ^ self unifie: t4 avec: t5 vars: t3 ].
+	(t4f isNumber and: [ t5f isNumber not ])
+		ifTrue: [ t5f := self makeNumber: t5f ].
+	(t4f isNumber not and: [ t5f isNumber ])
+		ifTrue: [ t4f := self makeNumber: t4f ].
+	(t4f isNumber and: [ t5f isNumber ])
+		ifTrue: [ ((t4f - t5f) abs < 1e-3)
+				ifTrue: [ t3 at: (self keyOf: t5f lval: t3) put:(( t5f * 1000)rounded /1000).
+				t3 at: (self keyOf: t4f lval: t3) put:(( t4f * 1000)rounded /1000).	
+					^ true ] ].
+	((t4f isKindOf: ExpertList) and: [ t5f isKindOf: ExpertList ])
+		ifTrue: [ (self unifie: t4f avec: t5f vars: t3)
+				ifTrue: [ (t4 isEmpty and: [ t5 isEmpty ])
+						ifTrue: [ ^ true ]
+						ifFalse: [ ^ self unifie: t4 avec: t5 vars: t3 ] ]
+				ifFalse: [ ^ false ] ].
+	(t4f isString and: [ $? = t4f first ])
+		ifTrue: [ (t5f isString not or: [ ($? = t5f asString first) not ])
+				ifTrue: [ (self affecte: t4f valeur: t5f vars: t3)
+						ifFalse: [ ^ false ] ].
+			t4 isEmpty & t5 isEmpty
+				ifTrue: [ ^ true ].
+			^ self unifie: t4 avec: t5 vars: t3 ].
+	$? = t5f asString first
+		ifTrue: [ $? = t4f asString first
+				ifFalse: [ (self affecte: t5f valeur: t4f vars: t3)
+						ifFalse: [ ^ false ] ].
+			(t4 isEmpty and: [ t5 isEmpty ])
+				ifTrue: [ ^ true ].
+			^ self unifie: t4 avec: t5 vars: t3 ].
+	^ false! !
+
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 22/Aug/2020 00:03:00'!
 unifie2: t1 avec: t2 vars: t3 
  "nil"	| t4 t5 t4f t5f|
 	
@@ -1249,51 +1293,7 @@ unifie2: t1 avec: t2 vars: t3
 	
 	^ false! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 2/16/2022 15:52'!
-unifie: t1 avec: t2 vars: t3
-	| t4 t5 t4f t5f |
-	t4 := ExpertList new: t1.
-	t5 := ExpertList new: t2.
-	(t4 isEmpty and: [ t5 isEmpty ])
-		ifTrue: [ ^ true ].
-	(t4 isEmpty or: [ t5 isEmpty ])
-		ifTrue: [ ^ false ].
-	t4f := t4 removeFirst.
-	t5f := t5 removeFirst.
-	t4f = t5f
-		ifTrue: [ ^ self unifie: t4 avec: t5 vars: t3 ].
-	(t4f isNumber and: [ t5f isNumber not ])
-		ifTrue: [ t5f := self makeNumber: t5f ].
-	(t4f isNumber not and: [ t5f isNumber ])
-		ifTrue: [ t4f := self makeNumber: t4f ].
-	(t4f isNumber and: [ t5f isNumber ])
-		ifTrue: [ ((t4f - t5f) abs < 1e-3)
-				ifTrue: [ t3 at: (self keyOf: t5f lval: t3) put:(( t5f * 1000)rounded /1000).
-				t3 at: (self keyOf: t4f lval: t3) put:(( t4f * 1000)rounded /1000).	
-					^ true ] ].
-	((t4f isKindOf: ExpertList) and: [ t5f isKindOf: ExpertList ])
-		ifTrue: [ (self unifie: t4f avec: t5f vars: t3)
-				ifTrue: [ (t4 isEmpty and: [ t5 isEmpty ])
-						ifTrue: [ ^ true ]
-						ifFalse: [ ^ self unifie: t4 avec: t5 vars: t3 ] ]
-				ifFalse: [ ^ false ] ].
-	(t4f isString and: [ $? = t4f first ])
-		ifTrue: [ (t5f isString not or: [ ($? = t5f asString first) not ])
-				ifTrue: [ (self affecte: t4f valeur: t5f vars: t3)
-						ifFalse: [ ^ false ] ].
-			t4 isEmpty & t5 isEmpty
-				ifTrue: [ ^ true ].
-			^ self unifie: t4 avec: t5 vars: t3 ].
-	$? = t5f asString first
-		ifTrue: [ $? = t4f asString first
-				ifFalse: [ (self affecte: t5f valeur: t4f vars: t3)
-						ifFalse: [ ^ false ] ].
-			(t4 isEmpty and: [ t5 isEmpty ])
-				ifTrue: [ ^ true ].
-			^ self unifie: t4 avec: t5 vars: t3 ].
-	^ false! !
-
-!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 1/23/2025 02:02:11'!
+!ExpertOutils methodsFor: 'tools' stamp: 'drgeo 23/Jan/2025 02:02:11'!
 valeur: t1 vars: t2 
 |val|
 t1 isList  ifTrue: [^t1  instancie: t2].
@@ -1310,7 +1310,7 @@ t1 isList  ifTrue: [^t1  instancie: t2].
 	"self halt."
 ^val.! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 4/8/2013 15:26'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 8/Apr/2013 15:26:00'!
 verifieFait2: t1 
 	| t2 t3 t4  vars res|
 	
@@ -1333,7 +1333,7 @@ verifieFait2: t1
 ' , t5 last afficheFait ].
 ^res! !
 
-!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 11/29/2022 17:22'!
+!ExpertOutils methodsFor: 'tools' stamp: 'DrGeoUser 29/Nov/2022 17:22:00'!
 verifieFaits: t1
 	| f res st |
 	f := self makeFactCollectionFromString: t1.
@@ -1351,15 +1351,15 @@ verifieFaits: t1
 	' , (self colAsStringWithCr: s last) ].
 	^ st! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 5/2/2025 17:08:35'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 2/May/2025 17:08:35'!
 affichage
 ^affichage! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 5/2/2025 17:09:28'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 2/May/2025 17:09:28'!
 affichage: aff
 affichage := aff! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 10/27/2023 16:03'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 27/Oct/2023 16:03:00'!
 afficheAffirmations
 	| n nfaits res wres |
 	n := 0.
@@ -1375,7 +1375,7 @@ afficheAffirmations
 	res atEnd ] whileFalse.
 	^wres contents! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/18/2024 00:19:25'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 18/Nov/2024 00:19:25'!
 afficheCode
 |str|
 str :='f:=DrGeoFigure nouveau.
@@ -1384,7 +1384,7 @@ str :='f:=DrGeoFigure nouveau.
 '] .
 ^str! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 4/18/2019 09:04'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 18/Apr/2019 09:04:00'!
 afficheConclusions
 	| t1 t2 |
 	t2 := ReadStream on: (self regles values
@@ -1395,12 +1395,12 @@ afficheConclusions
 	t2 atEnd] whileFalse.
 	^ t1 contents! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/7/2024 22:56:19'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 7/Nov/2024 22:56:19'!
 afficheFaits
 ''=self afficheFaits2 ifTrue: [^'base vide' ]
 ifFalse: [^self afficheFaits2]! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/17/2022 13:33'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 17/Jul/2022 13:33:00'!
 afficheFaits2
 |lfaits rstr res wres|
 lfaits:=(self faits keys reject: [:x|(x asString ) endsWith: '-regles'])collect:[:m|Array with: m with: (self  faits at:m )].
@@ -1419,7 +1419,7 @@ wres nextPut: Character  cr.
 ^ wres contents.
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 10/26/2023 21:41'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 26/Oct/2023 21:41:00'!
 affichePrédicats
 	| meth keys res |
 	meth := ExpertRegle methodDictionary.
@@ -1431,7 +1431,7 @@ affichePrédicats
 			^res
 		! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 6/28/2025 19:27:19'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 28/Jun/2025 19:27:19'!
 afficheRegle: ruleName 
 	| r |
 	r := ruleName asSymbol.
@@ -1440,7 +1440,7 @@ afficheRegle: ruleName
 				ifAbsent: [^ ruleName ,' absente'].
 	^ r afficheRegle! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 9/14/2024 14:53:42'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 14/Sep/2024 14:53:42'!
 afficheRegles
 	| res rstream |
 ordreRegles isEmpty ifTrue:[ ^  'Pas de règles' ].
@@ -1450,35 +1450,7 @@ rstream 	:= ReadStream on: ordreRegles .
 
 	^ res contents.! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/13/2024 19:51:27'!
-afficheReglesConcluants2:hyp
-|res lregl antes array regle lv  lvars | 
-
-res:=WriteStream on: ''.
-lregl:= ReadStream on: (self reglesConcluants: hyp).
-[	array := (lregl next).
-	regle := array first.
-
-	lv:=array last.
-	lvars:=(regle verifRegle: lv).
-	(lvars isEmpty )
-	ifTrue: [lvars:=lv ]
-	ifFalse: [lvars := lvars first     first].
-	
-	res cr.
-	res nextPutAll: (regle nom). 
-	
-	antes:= ReadStream on: (regle ant). .
-	[	res cr.
-		res nextPutAll: (self faitAsString: (regle instancie: lvars fait: (antes	 next ) )).
-			
-		antes atEnd 	]whileFalse .
-		res cr.
-	lregl atEnd ]whileFalse .
-^res contents .
-! !
-
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/13/2024 19:58:25'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 13/Oct/2024 19:58:25'!
 afficheReglesConcluants:hyp
 |res  antes array regle lv  lvars | 
 
@@ -1508,17 +1480,45 @@ lrgl:= ReadStream on: (self reglesConcluants: hyp).
 ^res contents .
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/21/2024 16:31:22'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 13/Oct/2024 19:51:27'!
+afficheReglesConcluants2:hyp
+|res lregl antes array regle lv  lvars | 
+
+res:=WriteStream on: ''.
+lregl:= ReadStream on: (self reglesConcluants: hyp).
+[	array := (lregl next).
+	regle := array first.
+
+	lv:=array last.
+	lvars:=(regle verifRegle: lv).
+	(lvars isEmpty )
+	ifTrue: [lvars:=lv ]
+	ifFalse: [lvars := lvars first     first].
+	
+	res cr.
+	res nextPutAll: (regle nom). 
+	
+	antes:= ReadStream on: (regle ant). .
+	[	res cr.
+		res nextPutAll: (self faitAsString: (regle instancie: lvars fait: (antes	 next ) )).
+			
+		antes atEnd 	]whileFalse .
+		res cr.
+	lregl atEnd ]whileFalse .
+^res contents .
+! !
+
+!Expert methodsFor: 'accessing' stamp: 'drgeo 21/Nov/2024 16:31:22'!
 afficheReglesDisplay
 self	drgeo presenter expertDisplay:'Règles
 ' , self afficheRegles.
 ! !
 
-!Expert methodsFor: 'accessing'!
+!Expert methodsFor: 'accessing' stamp: ''!
 afficheRègles
 	^ self afficheRegles.! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/14/2024 12:46:06'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 14/Oct/2024 12:46:06'!
 affirme: just fait: fait
 	| f nouvFait deja |
 	f := fait.
@@ -1555,7 +1555,7 @@ affirme: just fait: fait
 					^ true ] ].
 	^ false! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/14/2024 12:48:39'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 14/Oct/2024 12:48:39'!
 affirme: just fait: fait vars: lVars 
 	| f nouvFait   args deja|
 	f := fait .
@@ -1606,20 +1606,20 @@ select: [:t7 | t7 fait = f])
  	retablit ifTrue: 	[deja ifNotEmpty: [deja do:[:x|x retire:false.deductions add: x  ]]].
 	^ false! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/30/2024 14:43:02'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 30/Nov/2024 14:43:02'!
 affirmeFaits: aText
 |nf|
 nf := self affirmeFaits: 'énoncé' faits: aText.
 ^ nf size asString, ' faits affirrmés.'
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/8/2024 13:35:43'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 8/Nov/2024 13:35:43'!
 affirmeFaits: just faits: aText 
 
  	^(self makeFactCollectionFromString:  aText) collect: [:t|self affirme: just fait: t asString].
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 12/12/2025 13:37:57'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 12/Dec/2025 13:37:57'!
 ajouteNoms
 |  s x pool |
 
@@ -1630,7 +1630,7 @@ pool  do:[:m|s:=''.((((m name )='')or: [ ' '  = m name])or:(m name)isNil)
 	x ifNil: [ x:='' ]].
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/22/2025 23:39:53'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 22/Oct/2025 23:39:53'!
 ajouteNoms:pool
 |  s index x |
 index :=0.
@@ -1642,12 +1642,12 @@ pool  do:[:m|s:=''.((((m name )='')))
 ^pool.
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 9/13/2024 18:28:51'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 13/Sep/2024 18:28:51'!
 causeFaitNo: t1
 .
 	^ self causeFaitNo: t1 decal: '' detail: nil.! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 12/18/2023 15:32'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 18/Dec/2023 15:32:00'!
 causeFaitNo: n decal: dec
 	| aff r jst res faitInstancie decal |
 	n > affirmations size
@@ -1694,7 +1694,7 @@ causeFaitNo: n decal: dec
 				nextPutAll: faitInstancie printString ].
 	^ res contents! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/24/2024 22:53:31'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 24/Oct/2024 22:53:31'!
 causeFaitNo: n decal: dec detail: det
 	| aff r jst faitInstancie detail f lv resW ncom justF rgl impl ffinst |
 	self initConstructions.
@@ -1783,13 +1783,13 @@ causeFaitNo: n decal: dec detail: det
 						nextPutAll: faitInstancie asString , impl , justF ] ].
 	^ resW contents! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/30/2021 19:10'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 30/Jul/2021 19:10:00'!
 causesFaitNo: n  
 
 
 ^ self causesFaitNo: n dec: '' detail: true.! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/21/2020 23:02'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 21/May/2020 23:02:00'!
 causesFaitNo: n  dec:dec
 |jsts f  decal|
 decal:=WriteStream on:''.decal nextPutAll: dec; nextPutAll:  '  '.
@@ -1804,7 +1804,7 @@ ifTrue: [^jsts contents ].
 ^jsts contents 
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/30/2021 18:32'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 30/Jul/2021 18:32:00'!
 causesFaitNo: n  dec:dec detail: det
 |jsts f  decal|
 decal:=WriteStream on:'  '.decal nextPutAll: dec; nextPutAll:  '  '.
@@ -1823,7 +1823,7 @@ ifFalse:[
 ^jsts contents .
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/9/2024 02:45:57'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 9/Oct/2024 02:45:57'!
 chargeRegles: desRegles
 |rgl|
 rgl :=desRegles.
@@ -1835,25 +1835,25 @@ ExpertRegle perform: (rgl    ) withArguments:{self}.
 self stw add:rgl.
 ^'Règles : ',self stw asArray printString,' Installées.'.! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/11/2022 13:12'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/Jul/2022 13:12:00'!
 com 
 ^com! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/11/2022 13:12'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/Jul/2022 13:12:00'!
 com: aBoolean
 com := aBoolean! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/21/2021 15:40'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 21/Jul/2021 15:40:00'!
 constructions
 constructions ifNil: [ constructions := ExpertList new].
 ^ constructions! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/21/2021 15:26'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 21/Jul/2021 15:26:00'!
 constructions: cons
 constructions ifNil: [ constructions := ExpertList new ].
 constructions add: cons! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 2/3/2020 20:02'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 3/Feb/2020 20:02:00'!
 creeRegle: nom 
 	| r  |
 	nom = ''
@@ -1866,7 +1866,7 @@ creeRegle: nom
 	r expert: self.
 	^ r! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/23/2025 00:53:54'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 23/Oct/2025 00:53:54'!
 deduis
 | fst rgl fts  rr wrst rstr  |
 deductions:=OrderedCollection new.
@@ -1894,29 +1894,29 @@ rstr := ReadStream on: deductions.
 [  ( rstr atEnd) ifFalse:[ wrst nextPutAll: rstr next fait asString.wrst nextPut: Character cr].rstr atEnd ]whileFalse  .
 ^ wrst contents.	"! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 2/5/2020 12:20'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/Feb/2020 12:20:00'!
 drgeo 
 ^drgeo! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 2/5/2020 12:19'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/Feb/2020 12:19:00'!
 drgeo:drg
 drgeo := drg! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 7/30/2024 20:55:45'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 30/Jul/2024 20:55:45'!
 enonceFait: faitOuString 
 	self affirme: 'énoncé' fait: faitOuString! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 3/29/2013 18:36'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 29/Mar/2013 18:36:00'!
 enonceFaits: aText 
 	(self	makeFactCollectionFromString:  aText)do:
 		[:t|self enonceFait: t].
 	! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/19/2024 17:33:26'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 19/Nov/2024 17:33:26'!
 executeCode
 Compiler evaluate: self afficheCode! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 2/10/2020 12:32'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 10/Feb/2020 12:32:00'!
 expertBackward
 |p rcl f  tool  l ln action res rstr  index|
 p:=drgeo app presenter.
@@ -1943,11 +1943,36 @@ rstr:= ReadStream on: ( rcl at:(index ) )ant reverse.
 p expertDisplay: action String: res contents.
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/1/2019 22:34'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 1/Nov/2019 22:34:00'!
 explique:n
 ^self causeFaitNo: n! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 12/20/2023 18:32'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 8/Sep/2024 21:40:40'!
+faitTelque: f
+	| faux l ind res |
+	faux := false.
+	l := f.
+	f isEmpty
+		ifTrue: [ ^ false ].
+		$~ =  f first  ifTrue:  [ ^ f ].
+	f isString
+		ifTrue: [ l := self list: f ].
+	(l first endsWith: ':')
+		ifTrue: [ com
+				ifTrue: [ ^ l asString , Character cr asString,
+							((ExpertRegle methodDictionary
+								at: (l first asString , 'vars:') asSymbol) sourceCode lines at:2) ]
+				ifFalse: [ ^ l asString , Character cr asString ] ].
+	res := self affirmations
+		detect: [ :x | 
+			ind := x.
+			x fait = f ]
+		ifNone: [ res := self affirmations
+				detect: [ :m | m = (self faitTelque2: f) ]
+				ifNone: [ ^ (affirmations indexOf: ind) asString , ' ' , f ] ].
+	^ res afficheFait2! !
+
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 20/Dec/2023 18:32:00'!
 faitTelque2: model
 	| mod clef trouvés res lvar nouv oldCurs |
 	lvar := IdentityDictionary new.
@@ -1974,32 +1999,7 @@ res := trouvés
 					nouv expert: self ] ].
 	^ res! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 9/8/2024 21:40:40'!
-faitTelque: f
-	| faux l ind res |
-	faux := false.
-	l := f.
-	f isEmpty
-		ifTrue: [ ^ false ].
-		$~ =  f first  ifTrue:  [ ^ f ].
-	f isString
-		ifTrue: [ l := self list: f ].
-	(l first endsWith: ':')
-		ifTrue: [ com
-				ifTrue: [ ^ l asString , Character cr asString,
-							((ExpertRegle methodDictionary
-								at: (l first asString , 'vars:') asSymbol) sourceCode lines at:2) ]
-				ifFalse: [ ^ l asString , Character cr asString ] ].
-	res := self affirmations
-		detect: [ :x | 
-			ind := x.
-			x fait = f ]
-		ifNone: [ res := self affirmations
-				detect: [ :m | m = (self faitTelque2: f) ]
-				ifNone: [ ^ (affirmations indexOf: ind) asString , ' ' , f ] ].
-	^ res afficheFait2! !
-
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 4/8/2013 16:54'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 8/Apr/2013 16:54:00'!
 faitsIssusDe:just
 |res|
 res:=''.
@@ -2007,7 +2007,7 @@ res:=''.
 ', r afficheFait 	].
 ^res! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/14/2020 23:14'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 14/May/2020 23:14:00'!
 getRelationsAt: clef
 |rels cl|
 cl :=clef.
@@ -2015,21 +2015,21 @@ cl isSymbol ifFalse: [ cl := cl asSymbol].
 (rels:= self relationsAt: cl)ifNil: [ rels := self initRelationsAt: cl].
 ^rels! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/11/2022 15:41'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/Nov/2022 15:41:00'!
 indTexte 
 ^ indtexte! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/11/2022 15:42'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/Nov/2022 15:42:00'!
 indTexte: txt
 indtexte :=txt! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 12/12/2025 12:37:34'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 12/Dec/2025 12:37:34'!
 indexNom
 
 indexNom 		 ifNil:  [ indexNom:= 0].
 ^indexNom! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/1/2022 01:53'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 1/May/2022 01:53:00'!
 initConstructions
 
 constructions ifNotNil:[ constructions do:[:x |
@@ -2037,7 +2037,7 @@ constructions ifNotNil:[ constructions do:[:x |
 		( Array = x class)ifTrue: [ (x first) style color:   x last]]].
 constructions := ExpertList new. ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/14/2024 12:20:37'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 14/Oct/2024 12:20:37'!
 initFaits
 	self indTexte: nil.
 	nl:=0.
@@ -2050,7 +2050,7 @@ initFaits
 	deductions := OrderedCollection .
 	^'Base vide'! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/13/2024 19:43:51'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 13/Oct/2024 19:43:51'!
 initRegles
 	regles := IdentityDictionary new.
 	ordreRegles := OrderedCollection new.
@@ -2058,11 +2058,11 @@ initRegles
 	stw :=OrderedCollection new.
 	^'règles supprimée'! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/14/2020 14:46'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 14/May/2020 14:46:00'!
 initRelations
 relations:=IdentityDictionary new .! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 3/25/2023 14:19'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 25/Mar/2023 14:19:00'!
 initRelationsAt: clef
 	| cl res |
 	cl := clef asSymbol.
@@ -2070,25 +2070,25 @@ initRelationsAt: clef
    relations at: cl put: Set new.
 	! !
 
-!Expert methodsFor: 'accessing'!
+!Expert methodsFor: 'accessing' stamp: ''!
 initRègles
 	self initRegles.
 	^ 'règles supprimée'.! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/13/2024 19:44:40'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 13/Oct/2024 19:44:40'!
 lgl
 ^lrgl! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/22/2025 22:02:35'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 22/Oct/2025 22:02:35'!
 lisFigure
 self lisFigureDrgeo: ( self drgeo).
 ^'Figure lue.'! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 8/26/2024 17:45:53'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 26/Aug/2024 17:45:53'!
 lisFigure:fig
 self lisFigureDrgeo: fig.	! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/14/2025 16:15:23'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 14/Oct/2025 16:15:23'!
 lisFigureDrgeo
 	| pool s x px p index sub nb pnts pnts2 |
 	"f := DrGeoFigure viewLess.
@@ -2160,7 +2160,7 @@ lisFigureDrgeo
 			self affirme: 'Drgeo' fait: s ].
 	^ pool! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 12/16/2025 16:02:16'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 16/Dec/2025 16:02:16'!
 lisFigureDrgeo: w
 	| pool s x px p index nb f pnts pnts2 morphs |
 
@@ -2226,7 +2226,7 @@ lisFigureDrgeo: w
 		
 	^ pool! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 6/30/2019 09:16'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 30/Jun/2019 09:16:00'!
 lisRegle: nom com: c
 |r|
 (regles keys includes: nom asSymbol)
@@ -2234,7 +2234,7 @@ lisRegle: nom com: c
 		ifFalse: [^ self].
 r com: c.! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 12/1/2024 21:48:30'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 1/Dec/2024 21:48:30'!
 lisRegle: nom si: ant alors: conc
 |r|
 r:=self creeRegle: nom.
@@ -2242,7 +2242,7 @@ r antecedents: ant.
 r concl: conc.
 ^'Règle ''',nom,''' définie'! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 12/1/2024 21:46:07'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 1/Dec/2024 21:46:07'!
 lisRegle: nom si: ant alors: conc com:c
 |r|
 r:=self creeRegle: nom.
@@ -2252,15 +2252,15 @@ r com: c.
 ^'Règle ''',nom,''' définie'
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 2/23/2013 12:37'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 23/Feb/2013 12:37:00'!
 lregles
 ^lregles! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 2/23/2013 12:39'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 23/Feb/2013 12:39:00'!
 lregles:r
 lregles:=r! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 9/13/2024 18:55:21'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 13/Sep/2024 18:55:21'!
 marquerLesObjets: nofait
 |fct res fpool|
 fct:=self affirmations at: nofait. 
@@ -2278,12 +2278,12 @@ res do:  [ :x|self constructions add: (Array with: x with: x style color ).
 
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/9/2024 03:34:12'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 9/Oct/2024 03:34:12'!
 mesRegles
 ^self stw asArray
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 10/14/2021 20:50'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 14/Oct/2021 20:50:00'!
 modelesFaits
 |keys f v n m|
 keys:=((self faits) keys   ) reject:[:i|i asString  endsWith: '-regles'].
@@ -2298,7 +2298,7 @@ f do:[:i|v:=v,i,'
 ^'
 ',v  ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/14/2025 16:30:58'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 14/Oct/2025 16:30:58'!
 modèlesQuestions
 	| temp1 temp2 temp4 temp5 temp6 |
 	temp1 := self faits keys reject: [ :argm0_7 |
@@ -2329,20 +2329,20 @@ modèlesQuestions
 Modèles de questions.
 ' , temp4.! !
 
-!Expert methodsFor: 'accessing'!
+!Expert methodsFor: 'accessing' stamp: ''!
 ordreRegles
 	^ ordreRegles! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/13/2024 19:47:33'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 13/Oct/2024 19:47:33'!
 ordreRegles: lrgl1
 	ordreRegles := lrgl1! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 3/7/2013 16:00'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/Mar/2013 16:00:00'!
 ouvreTranscript
 "Transcript := TranscriptStream new.
 Transcript openLabel: 'Transcript'."! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/25/2025 03:32:10'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 25/Nov/2025 03:32:10'!
 polySommets: pol 
 |pool   poly  pointsSur pointsSurPoly som|
 pool:=self drgeo  domain factory pool.
@@ -2354,11 +2354,11 @@ pointsSurPoly := poly parents collect:[:x|x name].
 som:= ' [ ',( self  colAsString:  pointsSurPoly),' ]'.
 ^som.! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 5/5/2025 22:03:52'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 5/May/2025 22:03:52'!
 pressePapier
 ^ self drgeo presenter expertPressePapier! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 4/25/2022 20:23'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 25/Apr/2022 20:23:00'!
 prouve: aFait
 |f1  res n tr|
 f1 := self makeList: aFait.
@@ -2369,11 +2369,11 @@ res:= self affirmations select:  [:f|tr ifFalse:[ n:=n +1].(f1=f fait) ifTrue: [
 ^res collect: [:x |n asString , ' ',x fait asString , 'Par la regles: ',x just].
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/1/2024 00:55:58'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 1/Nov/2024 00:55:58'!
 reglesChargées
 ^(self regles keys collect:[:k|( ((self regles at:k)name)       substringsSeparatedBy: $-) first]) asSet sorted! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 2/3/2020 21:09'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 3/Feb/2020 21:09:00'!
 reglesConcluant: aStringOrList
 
 |r|
@@ -2381,7 +2381,7 @@ r:=ExpertRegle new.
 r expert:self .
 ^r reglesConcluant: aStringOrList.! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 4/25/2022 18:49'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 25/Apr/2022 18:49:00'!
 reglesConcluants:conc
 |c lvars res|
 lvars :=IdentityDictionary new.
@@ -2390,20 +2390,20 @@ c:=conc.
 	^res
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/9/2024 02:25:00'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 9/Oct/2024 02:25:00'!
 reglesPrédéfinies
 ExpertRegle class methodDict keys! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/24/2020 20:40'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 24/Nov/2020 20:40:00'!
 retablit
 ^ retablit! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 11/24/2020 20:54'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 24/Nov/2020 20:54:00'!
 retablit: aBoolean
 retablit :=  aBoolean.
 ^retablit.! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/28/2025 21:05:26'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 28/Nov/2025 21:05:26'!
 retireFait: aFait
 	| f res |
 	
@@ -2420,42 +2420,42 @@ retireFait: aFait
 	res retire: true.
 	^ true! !
 
-!Expert methodsFor: 'accessing'!
+!Expert methodsFor: 'accessing' stamp: ''!
 règlesChargées
 	^ stw.! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/9/2024 02:28:24'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 9/Oct/2024 02:28:24'!
 règlesPrédéfinies
 ^ExpertRegle class methodDict keys sort! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 7/28/2025 00:20:26'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 28/Jul/2025 00:20:26'!
 stringVerListe: str
 ^ ExpertList new: str! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 7/28/2025 00:24:20'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 28/Jul/2025 00:24:20'!
 stringVersListe: str
 ^ ExpertList new: str! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/3/2021 00:42'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 3/May/2021 00:42:00'!
 stw
 ^stw! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 5/3/2021 00:41'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 3/May/2021 00:41:00'!
 stw: watch
 stw:=watch! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 4/16/2013 12:26'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 16/Apr/2013 12:26:00'!
 supprimeMarqueRetire:aFait
 |f|
 f:=aFait .
 f isString ifTrue: [f:=ExpertList new:f].
 (self affirmations detect: [:m|(m fait)= f ])retire: nil.! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 4/16/2013 12:02'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 16/Apr/2013 12:02:00'!
 supprimeMarquesRetire
 self  affirmations do:[:m|m retire:nil]! !
 
-!Expert methodsFor: 'accessing' stamp: 'pad 1/16/2012 13:19'!
+!Expert methodsFor: 'accessing' stamp: 'pad 16/Jan/2012 13:19:00'!
 supprimeRegle: rNom 
 	| r |
 	r := regles
@@ -2465,20 +2465,20 @@ supprimeRegle: rNom
 	ordreRegles remove: rNom asSymbol.
 	^ r! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/21/2021 15:47'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 21/Jul/2021 15:47:00'!
 supprimerMathitem: aMathItem
 self drgeo domain deleteMathItem: aMathItem! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/27/2024 19:06:46'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 27/Oct/2024 19:06:46'!
 titre
 titre ifNil:[titre ='Expert journal'].
 ^titre! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 10/27/2024 18:42:36'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 27/Oct/2024 18:42:36'!
 titre:  t
 titre :=t! !
 
-!Expert methodsFor: 'accessing' stamp: 'pad 1/24/2012 22:31'!
+!Expert methodsFor: 'accessing' stamp: 'pad 24/Jan/2012 22:31:00'!
 toutVerifier
 |aVer|
 aVer:=Set new.
@@ -2487,13 +2487,13 @@ aVer:=Set new.
 
 ! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 3/7/2013 16:00'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 7/Mar/2013 16:00:00'!
 trace: anObject
 "Transcript show: anObject ; cr.
 ^ anObject
 "! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 9/4/2025 20:23:43'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 4/Sep/2025 20:23:43'!
 verifieCondition: cond
 	| flse r res resStr ccr wStr rr rr2 c inst dic |
 	flse := false.
@@ -2543,7 +2543,7 @@ faux' ].
 	"wStr nextPut: ccr."
 	^ wStr contents! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 9/8/2024 18:55:57'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 8/Sep/2024 18:55:57'!
 verifieFait: t1 vars: lvars
 	| t2 t3 t4 vars2 |
 	t2 :=t1.
@@ -2564,7 +2564,7 @@ verifieFait: t1 vars: lvars
 	^ t4
 	! !
 
-!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 12/1/2022 14:16'!
+!Expert methodsFor: 'accessing' stamp: 'DrGeoUser 1/Dec/2022 14:16:00'!
 verifieFaits
 	| f res st |
 	f := self makeFactCollectionFromString: self modèlesQuestions.
@@ -2583,52 +2583,7 @@ verifieFaits
 	' , (self colAsStringWithCr: s last) ].
 	^ st! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 9/4/2025 21:43:44'!
-vérifieCondition2: arg1
-
-	| temp2 temp3 temp4 temp5 temp6 temp7 temp8 temp9 temp10 temp11 temp13 |
-	temp2 := false.
-	arg1 = '' ifTrue: [ ^ 'selection vide' ].
-	temp10 := IdentityDictionary new.
-	temp3 := self creeRegle: 'temp'.
-	temp3 antecedents: arg1 asString.
-	temp11 := temp3 ant.
-	temp3 expert: self.
-	temp4 := temp3 verifAntecedants.
-	temp4 = false ifTrue: [ ^ 'faux' ].
-	(1 = temp4 size and: [ temp4 first = temp2 ]) ifTrue: [ ^ 'faux' ].
-	temp4 := temp4 reject: [ :argm10_14 |
-		argm10_14 = temp2 ].
-	temp4 := temp4 collect: [ :argm11_14 |
-		temp11 collect: [ :argm11_15 |
-			temp3 concl: argm11_15.
-			temp13 := temp3 instancie: argm11_14.
-			temp13 = argm11_14 ifTrue: [ temp13 := false ].
-			temp13 ]].
-	temp4 := temp4 reject: [ :argm12_14 |
-		argm12_14 = temp2 ].
-	temp4 ifEmpty: [ ^ '
-faux' ].
-	temp5 := ReadStream on: temp4.
-	temp6 := Character cr.
-	temp7 := WriteStream on: ''.
-	temp7 nextPut: temp6.
-	[
-	temp8 := temp5 next.
-	temp8 ifNil: [ temp8 := temp11 ].
-	temp9 := ReadStream on: temp8.
-	[
-	temp11 := self faitTelque: temp9 next asString.
-	(temp11 ~= false and: [ temp11 ~= nil ]) ifTrue: [
-		temp7 nextPutAll: temp11.
-		temp8 size > 1 ifTrue: [ temp7 nextPut: temp6 ]].
-	temp9 atEnd ] whileFalse.
-	temp7 nextPut: temp6.
-	temp5 atEnd ] whileFalse.
-	temp7 nextPut: temp6.
-	^ temp7 contents.! !
-
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/2/2025 13:40:53'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 2/Nov/2025 13:40:53'!
 vérifieCondition: cond
 	| flse r res resStr ccr wStr rr rr2 c inst dic |
 	flse := false.
@@ -2678,7 +2633,52 @@ faux' ].
 	"wStr nextPut: ccr."
 	^ wStr contents! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 11/2/2025 13:40:19'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 4/Sep/2025 21:43:44'!
+vérifieCondition2: arg1
+
+	| temp2 temp3 temp4 temp5 temp6 temp7 temp8 temp9 temp10 temp11 temp13 |
+	temp2 := false.
+	arg1 = '' ifTrue: [ ^ 'selection vide' ].
+	temp10 := IdentityDictionary new.
+	temp3 := self creeRegle: 'temp'.
+	temp3 antecedents: arg1 asString.
+	temp11 := temp3 ant.
+	temp3 expert: self.
+	temp4 := temp3 verifAntecedants.
+	temp4 = false ifTrue: [ ^ 'faux' ].
+	(1 = temp4 size and: [ temp4 first = temp2 ]) ifTrue: [ ^ 'faux' ].
+	temp4 := temp4 reject: [ :argm10_14 |
+		argm10_14 = temp2 ].
+	temp4 := temp4 collect: [ :argm11_14 |
+		temp11 collect: [ :argm11_15 |
+			temp3 concl: argm11_15.
+			temp13 := temp3 instancie: argm11_14.
+			temp13 = argm11_14 ifTrue: [ temp13 := false ].
+			temp13 ]].
+	temp4 := temp4 reject: [ :argm12_14 |
+		argm12_14 = temp2 ].
+	temp4 ifEmpty: [ ^ '
+faux' ].
+	temp5 := ReadStream on: temp4.
+	temp6 := Character cr.
+	temp7 := WriteStream on: ''.
+	temp7 nextPut: temp6.
+	[
+	temp8 := temp5 next.
+	temp8 ifNil: [ temp8 := temp11 ].
+	temp9 := ReadStream on: temp8.
+	[
+	temp11 := self faitTelque: temp9 next asString.
+	(temp11 ~= false and: [ temp11 ~= nil ]) ifTrue: [
+		temp7 nextPutAll: temp11.
+		temp8 size > 1 ifTrue: [ temp7 nextPut: temp6 ]].
+	temp9 atEnd ] whileFalse.
+	temp7 nextPut: temp6.
+	temp5 atEnd ] whileFalse.
+	temp7 nextPut: temp6.
+	^ temp7 contents.! !
+
+!Expert methodsFor: 'accessing' stamp: 'drgeo 2/Nov/2025 13:40:19'!
 vérifieConditionSolution: cond 
 | f v |
 
@@ -2688,7 +2688,7 @@ f :=self verifieCondition: cond.
 v := self vérifieConditionVar: cond.
 ^f,v.! !
 
-!Expert methodsFor: 'accessing' stamp: 'drgeo 9/4/2025 22:09:07'!
+!Expert methodsFor: 'accessing' stamp: 'drgeo 4/Sep/2025 22:09:07'!
 vérifieConditionVar: cond 
 	| flse r res dic c rep s|
 	(cond ='') ifTrue:[^'??'].
@@ -2745,7 +2745,7 @@ faux' ].
 	wStr nextPut: ccr.
 	^ wStr contents"! !
 
-!Expert methodsFor: 'initialize' stamp: 'drgeo 9/19/2024 13:27:25'!
+!Expert methodsFor: 'initialize' stamp: 'drgeo 19/Sep/2024 13:27:25'!
 Display:wTitle String: aString
 	|  t2 | 
 	( WorkspaceWindow allInstances includes:wTitle )
@@ -2755,15 +2755,15 @@ Display:wTitle String: aString
 
 	! !
 
-!Expert methodsFor: 'initialize' stamp: 'drgeo 11/15/2024 16:26:40'!
+!Expert methodsFor: 'initialize' stamp: 'drgeo 15/Nov/2024 16:26:40'!
 apppfficheCode
 ((self affirmations collect:[:x|x fait] )select:[:y|y first beginsWith:'f'] )! !
 
-!Expert methodsFor: 'initialize' stamp: 'drgeo 12/11/2025 18:43:57'!
+!Expert methodsFor: 'initialize' stamp: 'drgeo 11/Dec/2025 18:43:57'!
 indexNom: ind
 indexNom := ind! !
 
-!Expert methodsFor: 'initialize' stamp: 'drgeo 5/5/2025 23:28:02'!
+!Expert methodsFor: 'initialize' stamp: 'drgeo 5/May/2025 23:28:02'!
 initialize
 	affirmations :=''.
 	self affichage: nil.
@@ -2778,26 +2778,26 @@ initialize
 	stw add: #interface.
 	vars := IdentityDictionary new.! !
 
-!Expert methodsFor: 'relations' stamp: 'drgeo 10/13/2024 20:07:49'!
+!Expert methodsFor: 'relations' stamp: 'drgeo 13/Oct/2024 20:07:49'!
 lrgl
 ^lrgl! !
 
-!Expert methodsFor: 'relations' stamp: 'drgeo 10/13/2024 20:08:38'!
+!Expert methodsFor: 'relations' stamp: 'drgeo 13/Oct/2024 20:08:38'!
 lrgl: r
 lrgl :=r! !
 
-!Expert methodsFor: 'relations' stamp: 'DrGeoUser 5/14/2020 21:52'!
+!Expert methodsFor: 'relations' stamp: 'DrGeoUser 14/May/2020 21:52:00'!
 relations
 ^relations! !
 
-!Expert methodsFor: 'relations' stamp: 'DrGeoUser 3/25/2023 23:01'!
+!Expert methodsFor: 'relations' stamp: 'DrGeoUser 25/Mar/2023 23:01:00'!
 relationsAt: clef
 	| rel cl |
 	cl := clef asSymbol.
 	rel := relations at: cl ifAbsent: [ ^Set new].
 	^ relations at: cl! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 12/21/2021 00:32'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 21/Dec/2021 00:32:00'!
 addFait: aFait
 	| nouvFait faitsAtKey |
 	(aFait isKindOf: String)
@@ -2815,13 +2815,13 @@ addFait: aFait
 	affirmations add: nouvFait.
 	^ aFait.! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 5/12/2020 17:31'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 12/May/2020 17:31:00'!
 addRegle: uneRegle 
 uneRegle faitsMeConcernants0 .
 	self regles at: uneRegle name asSymbol put: uneRegle.
 	uneRegle expert: self! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 10/24/2012 10:58'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 24/Oct/2012 10:58:00'!
 afficheWs:m
 	"comment stating purpose of message"
 
@@ -2841,15 +2841,15 @@ afficheWs:m
 			ws := ws first.
 			ws model contents: m].! !
 
-!Expert methodsFor: 'tools'!
+!Expert methodsFor: 'tools' stamp: ''!
 affirmations
 	^ affirmations! !
 
-!Expert methodsFor: 'tools' stamp: 'pad 1/16/2012 13:56'!
+!Expert methodsFor: 'tools' stamp: 'pad 16/Jan/2012 13:56:00'!
 affirmations: lFaits 
 	affirmations := lFaits! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 12/21/2021 00:18'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 21/Dec/2021 00:18:00'!
 affirme: aStringOrFait 
 	| aFait faitCourant |
 	aFait := aStringOrFait.
@@ -2872,15 +2872,15 @@ affirme: aStringOrFait
 			^ true].
 	^ false! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 9/16/2024 18:11:13'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 16/Sep/2024 18:11:13'!
 comment
 ^ self sourceCode! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 9/16/2024 18:26:04'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 16/Sep/2024 18:26:04'!
 comment: method
  ^(self makeFactCollectionFromString: method sourceCode )at:2! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 4/21/2020 13:58'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 21/Apr/2020 13:58:00'!
 couleurPoint: aColor
 |points|
 drgeo ifNotNil:[points :=self drgeo app costumes select:[:x|x class = DrGPointCostume ].
@@ -2888,38 +2888,38 @@ points do:[:x| x style color:  aColor]].
 
 ! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 2/21/2022 12:40'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 21/Feb/2022 12:40:00'!
 deduire
 ^Cursor wait showWhile: [ self deduis ].! !
 
-!Expert methodsFor: 'tools' stamp: 'pad 2/5/2012 22:40'!
+!Expert methodsFor: 'tools' stamp: 'pad 5/Feb/2012 22:40:00'!
 faitAsString: aFait 
 ((aFait class)==ExpertFait )
 ifTrue:[^ super faitAsString: aFait fait].
 ^ super faitAsString: aFait! !
 
-!Expert methodsFor: 'tools'!
+!Expert methodsFor: 'tools' stamp: ''!
 faits
 	^ faits! !
 
-!Expert methodsFor: 'tools'!
+!Expert methodsFor: 'tools' stamp: ''!
 faitsAsArray
 	^ (faits keys
 		collect: [:t1 | (faits at: t1 asSymbol)
 				collect: [:t2 | t2]]) asArray! !
 
-!Expert methodsFor: 'tools' stamp: 'pad 1/17/2012 17:47'!
+!Expert methodsFor: 'tools' stamp: 'pad 17/Jan/2012 17:47:00'!
 faitsAt: key 
 	^ faits
 		at: key asSymbol
 		ifAbsent: [^ nil]! !
 
-!Expert methodsFor: 'tools'!
+!Expert methodsFor: 'tools' stamp: ''!
 initVars
 	vars := IdentityDictionary new.
 	^ vars! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 1/23/2025 11:48:56'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 23/Jan/2025 11:48:56'!
 instancie: lVars fait: f
 	| res fait |
 	fait :=ExpertList new: f.
@@ -2928,7 +2928,7 @@ instancie: lVars fait: f
 	res := fait do: [ :t4 | self valeur: t4 vars: lVars ].
 	^ res! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 12/8/2021 03:43'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 8/Dec/2021 03:43:00'!
 instancieNum: lVars fait: f
 	| res n |
 	n:=0.
@@ -2942,7 +2942,7 @@ instancieNum: lVars fait: f
 			]	.
 	^ res! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 9/23/2024 01:53:15'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 23/Sep/2024 01:53:15'!
 listeSelCom: aCategory
 | lst  s |
 lst := (ExpertRegle methodDict asOrderedCollection) .
@@ -2953,7 +2953,7 @@ lst :=  lst collect: [:x|Array with:x selector asString with:((x sourceCode line
 s:=''.	
 lst  do:[:x|s:=s,x first,' ',(x last,  Character cr asString)]! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 9/23/2024 01:59:27'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 23/Sep/2024 01:59:27'!
 listeSelCom: aCategory class:aClass
 | lst  s |
 lst := (aClass methodDict asOrderedCollection) .
@@ -2964,7 +2964,7 @@ lst :=  lst collect: [:x|Array with:x selector asString with:((x sourceCode line
 s:=''.	
 ^lst  do:[:x|s:=s,x first,' ',(x last,  Character cr asString)]! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 8/15/2014 14:22'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 15/Aug/2014 14:22:00'!
 nF: aFait
 |f  aff|
 aff:=
@@ -2979,7 +2979,7 @@ f:=ExpertList new faitAsList: aFait.
 				
 	! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 6/15/2021 02:34'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 15/Jun/2021 02:34:00'!
 polySommets
 |subs  poly polyName  som|
 subs:=self drgeo area submorphs.
@@ -2989,15 +2989,15 @@ som:=ExpertList new: (poly costume mathItem parents collect:[:x | x name]).
 
 ^ '[  ', som printString ,' ]' .! !
 
-!Expert methodsFor: 'tools'!
+!Expert methodsFor: 'tools' stamp: ''!
 regles
 	^ regles! !
 
-!Expert methodsFor: 'tools' stamp: 'pad 1/17/2012 18:07'!
+!Expert methodsFor: 'tools' stamp: 'pad 17/Jan/2012 18:07:00'!
 regles: r 
 	regles := r! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 12/22/2021 02:25'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 22/Dec/2021 02:25:00'!
 reglesConcluantFait: f
 	| r |
 	^ self regles keys
@@ -3008,7 +3008,7 @@ reglesConcluantFait: f
 				vars: IdentityDictionary new) ]
 				! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 11/17/2020 10:40'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 17/Nov/2020 10:40:00'!
 retablitFait: aFait
 |f   res|
 
@@ -3019,7 +3019,7 @@ self affirme: 'rétabli' fait: f  printString  vars: IdentityDictionary new.
 res retire: true.
 ^true.! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 11/17/2020 16:02'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 17/Nov/2020 16:02:00'!
 retablitFait: aFait regle:name
 |f   res|
 
@@ -3030,7 +3030,7 @@ self affirme:('retablit par ' , name) fait: res fait printString ,' retabli' var
 res retire: nil.
 ^true.! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 11/28/2025 21:13:03'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 28/Nov/2025 21:13:03'!
 retireFait: aFait regle: name
 	| f res |
 	f := aFait.
@@ -3046,7 +3046,7 @@ retireFait: aFait regle: name
 	res retire: true.
 	^ true! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 4/1/2019 12:47'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 1/Apr/2019 12:47:00'!
 rounded: val  dec: n
 |p|
 p:=10 raisedTo:  n.
@@ -3057,34 +3057,34 @@ p:=10 raisedTo:  n.
 
 	! !
 
-!Expert methodsFor: 'tools' stamp: 'pad 1/17/2012 18:08'!
+!Expert methodsFor: 'tools' stamp: 'pad 17/Jan/2012 18:08:00'!
 setFaits: lFaits 
 	faits := lFaits! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 10/13/2024 19:48:07'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 13/Oct/2024 19:48:07'!
 setRegles: lRegl
 	regles := lRegl! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 4/6/2019 01:32'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 6/Apr/2019 01:32:00'!
 standard
 |k cncl m|
 k:=self regles keys.
 cncl:=k collect:[:i|(regles at:i )concl].
 ^cncl collect:[:z|m:=0. z  collect:[:i|(i beginsWith: '?' )ifTrue:[m:=m+1.('?'  , (m asString  )) ]ifFalse:[i asString ] ]].! !
 
-!Expert methodsFor: 'tools'!
+!Expert methodsFor: 'tools' stamp: ''!
 trouve
 	^ trouve! !
 
-!Expert methodsFor: 'tools' stamp: 'pad 1/17/2012 18:09'!
+!Expert methodsFor: 'tools' stamp: 'pad 17/Jan/2012 18:09:00'!
 trouve: aBoolean 
 	trouve := aBoolean! !
 
-!Expert methodsFor: 'tools'!
+!Expert methodsFor: 'tools' stamp: ''!
 vars
 	^ vars! !
 
-!Expert methodsFor: 'tools' stamp: 'drgeo 7/30/2024 22:29:31'!
+!Expert methodsFor: 'tools' stamp: 'drgeo 30/Jul/2024 22:29:31'!
 verifFait: fait vars:lvars
 |f  lv res|
 f:= fait.
@@ -3093,7 +3093,7 @@ res :=(self faits at: f first ) collect:   [ :xx| lv:=lvars copy.  (self  unifie
 ^lv
 ! !
 
-!Expert methodsFor: 'tools' stamp: 'DrGeoUser 8/13/2020 11:50'!
+!Expert methodsFor: 'tools' stamp: 'DrGeoUser 13/Aug/2020 11:50:00'!
 verifieFait: t1 
 |res r|
 	r:=(self verifieFait: t1 vars: IdentityDictionary new) collect:  [:m|m last afficheFait ].
@@ -3102,11 +3102,11 @@ verifieFait: t1
 '.res nextPutAll:  m ].
 ^res contents.! !
 
-!Expert class methodsFor: 'initialize' stamp: 'drgeo 8/27/2024 01:05:01'!
+!Expert class methodsFor: 'initialize' stamp: 'drgeo 27/Aug/2024 01:05:01'!
 nouveau
 ^ self  new! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'drgeo 9/7/2024 20:35:37'!
+!ExpertFait methodsFor: 'accessing' stamp: 'drgeo 7/Sep/2024 20:35:37'!
 afficheFait
 |fs res|
 fs:=(expert faitAsString: self ).
@@ -3117,7 +3117,7 @@ res:= self no asString,' ',fs,' -> ',self just.
 ^res
 ! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 7/11/2022 17:26'!
+!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 11/Jul/2022 17:26:00'!
 afficheFait2
 	| fs res rgl |
 	fs := expert faitAsString: self.
@@ -3132,7 +3132,7 @@ afficheFait2
 	rgl := Character cr asString , ' * ' , rgl .
 	^ res , rgl! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 8/22/2020 12:25'!
+!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 22/Aug/2020 12:25:00'!
 egal: alist
 |l vars|
 vars :=IdentityDictionary new.  
@@ -3140,67 +3140,67 @@ l:=alist.
 (l isString) ifTrue: [ l:= expert list: alist  ].
 ^ expert unifie: self fait avec:l vars: vars.! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 1/24/2012 15:46'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 24/Jan/2012 15:46:00'!
 expert 
 ^expert! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 1/24/2012 15:47'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 24/Jan/2012 15:47:00'!
 expert:anExpert 
 expert := anExpert! !
 
-!ExpertFait methodsFor: 'accessing'!
+!ExpertFait methodsFor: 'accessing' stamp: ''!
 fait
 	^ fait! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 1/18/2012 00:28'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 00:28:00'!
 fait: f
 	fait := f! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 2/20/2012 10:00'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 20/Feb/2012 10:00:00'!
 faitAsString 
 ^super faitAsString: self fait
 ! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 2/12/2012 19:17'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 12/Feb/2012 19:17:00'!
 isExpertFait
 ^true.! !
 
-!ExpertFait methodsFor: 'accessing'!
+!ExpertFait methodsFor: 'accessing' stamp: ''!
 just
 	^ just! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 1/18/2012 00:29'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 00:29:00'!
 just: j 
 	just := j! !
 
-!ExpertFait methodsFor: 'accessing'!
+!ExpertFait methodsFor: 'accessing' stamp: ''!
 key
 	^ fait first asSymbol! !
 
-!ExpertFait methodsFor: 'accessing'!
+!ExpertFait methodsFor: 'accessing' stamp: ''!
 lv
 	^ lv! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 1/18/2012 00:29'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 00:29:00'!
 lv: v 
 	lv := v! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 3/18/2020 00:00'!
+!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 18/Mar/2020 00:00:00'!
 monIndex
 ^ expert affirmations indexOf: self.! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 3/17/2020 23:12'!
+!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 17/Mar/2020 23:12:00'!
 nF
 expert affirmations  indexOf: self! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 2/5/2012 21:35'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 5/Feb/2012 21:35:00'!
 nosAnt
 |e|
 e:=expert .
 
 ^ ((((e regles )at:( self just asSymbol  )  ifAbsent:[^ #() ]) ant ) collect: [:t|(( e   instancie: t  vars: self lv)  )] )collect:[:m|e nF: (e faitAsString: m )] thenSelect:[:m|m isNumber]! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'pad 1/24/2012 22:25'!
+!ExpertFait methodsFor: 'accessing' stamp: 'pad 24/Jan/2012 22:25:00'!
 regles
 |r|
 r:=( ((self fait) first) ,'-regles' )asSymbol.
@@ -3209,25 +3209,25 @@ ifTrue:[^(expert faits) at:r].
 ^nil
 ! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 4/15/2013 20:27'!
+!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 15/Apr/2013 20:27:00'!
 retire
 retire ifNil: [retire:=false].
 ^retire
 ! !
 
-!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 4/15/2013 20:29'!
+!ExpertFait methodsFor: 'accessing' stamp: 'DrGeoUser 15/Apr/2013 20:29:00'!
 retire:aBoolean
 retire :=aBoolean ! !
 
-!ExpertFait methodsFor: 'as yet unclassified' stamp: 'drgeo 9/7/2024 19:33:17'!
+!ExpertFait methodsFor: 'as yet unclassified' stamp: 'drgeo 7/Sep/2024 19:33:17'!
 no
 ^no! !
 
-!ExpertFait methodsFor: 'as yet unclassified' stamp: 'drgeo 9/7/2024 19:34:21'!
+!ExpertFait methodsFor: 'as yet unclassified' stamp: 'drgeo 7/Sep/2024 19:34:21'!
 no: nb
 no :=nb! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 11/6/2023 20:58'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 6/Nov/2023 20:58:00'!
 abs: mot1 rep: rep vars: lVars
 "Retourne la valeur absolue d'un nombre"
 	| t5 |
@@ -3235,7 +3235,7 @@ abs: mot1 rep: rep vars: lVars
 	t5 ifNil: [ ^ false ].
 	^ self affecte: rep valeur: (self makeNumber: t5) abs vars: lVars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/26/2023 02:18'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 26/Oct/2023 02:18:00'!
 arrondis: n rep: res vars: lvars
 "La valeur arrondie"
 	| nb n2 nn2x nn2y |
@@ -3260,7 +3260,7 @@ arrondis: n rep: res vars: lvars
 		ifTrue: [ ^ self affecte: res valeur: nb asFloat vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/27/2023 10:44'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:44:00'!
 difference: mot1 et: mot2 rep: rep vars: lVars
 	"La différence de deux nombres"
 
@@ -3279,7 +3279,7 @@ difference: mot1 et: mot2 rep: rep vars: lVars
 						ifTrue: [ res := res asInteger ] ] ].
 	^ self affecte: rep valeur: res vars: lVars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/26/2023 02:22'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 26/Oct/2023 02:22:00'!
 différence: mot1 et: mot2 rep: rep vars: lVars
 "La différeence de deux nombres"
 	^ self
@@ -3288,7 +3288,7 @@ différence: mot1 et: mot2 rep: rep vars: lVars
 		rep: rep
 		vars: lVars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/27/2023 10:44'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:44:00'!
 ensembleAjoute: obj ensemble: ens rep: rep vars: lvars
 	"Ajoute un objet à un ensemble"
 
@@ -3302,7 +3302,7 @@ ensembleAjoute: obj ensemble: ens rep: rep vars: lvars
 	res := en add: obj.
 	^ self affecte: rep valeur: res vars: lvars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 8/17/2024 03:27:52'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 17/Aug/2024 03:27:52'!
 égal: mot1 à: mot2 vars: lVars
 	"égalité numérique de deux nombres ou de deux points"
 
@@ -3326,14 +3326,14 @@ ensembleAjoute: obj ensemble: ens rep: rep vars: lvars
 		ifTrue: [ ^ (t5 - t6) abs < 0.001 ].
 	^ t5 = t6! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/27/2023 10:44'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:44:00'!
 gensym
 	"Génère le nombres suivant, commence à 0"
 
 	gen ifNil: [ gen := 0 ].
 	^ gen := gen + 1! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 8/1/2025 11:02:32'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 1/Aug/2025 11:02:32'!
 inférieur: mot1 à: mot2 vars: lVar
 
 "<"
@@ -3346,7 +3346,7 @@ inférieur: mot1 à: mot2 vars: lVar
 	t6 := self makeNumber: t6  asString.
 	^ t5 < t6! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/27/2023 10:46'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:46:00'!
 inférieurOuEgal: mot1 à: mot2 vars: lVars
 "<="
 	| t5 t6 |
@@ -3356,13 +3356,13 @@ inférieurOuEgal: mot1 à: mot2 vars: lVars
 	t6 := self makeNumber: t6.
 	^ t5 <= t6! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/27/2023 10:43'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:43:00'!
 initGensym
 	"IRemet le générateur de nombres à 0"
 
 	gen := 0! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 8/17/2024 02:42:58'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 17/Aug/2024 02:42:58'!
 négatif: mot1 rep: rep vars: lVars
 "Inverse le signe d'un nnombre"
 	| t5 res |
@@ -3372,7 +3372,7 @@ négatif: mot1 rep: rep vars: lVars
 	self affecte: rep valeur: res asString vars: lVars.
 	^ true! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/26/2023 02:44'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 26/Oct/2023 02:44:00'!
 produit: mot1 et: mot2 rep: rep vars: lVars
 "le produit de deux nombres"
 	| t5 t6 |
@@ -3384,7 +3384,7 @@ produit: mot1 et: mot2 rep: rep vars: lVars
 				ifTrue: [ ^ self affecte: rep valeur: (t5 * t6) asString vars: lVars ] ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 3/11/2026 17:06:02'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:47:00'!
 quotient: mot1 et: mot2 rep: rep vars: lVars
 	"le quotient de deux nombres"
 
@@ -3397,11 +3397,10 @@ quotient: mot1 et: mot2 rep: rep vars: lVars
 	t6 := self makeNumber: t6.
 	(t5 isNumber and: [ t6 isNumber ])
 		ifFalse: [ ^ false ].
-	t6 =0 ifTrue: [ self expert drgeo presenter expertDisplayModèles. self halt]
-		ifFalse:[ res := t5 / t6].
+	res := t5 / t6.
 	^ self affecte: rep valeur: res asString vars: lVars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/26/2023 02:47'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 26/Oct/2023 02:47:00'!
 racine: mot1 rep: rep vars: lVars
 "La racine carrée d'un nombre comme fraction"
 	| t5 res |
@@ -3416,7 +3415,7 @@ racine: mot1 rep: rep vars: lVars
 	self affecte: rep valeur: res asString vars: lVars.
 	^ true! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/27/2023 10:48'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:48:00'!
 racineDecimal: mot1 rep: rep vars: lVars
 	"La racine décimale d'un nombre"
 
@@ -3426,7 +3425,7 @@ racineDecimal: mot1 rep: rep vars: lVars
 	res := t5 sqrt asFloat.
 	^ self affecte: rep valeur: res asString vars: lVars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/26/2023 02:49'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 26/Oct/2023 02:49:00'!
 racineFraction: mot1 rep: rep vars: lVars
 
 "La racine carrée d'un nombre comme fraction"
@@ -3436,7 +3435,7 @@ racineFraction: mot1 rep: rep vars: lVars
 	res := t5 sqrt asFraction.
 	^ self affecte: rep valeur: res asString vars: lVars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/27/2023 10:55'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:55:00'!
 racineSymbol: mot1 rep: rep vars: lVars
 " La racine carrée sous forme de symbole  V¯ n"
 	| t5 t5asNumber res rac |
@@ -3452,7 +3451,7 @@ racineSymbol: mot1 rep: rep vars: lVars
 			^ self affecte: rep valeur: res asString vars: lVars ].
 	^ self affecte: rep valeur: rac , t5 asString vars: lVars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 3/28/2025 19:17:23'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 28/Mar/2025 19:17:23'!
 somme: mot1 et: mot2 rep: rep vars: lVars
 "La somme de deux nombres"
 
@@ -3477,7 +3476,7 @@ somme: mot1 et: mot2 rep: rep vars: lVars
 	^ t7 =res.
 	! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 10/27/2023 10:57'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 27/Oct/2023 10:57:00'!
 supérieur: mot1 à: mot2 vars: lVars
 	">"
 
@@ -3490,7 +3489,7 @@ supérieur: mot1 à: mot2 vars: lVars
 	t6 := self makeNumber: t6.
 	^ t5 > t6! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 11/6/2023 21:58'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'DrGeoUser 6/Nov/2023 21:58:00'!
 supérieurOuEgal: mot1 à: mot2 vars: lVars
 ">="
 	| t5 t6 |
@@ -3500,7 +3499,7 @@ supérieurOuEgal: mot1 à: mot2 vars: lVars
 	t6 := self makeNumber: t6.
 	^ t5 >= t6! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 4/29/2025 15:41:18'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 29/Apr/2025 15:41:18'!
 x: mot1 rep: rep vars: lVars
 "Coordonnée x d'un objet  point"
 	| t5 |
@@ -3508,7 +3507,7 @@ x: mot1 rep: rep vars: lVars
 	t5 ifNil: [ ^ false ].
 	^ self affecte: rep valeur: (self makeNumber: t5 x)  vars: lVars! !
 
-!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 4/29/2025 15:43:41'!
+!ExpertRegle methodsFor: 'numbers' stamp: 'drgeo 29/Apr/2025 15:43:41'!
 y: mot1 rep: rep vars: lVars
 "Coordonnée y d'un objet point"
 	| t5 |
@@ -3516,7 +3515,7 @@ y: mot1 rep: rep vars: lVars
 	t5 ifNil: [ ^ false ].
 	^ self affecte: rep valeur: (self makeNumber: t5 y)  vars: lVars! !
 
-!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 11/6/2023 22:48'!
+!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 6/Nov/2023 22:48:00'!
 ajoute: obj ensemble: ens vars: lvars
 "Ajoute un élément à  un ensemble"
 	| ob en |
@@ -3525,7 +3524,7 @@ ajoute: obj ensemble: ens vars: lvars
 	en add: obj.
 	^ true! !
 
-!ExpertRegle methodsFor: 'relations' stamp: 'drgeo 9/16/2024 17:19:11'!
+!ExpertRegle methodsFor: 'relations' stamp: 'drgeo 16/Sep/2024 17:19:11'!
 contient: list el: el vars: lvars
 "Vérifie si une liste contient un élément"
 	| t1 t2 res |
@@ -3537,7 +3536,7 @@ contient: list el: el vars: lvars
 		ifTrue: [ ^ (t1 asString indexOf: (t2 at: 1)) > 0 ].
 	^ t1 includes: t2! !
 
-!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 11/6/2023 22:49'!
+!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 6/Nov/2023 22:49:00'!
 nonRelation: obj1 et: obj2 nom: n vars: lvars
 "Vérifie qu'il n'y a pas de relation"
 	| ob1 ob2 nom rel |
@@ -3558,7 +3557,7 @@ nonRelation: obj1 et: obj2 nom: n vars: lvars
 	rel expert: expert.
 	^ (rel relation: ob1 et: ob2 nom: nom) not! !
 
-!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 12/2/2023 12:04'!
+!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 2/Dec/2023 12:04:00'!
 relation: obj1 et: obj2 nom: n vars: lvars
 	"Relation entre deux objets, nom de la relation"
 
@@ -3584,7 +3583,7 @@ relation: obj1 et: obj2 nom: n vars: lvars
 	rel expert: expert.
 	^ rel relation: ob1 et: ob2 nom: nom! !
 
-!ExpertRegle methodsFor: 'relations' stamp: 'drgeo 12/23/2025 02:43:48'!
+!ExpertRegle methodsFor: 'relations' stamp: 'drgeo 23/Dec/2025 02:43:48'!
 relation: nom rep: res vars: lvars
 "Affiche les éléments en relation sous forme de listes"
 
@@ -3602,7 +3601,7 @@ relation: nom rep: res vars: lvars
 			^ true ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 12/2/2023 12:19'!
+!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 2/Dec/2023 12:19:00'!
 relationCrée: obj1 et: obj2 nom: n vars: lvars
 	"Etablit une relation"
 
@@ -3625,7 +3624,7 @@ relationCrée: obj1 et: obj2 nom: n vars: lvars
 	rel relationCrée: ob1 et: ob2 nom: nom.
 	^ true! !
 
-!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 11/7/2023 13:45'!
+!ExpertRegle methodsFor: 'relations' stamp: 'DrGeoUser 7/Nov/2023 13:45:00'!
 relationsClés: rep vars: lVar
 	"Affiche les relations définies"
 
@@ -3637,7 +3636,7 @@ relationsClés: rep vars: lVar
 		vars: lVar.
 	^ true! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 6/4/2025 11:52:05'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 4/Jun/2025 11:52:05'!
 abcisseDe: pt sur: dr rep: res vars: lvars
 "Abcisse d'un point sur une ligne"
 	| point droite pool ptMat item |
@@ -3658,7 +3657,7 @@ abcisseDe: pt sur: dr rep: res vars: lvars
 		vars: lvars	" ].
 ^false."! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 10/15/2025 00:29:15'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 15/Oct/2025 00:29:15'!
 abscisseDe: pt sur: dr rep: res vars: lvars
 "Abcisse d'un point sur une ligne"
 	| point droite pool ptMat item |
@@ -3679,7 +3678,7 @@ abscisseDe: pt sur: dr rep: res vars: lvars
 		vars: lvars	" ].
 ^false."! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 10/27/2023 11:11'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 27/Oct/2023 11:11:00'!
 aireTriangle: p1 avec: p2 avec: p3 rep: r vars: lvar
 "Aire calculée à partir des coordonnées de 3 points,double de l'aire du triangle formé par les 3 points,
 positive si le triangle est orienté à gauche, sens trigonométrique"
@@ -3697,7 +3696,7 @@ positive si le triangle est orienté à gauche, sens trigonométrique"
 	res := pt1 triangleArea: pt2 with: pt3.
 	^ self affecte: r valeur: res vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 10/7/2025 21:20:04'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 7/Oct/2025 21:20:04'!
 aireTriangleNegative: p1 avec: p2 avec: p3 rep: res vars: lvar
 	| result |
 	self
@@ -3715,7 +3714,7 @@ aireTriangleNegative: p1 avec: p2 avec: p3 rep: res vars: lvar
 		vars: lvar.
 	^ true.! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 10/3/2024 01:17:08'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 3/Oct/2024 01:17:08'!
 aireTriangleNegative: p1 avec: p2 avec: p3 vars: lvar
 	"Aire calculée à partir des coordonnées de 3 points,double de l'aire du triangle formé par les 3 points,
 es négative, le triangle est orienté à droite, sens trigonométrique inverse"
@@ -3732,7 +3731,7 @@ es négative, le triangle est orienté à droite, sens trigonométrique inverse"
 		ifTrue: [ ^ (self valeur: r vars: lvar2) < 0 ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 10/28/2023 00:20'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 28/Oct/2023 00:20:00'!
 aireTrianglePositive: p1 avec: p2 avec: p3 rep: r vars: lvar
 	"vérifie si l'aire du triangle formé par les 3 points est positive,
 le triangle est orienté à gauche, sens trigonométrique"
@@ -3748,7 +3747,7 @@ le triangle est orienté à gauche, sens trigonométrique"
 		ifTrue: [ ^ self affecte: r valeur: res vars: lvar ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 3/15/2025 18:09:01'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 15/Mar/2025 18:09:01'!
 aireTrianglePositive: p1 avec: p2 avec: p3 vars: lvar
 	"vérifie si l'aire du triangle formé par les 3 points est positive,
 le triangle est orienté à gauche, sens trigonométrique"
@@ -3764,7 +3763,7 @@ le triangle est orienté à gauche, sens trigonométrique"
 		ifTrue: [ ^ (self valeur: r vars: lvar2) >= 0 ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 11/6/2023 21:01'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 6/Nov/2023 21:01:00'!
 degrés: p rep: res vars: lvar
 "retourne la valeur d'un angle qui a le  point pour sommet."
 	| pt result pool |
@@ -3776,7 +3775,7 @@ degrés: p rep: res vars: lvar
 		degreeAngle.
 	^ self affecte: res valeur: result vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 11/7/2023 13:36'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 7/Nov/2023 13:36:00'!
 justeAprès: list el: el rep: res vars: lvars
 	"L'élément qui suit un élément d'une liste"
 
@@ -3792,7 +3791,7 @@ justeAprès: list el: el rep: res vars: lvars
 		ifTrue: [ ^ self affecte: res valeur: (t1 at: r) vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 11/7/2023 02:35'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 7/Nov/2023 02:35:00'!
 justeAvant: list el: el rep: res vars: lvars
 	"L'élément qui précède un élément d'une liste"
 
@@ -3808,14 +3807,14 @@ justeAvant: list el: el rep: res vars: lvars
 		ifTrue: [ ^ self affecte: res valeur: (t1 at: r) vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 12/18/2025 13:02:06'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 18/Dec/2025 13:02:06'!
 nomPolygone: n rep: res vars: lvars
 "Retourne le nom grec d'un polygone de moins de cent côtés"
 	| r nb |
 	nb := (self instanciedValue: n vars: lvars) asNumber.
 	^ self affecte: res valeur: (self nomPolygone: nb) vars: lvars! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 6/4/2025 08:52:30'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 4/Jun/2025 08:52:30'!
 nonPointConfondu: p1 avec: p2 vars: lvar
 "Vérifie que deux pointsne sont pas confondus "
 	| pt1 pt2 result1 result2 res pool |
@@ -3831,7 +3830,7 @@ nonPointConfondu: p1 avec: p2 vars: lvar
 	res := (result1 - result2) abs.
 	^ (res x < 0.0001 and: [ res y < 0.0001 ]) not! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 11/6/2023 21:31'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 6/Nov/2023 21:31:00'!
 origine: obj rep: res vars: lvar
 "le premier parent d'un segment ou d'une droite"
 	| ob result pool sub objet |
@@ -3845,7 +3844,7 @@ origine: obj rep: res vars: lvar
 	result.
 	^ self affecte: res valeur: result vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 11/6/2023 21:32'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 6/Nov/2023 21:32:00'!
 parents: p rep: res vars: lvar
 	"les parents d'un objet."
 
@@ -3859,7 +3858,7 @@ parents: p rep: res vars: lvar
 	result := ExpertList new: (result collect: [ :x | x name ]).
 	^ self affecte: res valeur: result vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 10/28/2023 00:30'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 28/Oct/2023 00:30:00'!
 pente: dr rep: res vars: lvar
 "Ccalcule la pente d'une droite"
 	| drt result pool |
@@ -3877,7 +3876,7 @@ pente: dr rep: res vars: lvar
 	result := result y / result x.
 	^ self affecte: res valeur: result vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 9/4/2024 13:46:56'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 4/Sep/2024 13:46:56'!
 point: p entre: a et: b vars: lvars
 "un point entre deux autres. "
 	| pv av bv ap bp pp f drgeo |
@@ -3917,7 +3916,7 @@ point: p entre: a et: b vars: lvars
 				ifTrue: [ ^ pp x between: ap x and: bp x ]
 				ifFalse: [ ^ pp x between: bp x and: ap x ] ]! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 4/27/2025 13:20:12'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 27/Apr/2025 13:20:12'!
 point: arg1 rep: arg2 vars: arg3
 "Affiche les coordonnées d'un point."
 	| temp4 temp5 temp6 |
@@ -3937,7 +3936,7 @@ point: arg1 rep: arg2 vars: arg3
 		valeur: temp5
 		vars: arg3.! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 10/28/2023 00:34'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 28/Oct/2023 00:34:00'!
 pointConfondu: p1 avec: p2 vars: lvar
 "Signale des pointscofondus, des points avec les mêmecoordonnées"
 	| pt1 pt2 result1 result2 res pool |
@@ -3954,7 +3953,7 @@ pointConfondu: p1 avec: p2 vars: lvar
 	res :=(result1 -  result2) abs.
 	^ (res x) < 0.0001 and: [ (res y) < 0.0001 ]! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 10/26/2023 17:16'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 26/Oct/2023 17:16:00'!
 pointDifferent: p1 de: p2 vars: lvar
 "Vérifie que deux points sont difflérents, non confondus"
 	| pt1 pt2 result1 result2 res pool |
@@ -3970,7 +3969,7 @@ pointDifferent: p1 de: p2 vars: lvar
 	res := (result1 - result2) abs.
 	^ (res x < 0.0001 and: [ res y < 0.0001 ]) not! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 5/26/2025 11:04:32'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 26/May/2025 11:04:32'!
 pointsSur: droite rep: res vars: lvar
 "la liste de points sur un droite ordonnés suivant le sens de la droite"
 	| dr drorig pool ptsSur virt item |
@@ -4005,7 +4004,7 @@ ifFalse:[^ false]."
 	ptsSur := ExpertList new: ptsSur.
 	^ self affecte: res valeur: ptsSur vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 10/28/2023 00:37'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 28/Oct/2023 00:37:00'!
 pointsSurCercle: cercle rep: res vars: lvar
 "Les points sur le cercle, ordonnés suivant leur abcisse"
 	| cr pool ptsSur item val virt |
@@ -4031,7 +4030,7 @@ pointsSurCercle: cercle rep: res vars: lvar
 	ptsSur := ExpertList new: ptsSur.
 	^ self affecte: res valeur: ptsSur vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 4/5/2025 19:55:27'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 5/Apr/2025 19:55:27'!
 pointsSurVirt: demidr droite:droite rep: res vars: lvar
 "la lisre de points sur un droite ordonnés suivant le sens de la droite"
 	| dr drorig pool ptsSur virt item dd |
@@ -4067,7 +4066,7 @@ ifFalse:[^ false]."
 	ptsSur := ExpertList new: ptsSur.
 	^ self affecte: res valeur: ptsSur vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 4/10/2025 13:30:05'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 10/Apr/2025 13:30:05'!
 pointsSurdd: droite rep: res vars: lvar
 
 "la liste de points sur un droite ordonnés suivant le sens de la droite"
@@ -4107,7 +4106,7 @@ ifFalse:[^ false]."
 	(drorig=( item value: ptsSur first )point  ) ifFalse:[ ptsSur sort: [:x :y |( dr abscissaOf: (item value:  x)  point) > ( dr abscissaOf: (item value: y)  point )]]."
 	! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 11/6/2023 21:36'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 6/Nov/2023 21:36:00'!
 pointx: p1 rep: res vars: lvars
 "La coordonnée x d'un point"
 	| pp1 points rep rres drgeo |
@@ -4125,7 +4124,7 @@ pointx: p1 rep: res vars: lvars
 	rep := pp1 x.
 	^ self affecte: rres valeur: rep vars: lvars! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 11/6/2023 21:58'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 6/Nov/2023 21:58:00'!
 pointy: p1 rep: res vars: lvars
 "La coordonnée x d'un point"
 	| pp1 points rep rres drgeo |
@@ -4143,7 +4142,7 @@ pointy: p1 rep: res vars: lvars
 	rep := pp1 y.
 	^ self affecte: rres valeur: rep vars: lvars! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 10/28/2023 00:38'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'DrGeoUser 28/Oct/2023 00:38:00'!
 triangleArea: p1 with: p2 with: p3 rep: r vars: lvar
 	"Aire à partir des coordonnées de 3  points"
 
@@ -4161,7 +4160,7 @@ triangleArea: p1 with: p2 with: p3 rep: r vars: lvar
 	res := pt1 triangleArea: pt2 with: pt3.
 	^ self affecte: r valeur: res vars: lvar! !
 
-!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 3/7/2025 17:50:28'!
+!ExpertRegle methodsFor: 'geometry' stamp: 'drgeo 7/Mar/2025 17:50:28'!
 vecteur: obj rep: res vars: lvar
 "Le point à l'extrémité du vecteur d'origine 0@0 de même direction  qu'une sorte de droite"
 	| vect rep pool |
@@ -4172,7 +4171,7 @@ vecteur: obj rep: res vars: lvar
 	
 	^ self affecte: res valeur: rep direction vars: lvar! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/2/2025 20:53:59'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 2/Sep/2025 20:53:59'!
 afficheTexte: cont a: pt vars: lvars
 	"Affiche à une position et nomme un texte dans la figure"
 
@@ -4185,7 +4184,7 @@ afficheTexte: cont a: pt vars: lvars
 	f texte: txt à: ici.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/2/2025 19:20:13'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 2/Sep/2025 19:20:13'!
 afficheTexte: cont à: pt vars: lvars
 	"Affiche à une position et nomme un texte dans la figure"
 
@@ -4198,7 +4197,7 @@ afficheTexte: cont à: pt vars: lvars
 	f texte: txt à: ici.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/28/2025 18:52:31'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 28/Sep/2025 18:52:31'!
 afficheTexte: nom contenu: cont a: pt vars: lvars
 	"Affiche à une position et nomme un texte dans la figure"
 	| f  nm txt aff ici |
@@ -4216,13 +4215,13 @@ afficheTexte: nom contenu: cont a: pt vars: lvars
 	self expert constructions: aff.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/28/2025 18:16:28'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 28/Sep/2025 18:16:28'!
 afficheTexte: nom contenu: cont à: pt vars: lvars
 ^self afficheTexte: nom contenu: cont a: pt vars: lvars.
 	"Affiche à une position et nomme un texte dans la figure"
 ! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/2/2025 19:26:00'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 2/Sep/2025 19:26:00'!
 afficheTexte: cont  vars: lvars
 	"Affiche à une position et nomme un texte dans la figure"
 |  txt f  |
@@ -4234,7 +4233,7 @@ f texte: txt.
 
 ^true.! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/28/2025 19:43:23'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 28/Sep/2025 19:43:23'!
 alerte: mess vars: lvars
 	"Provoqe une alerte avec un message"
 |t1  |
@@ -4242,7 +4241,7 @@ t1 :=self instanciedValue: mess vars: lvars.
 PopUpMenu inform: t1 printString.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/28/2025 21:00:11'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 28/Sep/2025 21:00:11'!
 angleCentre: po de: pa a: pb coul: coul vars: lvars
 "Marque la valeur d'un angle en couleur"
 	| f drgeo pool o a b ang pto pta ptb couleur color |
@@ -4280,7 +4279,7 @@ angleCentre: po de: pa a: pb coul: coul vars: lvars
 	self expert constructions: ang.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/6/2023 21:00'!
+!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 6/Nov/2023 21:00:00'!
 angleGeometriqueCentre: po de: pa a: pb coul: coul vars: lvars
 "Marque la valleur d'un angle géométrique en couleur"
 	| f drgeo cost o a b ang pto pta ptb couleur color |
@@ -4320,7 +4319,7 @@ angleGeometriqueCentre: po de: pa a: pb coul: coul vars: lvars
 	self expert constructions: ang.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/7/2023 13:31'!
+!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 7/Nov/2023 13:31:00'!
 angleGeometriqueCentre: po de: pa a: pb vars: lvars
 	"Marque la valleur d'un angle géométrique en cyan"
 
@@ -4343,7 +4342,7 @@ angleGeometriqueCentre: po de: pa a: pb vars: lvars
 	self expert constructions: ang.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/2/2025 21:39:19'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 2/Sep/2025 21:39:19'!
 angleGeometriqueSommet: po de: pa a: pb coul: coul vars: lvars
 "Marque la valleur d'un angle géométrique en couleur"
 
@@ -4362,7 +4361,7 @@ ang := f  angleGéométriqueSommet: s de: a  à:  b.
 ang couleur: col.
 ^true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/2/2025 23:53:41'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 2/Sep/2025 23:53:41'!
 angleGeometriqueSommet: po de: pa a: pb vars: lvars
 "Marque la valleur d'un angle géométrique en couleur"
 |  s a b f  |
@@ -4378,7 +4377,7 @@ f  angleGéométriqueSommet: s de: a  à:  b.
 f  actualiser.
 ^true.! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/2/2025 23:28:37'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 2/Sep/2025 23:28:37'!
 angleGeometriqueSommet: po de: pa à: pb vars: lvars
 "Marque la valleur d'un angle géométrique en couleur"
 
@@ -4395,7 +4394,7 @@ f  angleGéométriqueSommet: s de: a  à:  b.
 f  actualiser.
 ^true.! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/3/2025 00:15:43'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 3/Sep/2025 00:15:43'!
 angleGéométriqueSommet: po de: pa à: pb vars: lvars
 "Marque la valleur d'un angle géométrique en couleur"
 
@@ -4412,7 +4411,7 @@ f  angleGéométriqueSommet: s de: a  à:  b.
 f  actualiser.
 ^true.! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/28/2025 21:03:26'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 28/Sep/2025 21:03:26'!
 angleSommet: po de: pa a: pb coul: coul vars: lvars
 "Marque la valeur d'un angle en couleur"
 	| f drgeo pool o a b ang pto pta ptb couleur color |
@@ -4450,7 +4449,7 @@ angleSommet: po de: pa a: pb coul: coul vars: lvars
 	self expert constructions: ang.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 9/28/2025 21:44:31'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 28/Sep/2025 21:44:31'!
 angleSommet: po de: pa à: pb coul: coul vars: lvars
 "Marque la valeur d'un angle en couleur"
 	| f drgeo pool o a b ang pto pta ptb couleur color |
@@ -4489,7 +4488,7 @@ angleSommet: po de: pa à: pb coul: coul vars: lvars
 	self expert constructions: ang.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/6/2023 21:00'!
+!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 6/Nov/2023 21:00:00'!
 couleurObjet: n couleur: coul vars: lvars
 "Mets en couleur un objet"
 	| col nom objs app obj |
@@ -4517,7 +4516,7 @@ couleurObjet: n couleur: coul vars: lvars
 	obj style color: col.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 12/7/2025 17:28:33'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 7/Dec/2025 17:28:33'!
 couleurPoint: n couleur: coul vars: lvars
 "Mets en couleur un point"
 
@@ -4549,7 +4548,7 @@ couleurPoint: n couleur: coul vars: lvars
 	
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/6/2023 21:00'!
+!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 6/Nov/2023 21:00:00'!
 créePointMilieu: med Point: pt1 et: pt2 vars: lvars
 "Crée le point au milieu d'une médiatrice"
 	| f drg md point1 point2 pool item seg |
@@ -4568,7 +4567,7 @@ créePointMilieu: med Point: pt1 et: pt2 vars: lvars
 	f intersectionOf: seg and: md.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/6/2023 21:01'!
+!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 6/Nov/2023 21:01:00'!
 distanceDe: pa a: pb coul: coul vars: lvars
 "Affiche la distance entre eux points"
 	| f drgeo cost a b dist pta ptb couleur color ptaMit ptbMit mx my |
@@ -4609,7 +4608,7 @@ distanceDe: pa a: pb coul: coul vars: lvars
 	self expert constructions: dist.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/7/2023 02:10'!
+!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 7/Nov/2023 02:10:00'!
 execute: acte vars: lvars
 	"Evalue une action"
 
@@ -4627,7 +4626,7 @@ execute: acte vars: lvars
 		evaluate.
 	^ true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 12/15/2025 20:07:43'!
+!ExpertRegle methodsFor: 'actions' stamp: 'drgeo 15/Dec/2025 20:07:43'!
 polyAjouteETNuméroteSommets: pol vars: lvars
 	"Ajoute et numérote les sommets d'un objet polygone régulier"
 	| drg poly  polyMorph nomPoly nSom pool  mit length abscis pt|
@@ -4652,7 +4651,7 @@ polyAjouteETNuméroteSommets: pol vars: lvars
 	self expert modèlesQuestions .
 	^true! !
 
-!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 11/7/2023 01:40'!
+!ExpertRegle methodsFor: 'actions' stamp: 'DrGeoUser 7/Nov/2023 01:40:00'!
 polyAjouteSommets: pol vars: lvars
 	"Ajoute les sommets d'un polygone"
 
@@ -4680,11 +4679,11 @@ test:=sommets collect:[:x |test ifTrue: [n:=n+1] .test := (( x mathItem abscissa
 			[ 0 to: nSom - 1 do: [ :nb | f pointSurLigne: poly a: nb / (nSom + 1) ] ].
 	^ true! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 1/26/2020 21:23'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 26/Jan/2020 21:23:00'!
 active: regle
 self class  perform:  regle asSymbol withArguments:    expert.! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/16/2012 20:04'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 16/Feb/2012 20:04:00'!
 activeconcl: lVars 
 	| res args |
 args := res allButFirst.
@@ -4694,7 +4693,7 @@ args := res allButFirst.
 
 		^ res! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/12/2012 23:10'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 12/Feb/2012 23:10:00'!
 afficheConclusion
 |res c|
 res:= WriteStream on: ''.
@@ -4705,7 +4704,7 @@ c atEnd ]whileFalse .
 
 ^ res contents.! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/20/2012 21:37'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 20/Feb/2012 21:37:00'!
 afficheConclusions
 |res conc item|
 res:='' writeStream .
@@ -4718,7 +4717,7 @@ res cr.
 conc atEnd ]whileFalse .
 ^ res contents ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 6/18/2025 00:39:25'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 18/Jun/2025 00:39:25'!
 afficheRegle
 	| temp1 temp2 temp3 |
 	temp1 := WriteStream on: ''.
@@ -4745,7 +4744,7 @@ afficheRegle
 	temp1 nextPut: $.. 
 	^ temp1 contents.! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/9/2012 01:17'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 9/Feb/2012 01:17:00'!
 afficheRegle1
 	| a c f |
 	a := ''.
@@ -4766,15 +4765,15 @@ afficheRegle1
 	alors:
 	' , c! !
 
-!ExpertRegle methodsFor: 'accessing'!
+!ExpertRegle methodsFor: 'accessing' stamp: ''!
 ant
 	^ ant! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 1/18/2012 00:45'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 00:45:00'!
 ant: a 	
 	ant := a! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/20/2012 11:05'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 20/Feb/2012 11:05:00'!
 antAstring
 |res a|
 res:=''writeStream .
@@ -4784,7 +4783,7 @@ ant do:
 
 ^res contents! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 9/5/2024 15:50:33'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 5/Sep/2024 15:50:33'!
 antecedents: aString 
 
 	self
@@ -4794,16 +4793,16 @@ antecedents: aString
 "self faitsMeConcernants ".
 	! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 10/23/2023 02:33'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 23/Oct/2023 02:33:00'!
 com
 com ifNil: [^''].
 	^ com! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 6/30/2019 09:03'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 30/Jun/2019 09:03:00'!
 com: c
 com :=c.! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/20/2023 03:16'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 20/Nov/2023 03:16:00'!
 commentaireRegle
 	| cr keys rgls rgl e |
 	e := DrGeo allInstances last view expert.
@@ -4819,7 +4818,7 @@ commentaireRegle
 				, rgl com , cr ].
 	^ rgl! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/20/2023 02:59'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 20/Nov/2023 02:59:00'!
 commentaireRegle: groupe
 	| cr keys rgls rgl e |
 	e := DrGeo allInstances last view expert.
@@ -4835,7 +4834,7 @@ commentaireRegle: groupe
 				, rgl com , cr ].
 	^ rgl! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/9/2023 01:45'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 9/Nov/2023 01:45:00'!
 commentaireRegle: groupe expert: e
 	| cr keys rgls rgl |
 	cr := Character cr asString.
@@ -4848,7 +4847,7 @@ commentaireRegle: groupe expert: e
 			rgl name  , ' >> ' ,  rgl concl asString , cr , '*' , rgl com , cr ].
 	^ rgl! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/7/2023 12:36'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 7/Nov/2023 12:36:00'!
 commentaires: cat
 	| dict cr predicats |
 	dict := ExpertRegle methodDictionary.
@@ -4858,11 +4857,11 @@ commentaires: cat
 	^ predicats
 		collect: [ :x | x asString , '	->' , (dict at: x) comment asString , cr ]! !
 
-!ExpertRegle methodsFor: 'accessing'!
+!ExpertRegle methodsFor: 'accessing' stamp: ''!
 concl
 	^ concl! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 7/30/2024 09:34:53'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 30/Jul/2024 09:34:53'!
 concl: c 
 	| conclusion |
 	conclusion := c.
@@ -4870,19 +4869,19 @@ concl: c
 		ifTrue: [conclusion := ExpertList new: c].
 	^ concl := conclusion! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 4/13/2020 11:44'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 13/Apr/2020 11:44:00'!
 contient: obj relation: res
 ^ res includes: obj ! !
 
-!ExpertRegle methodsFor: 'accessing'!
+!ExpertRegle methodsFor: 'accessing' stamp: ''!
 expert
 	^ expert! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 1/18/2012 00:49'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 00:49:00'!
 expert: exp 
 	expert := exp! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 10/13/2024 19:49:33'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 13/Oct/2024 19:49:33'!
 faitsMeConcernants
 |lregl|
 
@@ -4897,34 +4896,34 @@ ant ifNotNil:
  	].
 ^lf.! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 10/13/2024 19:50:28'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 13/Oct/2024 19:50:28'!
 faitsMeConcernants0
 ||
 ant ifNotNil: [ lf :=( (ant select: [:r|r notEmpty ])
 				collect: [:t2 | (t2 first) ])asSet. ]
 	! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/11/2022 15:39'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/Nov/2022 15:39:00'!
 findText: txt
 self expert indTexte: txt! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/11/2022 15:50'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/Nov/2022 15:50:00'!
 indTexte
 	^ self expert indTexte! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/11/2022 15:52'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/Nov/2022 15:52:00'!
 indTexte: txt
 self expert indTexte: txt! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/20/2012 12:35'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 20/Feb/2012 12:35:00'!
 initLv
 lv :=Set  new.! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 8/3/2020 21:16'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 3/Aug/2020 21:16:00'!
 instancie: lVars 
 ^self instancie: lVars fait: concl.! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/4/2019 15:57'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 4/Nov/2019 15:57:00'!
 instancie: lVars fait: f
 	| res |
 	lVars
@@ -4940,12 +4939,12 @@ res:=	f	do: [:t4 |self valeur: t4 vars: lVars ].
 "
 	^ res ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/20/2012 21:40'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 20/Feb/2012 21:40:00'!
 instancieConcl
 ^(((expert  applatis: (self lv asOrderedCollection ) )asSet )asOrderedCollection )collect: [:m|self instancie:  m] 
 ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 12/8/2021 17:47'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 8/Dec/2021 17:47:00'!
 instancieNum:  f
 	| res n faits |
 	faits := ExpertList new: f.
@@ -4959,7 +4958,7 @@ instancieNum:  f
 				ifFalse: [t4 ]].
 	^ res! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 12/8/2021 04:17'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 8/Dec/2021 04:17:00'!
 instancieNum: lVars fait: f
 	| res n faits |
 	faits := ExpertList new: f.
@@ -4975,45 +4974,45 @@ instancieNum: lVars fait: f
 				ifFalse: [ self valeur: t4 vars: lVars ] ].
 	^ res! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 1/18/2012 19:21'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 19:21:00'!
 lf
 ^lf! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 5/12/2020 18:13'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 12/May/2020 18:13:00'!
 lf: aSet
 lf := aSet .! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/21/2012 00:45'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 21/Feb/2012 00:45:00'!
 lv
 ^lv asOrderedCollection ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/20/2012 11:57'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 20/Feb/2012 11:57:00'!
 lv:t
 lv:=t! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 9/25/2012 23:48'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 25/Sep/2012 23:48:00'!
 lvAdd:t
 lv ifNil: [lv:=Set new ].
 lv add: t.
 ^t ! !
 
-!ExpertRegle methodsFor: 'accessing'!
+!ExpertRegle methodsFor: 'accessing' stamp: ''!
 name
 	^ name! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 1/18/2012 01:07'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 01:07:00'!
 name: nom 
 	name := nom! !
 
-!ExpertRegle methodsFor: 'accessing'!
+!ExpertRegle methodsFor: 'accessing' stamp: ''!
 nom
 	^ name! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 1/18/2012 01:10'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 01:10:00'!
 nom: monNom 
 	name := monNom! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 11/21/2025 15:24:38'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 21/Nov/2025 15:24:38'!
 perform: aCond vars: lVars 
 	| sel args c nSel  cond|     
 	cond := aCond veryDeepCopy .
@@ -5028,7 +5027,7 @@ perform: aCond vars: lVars
 	
 	! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 11/29/2022 16:32'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 29/Nov/2022 16:32:00'!
 predComm: pred
 	| txt start last |
 	txt := (ExpertRegle methodDict at: (pred asSymbol)) sourceCode.
@@ -5036,7 +5035,7 @@ predComm: pred
 	last := txt indexOf: $" startingAt: start + 1.
 	^ txt collect: [ :x | x ] from: start + 1 to: last - 1! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 2/3/2020 20:58'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 3/Feb/2020 20:58:00'!
 reglesConcluant: aStringOrList
 |f   l  u|
 f:=aStringOrList.
@@ -5047,7 +5046,7 @@ l:=l collect:[:r|(expert regles at:r asSymbol )].
 
 ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 1/18/2012 01:11'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 18/Jan/2012 01:11:00'!
 renomme: nouvNom 
 	| ancNom |
 	ancNom := self nom.
@@ -5056,20 +5055,20 @@ renomme: nouvNom
 	expert regles removeKey: ancNom asSymbol.
 	^ ancNom! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 8/3/2020 18:05'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 3/Aug/2020 18:05:00'!
 varLibre: vl val: vaieur vars: lvars
 ((vl isString) and: [vl beginsWith: '?' ] )ifTrue:[ ^ (vl = vaieur ) ].
 ^ false.
 
 ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 6/10/2020 11:03'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 10/Jun/2020 11:03:00'!
 varLibre: vl vars: lvars
 (vl asString beginsWith: '?' )ifFalse:  [ true ].
 ^(self valeur: vl vars: lvars) = vl.
 ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 11/21/2025 15:16:33'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 21/Nov/2025 15:16:33'!
 verifAnt: antes vars: lvars
 	| base lant lfClef myAnt aFirst r |
 	neg := false.
@@ -5133,11 +5132,11 @@ verifAnt: antes vars: lvars
 	^ (self applatis: aFirst)
 		collect: [ :t10 | self verifAnt: lant vars: t10 ]! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 2/18/2013 00:33'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 18/Feb/2013 00:33:00'!
 verifAntecedants
 ^  self verifAntecedants: IdentityDictionary new! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 1/19/2025 21:36:55'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'drgeo 19/Jan/2025 21:36:55'!
 verifAntecedants:lvars
 	| res flse|
 	"self halt."
@@ -5156,7 +5155,7 @@ verifAntecedants:lvars
 	 cut ifTrue:  [cut:=false. res ifNotEmpty: [res:= OrderedCollection with: res first]].
 	^res! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/18/2012 23:52'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 18/Feb/2012 23:52:00'!
 verifHyp
 |lv|
 lv :=self verifAnt: self ant  vars: (IdentityDictionary  new) .
@@ -5164,7 +5163,7 @@ lv :=self verifAnt: self ant  vars: (IdentityDictionary  new) .
 
 ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/29/2012 11:47'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 29/Feb/2012 11:47:00'!
 verifHyp: lvars 
 |lv2|
 lv2 :=self verifAnt: self ant  vars: lvars .
@@ -5172,11 +5171,11 @@ lv2 :=self verifAnt: self ant  vars: lvars .
 
 ! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'pad 2/28/2012 13:40'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'pad 28/Feb/2012 13:40:00'!
 verifRegle
 	^ self verifRegle: IdentityDictionary new.! !
 
-!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 6/28/2022 20:48'!
+!ExpertRegle methodsFor: 'accessing' stamp: 'DrGeoUser 28/Jun/2022 20:48:00'!
 verifRegle: lvars
 	| etat res  |
 	"Transcript show:'
@@ -5204,7 +5203,7 @@ verifRegle: lvars
 								vars: t3 first]]].
 	^ self applatis: res! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 01:46'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 01:46:00'!
 addFirst: list el: elem rep: res vars: lvars
 	"Ajoute en premier un élément à une liste"
 
@@ -5220,7 +5219,7 @@ addFirst: list el: elem rep: res vars: lvars
 		ifTrue: [ ^ self affecte: rep valeur: (l addFirst: el) vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 01:58'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 01:58:00'!
 addLast: list el: elem rep: res vars: lvars
 	"Ajoute un élément à la fin d'une liste"
 
@@ -5236,7 +5235,7 @@ addLast: list el: elem rep: res vars: lvars
 		ifTrue: [ ^ self affecte: rep valeur: (l addLast: el) vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 01:49'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 01:49:00'!
 ajoute: mot liste: l rep: res vars: lvars
 "Ajoute  un élément à la fin d'une liste"
 	| t4 t5 faux |
@@ -5250,7 +5249,7 @@ ajoute: mot liste: l rep: res vars: lvars
 	t5 := t5 addLast: t4.
 	^ self affecte: res valeur: t5 vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 01:56'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 01:56:00'!
 ajouteDernierUnique: list el: elem rep: res vars: lvars
 	"Ajoute un élément à la fin d'une liste, s'il n'est pas déjà dans la liste"
 
@@ -5267,7 +5266,7 @@ ajouteDernierUnique: list el: elem rep: res vars: lvars
 			[ ^ self affecte: rep valeur: (l addLastIfNotIncluded: el) vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 01:59'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 01:59:00'!
 ajoutePremier: list el: elem rep: res vars: lvars
 	"Ajoute un élément à la tête d'une liste"
 
@@ -5281,7 +5280,7 @@ ajoutePremier: list el: elem rep: res vars: lvars
 		ifTrue: [ ^ self affecte: rep valeur: (l := l addFirst: el) vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 02:04'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 02:04:00'!
 ajoutePremierUnique: list el: elem rep: res vars: lvars
 	"Ajoute un élément à la tête d'une liste, s'il n'est pas déjà dans la liste"
 
@@ -5300,7 +5299,7 @@ ajoutePremierUnique: list el: elem rep: res vars: lvars
 				vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 12/8/2023 12:25'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 8/Dec/2023 12:25:00'!
 commencePar: n début: mot vars: lvar
 	"vérifie si un mot commence par début ou si c'est  une liste "
 
@@ -5313,7 +5312,7 @@ commencePar: n début: mot vars: lvar
 	 ^ nm beginsWith: mt .
 ! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 12/8/2023 12:30'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 8/Dec/2023 12:30:00'!
 commencePar: n débutOuListe: mot vars: lvar
 	"vérifie si un mot commence par début ou si c'est  une liste "
 
@@ -5325,7 +5324,7 @@ commencePar: n débutOuListe: mot vars: lvar
 	nm class = ExpertList ifTrue: [ ^ true ].
 	^ nm beginsWith: mt! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/26/2023 01:44'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 26/Oct/2023 01:44:00'!
 constructions: cons rep: res vars: lvars
 "Construit un objet dans la figure"
 	| constr |
@@ -5333,7 +5332,7 @@ constructions: cons rep: res vars: lvars
 	constr ifNil: [ ^ false ].
 	^ self affecte: res valeur: constr vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/27/2023 20:12'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 27/Oct/2023 20:12:00'!
 contient: obj liste: l vars: lvars
 "Vérifie si un objet est présent dans une liste"
 	| t1 t2 faux |
@@ -5346,7 +5345,7 @@ contient: obj liste: l vars: lvars
 		ifTrue: [ ^ faux ].
 	^ t2 includes: t1! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/6/2023 21:02'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 6/Nov/2023 21:02:00'!
 couples: list rep: res vars: lvars
 "Associe une liste de deux points à un nom pour former un couple"
 	| lst |
@@ -5356,7 +5355,7 @@ couples: list rep: res vars: lvars
 		ifTrue: [ ^ self affecte: res valeur: lst couples vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/26/2023 01:49'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 26/Oct/2023 01:49:00'!
 dernier: list rep: res vars: lvars
 "Le dernier élément d'une liste"
 	| l rep |
@@ -5370,7 +5369,7 @@ dernier: list rep: res vars: lvars
 			^ self affecte: rep valeur: l last vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/26/2023 01:50'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 26/Oct/2023 01:50:00'!
 derniers: list rep: res vars: lvars
 "Les derniers éléments d'une liste de listes"
 	| lst |
@@ -5382,7 +5381,7 @@ derniers: list rep: res vars: lvars
 		valeur: (lst collect: [ :x | x last ])
 		vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 02:02'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 02:02:00'!
 enleverDe: list el: el rep: res vars: lvars
 	"Enlève un élément à une liste, si la liste restante n'a qu'un élément  retourne cet élément"
 
@@ -5405,7 +5404,7 @@ enleverDe: list el: el rep: res vars: lvars
 		ifTrue: [ ^ self affecte: t3 valeur: r vars: lvars ].
 	^ self unifie: t3 avec: r vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 02:27'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 02:27:00'!
 excludes: list el: el vars: lvars
 	"Vérifie qu'un élément n'appartient pas à un ensemble"
 
@@ -5414,7 +5413,7 @@ excludes: list el: el vars: lvars
 	t2 := self valeur: el vars: lvars.
 	^ (t1 includes: t2) not! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/26/2023 02:17'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 26/Oct/2023 02:17:00'!
 élément: list à: n rep: res vars: lvars
 "L'élément de la liste à une position n"
 	| lst ind |
@@ -5424,7 +5423,7 @@ excludes: list el: el vars: lvars
 	ind := self instanciedValue: n vars: lvars.
 	^ self affecte: res valeur: (lst at: ind asNumber) vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/6/2023 21:03'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 6/Nov/2023 21:03:00'!
 includes: list el: el vars: lvar
 "Vérifie qu'une liste contient un élément"
 	| t1 t2 |
@@ -5432,7 +5431,7 @@ includes: list el: el vars: lvar
 	t2 := self valeur: el vars: lvar.
 	^ t1 includes: t2! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 02:31'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 02:31:00'!
 index: list el: el rep: res vars: lvars
 	"Retourne l'indice d'un élément dans une liste"
 
@@ -5452,7 +5451,7 @@ index: list el: el rep: res vars: lvars
 	r ifNotNil: [ ^ self affecte: res valeur: r vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'drgeo 4/11/2025 03:47:02'!
+!ExpertRegle methodsFor: 'list' stamp: 'drgeo 11/Apr/2025 03:47:02'!
 inverse: list rep:res vars: lvars
 | lst inv |
 
@@ -5466,7 +5465,7 @@ lst do: [ :x|inv  addFirst: x].
 
 ! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/6/2023 21:03'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 6/Nov/2023 21:03:00'!
 joint: l1 avec: l2 rep: res vars: lvars
 "Réunit les éléments de deux listes"
 	| ll1 ll2 |
@@ -5474,7 +5473,7 @@ joint: l1 avec: l2 rep: res vars: lvars
 	ll2 := self valeur: l2 vars: lvars.
 	^ self affecte: res valeur: (ll1 append: ll2) vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 13:42'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 13:42:00'!
 min: alist rep: rep vars: lvars
 	"Le plus petit élément d'une  liste"
 
@@ -5483,7 +5482,7 @@ min: alist rep: rep vars: lvars
 	res := l min.
 	^ self affecte: rep valeur: res vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'drgeo 3/18/2026 00:21:01'!
+!ExpertRegle methodsFor: 'list' stamp: 'drgeo 18/Mar/2026 00:21:01'!
 neContientPas: obj liste: l vars: lvars
 "Vérifie si un objet n'est pas présent dans une liste"
 	| t1 t2 faux |
@@ -5496,7 +5495,7 @@ neContientPas: obj liste: l vars: lvars
 		ifTrue: [ ^ faux ].
 	^ (t2 includes: t1)not.! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/26/2023 02:00'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 26/Oct/2023 02:00:00'!
 nonContient: list el: el vars: lvars
 "Vérifie qu'un élément n'est pas dans une liste"
 	| t1 t2 res |
@@ -5508,7 +5507,7 @@ nonContient: list el: el vars: lvars
 		ifTrue: [ ^ (t1 asString indexOf: (t2 at: 1)) > 0 ].
 	^ (t1 includes: t2) not! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 02:39'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 02:39:00'!
 nonTousPositifs: list vars: lvars
 	"Vérifie que les éléments d'une liste ne sont pas tous positifs"
 
@@ -5520,7 +5519,7 @@ nonTousPositifs: list vars: lvars
 		ifFalse: [ ^ false ].
 	^ (l all: [ :x | x > 0 ]) not! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 02:41'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 02:41:00'!
 premier: list rep: res vars: lvars
 	"Le premier élément d'une liste"
 
@@ -5537,7 +5536,7 @@ premier: list rep: res vars: lvars
 			^ self affecte: rep valeur: l first vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 13:38'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 13:38:00'!
 premiers: list rep: res vars: lvars
 	"Les premiers des éléments d'une liste de listes"
 
@@ -5558,7 +5557,7 @@ premiers: list rep: res vars: lvars
 								allButLast allButLast last first asString ] ])
 		vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 02:43'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 02:43:00'!
 saufDernier: list rep: res vars: lvars
 	"Les éléments d'une liste sauf le dernier"
 
@@ -5569,7 +5568,7 @@ saufDernier: list rep: res vars: lvars
 		ifFalse: [ ^ self affecte: rep valeur: l allButLast vars: lvars ].
 	^ self affecte: rep valeur: ExpertList new vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'drgeo 12/18/2025 12:03:10'!
+!ExpertRegle methodsFor: 'list' stamp: 'drgeo 18/Dec/2025 12:03:10'!
 saufDerniers: list rep: res vars: lvars
 	"Les derniers des éléments d'une liste de listes"
 
@@ -5590,7 +5589,7 @@ saufDerniers: list rep: res vars: lvars
 								allButLast allButLast last allButLast asString ] ])
 		vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/6/2023 21:05'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 6/Nov/2023 21:05:00'!
 saufPremier: list rep: res vars: lvars
 	"Les éléments d'une liste sauf le premier"
 	| l rep |
@@ -5602,7 +5601,7 @@ saufPremier: list rep: res vars: lvars
 		ifTrue: [ ^ self affecte: rep valeur: l allButFirst vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'drgeo 12/18/2025 12:05:14'!
+!ExpertRegle methodsFor: 'list' stamp: 'drgeo 18/Dec/2025 12:05:14'!
 saufPremiers: list rep: res vars: lvars
 	"Les  éléments d'une liste de listes sauf les premiers"
 
@@ -5623,7 +5622,7 @@ saufPremiers: list rep: res vars: lvars
 								allButLast allButLast last allButLast asString ] ])
 		vars: lvars! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/26/2023 02:06'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 26/Oct/2023 02:06:00'!
 somme: list rep: res vars: lvar
 "La somme de tous les éléments d'une liste"
 	| lst |
@@ -5631,7 +5630,7 @@ somme: list rep: res vars: lvar
 	lst ifNotNil: [ ^ self affecte: res valeur: lst sum vars: lvar ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 13:43'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 13:43:00'!
 sort: mot block: bl rep: rep vars: lvars
 	"Trie les éléments d'une liste selon un critère décrit dans le block"
 
@@ -5645,7 +5644,7 @@ sort: mot block: bl rep: rep vars: lvars
 				ifFalse: [ ^ result = mot ] ].
 	^ faux! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 03:01'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 03:01:00'!
 taille: list rep: res vars: lvars
 	"Le nombre d'éléments de la liste"
 
@@ -5660,7 +5659,7 @@ taille: list rep: res vars: lvars
 			^ self affecte: rep valeur: l size vars: lvars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'drgeo 7/28/2025 00:34:32'!
+!ExpertRegle methodsFor: 'list' stamp: 'drgeo 28/Jul/2025 00:34:32'!
 tousDifferents: list vars: lvars
 	"Vérifie que tous les éléments de la liste sont différents"
 
@@ -5672,7 +5671,7 @@ tousDifferents: list vars: lvars
 		ifFalse: [ ^ false ].
 	^ l tousDifférents ! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/26/2023 02:11'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 26/Oct/2023 02:11:00'!
 tousNégatifs: list vars: lvars
 	"Vérifie que tous les éléments de la liste sont négatifs"
 
@@ -5684,7 +5683,7 @@ tousNégatifs: list vars: lvars
 		ifFalse: [ ^ false ].
 	^ l all: [ :x | x asNumber < 0 ]! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 10/26/2023 02:11'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 26/Oct/2023 02:11:00'!
 tousPositifs: list vars: lvars
 	"Vérifie que tous les éléments de la liste sont positifs"
 
@@ -5696,7 +5695,7 @@ tousPositifs: list vars: lvars
 		ifFalse: [ ^ false ].
 	^ l all: [ :x | x asNumber > 0 ]! !
 
-!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 11/7/2023 02:48'!
+!ExpertRegle methodsFor: 'list' stamp: 'DrGeoUser 7/Nov/2023 02:48:00'!
 triePointsSur: mot droite: d rep: rep vars: lvars
 	"Trie les points sur une droite"
 
@@ -5719,7 +5718,7 @@ triePointsSur: mot droite: d rep: rep vars: lvars
 			^ self affecte: rep valeur: result vars: lvars ].
 	^ faux! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/7/2023 01:54'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 7/Nov/2023 01:54:00'!
 ajouteDernier: list el: elem rep: res vars: lvars
 	"Ajoute un élément à la fin d'une liste"
 
@@ -5736,7 +5735,7 @@ ajouteDernier: list el: elem rep: res vars: lvars
 		ifTrue: [ result1 := self affecte: rep valeur: (l addLast: el) vars: lvars ].
 	^ result1! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:12'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:12:00'!
 alignés: p1 avec: p2 et: p3 vars: lvars
 "Vérifie que trois points sont alignés"
 	| pp1 pp2 pp3 pp1Point pp2Point pp3Point f points deltap pente |
@@ -5773,14 +5772,14 @@ alignés: p1 avec: p2 et: p3 vars: lvars
 					((pp1Point x - pp3Point x) @ (pp3Point y + (pente * pp1Point x))) ]
 		ifFalse: [ ^ pp1Point x = pp2Point x and: [ pp1Point x = pp3Point x ] ]! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 11/17/2024 19:51:58'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 17/Nov/2024 19:51:58'!
 asLowerCase:str rep: res vars:lvars
 |rep|
 rep:= (self instanciedValue: str vars: lvars )asLowercase .
 self affecte: res valeur: rep vars: lvars.
 ^true! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:57'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:57:00'!
 compteFaits: aFait rep: r vars: lVars
 	"Compte le nombre de mêmes faits correspondant à un modèle de question pour un faits sous forme de liste"
 
@@ -5789,7 +5788,7 @@ compteFaits: aFait rep: r vars: lVars
 		select: [ :x | x first notNil ]) size.
 	^ self affecte: r valeur: n asString vars: lVars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 10/16/2024 15:43:42'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 16/Oct/2024 15:43:42'!
 contraire: cont mot: mot rep: res vars: lvars
 	"décrit le contraire d''un mot"
 
@@ -5798,7 +5797,7 @@ contraire: cont mot: mot rep: res vars: lvars
 	c := self instanciedValue: cont vars: lvars.
 	^ self expert affecte: res valeur: cont vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:57'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:57:00'!
 créeNom: alist rep: rep vars: lvars
 	"Construit un nom à partir des éléments d''une liste"
 
@@ -5807,7 +5806,7 @@ créeNom: alist rep: rep vars: lvars
 	lst := lst makeNom.
 	^ self affecte: rep valeur: lst vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 10/27/2023 20:27'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 27/Oct/2023 20:27:00'!
 créeNomMin: aList rep: rep vars: lvars
 "Crée un nom pour une permutation minimum des éléments de la liste"
 	| lst0 lst lst2 lstLast |
@@ -5820,7 +5819,7 @@ créeNomMin: aList rep: rep vars: lvars
 	lst := lst makeNom.
 	^ self affecte: rep valeur: lst vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:57'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:57:00'!
 créeNomUnique: mot rep: res vars: lvars
 "Crée un nom suivi d'u numéro unique. "
 	^ self expert
@@ -5828,7 +5827,7 @@ créeNomUnique: mot rep: res vars: lvars
 		valeur: mot , self gensym asString
 		vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 10/27/2023 23:08'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 27/Oct/2023 23:08:00'!
 different: x de: y vars: lVars
 " Vérifie que deux objets sont différents"
 	| t4 t5 pool item diff tt4 tt5 |
@@ -5860,7 +5859,7 @@ different: x de: y vars: lVars
 		  [  ((xclass point - yclass point  )   abs )<  (0.0001@0.0001) ifTrue: [ ^ false ] ]."
 	^ t4 ~= t5! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 10/27/2023 20:39'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 27/Oct/2023 20:39:00'!
 direction: p rep: res vars: lvar
 "Retourne un point qui est l''extrémité d''un vecteur qui a pour origine le point 0@0. "
 	| pt result pool obj |
@@ -5871,7 +5870,7 @@ direction: p rep: res vars: lvar
 	result := obj direction.
 	^ self affecte: res valeur: result vars: lvar! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 11/5/2025 13:42:31'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 5/Nov/2025 13:42:31'!
 distance: p1 a: p2 rep: res vars: lvars
 "La distance entre deux points
 	| pp1 pp2 points rep rres drgeo |
@@ -5892,7 +5891,7 @@ distance: p1 a: p2 rep: res vars: lvars
 	
 ^ self  distance: p1 à: p2 rep: res vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 11/5/2025 13:24:51'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 5/Nov/2025 13:24:51'!
 distance: p1 à: p2 rep: res vars: lvars
 "La distance entre deux points"
 	| pp1 pp2 points rep rres drgeo |
@@ -5913,7 +5912,7 @@ distance: p1 à: p2 rep: res vars: lvars
 	rep := pp1 point dist: pp2 point.
 	^ self affecte: rres valeur: rep vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 11/5/2025 14:00:46'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 5/Nov/2025 14:00:46'!
 distanceDe: p1 à: p2 rep: res vars: lvars
 "La distance entre deux points
 	| pp1 pp2 points rep rres drgeo |
@@ -5934,7 +5933,7 @@ distanceDe: p1 à: p2 rep: res vars: lvars
 	
 ^ self  distance: p1 à: p2 rep: res vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:31'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:31:00'!
 extrémité: obj rep: res vars: lvar
 	"Le deuxième parent d'un segment ou d'une droite"
 
@@ -5946,7 +5945,7 @@ extrémité: obj rep: res vars: lvar
 	result := objet parents last name.
 	^ self affecte: res valeur: result vars: lvar! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/7/2023 03:56'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 7/Nov/2023 03:56:00'!
 égaux: x et: y vars: lVars
 "Vérifie si des objets sont égaux, si l'un des termes n'et pas  instancié, unifie ce terme avec l'autre terme"
 	| t4 t5 |
@@ -5964,7 +5963,7 @@ extrémité: obj rep: res vars: lvar
 			^ self unifie: y avec: t4 vars: lVars ].
 	^ false! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 10/27/2023 20:59'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 27/Oct/2023 20:59:00'!
 instanciedValue: val vars: lvars
 "Valeur attribuée à une variable, retourne faux si la variable n''a  pas reçu de valeur "
 	| res |
@@ -5973,7 +5972,7 @@ instanciedValue: val vars: lvars
 		ifTrue: [ ^ nil ].
 	^ res! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 4/12/2025 15:19:12'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 12/Apr/2025 15:19:12'!
 listeEnMot: m1 rep:res vars: lvar
 |mot rep |
 "self halt."
@@ -5983,7 +5982,7 @@ mot isList ifTrue: [mot do:[:mm| rep:= rep , (mm asString)] .
 ^ self affecte: res valeur: rep vars: lvar].
 ^false.! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 10/27/2023 21:00'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 27/Oct/2023 21:00:00'!
 max: alist rep: rep vars: lvars
 "Le maximum d''une liste"
 	| l res |
@@ -5991,7 +5990,7 @@ max: alist rep: rep vars: lvars
 	res := l max.
 	^ self affecte: rep valeur: res vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/28/2023 14:17'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 28/Nov/2023 14:17:00'!
 membre: obj liste: l vars: lvars
 	"Vérifie si un objet est présent dans une liste, obj peut être  une variable libre"
 
@@ -6008,7 +6007,7 @@ membre: obj liste: l vars: lvars
 		ifTrue: [ ^ faux ].
 	^ t2 includes: t1! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 10/27/2023 21:36'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 27/Oct/2023 21:36:00'!
 minMot: mot rep: rep vars: lvars
 "Le plus  petit caractère d'un mot"
 	| t4 |
@@ -6017,7 +6016,7 @@ minMot: mot rep: rep vars: lvars
 		ifTrue: [ ^ false ].
 	^ self affecte: rep valeur: t4 min vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 8/8/2025 01:48:48'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 8/Aug/2025 01:48:48'!
 minimum: mot rep: rep vars: lvars
 	"Le minimum d'une liste"
 	| t4 |
@@ -6025,7 +6024,7 @@ minimum: mot rep: rep vars: lvars
 	t4 ifNil: [ ^ false ].
 	^ self affecte: rep valeur: (self minimum: t4) vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:21'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:21:00'!
 mot: mot1 et: mot2 et: mot3 rep: rep vars: lVars
 "Forme un mot à partir de trois mots"
 	| t5 t6 t7 |
@@ -6037,7 +6036,7 @@ mot: mot1 et: mot2 et: mot3 rep: rep vars: lVars
 		valeur: t5 asString , t6 asString , t7 asString
 		vars: lVars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 12/22/2025 21:49:14'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 22/Dec/2025 21:49:14'!
 mot: mot1 et: mot2 rep: rep vars: lVars 
 "Forme un mot à partir de deux mots"
 	| t5 t6  res|
@@ -6045,7 +6044,7 @@ mot: mot1 et: mot2 rep: rep vars: lVars
 	t6 :=self instanciedValue: mot2  vars: lVars.
 	res := t5,t6.	^ self affecte: rep valeur: res vars: lVars ! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 4/12/2025 14:26:22'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 12/Apr/2025 14:26:22'!
 mot: m1 rep:res vars: lvar
 |mot rep |
 rep :=''.
@@ -6054,7 +6053,7 @@ mot isList ifTrue: [mot do:[:mm| rep:= rep , mm asString] ]
 ifFalse: [^false ].
 ^ self affecte: res valeur: rep vars: lvar! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:25'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:25:00'!
 objet: p rep: res vars: lvar
 "Retourne l'objet qui a ce nom"
 	| pt result pool |
@@ -6064,7 +6063,20 @@ objet: p rep: res vars: lvar
 	result := pool detect: [ :x | pt = x name ].
 	^ self affecte: res valeur: result vars: lvar! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 10/12/2024 20:03:47'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 7/Nov/2023 04:08:00'!
+ordonneMot: mot1 et: mot2 rep: rep vars: lVars
+	"Forme un mot à partir de deuxmots, en les  mettant dans l'ordre alphabètique "
+
+	| t5 t6 a |
+	t5 := self valeur: mot1 vars: lVars.
+	t6 := self valeur: mot2 vars: lVars.
+	(t5 isList and: [ t6 isList ])
+		ifTrue: [  ].
+	a := {t5.
+	t6} sort: [ :x :y | x < y ].
+	^ self affecte: rep valeur: a first , a last vars: lVars! !
+
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'drgeo 12/Oct/2024 20:03:47'!
 ordonneMot: mot1 et: mot2 rep1: rep1 rep2: rep2 vars: lVars
 " Place deux mots en ordre alphabétique"
 
@@ -6102,20 +6114,7 @@ ordonneMot: mot1 et: mot2 rep1: rep1 rep2: rep2 vars: lVars
 		ifFalse: [ ^ (self affecte: rep1 valeur: t6 vars: lVars)
 				and: [ self affecte: rep2 valeur: t5 vars: lVars ] ]! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/7/2023 04:08'!
-ordonneMot: mot1 et: mot2 rep: rep vars: lVars
-	"Forme un mot à partir de deuxmots, en les  mettant dans l'ordre alphabètique "
-
-	| t5 t6 a |
-	t5 := self valeur: mot1 vars: lVars.
-	t6 := self valeur: mot2 vars: lVars.
-	(t5 isList and: [ t6 isList ])
-		ifTrue: [  ].
-	a := {t5.
-	t6} sort: [ :x :y | x < y ].
-	^ self affecte: rep valeur: a first , a last vars: lVars! !
-
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:44'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:44:00'!
 renomme: obj nom: nom vars: lvar
 "Renomme un  objet"
 	| ob pool nm objet |
@@ -6128,21 +6127,21 @@ renomme: obj nom: nom vars: lvar
 	objet name: nm.
 	^ true! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:56'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:56:00'!
 retablitFait: aFait vars: v
 "rétablit un fait"
 	| f |
 	f := self expert instancie: aFait vars: v.
 	^ self expert retablitFait: f regle: self name! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:56'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:56:00'!
 retireFait: aFait vars: v
 "Retire un fait, le fait est marqué retiré et plus vu parmis les faits"
 	| f |
 	f := self expert instancie: aFait vars: v.
 	^ self expert retireFait: f regle: self name! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 8/31/2023 16:39'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 31/Aug/2023 16:39:00'!
 sort: mot rep: rep vars: lvars
 	| t4 faux result |
 	faux := false.
@@ -6154,7 +6153,7 @@ sort: mot rep: rep vars: lvars
 				ifFalse: [ ^ result = mot ] ].
 	^ faux! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:56'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:56:00'!
 suivant: nom rep: res vars: lvars
 "Génère le nom suivant un nom unique"
 	| t1 t2 faux |
@@ -6167,7 +6166,7 @@ suivant: nom rep: res vars: lvars
 		ifTrue: [ ^ faux ].
 	^ self affecte: res valeur: t1 , self gensym asString vars: lvars! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 21:56'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 21:56:00'!
 total: larg vars: lvar
 "Remplace le dernier élément d'une liste de nombres par le total des précédents"
 	| l last tot val |
@@ -6181,7 +6180,7 @@ total: larg vars: lvar
 			tot := tot + val ].
 	^ self affecte: last valeur: tot vars: lvar! !
 
-!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 11/6/2023 22:24'!
+!ExpertRegle methodsFor: 'miscellaneous' stamp: 'DrGeoUser 6/Nov/2023 22:24:00'!
 trie: mot rep: rep vars: lvars
 "Trie les lettres d'un mot"
 	| t4 faux result |
@@ -6194,14 +6193,14 @@ trie: mot rep: rep vars: lvars
 				ifFalse: [ ^ result = mot ] ].
 	^ faux! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 11/22/2023 18:42'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 22/Nov/2023 18:42:00'!
 Electricite: e
 	e initRegles.
 	ExpertRegle interfaceElectricite:  e.
 	ExpertRegle ohmRegles: e.
 	ExpertRegle circuitRegles: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 10/9/2020 18:12'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 9/Oct/2020 18:12:00'!
 Epidémie: e 
 e initRegles.
 e lisRegle: 'interface-Arc3pts' 
@@ -6264,7 +6263,7 @@ si:  'ami ?x ?y'
 alors: 'personne ?x'
 com:'Y est une personne.'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 3/25/2023 12:59'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 25/Mar/2023 12:59:00'!
 Euclide: e
 	e initRegles.
 	e retablit: false.
@@ -6284,7 +6283,7 @@ Euclide: e
 	ExpertRegle symetrieCentrale: e.
 	ExpertRegle symetrieAxiale: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/22/2025 02:25:31'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 22/Nov/2025 02:25:31'!
 EuclideMinimum: e
 	"e initRegles."
 	e retablit: false.
@@ -6300,7 +6299,7 @@ EuclideMinimum: e
 	ExpertRegle figuresNonRectilignes: e.
 	^ 'Règles EuclideMinimum: chargées'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/19/2026 01:03:17'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 19/Jan/2026 01:03:17'!
 angleSuite: e
 
 
@@ -6401,7 +6400,7 @@ relationCrée:et:nom: [ ?x1 ?s ?x2 ] [ ?p ?s ?x2 ]  équivalent'
 		alors: 'relationCréée [ ?x1 ?s ?x2 ] [ ?x3 ?s ?x4 ] équivalent '
 		com: 'Affirmation d''une relation céée'".! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/22/2026 19:43:47'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 22/Jan/2026 19:43:47'!
 angles: e
 	
 e		lisRegle: 'angles-alignés1'
@@ -7129,7 +7128,7 @@ different:de: ?o1 ?o2'
 		com: 'Des angles situés de chaque côté d''une droite tombant sur des parallèles et à l''intérieur de ces parallèles sont alternes internes.'.
 ExpertRegle  angleSuite: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 3/16/2026 01:48:33'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 18/Dec/2023 13:11:00'!
 circuitRegles: e
 	e retablit: false.
 	ExpertRegle interface: e.
@@ -7221,7 +7220,7 @@ retireFait: arete ?r2 ?n1 ?n2
 retireFait: PAR ?r1  ?r2  ?n1 ?n2'
 		alors: 'arete [ parallele ?r1 ?r2 ] ?n1 ?n2'
 		com:
-			'On remplace deux résistances en parallèle par une arête nommée: arete [ parallele ?r1 ?r2 ] ?n1 ?n2.'.
+			'On remplace les deux résistances en parallèle par une arête nommée: arete [ parallele ?r1 ?r2 ] ?n1 ?n2.'.
 	e
 		lisRegle: 'Circuits-SER'
 		si:
@@ -7247,7 +7246,7 @@ retireFait: arete ?r1 ?n1 ?x
 retireFait: arete ?r2 ?x ?n2'
 		alors: 'arete [ serie ?r1 ?r2 ] ?n1 ?n2'
 		com:
-			'On remplace  deux résistances en série par une arête nommée: arete [ serie ?r1 ?r2 ] ?n1 ?n2.'.
+			'On remplace les deux résistances en série par une arête nommée: arete [ serie ?r1 ?r2 ] ?n1 ?n2.'.
 	e
 		lisRegle: 'Circuits-ElementDeCircuit'
 		si:
@@ -7261,7 +7260,7 @@ different:de: ?r1 ?r2'
 		alors: 'circuit  ?a ?r1 ?r2  + -  '
 		com: 'Les circuits qui vont de + à -.'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/19/2024 21:42:05'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 19/Nov/2024 21:42:05'!
 code: e
 	| t2 |
 	e
@@ -7310,7 +7309,7 @@ t2 concl: 'code ?ls := f droitePassantPar: ?lxx et: ?lyy'.
 t2 com: 'code droite'.
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 5/7/2023 19:17'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 7/May/2023 19:17:00'!
 egalites: e
 	e
 		lisRegle: 'egalité-Points'
@@ -7457,7 +7456,7 @@ si: 'translation segment ?s ?so ?v'
 alors: 'egal ?s ?so'
 "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 4/4/2020 02:34'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 4/Apr/2020 02:34:00'!
 ensemble:e
 e lisRegle: 'initparallèle1'
 si: 'parallèle [ ?x1 ?y1 ] [ ?x2 ?y2 ] 
@@ -7487,7 +7486,7 @@ ajoute:liste:rep: [ ?xx2 ?yy2 ] ?x ?rep3 '
 alors: 'parallèles [ ?xx1 ?yy1 ] ?rep3 '.
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 6/28/2025 18:39:26'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 28/Jun/2025 18:39:26'!
 famille: e
 e initRegles .
 e lisRegle: 'parents'
@@ -7512,7 +7511,7 @@ ordonneMot:et:rep1:rep2: ?e1 ?e2  ?x1 ?x2'
 alors:'parents2 [ ?x1 ?x2 ] ?m  ?p'   
 com:'Les parents d''un enfant sont son père et sa mère'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/17/2025 22:15:14'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 17/Nov/2025 22:15:14'!
 figuresNonRectilignes: e
 	e
 		lisRegle: 'figuresNonRectilignes-AngleAuCentre'
@@ -8168,7 +8167,7 @@ different:de: [ ?p1 ?p2 ] [  ?x1 ?x2 ]'
 		com: 'Tangente en un point à un Cercle. '.
 	ExpertRegle figuresNonRectilignesSuite: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/6/2025 20:24:34'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 6/Nov/2025 20:24:34'!
 figuresNonRectilignesSuite: e
 	e
 		lisRegle: 'figuresNonRectilignes-couple'
@@ -8220,7 +8219,7 @@ different:de: ?p1 ?p2'
 		com: 'Le couple qui reiie deux points sur un cercle est une  corde de ce cercle'.
 	! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 3/18/2026 03:16:58'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 24/Apr/2025 17:14:05'!
 figuresRectilignes: e
 	e
 		lisRegle: 'égalitéParallèleParallèleDirection'
@@ -8890,59 +8889,29 @@ different:de: ?t1 ?t2
 		alors: 'isométrique ?t1 ?t2'
 		com:
 			'Deux triangles ayant respectivement leus côtés isométriques sont isométrique'.
-		
-			e
-		lisRegle: 'figuresRectilignes-triangleIsocèle01'
-		si:
-			'triangle ?t  [ côtés:  [ ?c1 ?c2 ?c3 ] 
-relation:et:nom:  ?c1 ?c2 isométrique'
-		alors: 'triangle ?t [ isocèle:  [ ?c1 ?c2 ] ]'
-		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'.
-			e
-		lisRegle: 'figuresRectilignes-triangleIsocèle02'
-		si:
-			'triangle ?t  [ côtés:  [ ?c1 ?c2 ?c3 ] 
-relation:et:nom:  ?c1 ?c3 isométrique'
-		alors: 'triangle ?t [ isocèle: [ ?c1 ?c3 ] ]'
-		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'.
-		
-			e
-		lisRegle: 'figuresRectilignes-triangleIsocèle03'
-		si:
-			'triangle ?t  [ côtés:  [ ?c1 ?c2 ?c3 ]  ] 
-relation:et:nom: ?c2 ?c3 isométrique'
-		alors: 'triangle ?t [ isocèle: [ ?c2 ?c3 ] ]'
-		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'.
-		
-		e
+	e
 		lisRegle: 'figuresRectilignes-triangleEquilatéral'
 		si:
-			'triangle ?t [ isocèle: [ ?s1 ?s2 ] ]
-triangle ?t [ isocèle: [ ?s2 ?s3 ] ]
+			'triangle ?t [  isocèle: [ sommet: ?s1 ] ]
+triangle ?t [  isocèle: [ sommet: ?s2 ] ]
 different:de: ?s1 ?s2
-different:de: ?s2 ?s3'
-
-		alors: 'triangle ?t [ équilatéral: [ [ ?s1 ?s2 ] [ ?s2 ?s3 ] ]'
-		com: 'Si un triangle a deux paires de côtés isocéles différentes, il est équilatéral,'.
-		e
-		lisRegle: 'figuresRectilignes-triangleEquilatéralHauteur'
+'
+		alors: 'triangle ?t [ équilatéral ]'
+		com: 'Si un triangle est isocèle en deux sommets, il est équilatéral.'.
+	e
+		lisRegle: 'figuresRectilignes-triangleEquilateral2'
 		si:
-			'intersection ?x ?s ?z
-segment ?z ?sz
-segmentSur ?s ?obj
-perpendiculaire ?obj ?z
-couple ?obj
-triangle ?t [ sommets: ?smts ]
-neContientPas:liste: ?x ?smts
-segment ?nom ?couple
-contient:liste: ?x ?couple'
-
-		alors: 'triangle ?t [ hauteur:  ?couple ]'
-		com: 'Une hauteur du triangle équilatéral,'.
-		
-		
-
-
+			'triangle ?t  [  côtés: [ [ ?x1 ?y1 ] [ ?x2 ?y2 ] [ ?x3 ?y3 ]  ] ]
+triangle ?t [ non_plat  ]
+ordonneMot:et:rep1:rep2:   ?x1 ?y1  ?xx1 ?yy1 
+ordonneMot:et:rep1:rep2:   ?x2 ?y2  ?xx2 ?yy2  
+ordonneMot:et:rep1:rep2:   ?x3 ?y3  ?xx3 ?yy3  
+relation:et:nom:  [ ?xx2 ?yy2 ] [ ?xx1 ?yy1 ]  isométrique
+relation:et:nom:  [ ?xx3 ?yy3 ] [ ?xx1 ?yy1 ]  isométrique
+'
+		alors: 'triangle ?t [ équilatéral ]'
+		com:
+			'Un triangle qui a les trois côtés isométriques est un triangle équilatéral.'.
 	"	e
 		lisRegle: 'figuresRectilignes-Hauteurs1'
 		si:
@@ -9188,7 +9157,7 @@ Si un triangle est isocèle en un sommet, les couples reliant ce sommet à chacu
 
 	ExpertRegle figuresRectilignesuite: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/8/2025 15:58:00'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 8/Dec/2025 15:58:00'!
 figuresRectilignesSuite2: e
 
 
@@ -9421,7 +9390,7 @@ relation:et:nom: ?x4 ?x2 parallèle'
 		com:
 			'Si des segments sont  perpendiculaires et respectivement parallèles à un autre segment, ces segments sont perpendiculaires.'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 5/3/2024 02:31'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 3/May/2024 02:31:00'!
 figuresRectilignesuite: e
 	e
 		lisRegle: 'figuresRectilignes-sommeAngles1'
@@ -10345,7 +10314,7 @@ enleverDe:el:rep: [ ?x2 ?y2 ]  ?x [ ?p2 ]'
 alors: 'adjacent  ?s1 ?s2 ?p1 ?x ?p2'.
 "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 12/2/2023 14:24'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 2/Dec/2023 14:24:00'!
 homothétie: e
 	"e
 		lisRegle: 'homothétie'
@@ -10419,7 +10388,7 @@ different:de: [ ?y3 ?O ]  [  ?y4 ?O ]'
 		com:
 			'Si de l''intersection de deux droites on a des segments reliant deux points de chaque droite, dans un même rapport, un des points est l''image par une homothétie ayant ce point pour centre et de rapport le quotient des mesures des segments correspondant pour chaque droite.'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/25/2025 11:27:03'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 25/Dec/2025 11:27:03'!
 interface: e 
 	| t2 |
 	e
@@ -10901,7 +10870,7 @@ ordonneMot:et:rep1:rep2:  ?perp1 ?dAB ?p1 ?p2'
 	
 	ExpertRegle interfacesuite: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 11/22/2023 18:37'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 22/Nov/2023 18:37:00'!
 interfaceElectricite: e
 	| t2 |
 	e
@@ -11006,170 +10975,7 @@ trie:rep: [ ?p1 ?p2 ?p3 ] ?rep'
 		alors: 'sorteDeCercle ?a'
 		com: 'Qualification d''une sorte de Cercle'.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 2/17/2026 20:10:51'!
-interfacesuite2:e
-|t2|
-
-
-t2 := e creeRegle: 'interface-Droite2-def2'.
-	t2 antecedents: 'DrGLine2ptsItem ?d ?a  ?b'.
-	t2 concl: 'droite ?a ?b'.
-	t2 com: 'Qualification d''une  droite'.
-	
-e
-		lisRegle: 'interface-droiteParents'
-		si: 'DrGLine2ptsItem ?d ?a  ?b'
-		alors: 'parents ?d  [ ?a  ?b ]'
-		com: 'les intersections de la figure'.
-		
-e
-		lisRegle: 'interface-droiteIntersectionParents1'
-		si: 'parents ?d1 ?par1
-dernier:rep: ?par1 ?dr
-parents ?d2 ?par2
-contient:el: ?par2 ?dr
-different:de: ?d1  ?d2
-'
-		alors: 'intersectionParent ?dr ?d1  ?d2'
-		com: 'les intersections de la figure'.
-		
-e
-		lisRegle: 'interface-droiteIntersectionParents2'
-		si: 'parents ?d1 ?par1
-premier:rep: ?par1 ?pr
-parents ?d2 ?par2
-contient:el: ?par2 ?pr
-different:de: ?d1  ?d2'
-		alors: 'intersectionParent ?pr ?d1  ?d2'
-		com: 'les intersections de la figure'.
-
-			
-
-
-e
-		lisRegle: 'interface-intersectionLignesConcourantesIntersection1'
-		si: 'intersectionPointCommun ?i ?d1 ?d2
-different:de: ?d1 ?d2'
- 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
-		com: 'Des lignes concourantes  et leur point d''intersection'.
-		
-e
-		lisRegle: 'interface-intersectionlignesConcourantesIntersection2'
-		si: 'intersection ?i ?d1 ?d2
-different:de: ?d1 ?d2'
- 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
-		com: 'Des lignes concourantes  et leur point d''intersection'.
-		
-e
-		lisRegle: 'interface-intersectionDroitesConcourantesIntersection3'
-		si: 'intersectionParent ?i ?d1 ?d2
-different:de: ?d1 ?d2'
- 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
-		com: 'Des droites concourantes  et leur point d''intersection'.
-
-	
-		
-		
-e
-		lisRegle: 'interface-intersections'
-		si: 'intersection ?i ?d1 ?d2'
-		alors: 'intersection ?i'
-		com: 'les intersections de la figure'.
-""e
-		lisRegle: 'interface-intersectionPointCommun'
-		si: 'pointSur ?d1 ?i 
-pointSur ?d2 ?i
-different:de: ?d1 ?d2
-ordonneMot:et:rep1:rep2:  ?d1 ?d2  ?d1 ?d2'
-		alors: 'intersectionPointCommun ?i ?d1 ?d2'
-		com: 'Une intersection de ligner qui ont un point en commun. '."
-"
-e
-		lisRegle: 'interface-valeur'
-		si: 'DrGValueValueItem  ?x1 ?x2'
-		alors: 'valeur ?x1 ?x2'
-		com: 'Une valeur affichée'.
-
-e    		lisRegle:'pointSur demi-droite'
-		si:' demi-droite ?dd ?p1 ?p2
-pointSur ?d ?p1
-pointSur ?d ?p2
-position ?p2 ?pos ?p1 ?d
-pointSur ?d ?x
-position ?x ?pos ?p1 ?d
-different:de: ?x ?p2'
-		alors:'pointSur ?dd ?x'
-		com:'Un point sur la moitié d''une droite qui est aussi sur une demi-droite'.
-
-e
-		lisRegle: 'interface-DroitePerpendiculaire-enP-def2'
-		si: 'DrGLinePerpendicularItem ?perp1 ?dAB ?C'
-		alors: 'perpendiculaire ?dAB'
-		com: 'Lecture d''un fait sur la figure définition'.
-	e
-		lisRegle: 'interface-DroitePerpendiculaire-SorteDedroite'
-		si: 'perpendiculaire ?d'
-		alors: 'sorteDeDroite  ?d'
-		com: 'Une perpendiculaire est une sorte de droite'.
-	e
-		lisRegle: 'interface-DroitePerpendiculaire-SorteDedroite2'
-		si: 'perpendiculaire ?perp ?d ?p'
-		alors: 'sorteDeDroite  ?perp ?d ?p'
-		com:
-			'Une perpendiculaire  à une droite par un point est une sorte de droite'.
-e
-		lisRegle: 'interface-sorteDeDroitePerpendiculairesOrdonnées'
-		si:
-			'DrGLinePerpendicularItem ?perp1 ?dAB ?C
-		ordonneMot:et:rep1:rep2  ?perp1 ?dAB  ?x ?y:'
-		alors: 'perpendiculaire ?x ?y'
-		com: 'Lecture d''un fait sur la figure'.
-		
-e lisRegle:'interface-pointNégatif'
-si: 'point ?x1 ?x2 ?x3
-mot:et:rep: ?x2 ?x3 ?x4'
-alors: 'point ?x1 ?x4'
-com: 'un point négatif avec le - collé au @ '.
-
-
-
-"e lisRegle: 'interface-demi-droiteVirtuelleAvant' 
-si:  'entre  ?O ?x2 ?x1 ?d
-mot:et:rep:  ?O ?x2 ?dd'
-alors: 'demi-droite ?dd ?O ?x2'
-com: 'L''origine de la droite est avant le parent'.	
-		
-e lisRegle: 'interface-demi-droiteVirtuelleAprès' 
-si:  'entre  ?O ?x1 ?x2 ?d
-mot:et:rep:  ?O ?x2 ?dd'
-alors: 'demi-droite ?dd ?O ?x2'
-com: 'L''origine de la droite est après le parent'.	
-
-e lisRegle: 'interface-demi-droiteVirtuelleAvant' 
-si:  'entre  ?O ?x2 ?x1 ?d
-mot:et:rep:  ?O ?x1 ?dd'
-alors: 'demi-droite ?dd ?O ?x2'
-com: 'L''origine de la droite est après le parent'.	
-
-e lisRegle: 'interface-demi-droiteVirtuelleAprèsPremier' 
-si:  'pointsSur ?d ?pts
-premier:rep: ?pts ?prem
-justeAprès:el:rep: ?pts ?prem ?suiv
-mot:et:rep:  ?prem ?suiv ?dd'
-alors: 'demi-droite ?dd ?prem ?suiv'
-com: 'L''origine de la droite est avant le parent'.	
-
-e lisRegle: 'interface-demi-droiteVirtuelleAvantDernier' 
-si:  'pointsSur ?d ?pts
-dernier:rep: ?pts ?der
-justeAvant:el:rep: ?pts ?der ?prec
-mot:et:rep:  ?der ?prec ?dd'
-alors: 'demi-droite ?dd ?der ?prec'
-com: 'L''origine de la droite est après le parent'.	
-"
-! !
-
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/12/2026 23:29:56'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/Jan/2026 23:29:56'!
 interfacesuite: e
 	| t2 |
 	e
@@ -11729,7 +11535,170 @@ com: 'Un point sur la droite qui après le parent d''une demi-droite est aussi s
 			
 ExpertRegle interfacesuite2: e.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/31/2024 23:28:48'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 17/Feb/2026 20:10:51'!
+interfacesuite2:e
+|t2|
+
+
+t2 := e creeRegle: 'interface-Droite2-def2'.
+	t2 antecedents: 'DrGLine2ptsItem ?d ?a  ?b'.
+	t2 concl: 'droite ?a ?b'.
+	t2 com: 'Qualification d''une  droite'.
+	
+e
+		lisRegle: 'interface-droiteParents'
+		si: 'DrGLine2ptsItem ?d ?a  ?b'
+		alors: 'parents ?d  [ ?a  ?b ]'
+		com: 'les intersections de la figure'.
+		
+e
+		lisRegle: 'interface-droiteIntersectionParents1'
+		si: 'parents ?d1 ?par1
+dernier:rep: ?par1 ?dr
+parents ?d2 ?par2
+contient:el: ?par2 ?dr
+different:de: ?d1  ?d2
+'
+		alors: 'intersectionParent ?dr ?d1  ?d2'
+		com: 'les intersections de la figure'.
+		
+e
+		lisRegle: 'interface-droiteIntersectionParents2'
+		si: 'parents ?d1 ?par1
+premier:rep: ?par1 ?pr
+parents ?d2 ?par2
+contient:el: ?par2 ?pr
+different:de: ?d1  ?d2'
+		alors: 'intersectionParent ?pr ?d1  ?d2'
+		com: 'les intersections de la figure'.
+
+			
+
+
+e
+		lisRegle: 'interface-intersectionLignesConcourantesIntersection1'
+		si: 'intersectionPointCommun ?i ?d1 ?d2
+different:de: ?d1 ?d2'
+ 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
+		com: 'Des lignes concourantes  et leur point d''intersection'.
+		
+e
+		lisRegle: 'interface-intersectionlignesConcourantesIntersection2'
+		si: 'intersection ?i ?d1 ?d2
+different:de: ?d1 ?d2'
+ 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
+		com: 'Des lignes concourantes  et leur point d''intersection'.
+		
+e
+		lisRegle: 'interface-intersectionDroitesConcourantesIntersection3'
+		si: 'intersectionParent ?i ?d1 ?d2
+different:de: ?d1 ?d2'
+ 		alors: 'relation ?d1 ?d2 [ concourante: ?i ]'
+		com: 'Des droites concourantes  et leur point d''intersection'.
+
+	
+		
+		
+e
+		lisRegle: 'interface-intersections'
+		si: 'intersection ?i ?d1 ?d2'
+		alors: 'intersection ?i'
+		com: 'les intersections de la figure'.
+""e
+		lisRegle: 'interface-intersectionPointCommun'
+		si: 'pointSur ?d1 ?i 
+pointSur ?d2 ?i
+different:de: ?d1 ?d2
+ordonneMot:et:rep1:rep2:  ?d1 ?d2  ?d1 ?d2'
+		alors: 'intersectionPointCommun ?i ?d1 ?d2'
+		com: 'Une intersection de ligner qui ont un point en commun. '."
+"
+e
+		lisRegle: 'interface-valeur'
+		si: 'DrGValueValueItem  ?x1 ?x2'
+		alors: 'valeur ?x1 ?x2'
+		com: 'Une valeur affichée'.
+
+e    		lisRegle:'pointSur demi-droite'
+		si:' demi-droite ?dd ?p1 ?p2
+pointSur ?d ?p1
+pointSur ?d ?p2
+position ?p2 ?pos ?p1 ?d
+pointSur ?d ?x
+position ?x ?pos ?p1 ?d
+different:de: ?x ?p2'
+		alors:'pointSur ?dd ?x'
+		com:'Un point sur la moitié d''une droite qui est aussi sur une demi-droite'.
+
+e
+		lisRegle: 'interface-DroitePerpendiculaire-enP-def2'
+		si: 'DrGLinePerpendicularItem ?perp1 ?dAB ?C'
+		alors: 'perpendiculaire ?dAB'
+		com: 'Lecture d''un fait sur la figure définition'.
+	e
+		lisRegle: 'interface-DroitePerpendiculaire-SorteDedroite'
+		si: 'perpendiculaire ?d'
+		alors: 'sorteDeDroite  ?d'
+		com: 'Une perpendiculaire est une sorte de droite'.
+	e
+		lisRegle: 'interface-DroitePerpendiculaire-SorteDedroite2'
+		si: 'perpendiculaire ?perp ?d ?p'
+		alors: 'sorteDeDroite  ?perp ?d ?p'
+		com:
+			'Une perpendiculaire  à une droite par un point est une sorte de droite'.
+e
+		lisRegle: 'interface-sorteDeDroitePerpendiculairesOrdonnées'
+		si:
+			'DrGLinePerpendicularItem ?perp1 ?dAB ?C
+		ordonneMot:et:rep1:rep2  ?perp1 ?dAB  ?x ?y:'
+		alors: 'perpendiculaire ?x ?y'
+		com: 'Lecture d''un fait sur la figure'.
+		
+e lisRegle:'interface-pointNégatif'
+si: 'point ?x1 ?x2 ?x3
+mot:et:rep: ?x2 ?x3 ?x4'
+alors: 'point ?x1 ?x4'
+com: 'un point négatif avec le - collé au @ '.
+
+
+
+"e lisRegle: 'interface-demi-droiteVirtuelleAvant' 
+si:  'entre  ?O ?x2 ?x1 ?d
+mot:et:rep:  ?O ?x2 ?dd'
+alors: 'demi-droite ?dd ?O ?x2'
+com: 'L''origine de la droite est avant le parent'.	
+		
+e lisRegle: 'interface-demi-droiteVirtuelleAprès' 
+si:  'entre  ?O ?x1 ?x2 ?d
+mot:et:rep:  ?O ?x2 ?dd'
+alors: 'demi-droite ?dd ?O ?x2'
+com: 'L''origine de la droite est après le parent'.	
+
+e lisRegle: 'interface-demi-droiteVirtuelleAvant' 
+si:  'entre  ?O ?x2 ?x1 ?d
+mot:et:rep:  ?O ?x1 ?dd'
+alors: 'demi-droite ?dd ?O ?x2'
+com: 'L''origine de la droite est après le parent'.	
+
+e lisRegle: 'interface-demi-droiteVirtuelleAprèsPremier' 
+si:  'pointsSur ?d ?pts
+premier:rep: ?pts ?prem
+justeAprès:el:rep: ?pts ?prem ?suiv
+mot:et:rep:  ?prem ?suiv ?dd'
+alors: 'demi-droite ?dd ?prem ?suiv'
+com: 'L''origine de la droite est avant le parent'.	
+
+e lisRegle: 'interface-demi-droiteVirtuelleAvantDernier' 
+si:  'pointsSur ?d ?pts
+dernier:rep: ?pts ?der
+justeAvant:el:rep: ?pts ?der ?prec
+mot:et:rep:  ?der ?prec ?dd'
+alors: 'demi-droite ?dd ?der ?prec'
+com: 'L''origine de la droite est après le parent'.	
+"
+! !
+
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 31/Oct/2024 23:28:48'!
 isometrieOld: e
 	| r |
 	"Angles"
@@ -12132,7 +12101,7 @@ ordonneMot:et:rep1:rep2: [  ?b1 ?c1 ?a1  ]    [ ?b2 ?c2 ?a2  ] ?ang1 ?ang2
 different:de: ?t1 ?t2'
 		alors: 'isométrique [ ?ang1 ] [  ?ang2 ]'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 2/8/2026 19:48:24'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 8/Feb/2026 19:48:24'!
 isometrieRegles: e
 	| r |
 	"Angles"
@@ -12547,7 +12516,7 @@ different:de: ?t1 ?t2'
 		
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/25/2025 22:13:34'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 25/Oct/2025 22:13:34'!
 isometrieReglesSuite: e 
 		e
 		lisRegle: 'figuresNonRectilignes-isométrieSegment'
@@ -12718,7 +12687,7 @@ different:de: ?x1 ?x2'
 		com:
 			'si un point est le milieu de deux points,  les couples qui le reiie à chaque point sont isométriques.'.	! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 11/20/2023 16:53'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 20/Nov/2023 16:53:00'!
 mesure: e
 	e
 		lisRegle: 'mesure-trianglePérimètreAffichemesure'
@@ -13195,7 +13164,7 @@ different:de: ?x ?y'
 		alors: 'égal ?x ?y'
 		com: 'Transitivité de la relation égal.'."! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/1/2024 02:16:48'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/Oct/2024 02:16:48'!
 morpion: e
 	"jeu du morpion"
 
@@ -14055,7 +14024,7 @@ ligne h3 ?a - -'
 
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 4/2/2019 00:33'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 2/Apr/2019 00:33:00'!
 morpionInterface: e
 	
 e lisRegle:'interface1-1'
@@ -14082,7 +14051,7 @@ alors:'joueur ?j'.
 
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/12/2026 13:03:47'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/Jan/2026 13:03:47'!
 objetsSur: e
 	| i |
 	"e lisRegle: 'interface-Polygone6' 
@@ -14973,14 +14942,14 @@ inférieur:à: ?rep ?rep2
 retireFait: pointsSur ?x1 ?x2'
 alors: 'pointsSur ?x1 ?x2 retiré'. "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 3/11/2026 03:42:29'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 20/Dec/2023 17:27:00'!
 ohmRegles: e
 	e
 		lisRegle: 'Ohm-Regles-texte'
 		si: 'DrGTextItem ?x ?y ?z ?v ?u'
 		alors: '?y ?z  ?v ?u'
 		com: 'lecture de données texte.'.
-	e
+	"e
 		lisRegle: 'valeurResistance'
 		si: 'DrGItem ?nom resistance ?n ?v'
 		alors: 'resistance ?n ?v Ohm-s'.
@@ -14991,7 +14960,7 @@ ohmRegles: e
 	e
 		lisRegle: 'valeurTension'
 		si: 'DrGValueValueItem ?nom tension  ?n ?v'
-		alors: 'tension ?n ?v V'.
+		alors: 'tension ?n ?v V'."
 	e
 		lisRegle: 'Ohm-ResistanceEqSerie'
 		si:
@@ -15014,8 +14983,7 @@ courant ?r1 ?i A'
 		lisRegle: 'Ohm-CourantSerie2'
 		si:
 			'serie ?r1 ?r2
-courant ?r2 ?i A
-different:de: 0 ?i'
+courant ?r2 ?i A'
 		alors: 'courant ?r1 ?i A'
 		com:
 			'Dans des résistance en série, le courant  est le même pour  chaque résistance.'.
@@ -15023,8 +14991,7 @@ different:de: 0 ?i'
 		lisRegle: 'Ohm-CourantSerie3'
 		si:
 			'serie ?r1 ?r2
-courant ?r2 ?i A
-different:de: 0 ?i'
+courant ?r2 ?i A'
 		alors: 'courant [ serie ?r1 ?r2 ] ?i A'
 		com:
 			'Dans un circuit de deux résistance en série, le courant  est le même que pour chaque résistance.'.
@@ -15061,7 +15028,8 @@ resistance ?R2 ?r2 ?u
 quotient:et:rep: 1 ?r1 ?q1
 quotient:et:rep: 1 ?r2 ?q2
 somme:et:rep: ?q1 ?q2 ?q
-quotient:et:rep: 1 ?q ?req'
+quotient:et:rep: 1 ?q ?req
+~ resistance [ parallele ?R1 ?R2 ] ?xreq Ohm-s'
 		alors: 'resistance [ parallele ?R1 ?R2 ] ?req Ohm-s'
 		com:
 			'La résistance équvalente au circuit de deux résistances en parallèle est l''inverse de la somme des inverses des résistances.'.
@@ -15086,7 +15054,8 @@ somme:et:rep: ?i1 ?i2 ?i'
 		si:
 			'courant [ parallele ?r1  ?r2 ] ?i A
 courant ?r2 ?i2 A
-difference:et:rep: ?i ?i2 ?i1'
+difference:et:rep: ?i ?i2 ?i1
+~ courant ?r1 ?xi1 A'
 		alors: 'courant ?r1 ?i1 A'
 		com:
 			'Si l''on connait le courant dans une résistance, et  le courant dans un circuit de deux résistances en parallèles
@@ -15097,7 +15066,7 @@ difference:et:rep: ?i ?i2 ?i1'
 			'courant [ parallele ?r1  ?r2 ] ?i A
 courant ?r1 ?i1 A
 difference:et:rep: ?i ?i1 ?i2
-different:de: 0 ?i2'
+~ courant ?r2 ?xi2 A'
 		alors: 'courant ?r2 ?i2 A'
 		com:
 			'Si l''on connait le courant dans une résistance, et  le courant dans un circuit de deux résistances en parallèles
@@ -15107,7 +15076,8 @@ different:de: 0 ?i2'
 		si:
 			'tension [ serie ?r1 ?r2 ] ?u  V
 tension ?r2 ?u2 V
-difference:et:rep: ?u ?u2 ?u1'
+difference:et:rep: ?u ?u2 ?u1
+~ tension ?r1 ?xu1 V'
 		alors: 'tension ?r1 ?u1 V'
 		com:
 			'Si l''on connait la tension dans une résistance, et  la tension du circuit de deux résistances en série
@@ -15124,7 +15094,8 @@ on peut affirmer que les résistances sont en série.'.
 		si:
 			'tension [ serie ?r1 ?r2 ] ?u  V
 tension ?r1 ?u1 V
-difference:et:rep: ?u ?u1 ?u2'
+difference:et:rep: ?u ?u1 ?u2
+~ tension ?r2 ?xu2 V'
 		alors: 'tension ?r2 ?u2 V'
 		com:
 			'Si l''on connait la tension dans une résistance, et  la tension du circuit de deux résistances en série,
@@ -15135,7 +15106,8 @@ difference:et:rep: ?u ?u1 ?u2'
 			'serie ?r1 ?r2
 tension ?r1 ?u1 V
 tension ?r2 ?u2 V
-somme:et:rep: ?u1 ?u2 ?u'
+somme:et:rep: ?u1 ?u2 ?u
+~ tension [ serie ?r1 ?r2 ] ?xu  V'
 		alors: 'tension [ serie ?r1 ?r2 ] ?u  V'
 		com:
 			'La tension d''un circuit de deux résistances en série est la somme des tensions des résistances.'.
@@ -15143,35 +15115,40 @@ somme:et:rep: ?u1 ?u2 ?u'
 		lisRegle: 'Ohm-TensionParallele1'
 		si:
 			'parallele ?r1 ?r2
-tension ?r2 ?u V'
+tension ?r2 ?u V
+~ tension ?r1 ?xu V'
 		alors: 'tension ?r1 ?u V'
 		com: ' Des résistances  en parallèle ont la même  tension.'.
 	e
 		lisRegle: 'Ohm-TensionParallele2'
 		si:
 			'parallele ?r1 ?r2
-tension ?r1 ?u V'
+tension ?r1 ?u V
+~ tension ?r2 ?xu V'
 		alors: 'tension ?r2 ?u V'
 		com: 'Des résistances en parallèle ont la même tension.'.
 	e
 		lisRegle: 'Ohm-TensionParallele3'
 		si:
 			'parallele ?r1 ?r2
-tension ?r1 ?u V'
+tension ?r1 ?u V
+~ tension [ parallele ?r1 ?r2  ] ?xu V'
 		alors: 'tension [ parallele ?r1 ?r2  ] ?u V'
 		com:
 			'Dans un circuit de résistances en parallèle, le circuit a la même tension que chaque résistance.'.
-	"e
+	e
 		lisRegle: 'Ohm-TensionParallele5'
 		si:
-			'tension [ parallele ?r1 ?r2  ] ?u V'
+			'tension [ parallele ?r1 ?r2  ] ?u V
+~ tension ?r1 ?xu V'
 		alors: 'tension ?r1 ?u V'
 		com:
-			'Dans un circuit de résistances en parallèle, chaque résistance a la même tension que le circuit.'."
+			'Dans un circuit de résistances en parallèle, chaque résistance a la même tension que le circuit.'.
 	e
 		lisRegle: 'Ohm-TensionParallele6'
 		si:
-			'tension [ parallele ?r1 ?r2  ] ?u V'
+			'tension [ parallele ?r1 ?r2  ] ?u V
+~ tension ?r2 ?xu V'
 		alors: 'tension ?r2 ?u V'
 		com:
 			'Dans un circuit de résistances en parallèle, chaque résistance a la même tension que le circuit.'.
@@ -15179,7 +15156,8 @@ tension ?r1 ?u V'
 		lisRegle: 'Ohm-TensionParallele4'
 		si:
 			'parallele ?r1 ?r2
-tension ?r2 ?u V'
+tension ?r2 ?u V
+~ tension [ parallele ?r1 ?r2  ] ?xu V'
 		alors: 'tension [ parallele ?r1 ?r2  ] ?u V'
 		com:
 			'Dans un circuit de résistances en parallèle, le circuit a la même tension que chaque résistance.'.
@@ -15228,7 +15206,8 @@ tension ?r2 ?u V'
 		si:
 			'courant ?r1 ?i A
 tension ?r1 ?u V
-quotient:et:rep:   ?u ?i ?r'
+quotient:et:rep:   ?u ?i ?r
+~ resistance ?r1 ?xr Ohm-s'
 		alors: 'resistance ?r1 ?r Ohm-s'
 		com: 'loi d''Ohm : R = U / I'.
 	e
@@ -15236,7 +15215,8 @@ quotient:et:rep:   ?u ?i ?r'
 		si:
 			'resistance ?r1 ?r Ohm-s
 tension ?r1 ?u V
-quotient:et:rep:   ?u ?r ?i'
+quotient:et:rep:   ?u ?r ?i
+~ courant ?r1 ?xi A'
 		alors: 'courant ?r1 ?i A'
 		com: 'loi d''Ohm : I = U / R'.
 	e
@@ -15244,11 +15224,12 @@ quotient:et:rep:   ?u ?r ?i'
 		si:
 			'resistance ?r1 ?r Ohm-s
 courant ?r1 ?i A
-produit:et:rep:   ?i ?r ?u'
+produit:et:rep:   ?i ?r ?u
+~ tension ?r1 ?u V'
 		alors: 'tension ?r1 ?u V'
 		com: 'loi d''Ohm : U = R * I'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 5/6/2025 01:04:24'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 6/May/2025 01:04:24'!
 paralPerpRegles: e
 	"e
 		lisRegle: 'paralPerp-perpendiculaireSym'
@@ -15899,7 +15880,7 @@ different:de: ?i1 ?i2'
 		com: 'Des segments de même directions  sont parallèles.'
 "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 3/17/2026 19:25:10'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 18/Feb/2026 01:50:30'!
 polygones: e
 
 	e lisRegle: 'polygones-lignePolygonaleFermée2'
@@ -15971,32 +15952,7 @@ nomPolygone:rep: ?t ?res'
 taille:rep: ?s ?t
 nomPolygone:rep: ?t ?res'
 alors:'polygone ?nom [ nomGrec: ?res ]'
-
-
 		com: 'Le  nom grec du polygone'.
-		
-		e
-		lisRegle: 'PolygoneTriangle'
-		si:
-			'polygone ?poly  [ nomGrec: Trigone ]'
-		alors: 'polygone ?poly [ nom: Triangle ]' 
-		com: 'Nom courant de la  figure'.
-		
-			e
-		lisRegle: 'PolygoneTriangle'
-		si:
-			'polygone  ?poly ?prop'
-		alors: 'triangle ?poly ?prop'
-		com: 'transfert propriétè'.
-		
-		
-		e
-		lisRegle: 'PolygoneQuadrilatère'
-		si:
-			'polygone ?poly  [ nomGrec: Tetragone ] '
-		alors: 'polygone ?nom [ nom: quadrilatère ]' 
-		com: 'Nom courant de la  figure'.
-		
 		
 e lisRegle: 'lignePolygonale-côtés' 
 si:  'lignePolygonaleSegments  ?x1'
@@ -16680,10 +16636,19 @@ contient:el: ?cot  [  ?p1 ?p2  ]
 mot:et:rep: ?p1 ?p2 ?nom0 
 mot:et:rep: s ?nom0 ?nom'
 		alors: 'segment ?nom [  ?p1 ?p2 ]'.
-"	
-		! !
+	e
+		lisRegle: 'PolygoneTriangle'
+		si:
+			'lignePolygonaleFermée ?l2
+premiers:rep: ?l2 ?som
+taille:rep: ?l2 ?x
+égal:à: ?x 3
+nomPolygone:rep: ?x ?nom
+créeNom:rep: ?som ?nomPoly
+'
+		alors: '?nomPoly  [ côtés:  ?l2  ]' "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/29/2025 15:26:56'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 29/Dec/2025 15:26:56'!
 relations: e
 	e
 		lisRegle: 'relations-RelationExplicite'
@@ -16745,7 +16710,7 @@ e
 relationCrée:et:nom: [ ?b ?a ] [ ?c ?d  ] isométrique'
 		alors: 'relation isométrique  [ ?b ?a ] [ ?c ?d  ] créée' "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 9/27/2014 22:51'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 27/Sep/2014 22:51:00'!
 representant: e
 e lisRegle: 'triangle' 
 si: 'segment ?s1 ?x ?y
@@ -16777,7 +16742,7 @@ alors:
 
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 11/20/2023 20:43'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 20/Nov/2023 20:43:00'!
 symetrieAxiale: e
 	e
 		lisRegle: 'symetrieAxiale-reflexionPoint'
@@ -16838,7 +16803,7 @@ different:de: ?x ?y'
 		com:
 			'les segment reliant un point et son image par symétrie axiale sont parallèles'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 10/15/2021 12:35'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 15/Oct/2021 12:35:00'!
 symetrieCentrale: e
 e lisRegle: 'symetrieCentrale-Arc' 
 si:  'symetrieCentrale ?Arc2 ?Arc1 ?csym
@@ -16908,7 +16873,7 @@ symetrieCentrale ?x2 ?3 ?centre2'
 alors:  'parallele [ ?x1  ?x2 ] [  ?centre1 ?centre2 ]'
 com: ''.! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/31/2024 23:19:21'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 31/Oct/2024 23:19:21'!
 translations: e
 	e
 		lisRegle: 'translations-PointSur'
@@ -16997,7 +16962,7 @@ translation point ?p2 ?p1o ?v2
 translation point ?p3  ?p2 ?v2'
 		alors: 'translation point ?p3 ?p1 ?v1'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 2/24/2020 13:08'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'DrGeoUser 24/Feb/2020 13:08:00'!
 varignon2: e
 
 	"comment stating purpose of message"
@@ -17030,7 +16995,7 @@ segment ?s4 [ ?C ?A ]
 segment ?s3 [ ?j ?i ]' 
 	alors: 'parallele ?s3 ?s4'.! !
 
-!ExpertRegle class methodsFor: 'rules'!
+!ExpertRegle class methodsFor: 'rules' stamp: ''!
 varignonRegles: arg1
 	| temp2 |
 	temp2 := arg1 creeRegle: 'VarignonAdjacent1'.
