@@ -43,12 +43,6 @@ tèlècharger depuis ce site les fichiers ci-dessous, ouvrir  CUIS DrGeo, drague
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
 
-- Pour un premier chargement, il faut ajouter dans **Kernel/Object/** ***DrGeo** la méthode
-  
-  **isListe**
-  
-  **^false**
-
 Remarque:
   - avec Windows si un fichier a déjà été chargé widows ajoute un nombre entre parenthèses pour distinguer le nouveau fichier, il faut enlever ce nombre et ses parenthèses du nom de fichier avant de le lâcher dans DrGeo sinon DrGeo ne le reconnais pas comme un fichier package.
 
@@ -159,12 +153,6 @@ Download the files below from this site, open CUIS DrGeo, drag these files and d
 - DrGeo.pck.st
 - DrGeoFrench.pck.st
 - Myexpert.pck.st
-
-- For the first load, you must add the method in **Kernel/Object/** ***DrGeo**
-  
-  **isListe**
-  
-  **^false**
 
 Note:
   - with Windows if a file has already been loaded, Windows adds a number in parentheses to distinguish the new file, you must remove this number and its parentheses from the filename before dropping it into DrGeo, otherwise DrGeo will not recognize it as a package file.
