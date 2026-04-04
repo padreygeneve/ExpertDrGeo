@@ -15,7 +15,7 @@ Des exemples simples avec peu de règles.
   - Jeu du morpion.
   - Carré magique.
 
-Un trutoriel permet d'apprendre à traiter son propre sujet en créant ses propres règles.
+Un tutoriel permet d'apprendre à traiter son propre sujet en créant ses propres règles.
 
 Dans le cadre d'un cours d'informatique il permet d'illustrer la voie logique de l'AI, opposée à la voie du neuro-mimétisme.
 
