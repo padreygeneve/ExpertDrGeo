@@ -1,4 +1,4 @@
-'From Cuis7.1 [latest update: #6452] on 30 August 2026 at 12:10:48 am'!
+'From Cuis7.1 [latest update: #6452] on 17 October 2026 at 12:42:17 pm'!
 'Description '!
 !provides: 'DrGeo' 1 753!
 !requires: 'Gettext' 1 17 nil!
@@ -30201,24 +30201,27 @@ expertInitRules
 	Règles initialisées'.
 ! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 15:23:44'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/13/2026 21:54:28'!
 expertInspect
-|f  e|
+|f  e t|
 
 f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
 f   affichage ifNil:[ self expertDisplayTutor: 'Initialisation de l''affichage.' ].
-self expertDisplayTutor: 'Examen de la figure.
-'.
+t := Time now.
+self expertDisplayTutor: ('Examen de la figure. 
+	'  ,t asString ) .
 f affichage ifNotNil:[
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
 
-self   expertDisplayModèles.]! !
+self   expertDisplayModèles.].
+self expertDisplayTutor: ('durée:  
+	'  ,(Time now  -t ) asString ).! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 18:21:28'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/13/2026 21:18:14'!
 expertInspect: titre
 |f  e|
 "self halt."
@@ -30226,27 +30229,29 @@ f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
 "f  exert affichage ifNil:[ self expertDisplayTutor: 'Initialisation de l''affichage.' ]."
-self expertDisplayTutor:titre string:'Examen de la figure.
-'.
+self expertDisplayTutor:titre string:'Examen de la figure test'..
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
 self   expertDisplayModèles.! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 18:21:04'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/13/2026 21:19:06'!
 expertInspect: titre style: st
-|f  e|
+|f  e t|
 "self halt."
 f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
-self expertDisplayTutor:titre string:'Examen de la figure.' style: st.
+t := Time now.
+self expertDisplayTutor:titre string: ('Examen de la figure. test
+	'  ,t asString ) style: st.
 f affichage ifNotNil:[
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
-
-self   expertDisplayModèles.]! !
+self expertDisplayTutor:titre string:'Durée: ',(Time now -t ) asString style: st.
+self   expertDisplayModèles.]
+! !
 
 !DrGeo methodsFor: 'callback expert' stamp: 'drgeo 11/5/2025 10:56:51'!
 expertLoadFactsFigure
