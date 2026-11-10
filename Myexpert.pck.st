@@ -1,4 +1,4 @@
-'From Cuis7.1 [latest update: #6452] on 17 October 2026 at 4:14:28 pm'!
+'From Cuis7.1 [latest update: #6452] on 9 November 2026 at 10:11:36 pm'!
 'Description '!
 !provides: 'Myexpert' 1 25!
 SystemOrganization addCategory: #Myexpert!
@@ -159,10 +159,11 @@ rel isEmpty ifTrue:[ ^ rel].
 ^rel asArray first.
 ! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'drgeo 12/23/2025 01:55:32'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'drgeo 10/19/2026 16:50:50'!
 relationCrée: obj1 et: obj2 nom: n
 	| rel1 rel2 rel e  nom |
 	e := self expert.
+
 	nom:= n asSymbol.
 	rel := e relationsAt: nom.
 	rel1 := rel detect: [ :x | x includes: obj1 ] ifNone: [ nil ].
@@ -6321,6 +6322,981 @@ EuclideMinimum: e
 	ExpertRegle figuresNonRectilignes: e.
 	^ 'Règles EuclideMinimum: chargées'.! !
 
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/19/2026 22:34:16'!
+Ftransfertpolygones: e
+	e lisRegle: 'polygones-lignePolygonaleFermée'
+		si: 'lignePolygonaleCouple ?nom ?lp
+premier:rep: ?lp ?prem
+dernier:rep: ?lp ?der
+premier:rep: ?prem ?debut
+dernier:rep: ?der ?fin
+égal:à: ?debut ?fin'
+	alors: 'lignePolygonaleFermée ?nom ?lp'
+	com:  'Une ligne polygonale est fermée si sont premier point est le même que le dernier'.
+	
+		e lisRegle: 'polygones-lignePolygonaleFerméePartielle'
+		si: 'lignePolygonale0  ?x1  
+dernier:rep: ?x1 ?dr
+dernier:rep: ?dr ?dd
+premier:rep: ?x1 ?pr
+premier:rep: ?pr ?pp
+ajoute:liste:rep:   [ ?dd ?pp ]  ?x1 ?l
+different:de: ?dd ?pp'
+	alors: 'lignePolygonaleFermée ?l'
+	com:  'Une ligne polygonale est fermée si sont premier point est le même que le dernier'.
+	
+	e lisRegle: 'polygones-lignePolygonaleSegmentsFermée'
+		si: 'lignePolygonaleSegments  ?x1 retiré
+premier:rep: ?x1 ?prem
+dernier:rep: ?x1 ?der
+segment ?prem [ ?px ?py ]
+segment ?der [ ?dx ?dy ]
+égaux:et: ?px ?dy'
+	alors: 'lignePolygonaleFerméeSegments ?x1'
+	com:  'Une ligne polygonale est fermée si sont premier point est le même que le dernier'.
+
+	"
+	e lisRegle: 'polygones-lignePolygonaleSegmentsPartielles'
+		si: 'lignePolygonale  ?x1 ?retire'
+
+	alors: 'lignePolygonalePartielle ?x1'
+	com:  'Une ligne polygonale qui n''est pas la plus grande (suite de segmenta ou couples) '."
+
+	
+	"e lisRegle: 'polygones-Sommets0' 
+si:  'lignePolygonaleFermée ?lf 
+saufPremiers:rep: ?lf ?lsp
+premiers:rans ?lsp ?lsd
+dernier:rep: ?lsd ?dder
+ajouteDernier:el:rep: ?lso ?dder ?res
+saufDernier:rep: ?res  ?res1
+saufDernier:rep: ?res1  ?res2
+dernier:rep: ?res ?fin2
+ajouteDernier:el:rep: ?res2 ?fin2 ?res3
+'
+alors:  'sommets ?lf ?res3'
+com:  'Les points de la lignePolygonale sont les sommets du polygone formé par cette ligne'."
+
+e lisRegle: 'polygone-CouplesInit'
+ si:  'lignePolygonaleSegments  ?x1'
+alors: 'pourTousInit Couples ?x1 [ ]' 
+com: 'lance le calcul des couples'.
+
+e lisRegle: 'polygone-PérimètreInit'
+ si:  'lignePolygonaleSegments  ?x1'
+alors: 'pourTousInit périmètre ?x1 [ ]' 
+com: 'lance le calcul des couples'.
+
+e lisRegle: 'polygone-Couples'
+ si:  'pourTous0 Couples [ ]  ?x3
+premiers:rep: ?x3 ?prems
+créeNom:rep: ?prems ?res'
+alors: 'lignePolygonaleCouple ?res ?x3' 
+com: 'les couples de la lignePolygonale'.
+
+e lisRegle: 'polygone-Périmètre'
+ si:  'pourTous0 périmètre [ ]  ?x3
+somme:rep: ?x3 ?périm
+polygone ?pol'
+alors: 'périmètre ?pol ?périm'
+com: 'le périmètre du polygone'.
+
+
+e lisRegle: 'polygones-pourTousInit'
+ si:  'pourTousInit Couples  ?l ?res
+premier:rep: ?l ?seg
+segment ?seg ?couple
+ajouteDernierUnique:el:rep: ?res  ?couple ?res2
+saufPremier:rep: ?l ?l2'
+alors:  'pourTous0 Couples ?l2  ?res2'
+com: 'initialise un traitement pourTous'.
+
+e lisRegle: 'périmètre-pourTousInit'
+ si:  'pourTousInit périmètre  ?l ?res
+premier:rep: ?l ?seg
+segment ?seg ?couple
+mesure ?couple ?val
+ajouteDernierUnique:el:rep: ?res  ?val ?res2
+saufPremier:rep: ?l ?l2'
+alors:  'pourTous0 périmètre ?l2  ?res2'
+com: 'initialise un traitement pourTous'.
+
+e lisRegle: 'polygones-pourTousSuite' 
+si:  'pourTous0 Couples  ?l ?res
+premier:rep: ?l ?prem
+segment ?prem ?couple
+ajouteDernierUnique:el:rep: ?res ?couple ?res2
+saufPremier:rep: ?l ?suite
+retireFait: pourTous0 Couples  ?l ?res'
+alors:  'pourTous0 Couples ?suite  ?res2'
+com: 'execute une même action sur les éléments d''une liste'.
+
+e lisRegle: 'périmètre-pourTousSuite' 
+si:  'pourTous0 périmètre  ?l ?res
+premier:rep: ?l ?prem
+segment ?prem ?couple
+mesure ?couple ?val
+ajouteDernierUnique:el:rep: ?res ?val ?res2
+saufPremier:rep: ?l ?suiteFsommets
+retireFait: pourTous0 périmètre  ?l ?res'
+alors:  'pourTous0 périmètre ?suite  ?res2'
+com: 'execute une même action sur les éléments d''une liste'.
+
+
+e lisRegle: 'lignePolygonale-sommets' 
+si:   'lignePolygonaleCouple ?nom  ?x1
+premiers:rep: ?x1 ?prems
+dernier:rep: ?x1 ?der
+dernier:rep: ?der ?dder
+ajouteDernierUnique:el:rep: ?prems ?dder ?som'
+alors:  'lignePolygonaleSommets ?nom ?som'
+com:  'Les sommets d''une ligne polygonale'.		
+
+
+e lisRegle: 'polygones-lignePolygonaleFerméeSommets' 
+si:  'lignePolygonaleFermée  ?x1 ?x2
+premiers:rep: ?x2 ?som'
+alors:  'polygone ?x1 [ sommets:  ?som ]'
+com:  'Les point de la lignePolygonale sont les sommets
+du polygone formé par cette ligne'.
+
+e lisRegle: 'polygones-lignePolygonaleFerméeSommets2' 
+si:  'lignePolygonalePartielleFermée  ?x1
+premiers:rep: ?x2 ?som'
+alors:  'polygone ?x1 [ sommets:  ?som ]'
+com:  'Les point de la lignePolygonale sont les sommets
+du polygone formé par cette ligne'.
+
+e lisRegle: 'polygones-polygoneLlgnePolygonaleCouples' 
+si:  'lignePolygonaleFermée  ?nom ?x0
+lignePolygonaleCouple  ?nom ?x1'
+alors:  'polygone ?nom [ couples:  ?x1 ]'
+com:  'Les côtés du polygone comme couples'.
+
+e lisRegle: 'polygones-lignePolygonaleFerméeSCréenom' 
+si:  'lignePolygonaleSommets ?x1
+créeNom:rep: ?x1 ?res'
+alors:  'ligne ?res ?x1'
+com:  'Le nom d''une ligne polygonale fermée'.
+
+e lisRegle: 'polygones-lignePolygonaleFerméeSegmentsCréenom' 
+si:  ' lignePolygonaleFerméeSegments [ ?x1 ?x2 ?x3 ?x4 ]
+segment ?x1 ?s1
+segment ?x2 ?s2
+segment ?x3 ?s3
+segment ?x4 ?s4
+premiers:rep: [ ?s1 ?s2 ?s3 ?s4 ] ?prems
+créeNom:rep: ?prems ?res'
+alors:  'ligneFerméesSegments ?res [ ?x1 ?x2 ?x3 ?x4 ]'
+com:  'Le nom d''une ligne polygonale'.
+
+
+
+
+e lisRegle: 'polygones-lignePolygonaleFerméeNom' 
+si:  'lignePolygonaleFermée  ?x0
+ligne ?res   ?l' 
+alors:  'polygone ?res  ?x0'
+com:  'Le nom du polygone'.
+	
+	
+	e lisRegle: 'polygones-lignePolygonaleFerméeNom2' 
+si:  'lignePolygonaleFermée  ?x0
+premiers:rep: ?x0 ?prems
+créeNom:rep: ?prems ?res'
+alors:  'polygone ?res [ couples:  ?x0 ]'
+com:  'Les côtés du polygone comme couples'.
+e
+		lisRegle: 'polygones-NomGrecPolygoneRégulier'
+		si:'lignePolygonaleFermée ?nom ?x0
+polygoneRégulier ?x1  [ sommets: ?x2 ] ] 
+taille:rep: ?xparf1 ?t
+nomPolygone:rep: ?t ?res'
+		alors: 'polygone  ?nom ?res' 
+		com: 'Un nom pour le polygone'.
+	
+	e
+		lisRegle: 'polygones-NomGrecPolygone'
+		si:'polygone ?nom [ sommets: ?s ]
+taille:rep: ?s ?t
+nomPolygone:rep: ?t ?res'
+alors:'polygone ?nom [ nomGrec: ?res ]'
+
+
+		com: 'Le  nom grec du polygone'.
+		
+		e
+		lisRegle: 'PolygoneTriangle'
+		si:
+			'polygone ?poly [ nomGrec: Trigone ]'  
+		alors: 'polygone ?poly [ nom: Triangle ]' 
+		com: 'Nom courant de la  figure'.
+		e
+		lisRegle: 'FigureeMinimum'
+		si:
+			'polygone  ?x1 [ sommets: ?x2 ]
+minimum:rep: ?x2 ?min
+premier:rep: ?x2 ?prem
+égal:à: ?prem ?min'
+		alors: 'figureMinimum ?x'
+		com: 'Polygone commençant par  le point minimum'.
+			
+		
+		
+	
+	e
+		lisRegle: 'TriangleTransfert'
+		si:
+			'figureMinimum ?poly
+polygone ?poly ?prop'
+		alors: 'figure ?poly   ?prop'
+		com: 'transfert propriété'.
+		
+		
+			e
+		lisRegle: 'TriangleNonPlat'
+		si:
+			'triangle ?poly   ?prop
+triangle ?poly [ non_plat ]			'
+		alors: 'triangleNonPlat ?poly   ?prop'
+		com: 'transfert propriétè si le triangle est non_plat'.
+		
+			e
+		lisRegle: 'QuadrilatèreTransfert'
+		si:
+			'polygone  ?poly ?prop
+polygone ?poly [ nom: Quadrilatère ]'
+		alors: 'quadrilatère ?poly   ?prop'
+		com: 'transfert propriétè'.
+		
+		
+		e
+		lisRegle: 'PolygoneQuadrilatère'
+		si:
+			'lignePolygonaleFermée  ?poly ?x0
+polygone ?poly  [ nomGrec: Tetragone ] '
+		alors: 'polygone ?poly [ nom: Quadrilatère ]' 
+		com: 'Nom courant de la  figure'.
+		
+		
+e lisRegle: 'polygone-lignePolygonaleSegments' 
+si:  'lignePolygonale ?x1
+min:rep: ?x1 ?res
+premier:rep: ?x1 ?prem
+égaux:et: ?prem ?res'
+alors:  'lignePolygonaleSegments  ?x1'
+com:  'Les côtés d''une ligne polygonale'.		
+
+
+
+"e lisRegle: 'lignePolygonale-couples2' 
+si:  'lignePolygonaleCouples  ?x1
+premiers:rep: ?x1 ?prems
+min:rep: ?prems ?res
+premier:rep: ?prems ?f
+égaux:et: ?f ?res'
+alors:  'lignePolygonaleOuverte  [ couples: ?x1 ]'
+com:  'Les sommets d''une ligne polygonale ouverte'.		"
+		
+		
+e lisRegle: 'polygones-côtés' 
+si:  'polygone ?nom  [ couples:  ?x2 ] '
+alors:  'polygone ?nom [ côtés: ?x2 ]'
+com:  'les côtés du polygone'.
+
+
+e lisRegle: 'polygones-sommets2' 
+si:  'polygone ?nom  [ couples:  ?x2  ]
+premiers:rep: ?x2 ?som'
+alors:  'polygone ?nom [ sommets: ?som ]'
+com:  'les sommets du polygone'.
+
+
+e lisRegle: 'polygones-périmètre' 
+
+si:  'périmètre  ?x1 ?x2'
+alors:  'polygone ?x1 [ périmètre: ?x2 ]' 
+com:  'Le périmètre du polygone'.
+
+"e lisRegle: 'polygones-périmètreTriangle' 
+
+si:  'périmètre  ?x1 ?x2'
+alors:  'polygone ?x1 [ périmètre: ?x2 ]' 
+com:  'Le périmètre du polygone'.
+
+e lisRegle: 'polygones-sommets' 
+si:  'triangle ?nom g
+sommets ?s'
+alors:  'polygone ?nom [ sommets: ?s ]'
+com:  'Les sommets du polygone'."
+
+
+		
+	e
+		lisRegle: 'polygones-adjacentCouple'
+		si:
+			'couple  [ ?a ?b ] 
+couple [ ?b ?c ]
+different:de: ?a ?c
+supérieur:à: ?c ?b 
+supérieur:à: ?c ?a 
+'
+		alors: 'adjacent [ ?a ?b ] [ ?b ?c ] ?a  ?'
+
+		com: 'Couples adjacents.'.
+		
+			e
+		lisRegle: 'polygones:-adjacentSegment'
+		si:
+			'segment ?s1 [ ?a ?b ]
+segment ?s2  [ ?b ?c ]' 
+		alors: 'adjacent ?s1 ?s2 ?a ?c'
+		com: 'Segments adjacents	.'.
+		
+				e
+		lisRegle: 'polygones:-LignePolygonaleTestSegment'
+		si:
+			'adjacent ?s1 ?s2 ?d ?f'
+alors: 'lignePolygonale [ ?s1 ?s2 ]'
+		com: 'Ligne polygonale init'.
+		
+
+	e
+		lisRegle: 'polygones-lignePolygonaleSuite1'
+		si:
+			'lignePolygonale ?l
+dernier:rep: ?l ?der
+adjacent ?der ?s2 ?a  ?c
+ajouteDernierUnique:el:rep: ?l ?s2 ?l2'
+		alors: 'lignePolygonale ?l2'
+		com: 'Une lignePolygonale qui peut être fermée par un dernier segment'.
+		
+			e
+		lisRegle: 'polygones-lignePolygonaleSegments'
+		si:
+			'lignePolygonale ?lp
+premier:rep: ?lp ?prem
+premier:rep:  ?prem ?PPrem
+segment ?PPrem
+premiers:rep: ?lp ?lseg'
+		alors: 'lignePolygonaleSegments ?lseg'
+		com: 'Une lignePolygonale de segments'.
+		
+					e
+		lisRegle: 'polygones-lignePolygonaleCouples'
+		si:
+			'lignePolygonale ?lp
+premier:rep: ?lp ?prem
+premier:rep:  ?prem ?PPrem
+couple ?PPrem
+premiers:rep: ?lp ?lc'
+		alors: 'lignePolygonaleCouples ?lc'
+		com: 'Une lignePolygonale de segments'.
+		
+		
+	e
+		lisRegle: 'polygones-lignePolygonaleRetraitSeg'
+		si:
+			'lignePolygonaleSegments ?l1
+lignePolygonaleSegments ?l2
+taille:rep: ?l1 ?t1
+taille:rep: ?l2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleSegments ?l1
+'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la ligne la plus longue'.
+		
+		e
+		lisRegle: 'polygones-lignePolygonaleRetraitSeg'
+		si:
+			'lignePolygonaleSegments ?l1
+lignePolygonaleSegments ?l2
+taille:rep: ?l1 ?t1
+taille:rep: ?l2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleSegments ?l1
+'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la ligne la plus longue'.
+		
+		e
+		lisRegle: 'polygones-lignePolygonaleRetraitCouples'
+		si:
+			'lignePolygonaleCouples ?x1
+lignePolygonaleCouples ?x2
+taille:rep: ?x1 ?t1
+taille:rep: ?x2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleCouples ?x1'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la ligne la plus longue'.
+	
+		e
+		lisRegle: 'polygones-lignePolygonaleRetraitOuvertes'
+		si:
+			'lignePolygonaleOuverte ?x1
+lignePolygonaleOuverte ?x2
+dernier:rep: ?x1 ?xx1
+dernier:rep: ?x2 ?xx2
+taille:rep: ?xx1 ?t1
+taille:rep: ?xx2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleOuverte ?x1'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales ouvertes retirées pour ne garder que la ligne la plus longue'.
+	
+		e
+		lisRegle: 'polygones-lignePolygonaleRetrait1'
+		si:
+			'lignePolygonale ?l1
+lignePolygonale ?l2
+taille:rep: ?l1 ?t1
+taille:rep: ?l2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonale ?l1'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la lignePolygonale la plus longue'.
+		
+		e
+		lisRegle: 'polygones-lignePolygonaleRetrait2'
+		si:
+			'lignePolygonaleCouple ?l1
+lignePolygonaleCouple ?l2
+taille:rep: ?l1 ?t1
+taille:rep: ?l2 ?t2
+inférieur:à: ?t1 ?t2
+retireFait: lignePolygonaleCouple ?l1'
+		alors: 'lignePolygonale0 ?l1'
+		com:'Des parties de lignePolygonales retirées pour ne garder que la lignePolygonale la plus longue'.
+		
+	e
+		lisRegle: 'polygones-PolygoneRégulierRayons'
+		si:
+			'polygoneRégulier?p [  sommets: ?s ]
+polygone ?p [  centre: ?c ]
+point ?x
+contient:el: ?s ?x
+ordonneMot:et:rep1:rep2: ?c ?x ?cc ?xx'
+		alors: 'polygone ?p [ rayon: [ ?cc ?xx  ] ]'
+		com:
+			'Un rayon de polygone relie un sommet au centre du polygone, c''est aussi un rayon du cercle circonscrit au polygone'.
+	e
+		lisRegle: 'polygones-PolygoneRégulieNbcôtés'
+		si: 'polygoneRégulier ?x1 [ nombre_de_sommets: ?x6 ] ]'
+		alors: 'polygoneRégulier ?x1 [ nombre_de_côtés: ?x6 ] ]'
+		com:
+			'Un polygoneRégulier régulier: a un nombre de côtés égal au nombre de sommets'.
+	e
+		lisRegle: 'polygones-PolygoneRégulieSommets'
+		si: 'DrGPolygonRegularItem  ?x1 ?x2 ?x3 ?x4 ?x5 ?x6'
+		alors: 'polygoneRégulier ?x1  [ sommets: ?x2 ] ]'
+		com:
+			'Les sommets d''un polygone régulier de n côtés, en bleu le sommet qui définit le polygone, ajoute les sommets, si nécessaires'.
+	e
+		lisRegle: 'polygones-Polygone3def'
+		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: 3 ] ]'
+		alors: 'polygoneRégulier  ?x1 [  quadrilatère ]'
+		com: 'Un polygone régulier de 3 sommets définit un triangle'.
+	e
+		lisRegle: 'polygones-Polygone4def'
+		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: 4] ]'
+		alors: 'polygoneRégulier  ?x1 [  quadrilatère ]'
+		com: 'Un polygone de 4 sommets définit un quadrilatère'.
+	e
+		lisRegle: 'polygones-PolygoneNomCôté<=100'
+		si:
+			'polygoneRégulier ?x1 [ nombre_de_côtés: ?nc ]
+inférieurOuEgal:à: ?nc  100
+nomPolygone:rep: ?nc ?res'
+		alors: 'polygoneRégulier  ?x1 [ nom:   ?res ]'
+		com: 'nomme un polygone de moins de cent côtés selon la nomenclatutre'.
+	e
+		lisRegle: 'polygones-PolygoneNomGénéral'
+		si: 'polygoneRégulier ?x1 [ nombre_de_côtés: ?nc ]'
+		alors: 'figure  ?x1  PolygoneRégulier'
+		com: 'nomme un polygone régulier'.
+	e
+		lisRegle: 'polygones-PolygoneCréeDernierCôtés1'
+		si:
+			'créeCôtés ?c [ ?x ]
+premier:rep: ?c ?p
+premier:rep: ?p ?p1
+addLast:el:rep: ?c  [ ?x ?p1 ] ?res
+retireFait: créeCôtés ?c [ ?x ]'
+		alors: 'créeCôtés ?res'
+		com:
+			'Crée le dernier côtés d''un polygone à partir de ses sommets reliant le dernier sommet au premier'.
+	e
+		lisRegle: 'polygones-PolygoneCôtés'
+		si: 'créeCôtés ?res'
+		alors: 'polygoneRégulier ?x1  [ côtés: ?res ] ]'
+		com: 'Les côtés d''un polygone régulier de n côtés.'.
+	e
+		lisRegle: 'polygones-PolygoneCréeCôtés'
+		si:
+			'créeCôtés ?c ?som
+retireFait: créeCôtés ?c ?som
+premier:rep: ?som ?p
+saufPremier:rep: ?som ?sp
+premier:rep: ?sp ?p2
+addLast:el:rep: ?c  [  ?p ?p2 ] ?res'
+		alors: 'créeCôtés ?res ?sp'
+		com: 'Crée les côtés d''un polygone à partir de ses sommets'.
+	e
+		lisRegle: 'polygones-quadrilatèrePérimètre'
+		si: 'polygone Tetragone ?q [ périmètre:  ?p ]'
+		alors: 'quadrilatère ?q [  périmètre:  ?p ]'
+		com: 'Le périmètre d''un quadrilatèe'.
+	e
+		lisRegle: 'polygones-polygoneCréeCôté'
+		si:
+			'DrGPolygonRegularItem  ?x1 ?x2 ?x3 ?x4 ?x5 ?x6
+premier:rep: ?x2 ?p
+saufPremier:rep: ?x2 ?sp
+premier:rep: ?sp ?p2'
+		alors: 'créeCôtés [  [  ?p ?p2  ]  ] ?sp '.
+	e
+		lisRegle: 'polygones-PolygoneCôtésDef'
+		si:
+			'créeCôtés  ?c ?x
+polygoneRégulier ?p [  nombre_de_côtés: ?nc ]
+taille:rep: ?c ?tc
+égaux:et: ?nc ?tc
+retireFait: créeCôtés  ?c ?x'
+		alors: 'polygoneRégulier ?p [ côtés: ?c ]'
+		com: 'Arrête la création des côtés d''un polygone à partir de ses sommets'.
+	e
+		lisRegle: 'polygones-PolygoneAngleAuCentre'
+		si:
+			'polygoneRégulier ?p [  nombre_de_sommets: ?n ]
+quotient:et:rep: 360 ?n ?angle'
+		alors: 'polygoneRégulier ?p [ angle_au_centre: ?angle ]'
+		com: 'L''angle au centre = 360 / nombre_de_côtés'.
+	e
+		lisRegle: 'polygones-PolygoneAngleEntreCôtés'
+		si:
+			'polygoneRégulier ?p [ angle_au_centre: ?angle ]
+difference:et:rep: 180 ?angle ?rep1'
+		alors: 'polygoneRégulier ?p [ angle_entre_côtés: ?rep1 ]'
+		com:
+			'L''angle entre côtés  = 180 - angle_au_centre, somme des angles entre rayon et côté'.
+	e
+		lisRegle: ' polygones-PolygoneAngleEntreRayonEtCôtés'
+		si:
+			'polygoneRégulier ?p [ angle_entre_côtés: ?angle ]
+quotient:et:rep:  ?angle 2 ?rep1'
+		alors: 'polygoneRégulier ?p  [ angle_entre_rayon_et_côté: ?rep1 ]'
+		com: 'L''angle entre rayon et côtés  = moitié de angle_entre_côtés'.
+
+	
+	
+	"	e
+		lisRegle: 'polygones-objetPolygone'
+		si:
+			'DrGPolygonNptsItem  ?x1 ?som
+lignePolygonaleFermée  ?l2
+premiers:rep: ?l2 ?prems
+égaux:et:  ?som ?prems
+taille:rep: ?som ?t
+tousDifferents: ?som
+nomPolygone:rep: ?t ?nom
+créeNom:rep: ?som ?nomPoly
+renomme:nom: ?x1 ?nomPoly'
+		alors: 'lignePolygonaleFermée ?l2 [ ?nomPoly  ?nom ]'
+		com: 'Liste des côtés et nom du polygone selon le nombre de côtés.'."
+	"e
+		lisRegle: 'polygones--objetPolygoneNom'
+		si: 'lignePolygonaleFermée ?l2 [ ?nomPoly  ?nom  ] '
+		alors: 'polygone ?nomPoly  [  ?nom ]'
+		com: 'Nom du polygone selon le nombre de sommets ou de côtès'.
+	e
+		lisRegle: 'polygones--objetPolygoneDef'
+		si: 'lignePolygonaleFermée ?l2 [ ?nomPoly  ?nom ] ?l'
+		alors: 'polygone ?nomPoly'
+		com: 'Définition d''un objet.'."
+	"e
+		lisRegle: 'polygones--objetPolygonePointSur'
+		si:
+			'point ?x
+polygone ?nm  ?p [ sommets: ?som ]
+contient:el: ?som ?x'
+		alors: 'pointSur ?p ?x'
+		com: 'Un sommet d''un polygone est un point sur ce polygone.'."
+	"e
+		lisRegle: 'polygones-objetPolygoneSommets'
+		si: 'polygone ?nomPoly [ sommets: ?som ] ?l'
+		alors: 'polygone ?nomPoly  [ sommets: ?som ]'
+		com: 'Liste des sommets du polygone.'.
+	e
+		lisRegle: 'polygones-objetPolygoneCôtés'
+		si: 'polygone ?nomPoly [ sommets: ?som ] ?l'
+		alors: 'polygone ?nomPoly  [ côtés:  ?l ]'
+		com: 'Liste des sommets du polygone.'.
+	e
+		lisRegle: 'polygones--PérimètreInit'
+		si: 'polygone ?nomPoly  [ côtés: ?cot ]'
+		alors: 'mesuresDe ?cot 0'
+		com: 'Initialse le calcul du périmètre'.
+	e
+		lisRegle: 'polygones--Périmètre'
+		si:
+			'polygone ?nomPoly  [ côtés: ?cot ]
+mesuresDe  ?cot ?x ?m
+arrondis:rep:  ?m ?per'
+		alors: 'polygone ?nomPoly [ périmètre: ?per ]'
+		com: 'Périmètre d''un polygone'.
+	e
+		lisRegle: 'polygones--Aire'
+		si:
+			'polygone ?nomPoly  [ côtés: ?cot ]
+
+mesure  [ aire0  trapèze ?t ] ?m ] 
+arrondis:rep: ?m ?mArr'
+		alors: 'polygone ?nomPoly [ aire:  ?mArr ]'
+		com: 'Aire d''un polygone'.
+	e
+		lisRegle: 'polygones--PérimètreMesure'
+		si: 'polygone ?nomPoly [ périmètre: ?m ]'
+		alors: 'mesure [ périmètre ?nomPoly ] ?m déduite'
+		com: 'Mesure du Périmètre d''un polygone'.
+	"
+	"	e
+		lisRegle: 'polygones-triangleinit'
+		si:
+			'lignePolygonaleFermée ?l  [  Trigone ?nom ]
+saufPremier:rep: ?l ?l2 
+premier:rep: ?l ?pr
+premier:rep: ?pr ?p1
+premier:rep: ?l2 ?cot
+premier:rep: ?cot ?p2
+dernier:rep: ?cot ?p3
+ajoutePremier:el:rep: ?cot ?p1 ?triangle
+aireTriangle:avec:avec:rep:  ?p1 ?p2 ?p3 ?aire
+ajouteDernier:el:rep: ?triangle ?aire ?triangle2
+supérieur:à: ?aire 0'
+		alors: 'triangle   ?nom [ triangles: [ ?triangle2 ]   ]'."
+
+"	e
+		lisRegle: 'polygones-lignePolygonaleFermée2'
+		si:
+			'lignePolygonale ?l
+premier:rep: ?l ?pr
+premier:rep: ?pr ?a
+dernier:rep: ?l ?der
+dernier:rep: ?der ?b
+ordonneMot:et:rep1:rep2: ?a ?b ?aa ?bb
+segment ?s [  ?aa ?bb  ]
+ajouteDernier:el:rep: ?l [ ?aa ?bb ] ?l2
+premiers:rep: ?l ?prems
+minimum:rep: ?prems ?min
+égaux:et: ?a ?min
+'
+		alors: 'lignePolygonaleFermée0 ?l2'."
+"	e
+		lisRegle: 'polygones-lignePolygonaleFermée0'
+		si:
+			'lignePolygonale0 ?l
+premier:rep: ?l ?pr
+premier:rep: ?pr ?a
+dernier:rep: ?l ?der
+dernier:rep: ?der ?b
+égaux:et: ?a ?b
+premiers:rep: ?l ?prems
+minimum:rep: ?prems ?min
+égaux:et: ?a ?min'
+		alors: 'lignePolygonaleFermée0 ?l'.
+"
+
+	"	e
+		lisRegle: 'p-lignePolygonaleFerméePermutation'
+		si:
+			'lignePolygonaleFermée0 ?l
+saufPremier:rep: ?l ?l2
+premier:rep: ?l ?pr
+ajouteDernier:el:rep: ?l2 ?pr ?l3'
+		alors: 'lignePolygonaleFermée0 ?l3'."
+	"e
+		lisRegle: 'polygones-lignePolygonaleFerméeSommets'
+		si:
+			'lignePolygonaleFermée  ?l2 [ ?nomPoly ?nom ]
+premiers:rep: ?l2 ?som
+tousDifferents: ?som'
+		alors: 'polygone ?nomPoly  [ sommets:    ?som  ]'
+		com:
+			'Liste des sommets d''une ligne polygonale fermée fomant un polygone et nom du polygone selon le nombre de côtés.'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFermée3'
+		si:
+			'lignePolygonaleFermée0 ?l
+minimum:rep: ?l ?min
+premier:rep: ?l ?pr
+égaux:et:  ?pr ?min
+saufDernier:rep: ?l ?sd
+dernier:rep: ?l ?der
+premier:rep: ?der ?prd
+dernier:rep: ?der ?derd
+ordonneMot:et:rep1:rep2:  ?prd ?derd ?a ?b
+égaux:et: [ ?a ?b ] ?nouvDer
+ajouteDernier:el:rep: ?sd ?nouvDer  ?lor'
+		alors: 'lignePolygonaleFermée ?lor'
+		com:
+			'Une ligne qui a un segment qui joint son dernier point à son premier est une ligne polygonaleFermée'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFermeture'
+		si:
+			'lignePolygonaleFermée   ?lor
+segment ?s ?x
+sens ?s inverse
+contient:el: ?lor    ?x 
+'
+		alors: 'lignePolygonaleFermée ?lor fermeture: ?s'
+		com:
+			'La fermeture  d''une ilgne polygonale est le segment qui joint le début  à la fin  de cette ligne pour la fermer, il est en sens inverse'.
+"
+
+	"	e
+		lisRegle: 'polygones-lignePolygonaleFermée4'
+		si:
+			'lignePolygonaleFermée2 ?l
+minimum:rep: ?l ?min'
+		alors: 'lignePolygonaleFermée ?l'."
+	"	e
+		lisRegle: 'polygones-lignePolygonaleFerméeCôtés'
+		si:
+			'lignePolygonaleFermée0  ?l2
+lignePolygonaleFermée  ?l2 [  ?nomPoly   ?nom ]'
+		alors: 'polygone ?nomPoly  [ côtés:    ?l2  ]'
+		com: 'Liste des côtés d''un polygone'."
+"	e
+		lisRegle: 'polygones-lignePolygonaleFerméeConvexité'
+		si:
+			'polygone ?nomPoly  [ sommets:    ?l2  ]
+taille:rep: ?l2 ?t
+premier:rep: ?l2 ?p2
+saufPremier:rep:  ?l2  ?l1
+premier:rep: ?l1 ?p3
+dernier:rep: ?l2 ?p1
+aireTriangle:avec:avec:rep: ?p1 ?p2 ?p3 ?a1
+ajouteDernier:el:rep:  ?l2 ?p2 ?suite'
+		alors: 'convexité0  ?nomPoly   [   [ ?p1  ?p2 ?p3 ?a1  ]   ]  ?suite'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeConvexitéTriangle'
+		si:
+			'polygone ?nomPoly  [ sommets:    ?l2  ]
+taille:rep: ?l2 ?t
+égal:à: ?t 3
+premier:rep: ?l2 ?p2
+saufPremier:rep:  ?l2  ?l1
+premier:rep: ?l1 ?p3
+dernier:rep: ?l2 ?p1
+aireTriangle:avec:avec:rep: ?p1 ?p2 ?p3 ?a1'
+		alors: 'convexité0  ?nomPoly   [   [ ?p1  ?p2 ?p3 ?a1  ]   ]  [  ]'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeConvexitéSuite'
+		si:
+			'convexité0     ?nomPoly ?conv     ?l2
+dernier:rep: ?l2 ?p3
+saufDernier:rep:  ?l2 ?l3
+dernier:rep: ?l3 ?p2
+saufDernier:rep:  ?l3 ?l4
+dernier:rep: ?l4 ?p1
+aireTriangle:avec:avec:rep: ?p1 ?p2 ?p3 ?a1
+saufDernier:rep:  ?l4 ?suite
+ajoutePremier:el:rep: ?conv [ ?p1 ?p2 ?p3 ?a1  ] ?conv2'
+		alors: 'convexité0   ?nomPoly  ?conv2  ?l3 '.
+	e
+		lisRegle: 'polygones-OrientationGauche'
+		si:
+			'polygone  ?nom [  sommets: ?som ]
+convexité0     ?nom ?conv    [ [  ] ]
+derniers:rep: ?conv ?ders
+tousPositifs: ?ders'
+		alors: 'polygone  ?nom [ orientation: gauche ]'
+		com: 'Polygone orienté à gauche, sens inverse des aiguilles d''une montre'.
+	e
+		lisRegle: 'polygones-OrientationDroite'
+		si:
+			'polygone   ?nom [  sommets: ?som ]
+convexité0     ?nom ?conv     [ [ ] 
+derniers:rep: ?conv ?ders
+tousNégatifs: ?ders'
+		alors: 'polygone ?nom [ orientation: droite ]'
+		com: 'Polygone orienté à droite,sens  des aiguilles d''une montre'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeConvexe'
+		si:
+			'polygone  ?nom [  sommets: ?som ]
+convexité0     ?nom ?conv  ?l2 
+taille:rep: ?l2 ?t
+inférieur:à:  ?t 3
+derniers:rep: ?conv ?der
+tousPositifs: ?der'
+		alors: 'polygone   ?nom [  convexité:  [  convexe  ] ]'
+		com:
+			'Si l''aire de tous les  triangle formé de trois sommets consécutifs est de même signe, le polygone est convexe.'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeConvexeNeg'
+		si:
+			'polygone  ?nom [  sommets: ?som ]
+convexité0     ?nom ?conv  ?l2 
+taille:rep: ?l2 ?t
+inférieur:à:  ?t 3
+derniers:rep: ?conv ?der
+tousNégatifs: ?der'
+		alors: 'polygone   ?nom [  convexité:  [  convexe  ] ]'
+		com:
+			'Si l''aire de tous les  triangle formé de trois sommets consécutifs est de même signe, le polygone est convexe.'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeNonConvexe'
+		si:
+			'polygone ?nom  [  sommets: ?som ]
+tousDifferents: ?som
+convexité0     ?nom ?conv  ?l2 
+taille:rep: ?l2 ?t
+inférieur:à:  ?t 3
+derniers:rep: ?conv ?der
+~ tousPositifs: ?der
+~ tousNégatifs: ?der'
+		alors: 'polygone  ?nom  [ convexité: [ non convexe ] ]'
+		com:
+			'Si ni l''aire de tous les  triangle formé de trois sommets consécutifs est négative,  ni l''aire de tous les  triangle formé de trois sommets consécutifs est posittive , le polygone est non convexe.'."
+	"	e
+		lisRegle: 'polygones-lignePolygonaleFerméeSommetsTriangle'
+		si:
+			'lignePolygonaleFermée ?l2 [ Trigone ?q ]
+premiers:rep:  ?l2 ?som'
+		alors: 'triangle ?q  [ sommets:   ?som  ]'
+		com: 'Liste des sommets qui constituent une ligne polygonale fermée'."
+	"e
+		lisRegle: 'polygones-lignePolygonaleFerméeSommets2'
+		si:
+			'lignePolygonaleFermée0  ?x1
+saufDernier:rep: ?x1 ?sd
+dernier:rep: ?x1 ?der 
+premier:rep: ?der ?pder
+dernier:rep:  ?der ?dder
+premiers:rep: ?sd ?prems
+contient:el: ?prems ?pder
+ajouteDernier:el:rep: ?prems ?dder  ?prems2
+créeNom:rep: ?prems2 ?p'
+		alors: 'polygone ?p [ sommets:   ?prems2 ]  ?x1'
+		com: 'Liste des sommets qui constituent une ligne polygonale fermée'."
+	"	e
+		lisRegle: 'polygones-lignePolygonaleFerméeSommetsTriangle2'
+		si:
+			'lignePolygonaleFermée0  ?x1
+saufDernier:rep: ?x1 ?sd
+dernier:rep: ?x1 ?der 
+premier:rep: ?der ?pder
+dernier:rep:  ?der ?dder
+premiers:rep: ?sd ?prems
+contient:el: ?prems ?dder
+ajouteDernier:el:rep: ?prems ?pder  ?prems2
+créeNom:rep: ?prems2 ?p'
+		alors: 'polygone ?p [ sommets:   ?prems2 ]'
+		com: 'Liste des sommets qui constituent une ligne polygonale fermée'.
+	"
+	"e
+		lisRegle: 'polygones-triangleDef'
+		si:
+			'polygone ?poly [ Trigone ]
+polygone  ?nom [  côtés: ?c ]
+taille:rep: ?c ?t
+égal:à: 3 ?t'
+		alors: 'triangle ?nom [ côtés: ?c ]'
+		com: 'Un polygone de trois côtés est un triangle.'.
+	e
+		lisRegle: 'polygones-trianglePlatDef'
+		si:
+			'polygone ?poly [ Trigone ]
+polygone  ?nom [  sommets: [ ?x1 ?x2 ?x3 ] ]
+alignement ?x
+contient:el: ?x ?x1
+contient:el: ?x ?x2
+contient:el: ?x ?x3
+taille:rep:  [ ?x1 ?x2 ?x3  ] ?t
+égal:à: 3 ?t'
+		alors: 'triangle ?nom [ plat ]'
+		com: 'Si les sommets d''un triangle sont alignés, le triangle est plat.'.
+	""	e
+		lisRegle: 'polygones-triangleSommets'
+		si:
+			'triangle ?nom [  côtés: ?c ]
+premiers:rep: ?c ?som'
+		alors: 'triangle ?nom [ sommets: ?som ]'
+		com: 'les sommets sont les origines des segments'."  
+		"
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeNoms'
+		si:
+			'lignePolygonaleFermée0 ?l2
+polygone ?nom [ sommets: ?som ]
+taille:rep: ?som ?t
+nomPolygone:rep: ?t ?nomPoly'
+		alors: 'polygone ?nom [  ?nomPoly   ]'."
+	"e
+		lisRegle: 'polygones-lignePolygonaleFerméeNoms2'
+		si:
+			'lignePolygonaleFermée0 ?l2
+polygone ?p [  sommets: ?som ]
+taille:rep: ?som ?t
+'
+		alors: 'lignePolygonaleFermée ?l2 [   ?nomPoly  ?nom  ]'."
+	"e
+		lisRegle: 'polygones-lignePolygonaleFerméeTriangle'
+		si:
+			'lignePolygonaleFermée ?l2 [  Trigone ?nom ]
+taille:rep: ?l2 ?x
+égal:à: ?x 3
+premiers:rep: ?l2 ?som
+premier:rep: ?som ?p1
+saufPremier:rep: ?som ?som1
+premier:rep: ?som1 ?p2
+saufPremier:rep: ?som1 ?som2
+premier:rep: ?som2 ?p3
+aireTriangle:avec:avec:rep: ?p1 ?p2 ?p3 ?aire
+supérieur:à: ?aire 0
+nomPolygone:rep: ?x ?nom
+créeNom:rep: ?som ?nomPoly'
+		alors: 'lignePolygonaleFermée ?l2 [ ?nomPoly ]'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeTriangle'
+		si: 'lignePolygonaleFermée ?l2 [ Trigone ?nomPoly ]'
+		alors: 'lignePolygonaleFermée ?l2 [ triangle ?nomPoly ]'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeQuadrilatère'
+		si: 'lignePolygonaleFermée ?l2 [ Tetragone ?nomPoly ]'
+		alors: 'lignePolygonaleFermée ?l2 [ quadrilatère ?nomPoly ]'
+		"	"
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeSommetsQuadrilatère'
+		si:
+			'lignePolygonaleFermée ?l2 [ Tetragone ?q ]
+premiers:rep:  ?l2 ?prem
+'
+		alors: 'quadrilatère ?q  [ sommets:    ?prem   ]'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeCôtésQuadrilatère'
+		si: 'lignePolygonaleFermée ?l  [ Tetragone ?nomPoly ]'
+		alors: 'quadrilatère ?nomPoly  [ côtés:  ?l ]'.
+	e
+		lisRegle: 'polygones-lignePolygonaleFerméeCôtésTriangle'
+		si: 'lignePolygonaleFermée ?l  [ Trigone ?nomPoly ]'
+		alors: 'triangle ?nomPoly  [ côtés:  ?l ]'.
+	e
+		lisRegle: 'polygones-segments'
+		si:
+			'polygone ?nomPoly ?poly [ côtés: ?cot ]
+point ?p1
+point ?p2
+contient:el: ?cot  [  ?p1 ?p2  ]
+mot:et:rep: ?p1 ?p2 ?nom0 
+mot:et:rep: s ?nom0 ?nom'
+		alors: 'segment ?nom [  ?p1 ?p2 ]'.
+"	
+		! !
+
 !ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 1/19/2026 01:03:17'!
 angleSuite: e
 
@@ -6422,7 +7398,7 @@ relationCrée:et:nom: [ ?x1 ?s ?x2 ] [ ?p ?s ?x2 ]  équivalent'
 		alors: 'relationCréée [ ?x1 ?s ?x2 ] [ ?x3 ?s ?x4 ] équivalent '
 		com: 'Affirmation d''une relation céée'".! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/25/2026 00:56:08'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/19/2026 15:32:00'!
 angles: e
 			
 	e lisRegle: 'angles-angle' 
@@ -6516,14 +7492,14 @@ pointSur ?c ?s'
 		
 			e
 		lisRegle: 'angles-inscrit'
-		si: 'angle0 [ ?p1 ?s ?p2 ] [ plusProche ]
+		si: 'angle0 [ ?p1 ?s ?p2 ] 
 cercle ?c
 pointSur ?c ?p1
 pointSur ?c ?p2
 pointSur ?c ?s'
 		alors: 'angle0  [ ?p1 ?s ?p2 ]  [ Inscrit: ?c ]'
 		com: 'Un angle inscrit dans un cercle a son sommet sur le cercle et ses côtés interceptent le cercle.'.
-	e
+	"e
 		lisRegle: 'angles-inscritsIsométrique'
 		si: 'angle0  [ ?p1 ?s1 ?p2 ]  [ Inscrit: ?c ]
 angle0  [ ?p1 ?s2 ?p2 ]  [ Inscrit: ?c ]
@@ -6531,10 +7507,10 @@ ordonneMot:et:rep1:rep2: ?s1 ?s2 ?ss1 ?ss2
 different:de: ?s1 ?s2
 relationCrée:et:nom:   [ ?p1 ?ss1 ?p2 ]  [ ?p1 ?ss2 ?p2 ] isométrique'
 		alors: 'relationCréée  [ ?p1 ?ss1 ?p2 ]  [ ?p1 ?ss2 ?p2 ] isométrique'
-		com: 'Des angles inscrits  dans un  même cercle et interceptant le même arc sont isométriques'.
+		com: 'Des angles inscrits  dans un  même cercle et interceptant le même arc sont isométriques'."
 	e
 		lisRegle: 'angles-inscritsIsométriqueClassement'
-		si: ' angle0  ?a1 [ ?cl ]
+		si: 'angle0  ?a1 [ ?cl ]
 angle0 ?a2
 contient:el: [ aigu droit obtus  ] ?cl
 relation:et:nom: ?a1 ?a2 isométrique
@@ -8343,7 +9319,7 @@ pointSur ?c ?s'
 
 	! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/21/2026 11:44:08'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/19/2026 15:52:05'!
 figuresRectilignes: e
 	e
 		lisRegle: 'égalitéParallèleParallèleDirection'
@@ -8767,7 +9743,7 @@ angle [ ?p2 ?s ?p1 ] [ supplémentaire: ?sup ] ]'
 	e
 		lisRegle: 'figuresRectilignes-triangleAngleIsométriques'
 		si:
-			'triangle ?t [ isocèle: [ sommet: ?s angles: ?a1 ?a2 ] ]
+			'triangle ?t [ isocèle: [  angles: ?a1 ?a2 ] ]
 relationCrée:et:nom: ?a1 ?a2 isométrique'
 		alors: 'relationCréée  ?a1 ?a2 isométrique'
 		com: 'Angles isométriques d''un triangle isocèles'.
@@ -9001,7 +9977,7 @@ relationCrée:et:nom: ?t1 ?t2 isométrique'
 		alors: 'relationCréée  ?t1 ?t2 isométrique'
 		com:
 			'Deux triangles rectangle avec les côtés issus de l''angle droit respectivement isométriques sont isométriqueq'.
-	e
+"	e
 		lisRegle: 'figuresRectilignes-trianglesIsométrique'
 		si:
 			'triangle ?t1 [ côtés: [ ?c11 ?c12 ?c13 ] ]
@@ -9013,7 +9989,7 @@ different:de: ?t1 ?t2
 '
 		alors: 'isométrique ?t1 ?t2'
 		com:
-			'Deux triangles ayant respectivement leus côtés isométriques sont isométrique'.
+			'Deux triangles ayant respectivement leus côtés isométriques sont isométrique'."
 			"
 						e
 		lisRegle: 'figuresRectilignes-triangleIsocèleDef'
@@ -9049,7 +10025,27 @@ coupleOrdonné [ ?x1 ?y1 ] ?or1
 coupleOrdonné [ ?x3 ?y3 ] ?or3
 relation:et:nom:  ?or1 ?or3 isométrique'
 		alors: 'triangle ?t [ isocèle:  [ ?or1 ?or3 ] ]'
-		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'..
+		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'.
+		
+			
+			e
+		lisRegle: 'figuresRectilignes-triangleIsocèleAngles'
+		si:
+			'triangle  ?x1 [  isocèle: [ ?c1 ?c2 ] ]
+point ?x
+point ?y
+point ?z
+triangle ?x1 [ sommet:  [ ?y angle: ?angy ]  ] 
+triangle ?x1 [ sommet:  [ ?z angle: ?angz ]  ] 
+relationCrée:et:nom: ?angy ?angz isométrique
+contient:el: ?c1 ?x
+contient:el: ?c2 ?x
+contient:el: ?c1 ?y
+contient:el: ?c2 ?z
+different:de: ?x ?y
+different:de: ?x ?z'
+		alors: 'triangle ?x1 [ isocèle:  [ angles: ?angy ?angz ]'
+		com: 'Un triangle isocèle a deux angles isométriques.'.
 		
 		e
 		lisRegle: 'figuresRectilignes-triangleEquilatéral'
@@ -12436,7 +13432,7 @@ ordonneMot:et:rep1:rep2: [  ?b1 ?c1 ?a1  ]    [ ?b2 ?c2 ?a2  ] ?ang1 ?ang2
 different:de: ?t1 ?t2'
 		alors: 'isométrique [ ?ang1 ] [  ?ang2 ]'! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/21/2026 01:31:13'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/19/2026 14:34:27'!
 isometrieRegles: e
 	| r |
 	"Angles"
@@ -12843,7 +13839,7 @@ relation:et:nom: ?r1 ?r2 isométrique'
 		alors: 'isométrique ?t1 ?t2'
 		com:
 			'Deux triangles isocèles de sommets s1 s2 sont isométriques si les côtés opposés aux sommets sont isométriques'.
-	e
+"	e
 		lisRegle: 'isométrie-anglesTriangle1'
 		si:
 			'triangle ?t1 [ sommets: [  ?a1 ?b1 ?c1 ]  ]
@@ -12873,7 +13869,7 @@ triangle ?t2  [ sommets: [  ?a2 ?b2 ?c2 ]  ]
 isométrique ?t1 ?t2
 ordonneMot:et:rep1:rep2: [  ?b1 ?c1 ?a1  ]    [ ?b2 ?c2 ?a2  ] ?ang1 ?ang2
 different:de: ?t1 ?t2'
-		alors: 'isométrique [ ?ang1 ] [  ?ang2 ]'.
+		alors: 'isométrique [ ?ang1 ] [  ?ang2 ]'."
 		
 ExpertRegle isometrieReglesSuite: e.
 ! !
@@ -13074,7 +14070,7 @@ different:de: ?x1 ?x2'
 			'si un point est le milieu de deux points,  les couples qui le reiie à chaque point sont isométriques.'.	
 			! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/26/2026 22:23:05'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/18/2026 18:00:51'!
 mesure: e
 	e
 		lisRegle: 'mesure-trianglePérimètreAffichemesure'
@@ -13325,7 +14321,6 @@ different:de: ?obj1  ?obj2
 			'angle0 ?obj1
 angle0 ?obj2
 relation:et:nom:  ?obj1  ?obj2 isométrique
-different:de: ?obj1  ?obj2
 different:de: ?obj1  ?obj2'
 		alors: 'égal [ mesure ?obj1 ] [ mesure ?obj2 ]'
 		com: 'Les mesures d'' objets isométriques sont égales'.
@@ -16302,7 +17297,7 @@ different:de: ?i1 ?i2'
 		com: 'Des segments de même directions  sont parallèles.'
 "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/17/2026 15:09:38'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/19/2026 23:43:28'!
 polygones: e
 	e lisRegle: 'polygones-lignePolygonaleFermée'
 		si: 'lignePolygonaleCouple ?nom ?lp
@@ -16511,15 +17506,23 @@ alors:'polygone ?nom [ nomGrec: ?res ]'
 			'polygone ?poly [ nomGrec: Trigone ]'  
 		alors: 'polygone ?poly [ nom: Triangle ]' 
 		com: 'Nom courant de la  figure'.
+		e
+		lisRegle: 'FigureMinimum'
+		si:
+			'polygone  ?x1 [ sommets: ?x2 ]
+minimum:rep: ?x2 ?min
+premier:rep: ?x2 ?prem
+égal:à: ?prem ?min'
+		alors: 'figureMinimum ?x1'
+		com: 'Polygone commençant par  le point minimum'.	
 		
 	
 	e
 		lisRegle: 'TriangleTransfert'
 		si:
-			'polygone  ?poly ?prop
-polygone ?poly [ nom: Triangle ]
-polygone ?poly [ sommets: [ ?s1 ?s2 ?s3 ] ]
-aireTrianglePositive:avec:avec: ?s1 ?s2 ?s3'
+			'figureMinimum ?poly
+polygone ?poly ?prop
+polygone ?poly [ nom: Triangle ]'
 		alors: 'triangle ?poly   ?prop'
 		com: 'transfert propriété'.
 		
@@ -17268,7 +18271,7 @@ mot:et:rep: s ?nom0 ?nom'
 "	
 		! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 12/29/2025 15:26:56'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/19/2026 15:43:45'!
 relations: e
 	e
 		lisRegle: 'relations-RelationExplicite'
@@ -17289,7 +18292,8 @@ relation:rep: ?rel ?rep'
 		si:
 			'isométrique ?a ?b
 relationCrée:et:nom: ?a ?b isométrique'
-		alors: 'relation isométrique  ?a ?b créée'.
+		alors: 'relation isométrique  ?a ?b créée'
+		com: 'relation créée à partir d''affirmations relation'.
 		
 		
 		e

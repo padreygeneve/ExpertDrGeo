@@ -1,4 +1,4 @@
-'From Cuis7.1 [latest update: #6452] on 17 October 2026 at 12:45:43 pm'!
+'From Cuis7.1 [latest update: #6452] on 4 November 2026 at 12:47:12 am'!
 'Description '!
 !provides: 'DrGeoFrench' 1 26!
 !requires: 'DrGeo' 1 747 nil!
@@ -30,7 +30,7 @@ DrGeoFigure class
 Domain Specific Language (DSL) abstraction to construct programmatically interactive sketch. 
 I come with methods with French names.!
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 initialize
     super initialize.
     title _ 'Dr. Geo Tutorial'.
@@ -120,7 +120,7 @@ section_ChargerLesFaitsDeLaFigure
 section_Exemples
 ^(EruditeBookSection basicNew title: 'Exemples'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert
 ^(EruditeBookSection basicNew title: 'Expert'; document: ((EruditeDocument contents: 'Avant propos.
 
@@ -173,7 +173,7 @@ Les règles sont vérifiées à nouveau, le processus se répète jusqu''à ce q
         add: self section_Expert_Electricité;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_Electricité
 ^(EruditeBookSection basicNew title: 'Electricité'; document: ((EruditeDocument contents: '!!!! Résistances parallèle-série
 
@@ -466,7 +466,7 @@ exp vérifieCondition: ''''resistance  ?x1 ?x2 ?x3'''' '']]] doItWithButton: Le 
         add: self section_Expert_Electricité_RésistancesParallèlesérie;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_Electricité_RésistancesEnParallèles
 ^(EruditeBookSection basicNew title: 'Résistances en parallèles'; document: ((EruditeDocument contents: '!!!! Résistances en  parallèle
 Choisi la représentation du circuit.
@@ -629,7 +629,7 @@ exp vérifieCondition: ''''resistance  ?x1 ?x2 ?x3'''' '']]] doItWithButton: Le 
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_Electricité_RésistancesEnSérie
 ^(EruditeBookSection basicNew title: 'Résistances en série'; document: ((EruditeDocument contents: '!!!! Résistances en  série
 Choisi la représentation du circuit.
@@ -792,7 +792,7 @@ exp vérifieCondition: ''''resistance  ?x1 ?x2 ?x3'''' '']]] doItWithButton: Le 
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_Electricité_RésistancesParallèlesérie
 ^(EruditeBookSection basicNew title: 'Résistances parallèle-série'; document: ((EruditeDocument contents: '!!!! Résistances parallèle-série
 
@@ -1082,7 +1082,7 @@ exp vérifieCondition: ''''resistance  ?x1 ?x2 ?x3'''' '']]] doItWithButton: Le 
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ExemplesDexperts
 ^(EruditeBookSection basicNew title: 'Exemples d''experts'; document: ((EruditeDocument contents: '!!!!!!Exemples d''expert!!!!!!
 
@@ -1098,7 +1098,7 @@ Placacer les nombres de 1 à 9 dans une grille 3 x 3 pour que toutes les lignes,
         add: self section_Expert_ExemplesDexperts_CarréMagique;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ExemplesDexperts_CarréMagique
 ^(EruditeBookSection basicNew title: 'Carré magique'; document: ((EruditeDocument contents: '!!!!!!Carré magique!!!!!!
 
@@ -1450,7 +1450,7 @@ exp verifieCondition:''''carréCroixDiagonales  ?x1''''.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ExemplesDexperts_accordParticipes
 ^(EruditeBookSection basicNew title: 'accord participes'; document: ((EruditeDocument contents: '!!!!!!accord participes
 
@@ -1550,7 +1550,7 @@ e afficheFaits.  ''
 Tu as tous les élémemts pour faire ce projet à toi de les assembler.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ExemplesDexperts_leJeuDuMorpion
 ^(EruditeBookSection basicNew title: 'le jeu du morpion'; document: ((EruditeDocument contents: '!!!!!!morpion
 Ce système expert donne des conseils pour le jeu du morpion.
@@ -1631,7 +1631,7 @@ E.t c''est une partie nulle si toutes les cases sont pleines
 	different:de: ?9 -''
 	alors: ''''partie terminée''.**') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_GéométrieEtSystèmeExpert
 ^(EruditeBookSection basicNew title: 'Géométrie et système Expert'; document: ((EruditeDocument contents: 'Avant propos.
 
@@ -3451,7 +3451,7 @@ i2:= f intersectionDe: par et: trans.i2 nommer: ''''I2''''.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite
 ^(EruditeBookSection basicNew title: '1 point segment et droite'; document: ((EruditeDocument contents: '!!!! point, segment, droite.
 **1.1 point.**
@@ -3568,7 +3568,7 @@ Les prédicats x:rep: et y:rep:  permettent d''avoir les coordonnées x et y d''
 	Les règles sont des méthodes de la classe ExpertRegle. 
 	On peut sauvegarder une règle par copier /coller.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_11Point
 ^(EruditeBookSection basicNew title: '1.1 Point'; document: ((EruditeDocument contents: '!!!! 1.1 point
 
@@ -3694,7 +3694,7 @@ y:rep: ?pos ?y''''.
       ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_11Point_112DistanceEntrePoints;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_11Point_112DistanceEntrePoints
 ^(EruditeBookSection basicNew title: '1.1.2 Distance entre points'; document: ((EruditeDocument contents: '!!!! 1.1.2 Distance entre points
 
@@ -4289,7 +4289,7 @@ Les règles sont des méthodes de la classe ExpertRegle.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment
 ^(EruditeBookSection basicNew title: '1.2 Segment'; document: ((EruditeDocument contents: ' ''!!!!1.2. Segments.
 
@@ -4414,7 +4414,7 @@ exp verifieCondition: ''''coupleSur ?s ?couple''''
         add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment_123PolygoneRégulier;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment_121LignePolygonales
 ^(EruditeBookSection basicNew title: '1.2.1 Ligne Polygonales'; document: ((EruditeDocument contents: '!!!!1.2.1 Ligne Polygonale 
 
@@ -4526,7 +4526,7 @@ ajouteDernierUnique:el:rep: ?l [ ?s2   ?b ?c ] ?l2''
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment_122LignePolygonaleFerméee
 ^(EruditeBookSection basicNew title: '1.2.2 Ligne Polygonale ferméee'; document: ((EruditeDocument contents: '!!!!1.2.1 Ligne Polygonale ferméee
 
@@ -4609,7 +4609,7 @@ exp verifieCondition: ''''polygone  ?x1 ?x2''''
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_12Segment_123PolygoneRégulier
 ^(EruditeBookSection basicNew title: '1.2.3 Polygone régulier'; document: ((EruditeDocument contents: '!!!!1.2.3 Polygone régulier
 
@@ -4942,7 +4942,7 @@ Remarque:
 il ne peut pas y avoir que des prédicats dans une condition, il faut au moins une affirmation à vérifier, c''est pour ça que l''affirmation vraie **point A**  est au début de la condition à vérifier-
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite
 ^(EruditeBookSection basicNew title: '1.3 Droite'; document: ((EruditeDocument contents: '!!!!1.2.2. Droites
 1.2. Segments et droites.
@@ -5058,11 +5058,11 @@ exp verifieCondition: ''''position B ?pos ?x3 ?x4'''''' style:true]]] doItWithBu
         add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite_11Médiatrice;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite_11Médiatrice
 ^(EruditeBookSection basicNew title: '1.1 Médiatrice'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite_131Demidroite
 ^(EruditeBookSection basicNew title: '1.3.1 Demi-droite'; document: ((EruditeDocument contents: '!!!!!! 1.3.1 Demi-Droite.
 
@@ -5279,7 +5279,7 @@ position  ?x1 ?x2 ?x3 ?dd
 ordonneMot:et:rep1:rep2: ?x1 ?x3 ?x1 ?x3 ''''''
 ]]] doItWithButton: copier le code pour l''exécuter.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite_132IntersectionDeDroites
 ^(EruditeBookSection basicNew title: '1.3.2 intersection  de droites'; document: ((EruditeDocument contents: '!!!! 1.3.2 intersection  de droites
 
@@ -5297,7 +5297,7 @@ S''il y a plus de deux droites qui passent par le même point d''intersection, o
         add: self section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite_132IntersectionDeDroites_1322DroitesConcourantes;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite_132IntersectionDeDroites_1321DroitesSécantes
 ^(EruditeBookSection basicNew title: '1.3.2.1 Droites sécantes'; document: ((EruditeDocument contents: '1.3.2.1 Droites sécantes
 
@@ -5378,7 +5378,7 @@ exp vérifieCondition:''''
 point A
 relation:rep: concourante ?res''   '']]] doItWithButton: copier le code pour l''exécuter.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_1PointSegmentEtDroite_13Droite_132IntersectionDeDroites_1322DroitesConcourantes
 ^(EruditeBookSection basicNew title: '1.3.2.2 droites concourantes'; document: ((EruditeDocument contents: '
 1.3.2.2 **Droites concourantes, la figure.**
@@ -8245,7 +8245,7 @@ exp verifieCondition: ''''position P ?pos B d''''
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles
 ^(EruditeBookSection basicNew title: '2 Angles'; document: ((EruditeDocument contents: '!!!! 2 Angle
 Euclide : Définition 8, «  angle plan est l''inclinaison mutuelle de deux lignes qui se touchent dans un plan, et  qui ne sont pas placées dans la même direction. ».
@@ -8786,7 +8786,7 @@ ou
 	mesureangle :=  ang  morph mathItem 	degreeAngle rounded.
 '']]] doItWithButton: Copier le code de la démonstration.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_20AngleEntreDemidroite
 ^(EruditeBookSection basicNew title: '2.0 Angle entre demi-droite'; document: ((EruditeDocument contents: '!!!!!!2.0 Angle entre demi-droite
 
@@ -9148,7 +9148,7 @@ relation:rep: équivalent ?res''''
 	Pour vérifier une condition, il faut au moins une affirmation, c''est pour ça que l''affirmation vraie **point A**  est ajoutée au début de la condition à vérifier.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_21AnglesEntrePoints
 ^(EruditeBookSection basicNew title: '2.1 Angles entre points.'; document: ((EruditeDocument contents: '2.1 Angles entre points.
 
@@ -9256,7 +9256,7 @@ exp verifieCondition: ''''angle0 ?x''''.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_22AngleEntreDroites
 ^(EruditeBookSection basicNew title: '2.2. Angle entre droites'; document: ((EruditeDocument contents: '!!!!!! 2.2. Angle entre droites
 
@@ -9313,7 +9313,7 @@ Remarque:
 il ne peut pas y avoir que des prédicats dans une condition, il faut au moins une affirmation à vérifier, c''''est pour ça que l''affirmation vraie **point A**  est au début de la condition à vérifier
 ''') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_23PerpendiculaireDroitObtuAigu
 ^(EruditeBookSection basicNew title: '2.3 Perpendiculaire, droit, obtu, aigu,'; document: ((EruditeDocument contents: '
 !!!!!!2.3  Perpendiculaire, droit, obtu, aigu,
@@ -9432,7 +9432,7 @@ Cette démonstration montre comment Euclide définit l''angle droit comme étant
 Cette relation n''est pas une relation d''équivalence parce qu''elle n''est pas transitive: deux droites perpendiculaires à une même droite ne sont pas perpendiulaires entre elles.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_24Parallèle
 ^(EruditeBookSection basicNew title: '2.4 Parallèle.'; document: ((EruditeDocument contents: '!!!! 2.4 Parallèle.
 
@@ -9586,7 +9586,7 @@ p déplacerA: (0@2).fig actualiser .
 ]]] doItWithButton:Charger le script de l''	animation,.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_25AngleEntreParallèles
 ^(EruditeBookSection basicNew title: '2.5 Angle entre parallèles'; document: ((EruditeDocument contents: ' ''!!!!!! 2.5 Angle entre parallèles
 
@@ -9784,7 +9784,7 @@ relation:rep: isométrique ?res''''.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_2Angles_26Bissectrice
 ^(EruditeBookSection basicNew title: '2.6 Bissectrice'; document: ((EruditeDocument contents: '!!!!2.6 Bissectrice
 
@@ -12286,7 +12286,7 @@ ou
 section_Expert_GéométrieEtSystèmeExpert_3Angles_34AngleObtuAigudroit_13233AngleObtuaigudroit
 ^(EruditeBookSection basicNew title: '1.3.2.3.3 Angle obtu,aigu,droit'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_3Cercles
 ^(EruditeBookSection basicNew title: '3 Cercles.'; document: ((EruditeDocument contents: '3 Cercles
 
@@ -12891,7 +12891,7 @@ abscisseDe:sur:rep: ?point ?cercle ?res'''' ''style: true.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_3Cercles_31CercleRayon
 ^(EruditeBookSection basicNew title: '3.1 Cercle rayon'; document: ((EruditeDocument contents: '!!!! 2.1 Cecle rayon
 	**2.1.1 Rayon du cercle.**
@@ -13010,7 +13010,7 @@ segment ?s  ?x2''''
 
  ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_3Cercles_32RapportCirconférenceRayon
 ^(EruditeBookSection basicNew title: '3.2 Rapport circonférence / rayon'; document: ((EruditeDocument contents: '** 3.2 Rapport entre circonférence et rayon**
 
@@ -13052,7 +13052,7 @@ exp deduis.]]] doItWithButton:Charger la démonstration du rapport constant .
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_3Cercles_33CercleIsométrie
 ^(EruditeBookSection basicNew title: '3.3 Cercle Isométrie'; document: ((EruditeDocument contents: '!!!!3.2 Cercle Isométrie
 
@@ -13320,7 +13320,7 @@ relation:rep: isométrique ?res''''
 
 Il y a deux ensembles l''un avec les rayons du cercle vert l''autre avec les rayons du cercle rouge.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_3Cercles_34CercleAbscisse
 ^(EruditeBookSection basicNew title: '3.4 Cercle. abscisse.'; document: ((EruditeDocument contents: '!!!!3.14 Cercle. abscisse curviligne.
 
@@ -13415,7 +13415,7 @@ abscisseDe:sur:rep: ?point ?cercle ?res'''' ''style: true.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_3Cercles_35AngleInscrit
 ^(EruditeBookSection basicNew title: '3.5 Angle Inscrit'; document: ((EruditeDocument contents: '3.5 Angle inscrit dans un cercle, angle au centre
 .
@@ -13465,10 +13465,7 @@ exp := fig expert.
 exp  initFaits .
 exp lisFigure.
 exp chargeRegles: ''Euclide''.
-exp déduis.
-exp modèlesQuestions .
-
-fig presenter expertInspect: ''Géométrie et système Expert'' style: true]]] doItWithButton: Charger la figure et les modèles de questions.
+fig presenter expertInspect ]]] doItWithButton: Charger la figure et les modèles de questions.
 
 	[[[fig :=DrGeoFigure nouveau.
 fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''
@@ -13500,16 +13497,54 @@ exp := fig expert.
 exp  initFaits .
 exp lisFigure.
 exp chargeRegles: ''''Euclide''''.
-exp déduis.
-exp modèlesQuestions.
+fig presenter expertInspect.
 
 '']]] doItWithButton: Charger le script la figure. 
 
 
 	**3.5.2 Angle au centre et angle inscrit**
 
-  	On a deux triangles isocèles qui ont le côté O S en commun, la somme des angles égaux de chacun de ces triangles est égale à l''angle au centre qui est formé de la somme des angles  extérieurs des triangles isocèles.
-donc le double de la somme des angles  des triangles isocèles est égal à l''angle au centre.
+  	On a deux triangles isocèles qui ont le côté OS en commun, l''angle inscrit est la somme des angles au sommet S de ces triangles.
+
+	** triangle  ?x1 [  sommet: [ S angle: ?x2 ] ]**
+	[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string:
+''
+triangle  ?x1 [  sommet: [ S angle: ?x2 ] ]
+'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+	**exp verifieCondition:''triangle  ?x1 [  sommet: [ S angle: ?x2 ] ]''**
+	[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''exp verifieCondition:''''triangle  ?x1 [  sommet: [ S angle: ?x2 ] ]'''''']]] doItWithButton:copier le code pour l''''exécuter.	
+
+
+ 	La somme de ces 2 angles  est égale à l''angle inscrit.
+
+	** égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  ?angleInscrit **
+	[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string:
+''
+égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  ?angleInscrit
+'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+	**exp verifieCondition:''égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  ?angleInscrit''**
+	[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''exp verifieCondition:''''égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  ?angleInscrit'''' '']]] doItWithButton:copier le code pour l''''exécuter.	
+
+
+	Les triangles sont isocèles, leurs côtés sont des rayons du cercle.
+	Les angles au sommets différents du sommet commun aux côtés isométriques sont isométriques.
+	
+	** triangle  ?x1 [  isocèle: ?x ]**
+	[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string:
+''
+ triangle  ?x1 [  isocèle: ?x ]
+'']]] doItWithButton:copier pour vérifier avec le menu expert.
+
+	**exp verifieCondition: ''triangle  ?x1 [  isocèle: ?x ]''**
+	[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''exp verifieCondition:'''' triangle  ?x1 [  isocèle: ?x ]'''''']]] doItWithButton:copier le code pour l''''exécuter.	
+
+	
+
+
+	Des angles isométriques ont même mesure, la somme de quantités égales est le double d''une des quantités.
+donc le double de la somme des angles des triangles isocèles est égale à l''angle au centre.
 
 	**L''angles au centre est donc le double d''un angle inscrit.** cqfd.
 
@@ -13519,14 +13554,11 @@ donc le double de la somme des angles  des triangles isocèles est égal à l''a
 égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  [ mesure ?AngleInscriIt  ]  
 '']]] doItWithButton:copier pour vérifier avec le menu expert.
 
-	**exp verifieCondition:''égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  [ mesure ?AngleInscriIt  ]''
-**
-	[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''''
-égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  [ mesure ?AngleInscriIt  ] ''''
-'']]] doItWithButton:copier le code pour l''''exécuter.	
+	**exp verifieCondition:''égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  [ mesure ?AngleInscriIt ]''**
+	[[[fig presenter expertDisplayTutor:''Géométrie et Système Expert'' string: ''exp verifieCondition:''''égal  [ somme  [ mesure  [ A S O ]  ]  [ mesure  [ O S B ]  ]  ]  [ mesure ?AngleInscriIt  ] '''''']]] doItWithButton:copier le code pour l''''exécuter.	
  ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes
 ^(EruditeBookSection basicNew title: '4 figures rectilignes'; document: ((EruditeDocument contents: '!!!! 4 Figures rectilignes
 Euclide : Définition 20, «**  Figure rectiligrne, est celle qui est comprise de lignes droites**».
@@ -13659,7 +13691,7 @@ Un triangle isocèle n''a que deux côtés isométriques, chaque sommet du trian
 exp vérifieCondition: (''''triangle  ?x1 [ isocèle: ?x2 ]'''') ''
  style: true. ]]] doItWithButton:  doItWithButton: copier le code pour l''exécuter..') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_41Triangles
 ^(EruditeBookSection basicNew title: '4,1 Triangles'; document: ((EruditeDocument contents: 'Euclide:Définition 20, «**Figure rectiligne est celle qui est comprise de lignes droites.** »
 Euclide:Définition 21, «** Figure de trois côtés, triangle est celle qui est comprise de trois lignes droites **»
@@ -13672,7 +13704,7 @@ Remarque : Puisqu''il est possible de faire un cercle qui passe par trois point
         add: self section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_41Triangles_412TriangleIsocèle;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_41Triangles_411TriangleEquilatéral
 ^(EruditeBookSection basicNew title: '4.1.1 Triangle Equilatéral'; document: ((EruditeDocument contents: '!!!!4.1 Triangle équilatéral
 
@@ -13761,7 +13793,7 @@ Un triangle isocèle n''a que deux côtés isométriques, chaque sommet du trian
 exp vérifieCondition: ''''triangle  ?x1 [ isocèle: ?x2 ]'''' ''
  style: true. ]]] doItWithButton:  doItWithButton: copier le code pour l''exécuter..') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_41Triangles_412TriangleIsocèle
 ^(EruditeBookSection basicNew title: '4.,1,2 Triangle Isocèle'; document: ((EruditeDocument contents: '!!!!!!4.2 Triangle isocèle
 
@@ -13855,7 +13887,7 @@ relation:rep: isométrique ?res''''
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_42Quadrilatères
 ^(EruditeBookSection basicNew title: '4.2 Quadrilatères'; document: ((EruditeDocument contents: '!!!!!! 4.2 Quadrilatères
 
@@ -13881,7 +13913,7 @@ Aide-mémoire p.123«**Deux paires de côtés consécutifs isométriques. Des di
         add: self section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_42Quadrilatères_422Parallélograme;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_42Quadrilatères_421Trapèze
 ^(EruditeBookSection basicNew title: '4.2.1 trapèze'; document: ((EruditeDocument contents: 'Aide-mémoire p.123 Propriétés :  « **Au moins une paire de côtés parallèles.** »
 
@@ -13927,7 +13959,7 @@ exp examine.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_42Quadrilatères_421Trapèze_412TrapèzeIsocèle;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_42Quadrilatères_421Trapèze_412TrapèzeIsocèle
 ^(EruditeBookSection basicNew title: '4.1.2 trapèze isocèle'; document: ((EruditeDocument contents: 'Aide-mémoire p.123 Propriétés :  « **Au moins une paire de côtés parallèles.** »
 
@@ -13990,7 +14022,7 @@ exp examine.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:05'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:30'!
 section_Expert_GéométrieEtSystèmeExpert_4FiguresRectilignes_42Quadrilatères_422Parallélograme
 ^(EruditeBookSection basicNew title: '4,2,2 Parallélograme'; document: ((EruditeDocument contents: 'Aide-mémoire p.123 Propriétés :  « **Au moins une paire de côtés parallèles.** »
 
@@ -14238,7 +14270,7 @@ exp vérifieCondition: ''''triangle ?x1 [ sommet: ?x2 ]''''
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Introduction
 ^(EruditeBookSection basicNew title: 'Introduction'; document: ((EruditeDocument contents: '!!!!!!Introduction.
 
@@ -14323,7 +14355,7 @@ Les termes correspondants sont comparés.
 	Si elle est instanciée, on compare les valeurs correspondantes qui doivent être 	les mêmes.
 	Si non l''unification échoue.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats
 ^(EruditeBookSection basicNew title: 'Liste des prédicats'; document: ((EruditeDocument contents: '!!!! 1.1.2 Distance entre points
 
@@ -14551,7 +14583,7 @@ ordonneMot:et:rep1:rep2:  ?x 1 ?x2 ?x1 ?x2 ''
         add: self section_Expert_ListeDesPrédicats_Relations;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions
 ^(EruditeBookSection basicNew title: 'Actions'; document: ((EruditeDocument contents: '!!!!!!Action
 
@@ -14570,74 +14602,74 @@ Ce peut être par exemple une alerte mais aussi une construction sur la figure.'
         add: self section_Expert_ListeDesPrédicats_Actions_polyAjouteSommets;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_affiche
 ^(EruditeBookSection basicNew title: 'affiche:	'; document: ((EruditeDocument contents: '!!!!!!afficheTexte:a:
 
 Affiche à une position et nomme un texte dans la 	figure"
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_afficheTextea
 ^(EruditeBookSection basicNew title: 'afficheTexte:a:'; document: ((EruditeDocument contents: '!!!!!!afficheTexte:a:
 
 Affiche à une position et nomme un texte dans la 	figure"
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_afficheTextecontenua
 ^(EruditeBookSection basicNew title: 'afficheTexte:contenu:a:	'; document: ((EruditeDocument contents: '!!!!!!afficheTexte:contenu:a:	
 
 Affiche à une position et nomme un texte dans 	la figure.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_angleCentredeacou
 ^(EruditeBookSection basicNew title: 'angleCentre:de:a:cou'; document: ((EruditeDocument contents: '!!!!!!angleCentre:de:a:coul:
 
 angleCentre:de:a:coul:	
 Marque la valeur d''un angle en couleur') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_angleGeometriqueCentredeacoul
 ^(EruditeBookSection basicNew title: 'angleGeometriqueCentre:de:a:coul:  '; document: ((EruditeDocument contents: 'angleGeometriqueCentre:de:a:coul:  
 
 Marque la valleur d''un angle géométrique en couleur
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_couleurPointcouleur
 ^(EruditeBookSection basicNew title: 'couleurPoint:couleur:'; document: ((EruditeDocument contents: 'couleurPoint:couleur:
 
 Mets en couleur un point.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_créePointMilieuPointet
 ^(EruditeBookSection basicNew title: 'créePointMilieu:Point:et'; document: ((EruditeDocument contents: 'créePointMilieu:Point:et
 
 Crée le point au milieu d''une médiatrice.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_execute
 ^(EruditeBookSection basicNew title: 'execute:	'; document: ((EruditeDocument contents: 'execute:	
 
 Evalue une action.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_polyAjouteETNuméroteSommets
 ^(EruditeBookSection basicNew title: 'polyAjouteETNuméroteSommets:	'; document: ((EruditeDocument contents: '
 polyAjouteETNuméroteSommets:	
 
 Ajoute et numérote les sommets d''un objet polygone régulier.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Actions_polyAjouteSommets
 ^(EruditeBookSection basicNew title: 'polyAjouteSommets:	'; document: ((EruditeDocument contents: 'polyAjouteSommets:	
 
 Ajoute les sommets d''un polygone') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers
 ^(EruditeBookSection basicNew title: 'Divers'; document: ((EruditeDocument contents: 'Diverses actions.direction:rep:	
 
@@ -14671,7 +14703,7 @@ Le deuxième parent d''un segment ou d''une droite.
         add: self section_Expert_ListeDesPrédicats_Divers_égauxet;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_alignésavecetVérifieQueTroisPointsSontAlignés
 ^(EruditeBookSection basicNew title: 'alignés:avec:et:
 
@@ -14679,13 +14711,13 @@ Vérifie que trois points sont alignés.'; document: ((EruditeDocument contents:
 
 Vérifie que trois points sont alignés.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_compteFaitsrep
 ^(EruditeBookSection basicNew title: 'compteFaits:rep:	'; document: ((EruditeDocument contents: 'compteFaits:rep:	
 
 Compte le nombre de mêmes faits correspondant à un modèle de question pour un faits sous forme de liste.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_constructionsrep
 ^(EruditeBookSection basicNew title: 'constructions:rep:	'; document: ((EruditeDocument contents: 'constructions:rep:	
 
@@ -14697,34 +14729,34 @@ section_Expert_ListeDesPrédicats_Divers_contrairecontrairerep
 
 décrit le contraire d''''un mot') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_créeNomMinrep
 ^(EruditeBookSection basicNew title: 'créeNomMin:rep:	'; document: ((EruditeDocument contents: 'créeNomMin:rep:	
 
 Crée un nom pour une permutation minimum des éléments de la liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_créeNomUniquerep
 ^(EruditeBookSection basicNew title: 'créeNomUnique:rep:	'; document: ((EruditeDocument contents: 'créeNomUnique:rep:	
 
 Crée un nom suivi d''un numéro unique.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_créeNomrep
 ^(EruditeBookSection basicNew title: 'créeNom:rep:'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_differentde
 ^(EruditeBookSection basicNew title: 'different:de:	'; document: ((EruditeDocument contents: 'different:de:	
 
 Vérifie que deux objets sont différents.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_directionrep
 ^(EruditeBookSection basicNew title: 'direction:rep:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_distancearep
 ^(EruditeBookSection basicNew title: 'distance:a:rep:	
 '; document: ((EruditeDocument contents: 'distance:a:rep:	
@@ -14733,69 +14765,69 @@ La distance entre deux points.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_extrémitérep
 ^(EruditeBookSection basicNew title: 'extrémité:rep:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_égauxet
 ^(EruditeBookSection basicNew title: 'égaux:et:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_instanciedValue
 ^(EruditeBookSection basicNew title: 'instanciedValue:'; document: ((EruditeDocument contents: 'instanciedValue:
 Valeur attribuée à une variable, retourne faux si la 	variable n''a  pas reçu de valeur.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_maxrep
 ^(EruditeBookSection basicNew title: 'max:rep:	'; document: ((EruditeDocument contents: 'max:rep:	
 
 Le maximum d''une liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_minMotrep
 ^(EruditeBookSection basicNew title: 'minMot:rep:	'; document: ((EruditeDocument contents: 'minMot:rep:	
 
 Le plus  petit caractère d''un mot.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_minimumrep
 ^(EruditeBookSection basicNew title: 'minimum:rep:	'; document: ((EruditeDocument contents: 'minimum:rep:	
 
 Le plus  petit caractère d''un mot.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_motetetrep
 ^(EruditeBookSection basicNew title: 'mot:et:et:rep:	'; document: ((EruditeDocument contents: 'mot:et:et:rep:	
 
 Forme un mot à partir de trois mots.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_ordonneMotetrep
 ^(EruditeBookSection basicNew title: 'ordonneMot:et:rep:	'; document: ((EruditeDocument contents: 'ordonneMot:et:rep:	
 
 Forme un mot à partir de deuxmots, en les  mettant 	dans l''ordre alphabètique .
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_ordonneMotetrep1rep2
 ^(EruditeBookSection basicNew title: 'ordonneMot:et:rep1:rep2:'; document: ((EruditeDocument contents: 'ordonneMot:et:rep1:rep2:
 
 Place deux mots en ordre alphabétique.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_renommenom
 ^(EruditeBookSection basicNew title: 'renomme:nom:	'; document: ((EruditeDocument contents: 'renomme:nom:	
 
 Renomme un  objet.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_retablitFait
 ^(EruditeBookSection basicNew title: 'retablitFait:	'; document: ((EruditeDocument contents: 'retablitFait:	
 
@@ -14804,34 +14836,34 @@ section_Expert_ListeDesPrédicats_Divers_retablitFait
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_retireFait
 ^(EruditeBookSection basicNew title: 'retireFait:	'; document: ((EruditeDocument contents: 'retireFait:	
 
 Retire un fait, le fait est marqué retiré et plus vu 	parmis les faits.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_suivantrep
 ^(EruditeBookSection basicNew title: 'suivant:rep:'; document: ((EruditeDocument contents: 'suivant:rep:	
 Génère le nom suivant un nom unique.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_total
 ^(EruditeBookSection basicNew title: 'total:	'; document: ((EruditeDocument contents: 'total:	
 
 Remplace le dernier élément d''une liste de 	nombres par le total des précédents.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Divers_trierep
 ^(EruditeBookSection basicNew title: 'trie:rep:	'; document: ((EruditeDocument contents: 'trie:rep:	
 
 Trie les lettres d''un mot.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie
 ^(EruditeBookSection basicNew title: 'Géométrie'; document: ((EruditeDocument contents: 'Des prédicats pour traiter les objets géométriques,') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_ListeDesPrédicats_Géométrie_abcisseDesurrep;
         add: self section_Expert_ListeDesPrédicats_Géométrie_aireTriangleavecavecrep;
@@ -14859,111 +14891,111 @@ section_Expert_ListeDesPrédicats_Géométrie
         add: self section_Expert_ListeDesPrédicats_Géométrie_vecteurrep;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_abcisseDesurrep
 ^(EruditeBookSection basicNew title: '-abcisseDe:sur:rep:'; document: ((EruditeDocument contents: '!!!!!! -abcisseDe:sur:rep:
 "Abcisse d''un point sur une droite"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTriangleNegativeavecavec
 ^(EruditeBookSection basicNew title: '-aireTriangleNegative:avec:avec:'; document: ((EruditeDocument contents: 'reTriangleNegative: p1 avec: p2 avec: p3 vars: lvar
 	"Aire calculée à partir des coordonnées de 3 points,double de l''aire du triangle formé par les 3 points,
 es négative, le triangle est orienté à droite, sens trigonométrique inverse"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTriangleNegativeavecavecrep
 ^(EruditeBookSection basicNew title: '-aireTriangleNegative:avec:avec:rep:'; document: ((EruditeDocument contents: '"vérifie si l''aire du triangle formé par les 3 points est négative,
 le triangle est orienté à droite, sens trigonométrique inverses"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTrianglePositiveavecavec
 ^(EruditeBookSection basicNew title: '-aireTrianglePositive:avec:avec:'; document: ((EruditeDocument contents: '	"vérifie si l''aire du triangle formé par les 3 points est positive,
 le triangle est orienté à gauche, sens trigonométrique"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTrianglePositiveavecavecrep
 ^(EruditeBookSection basicNew title: '-aireTrianglePositive:avec:avec:rep:'; document: ((EruditeDocument contents: '	"vérifie si l''aire du triangle formé par les 3 points est positive,
 le triangle est orienté à gauche, sens trigonométrique"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_aireTriangleavecavecrep
 ^(EruditeBookSection basicNew title: '-aireTriangle:avec:avec:rep:'; document: ((EruditeDocument contents: '"Aire calculée à partir des coordonnées de 3 points,double de l''aire du triangle formé par les 3 points,
 positive si le triangle est orienté à gauche, sens trigonométrique"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_degrésrep
 ^(EruditeBookSection basicNew title: '-degrés:rep:'; document: ((EruditeDocument contents: '"retourne la valeur d''un angle qui a le  point pour sommet."') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_justeAprèselrep
 ^(EruditeBookSection basicNew title: '-justeAprès:el:rep:'; document: ((EruditeDocument contents: '	"L''élément qui suit un élément d''une liste"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_justeAvantelrep
 ^(EruditeBookSection basicNew title: '-justeAvant:el:rep:'; document: ((EruditeDocument contents: '	"L''élément qui précède un élément d''une liste"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_nomPolygonerep
 ^(EruditeBookSection basicNew title: '-nomPolygone:rep:'; document: ((EruditeDocument contents: '"Retourne le nom d''un polygone de moins de cent côtés"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_nonPointConfonduavec
 ^(EruditeBookSection basicNew title: '-nonPointConfondu:avec:'; document: ((EruditeDocument contents: '"Vérifie que deux pointsne sont pas confodus "') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_originerep
 ^(EruditeBookSection basicNew title: '-origine:rep:'; document: ((EruditeDocument contents: '"le premier parent d''un segment ou d''une droite"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_parentsrep
 ^(EruditeBookSection basicNew title: '-parents:rep:'; document: ((EruditeDocument contents: '"les parents d''un objet."') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_penterep
 ^(EruditeBookSection basicNew title: '-pente:rep:'; document: ((EruditeDocument contents: '"Ccalcule la pente d''une droite"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_pointConfonduavec
 ^(EruditeBookSection basicNew title: '-pointConfondu:avec:'; document: ((EruditeDocument contents: '"Signale des pointscofondus, des points avec les mêmecoordonnées"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_pointDifferentde
 ^(EruditeBookSection basicNew title: '-pointDifferent:de:'; document: ((EruditeDocument contents: '"Vérifie que deux points sont difflérents, non confondus"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_pointentreet
 ^(EruditeBookSection basicNew title: '-point:entre:et:'; document: ((EruditeDocument contents: '"un point entre deux autres. "') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_pointrep
 ^(EruditeBookSection basicNew title: '-point:rep:'; document: ((EruditeDocument contents: '	"retourne un objet point"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_pointsSurCerclerep
 ^(EruditeBookSection basicNew title: '-pointsSurCercle:rep:'; document: ((EruditeDocument contents: '"Les points sur le cercle, ordonnés suivant leur abcisse"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_pointsSurrep
 ^(EruditeBookSection basicNew title: '-pointsSur:rep:'; document: ((EruditeDocument contents: '"Vérifie que deux points sont difflérents, non confondus"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_pointxrep
 ^(EruditeBookSection basicNew title: '-pointx:rep:'; document: ((EruditeDocument contents: '"La coordonnée x d''un point"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_pointyrep
 ^(EruditeBookSection basicNew title: '-pointy:rep:'; document: ((EruditeDocument contents: '"La coordonnée x d''un point"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_triangleAreawithwithrep
 ^(EruditeBookSection basicNew title: '-triangleArea:with:with:rep:'; document: ((EruditeDocument contents: '	"Aire à partir des coordonnées de 3  points"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Géométrie_vecteurrep
 ^(EruditeBookSection basicNew title: '-vecteur:rep:
 '; document: ((EruditeDocument contents: '"Le point à l''extrémité du vecteur d''origine 0@0 de même direction  qu''une sorte de droite"') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes
 ^(EruditeBookSection basicNew title: 'Listes'; document: ((EruditeDocument contents: '!!$!!!!!!Listes
 Des méthodes pour agir sur les listes.justeAprès:el:rep:	
@@ -14996,7 +15028,7 @@ L''élément qui suit un élément d''une liste.
         add: self section_Expert_ListeDesPrédicats_Listes_triePointsSurdroiterep;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_addFirstelrep
 ^(EruditeBookSection basicNew title: 'addFirst:el:rep:	'; document: ((EruditeDocument contents: 'addFirst:el:rep:	
 
@@ -15006,44 +15038,44 @@ Ajoute en premier un élément à une liste') data: ((Dictionary new)); yourself
 section_Expert_ListeDesPrédicats_Listes_addFirstelrep_addFirstelrep
 ^(EruditeBookSection basicNew title: 'addFirst:el:rep:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_addLastelrep
 ^(EruditeBookSection basicNew title: 'addLast:el:rep:'; document: ((EruditeDocument contents: 'addLast:el:rep:
 
 Ajoute un élément à la fin d''une liste
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_ajouteDernierUniqueelrep
 ^(EruditeBookSection basicNew title: 'ajouteDernierUnique:el:rep:	'; document: ((EruditeDocument contents: 'ajouteDernierUnique:el:rep:	
 
 Ajoute un élément à la fin d''une liste, s''il n''est pas déjà dans la liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_ajouteDernierelrep
 ^(EruditeBookSection basicNew title: 'ajouteDernier:el:rep:	'; document: ((EruditeDocument contents: 'ajouteDernier:el:rep:	
 
 Ajoute un élément à la fin d''une liste') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_ajoutePremierUniqueelrep
 ^(EruditeBookSection basicNew title: 'ajoutePremierUnique:el:rep:	'; document: ((EruditeDocument contents: 'ajoutePremierUnique:el:rep:	
 
 Ajoute un élément à la tête d''une liste, s''il n''est pas déjà dans la liste') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_ajoutePremierelrep
 ^(EruditeBookSection basicNew title: 'ajoutePremier:el:rep:	'; document: ((EruditeDocument contents: 'ajoutePremier:el:rep:	
 
 Ajoute un élément à la tête d''une liste, 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_ajoutelisterep
 ^(EruditeBookSection basicNew title: 'ajoute:liste:rep:'; document: ((EruditeDocument contents: 'ajoute:liste:rep:') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_contientliste
 ^(EruditeBookSection basicNew title: 'contient:liste:	'; document: ((EruditeDocument contents: '
 contient:liste:	
@@ -15052,13 +15084,13 @@ Vérifie si un objet est présent dans une liste.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_couplesrep
 ^(EruditeBookSection basicNew title: 'couples:rep:	'; document: ((EruditeDocument contents: 'couples:rep:	
 
 Associe une liste de deux points à un nom pour former 	un couple.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_dernierrep
 ^(EruditeBookSection basicNew title: 'dernier:rep:'; document: ((EruditeDocument contents: '
 dernier:rep:
@@ -15067,91 +15099,91 @@ Le dernier élément d''une liste.
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_excludesel
 ^(EruditeBookSection basicNew title: 'excludes:el:	'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_includesel
 ^(EruditeBookSection basicNew title: 'includes:el:	'; document: ((EruditeDocument contents: 'includes:el:	
 
 Vérifie qu''une liste contient un élément.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_indexelrep
 ^(EruditeBookSection basicNew title: 'index:el:rep:'; document: ((EruditeDocument contents: 'index:el:rep:
 
 Retourne l''indice d''un élément dans une liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_jointavecrep
 ^(EruditeBookSection basicNew title: 'joint:avec:rep:'; document: ((EruditeDocument contents: 'joint:avec:rep:
 
 Réunit les éléments de deux listes.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_minrep
 ^(EruditeBookSection basicNew title: 'min:rep:	'; document: ((EruditeDocument contents: 'min:rep:	
 
 Le plus petit élément d''une  liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_nonContientel
 ^(EruditeBookSection basicNew title: 'nonContient:el:	'; document: ((EruditeDocument contents: 'nonContient:el:	
 
 Vérifie qu''un élément n''est pas dans une liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_nonTousPositifs
 ^(EruditeBookSection basicNew title: 'nonTousPositifs:	'; document: ((EruditeDocument contents: 'nonTousPositifs:	
 
 Vérifie que les éléments d''une liste ne sont pas tous 	positifs.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_premierrep
 ^(EruditeBookSection basicNew title: 'premier:rep:'; document: ((EruditeDocument contents: 'premier:rep:
 
 Le premier élément d''une liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_saufDernierrep
 ^(EruditeBookSection basicNew title: 'saufDernier:rep:	'; document: ((EruditeDocument contents: 'saufDernier:rep:	
 
 Les éléments d''une liste sauf le dernier.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_saufPremierrep
 ^(EruditeBookSection basicNew title: 'saufPremier:rep:'; document: ((EruditeDocument contents: 'saufPremier:rep:
 
 Les éléments d''une liste sauf le premier.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_sommerep
 ^(EruditeBookSection basicNew title: 'somme:rep:'; document: ((EruditeDocument contents: 'somme:rep:
 
 La somme de tous les éléments d''une liste.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_sortblockrep
 ^(EruditeBookSection basicNew title: 'sort:block:rep'; document: ((EruditeDocument contents: 'sort:block:rep
 
 Trie sort:block:reples éléments d''une liste selon un critère décrit 	dans le block.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_taillerep
 ^(EruditeBookSection basicNew title: 'taille:rep'; document: ((EruditeDocument contents: 'taille:rep
 
 Le nombre d''éléments de la liste.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_tousNégatifs
 ^(EruditeBookSection basicNew title: 'tousNégatifs:	
 '; document: ((EruditeDocument contents: 'tousNégatifs:	
@@ -15159,13 +15191,13 @@ section_Expert_ListeDesPrédicats_Listes_tousNégatifs
 Vérifie que tous les éléments de la liste sont 	négatifs.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Listes_triePointsSurdroiterep
 ^(EruditeBookSection basicNew title: 'triePointsSur:droite:rep:	'; document: ((EruditeDocument contents: 'triePointsSur:droite:rep:	
 
 Trie les points sur une droite') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Nombres
 ^(EruditeBookSection basicNew title: 'Nombres'; document: ((EruditeDocument contents: 'Des opérations avec les nombresl') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_ListeDesPrédicats_Nombres_différenceetrep;
         add: self section_Expert_ListeDesPrédicats_Nombres_xrepvars;
@@ -15175,7 +15207,7 @@ section_Expert_ListeDesPrédicats_Nombres
         add: self section_Expert_ListeDesPrédicats_Nombres_supérieurOuEgalà;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Nombres_différenceetrep
 ^(EruditeBookSection basicNew title: 'différence:et:rep:'; document: ((EruditeDocument contents: 'différence:et:rep:vars: 
 
@@ -15189,20 +15221,20 @@ section_Expert_ListeDesPrédicats_Nombres_différenceetrepvars
 La différence de deux nombres.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Nombres_égalà
 ^(EruditeBookSection basicNew title: 'égal:à:'; document: ((EruditeDocument contents: 'égal:à:
 
 égalité numérique de deux nombres ou de deux points.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Nombres_racineFractionrep
 ^(EruditeBookSection basicNew title: 'racineFraction:rep:'; document: ((EruditeDocument contents: 'racineFraction:rep:
 
 Racine sous forme de fraction.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Nombres_supérieurOuEgalà
 ^(EruditeBookSection basicNew title: 'supérieurOuEgal:à:'; document: ((EruditeDocument contents: 'supérieurOuEgal:à:
 
@@ -15213,7 +15245,7 @@ section_Expert_ListeDesPrédicats_Nombres_supérieurOuEgalà
 section_Expert_ListeDesPrédicats_Nombres_supérieurOuEgalà_supérieurOuEgalà
 ^(EruditeBookSection basicNew title: 'supérieurOuEgal:à'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Nombres_supérieurà
 ^(EruditeBookSection basicNew title: 'supérieur:à:'; document: ((EruditeDocument contents: 'supérieur:à:vars:
  
@@ -15223,12 +15255,12 @@ section_Expert_ListeDesPrédicats_Nombres_supérieurà
 section_Expert_ListeDesPrédicats_Nombres_supérieurà_supérieuràvars
 ^(EruditeBookSection basicNew title: 'supérieur:à:vars:'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Nombres_xrepvars
 ^(EruditeBookSection basicNew title: 'x:rep:vars: '; document: ((EruditeDocument contents: 'x:rep:vars: 
 Coordonnée x d''''un point.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Relations
 ^(EruditeBookSection basicNew title: 'Relations'; document: ((EruditeDocument contents: ' DrGeo relations permettent de représenter les relations  d''équivalences sous forme de partition d''un ensemble pour un traitement plus rapide.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_ListeDesPrédicats_Relations_ajouteensemble;
         add: self section_Expert_ListeDesPrédicats_Relations_nonRelationetnom;
@@ -15238,41 +15270,41 @@ section_Expert_ListeDesPrédicats_Relations
         add: self section_Expert_ListeDesPrédicats_Relations_relationsClés;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Relations_ajouteensemble
 ^(EruditeBookSection basicNew title: 'ajoute:ensemble:	'; document: ((EruditeDocument contents: 'ajoute:ensemble:	
 
 Ajoute un élément à  un ensemble.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Relations_nonRelationetnom
 ^(EruditeBookSection basicNew title: 'nonRelation:et:nom:	'; document: ((EruditeDocument contents: 'nonRelation:et:nom:	
 
 Vérifie qu''il n''y a pas de relation.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Relations_relationCréeetnom
 ^(EruditeBookSection basicNew title: 'relationCrée:et:nom:'; document: ((EruditeDocument contents: 'relationCrée:et:nom:
 
 Etablit une relation.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Relations_relationetnom
 ^(EruditeBookSection basicNew title: 'relation:et:nom:'; document: ((EruditeDocument contents: 'relation:et:nom:	
 
 Relation entre deux objets, nom de la relation.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Relations_relationrep
 ^(EruditeBookSection basicNew title: 'relation:rep:	'; document: ((EruditeDocument contents: 'relation:rep:	
 
 Affiche les éléments en relation sous forme de 	listes.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_ListeDesPrédicats_Relations_relationsClés
 ^(EruditeBookSection basicNew title: 'relationsClés:	'; document: ((EruditeDocument contents: 'relationsClés:	
 
@@ -16207,7 +16239,7 @@ Supprime ou rétablit l''affichage des commentairs des règles.
 inverrse entre menu DrGeo et menu  World.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel
 ^(EruditeBookSection basicNew title: 'Tutoriel'; document: ((EruditeDocument contents: '!!!!!!Tutoriel
 
@@ -16448,7 +16480,7 @@ e afficheFaits.''.
 ]]] doItWithButton: copier l''exemple.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_AfficherLesRègles
 ^(EruditeBookSection basicNew title: 'Afficher les règles
 '; document: ((EruditeDocument contents: '!!!!!!Afficher les règles
@@ -16580,7 +16612,7 @@ e afficheFaits."Affiche tous les faits"
 "La solution est aussi acceptable avec les noms inversés."''
 ]]] doItWithButton: Solutions.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_ChargerDesRègles
 ^(EruditeBookSection basicNew title: 'Charger des règles'; document: ((EruditeDocument contents: '!!!!!!Charger des règles
 //<Expert>//**ChargeRegle:**  Règles_à_charger
@@ -16979,7 +17011,7 @@ Aller plus loin :
 Ecris d''autre règles sur la famile.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_ExempleGénéral
 ^(EruditeBookSection basicNew title: 'Exemple général'; document: ((EruditeDocument contents: '!!!!Exemple Général
 Pour observer les méthodes du système expert, il faut les mettre en situation parmi les autres méthodes, avec l''Exemple général on peut utiliser les méthodes en ce concentrant sur chaque méthode.
@@ -17019,7 +17051,7 @@ exp modèlesQuestions.
 
 Tu retrouvera ce bouton dans chaque section et portera son attention sur une partie de l''exemple pour chaque méthode.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_Explications
 ^(EruditeBookSection basicNew title: 'Explications'; document: ((EruditeDocument contents: '!!!!!!Explications
 
@@ -17101,7 +17133,7 @@ exp causesFaitNo: 5 .
 Cet exemple sera repris dans la section **Les prédicats** dans le cas où un fait dépend de plusieurs règles.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_InitialiserAffirmerEtAfficherDesFaits
 ^(EruditeBookSection basicNew title: 'Initialiser, affirmer et Afficher des faits '; document: ((EruditeDocument contents: '!!!!Initialiser, affirmer et Afficher des faits.
 
@@ -17164,7 +17196,7 @@ exp afficheFaits.
 "La solution est aussi acceptable avec les noms inversés."''
 ]]] doItWithButton: Solutions.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_InitialiserDéfinirDesRèglesDéductions
 ^(EruditeBookSection basicNew title: 'Initialiser, définir des règles, déductions.'; document: ((EruditeDocument contents: '!!!!!!Initialiser,  définir des règles, déductions
 	**Initialiser les règles**
@@ -17477,7 +17509,7 @@ Aller plus loin :
 Ecris d''autre règles sur la famile.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_LesPrédicats
 ^(EruditeBookSection basicNew title: 'Les prédicats'; document: ((EruditeDocument contents: '!!!!!!Les prédicats
 //<expert> //** sélecteur  **//arguents//
@@ -17654,7 +17686,7 @@ exp verifieCondition: ''''frèreOuSoeur ?e1 ?e2''''.''.]]] doItWithButton: copie
 Il n''y a qu''une réponse."
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_ModèlesDeQuestions
 ^(EruditeBookSection basicNew title: 'Modèles de questions'; document: ((EruditeDocument contents: '!!!!!!Modèles de questions
 
@@ -17802,7 +17834,7 @@ Dans la suite de ce tutoriel, un espace de travail s''ouvre avec les variables *
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_OuvirUneFigureOuUnExpert
 ^(EruditeBookSection basicNew title: 'Ouvir une figure ou un expert
 
@@ -17837,7 +17869,7 @@ Dans la suite de ce tutoriel, si tu copies un exemple un espace de travail s''ou
 **fig** contient une DrGeoFigure et **exp** une Expert.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_Tutoriel_VérifierUneCondition
 ^(EruditeBookSection basicNew title: 'Vérifier une condition.'; document: ((EruditeDocument contents: '!!!!Vérifier une condition.
 //<expert>//**vérifieCondition:**cond
@@ -17976,7 +18008,7 @@ mère Marie ?x3''''
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_UtilisationInteractive
 ^(EruditeBookSection basicNew title: 'Utilisation interactive'; document: ((EruditeDocument contents: '!!!!!! Utilisation intreractive
 
@@ -18005,7 +18037,7 @@ Pour expliquer un fait, selectionne le numéro du fait et clique sur **Expliquer
 Pour avoir la documentation d''un article du menu, laisse la souris dessus sans cliquer.') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Expert_UtilisationInteractive_MenuExpert;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Expert_UtilisationInteractive_MenuExpert
 ^(EruditeBookSection basicNew title: 'Menu Expert'; document: ((EruditeDocument contents: '!!!!!!!!Examiner la figure
 Rassemble plusieurs actions:
@@ -18074,7 +18106,7 @@ Supprime ou rétablit l''affichage des commentairs des règles.
 inverrse entre menu DrGeo et menu  World.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Général
 ^(EruditeBookSection basicNew title: 'Général'; document: ((EruditeDocument contents: '!!!!!!Commandes générales
 **faire:** //bloc//
@@ -18124,7 +18156,7 @@ fig échelle: 5]]] withDrGeoActions
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Introduction
 ^(EruditeBookSection basicNew title: 'Introduction'; document: ((EruditeDocument contents: 'Les Figures Smalltalk de Dr.Geo – ou plus simplement figure dans la suite de ce texte – sont des figures écrites en langage Smalltalk. Il ne s’agit donc plus de construire une figure à l’aide de l’interface graphique de Dr.Geo mais plutôt de décrire une figure avec le langage Smalltalk et des instructions dédiées. Cette documentation décrit ces instructions.
 
@@ -18152,7 +18184,7 @@ Les icônes de la barre ont les fonctions suivantes :
 //Stopper la construction d''une figure. Utile lorsqu''une figure prend beaucoup de temps à s''exécuter entièrement.//') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new        add: self section_Introduction_Exemples;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Introduction_Exemples
 ^(EruditeBookSection basicNew title: 'Exemples'; document: ((EruditeDocument contents: '!!!!!!Examples simples
 //La figure la plus simple, une figure vide.//
@@ -18215,7 +18247,7 @@ d tiret]]] withDrGeoActions
 Deux points et une droite sont créés. Ensuite des messages sont envoyés pour modifier l’aspect des objets, voire pour en cacher.
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesCourbes
 ^(EruditeBookSection basicNew title: 'Lignes courbes'; document: ((EruditeDocument contents: 'La famille des lignes courbres regroupe les cercle, arc de cercle, polygone et lieu de points.
 
@@ -18226,7 +18258,7 @@ Déplie la section **▶ Lignes courbes** pour explorer ces types de ligne !!') 
         add: self section_LignesCourbes_CourbeFonction;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesCourbes_ArcDeCercle
 ^(EruditeBookSection basicNew title: 'Arc de cercle'; document: ((EruditeDocument contents: '!!!!!!Arc passant par trois points
 //<arc>// **arcDe:à:passantPar:** //p1 p2 p3//
@@ -18254,7 +18286,7 @@ a _ fig point: 1@5.
 b _ fig point: 0@5.
 fig arcCentre: a de: b à: -1 @ -2]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesCourbes_Cercle
 ^(EruditeBookSection basicNew title: 'Cercle'; document: ((EruditeDocument contents: '!!!!!!Cercle selon centre et point
 //<cercle>// **cercleCentre:passantPar:** //c p//
@@ -18292,7 +18324,7 @@ a _ fig point: 1@5.
 s _ fig segmentDe: 0@0 à: 3@0.
 fig cercleCentre: a segment: s]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesCourbes_CourbeFonction
 ^(EruditeBookSection basicNew title: 'Courbe fonction'; document: ((EruditeDocument contents: '!!!!!!Courbe d''une fonction
 //<lieu>// **courbeDe:de:à:** //bloc x0 x1//
@@ -18305,7 +18337,7 @@ section_LignesCourbes_CourbeFonction
 fig _ DrGeoFigure nouveau.
 fig courbeDe: [:x | x * x] de: -3 à: 3]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesCourbes_LieuDePoint
 ^(EruditeBookSection basicNew title: 'Lieu de point'; document: ((EruditeDocument contents: '!!!!!!Lieu d''un point
 //<lieu>// **lieuDe:lorsqueBouge:** //c m//
@@ -18323,7 +18355,7 @@ fig lieuDe: c lorsqueBouge: m]]] withDrGeoActions
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesCourbes_Polygone
 ^(EruditeBookSection basicNew title: 'Polygone'; document: ((EruditeDocument contents: '!!!!!!Polygone
 //<polygone>// **polygone:** //collection//
@@ -18356,7 +18388,7 @@ s _ fig segmentDe: b à: 0@0.
 v _ fig longueurDe: s.
 fig polygoneRégulierCentre: 0@0 sommet: b côtés: v]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites
 ^(EruditeBookSection basicNew title: 'Lignes droites'; document: ((EruditeDocument contents: 'La famille des lignes droites regroupe les droites passant par deux points, parallèle, perpendiculaire,... ainsi que les demi-droites et les segments.
 
@@ -18370,7 +18402,7 @@ Déplie la section **▶ Lignes droites** pour explorer ces types de ligne !!') 
         add: self section_LignesDroites_Explications;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites_Bissectrice
 ^(EruditeBookSection basicNew title: 'Bissectrice'; document: ((EruditeDocument contents: '!!!!!!Bissectrice d''un angle
 //<droite>// **bissectriceDe:** //a//
@@ -18391,7 +18423,7 @@ fig bissectriceDe: angle]]] withDrGeoActions
 
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites_Demidroite
 ^(EruditeBookSection basicNew title: 'Demi-droite'; document: ((EruditeDocument contents: '!!!!!!Demi-droite
 //<demi-droite>// **demiDroiteOrigine:passantPar:** //o p//
@@ -18401,7 +18433,7 @@ fig _ DrGeoFigure nouveau.
 a _ fig point: 1@5.
 fig demiDroiteOrigine: 0@0 passantPar: a]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites_Droite
 ^(EruditeBookSection basicNew title: 'Droite'; document: ((EruditeDocument contents: '!!!!!!Passant par deux points
 //<droite>// **droitePassantPar:et:** //p1 p2//
@@ -18416,11 +18448,11 @@ point _ figure point: 1@2.
 figure droitePassantPar: 0@0 et: point]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites_Explications
 ^(EruditeBookSection basicNew title: 'Explications'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites_Médiatrice
 ^(EruditeBookSection basicNew title: 'Médiatrice'; document: ((EruditeDocument contents: '!!!!!!Médiatrice d''un segment
 //<droite>// **médiatriceDe:** //s//
@@ -18450,7 +18482,7 @@ fig médiatriceDe: ptA à: (fig point: 0@5)]]] withDrGeoActions
 section_LignesDroites_Parallel
 ^(EruditeBookSection basicNew title: 'Parallel'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites_Parallèle
 ^(EruditeBookSection basicNew title: 'Parallèle'; document: ((EruditeDocument contents: '!!!!!!Droite parallèle
 //<droite>// **parallèleA:passantPar:** //d p//
@@ -18469,7 +18501,7 @@ fig
 	parallèleA: (fig droitePassantPar: 0@0 et: 5@1)
 	passantPar: 0@3]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites_Perpendiculaire
 ^(EruditeBookSection basicNew title: 'Perpendiculaire'; document: ((EruditeDocument contents: '!!!!!!Droite perpendiculaire
 //<droite>// **perpendiculaireA:passantPar:** //d p//
@@ -18490,7 +18522,7 @@ section_LignesDroites_Perpendicular
 section_LignesDroites_Ray
 ^(EruditeBookSection basicNew title: 'Ray'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_LignesDroites_Segment
 ^(EruditeBookSection basicNew title: 'Segment'; document: ((EruditeDocument contents: '!!!!!!Segment
 //<segment>// **segmentDe:à:** //p1 p2//
@@ -18751,7 +18783,7 @@ Variante à valeur décimale.
 //<bloc>// **decimal:a:min:max:nom:** //v1 p v2 v3 s//
 //<bloc>// **decimal:a:min:max:nom:affciherValeur:** //v1') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_NumériqueTexte
 ^(EruditeBookSection basicNew title: 'Numérique & Texte'; document: ((EruditeDocument contents: 'Cette section regroupe les commandes pour obtenir des valeurs numériques et texte : angles, coordonnées, pente, distance, valeurs libres, etc.
 
@@ -18763,7 +18795,7 @@ Déplie la section **▶ Numérique & Texte** pour explorer ces types de valeurs
         add: self section_NumériqueTexte_Texte;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_NumériqueTexte_Angle
 ^(EruditeBookSection basicNew title: 'Angle'; document: ((EruditeDocument contents: '!!!!!!Angle géométrique
 //<angle>// **angleGéométriqueSommet:de:à** //a b c//
@@ -18809,7 +18841,7 @@ v2 _ fig vecteurOrigine: 0@0 extrémité: -1@-3.
 a _ fig angleVecteur: v1 et: v2]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_NumériqueTexte_Coordonnée
 ^(EruditeBookSection basicNew title: 'Coordonnée'; document: ((EruditeDocument contents: '!!!!!!Abscisse
 //<valeur>// **abscisseDe:** //item//
@@ -18840,7 +18872,7 @@ p _ fig pointSurLigne: seg à: 0.5.
 c _ p coordonnées.
 c x]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_NumériqueTexte_Equation
 ^(EruditeBookSection basicNew title: 'Equation'; document: ((EruditeDocument contents: '!!!!!!Equation
 //<equation>// **équationDe:** //item//
@@ -18854,7 +18886,7 @@ d _ fig droitePassantPar: 0@0 et: 15@13.
 e _ fig équationDe: e]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_NumériqueTexte_Mesure
 ^(EruditeBookSection basicNew title: 'Mesure'; document: ((EruditeDocument contents: '!!!!!!Longueur
 //<valeur>// **longueurDe:** //objet//
@@ -18890,7 +18922,7 @@ fig _ DrGeoFigure nouveau.
 d _ fig droitePassantPar: 0@0 et: 3@8.
 p _ fig penteDe: d]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_NumériqueTexte_Texte
 ^(EruditeBookSection basicNew title: 'Texte'; document: ((EruditeDocument contents: '!!!!!!Texte
 //<texte>// **texte:** //string//
@@ -18921,7 +18953,7 @@ fig _ DrGeoFigure nouveau.
 monTexte _ fig texte: ''Hello''.
 monTexte texte: ''Au revoir'']]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_NumériqueTexte_ValeurRéglette
 ^(EruditeBookSection basicNew title: 'Valeur & Réglette'; document: ((EruditeDocument contents: '!!!!!!Valeur libre
 //<valeur>// **valeurLibre:** //v//
@@ -18976,7 +19008,7 @@ Variante à valeur décimale.
 //<bloc>// **décimal:à:min:max:nom:** //v1 p v2 v3 s//
 //<bloc>// **décimal:à:min:max:nom:affciherValeur:** //v1') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Point
 ^(EruditeBookSection basicNew title: 'Point'; document: ((EruditeDocument contents: 'Tu peux créer toutes sortes de point : point libre que tu peux ensuite déplacer à la souris, point mobile sur une ligne, point milieu ou d''intersection entre deux lignes. Il est même possible de créer un point dont la position est déterminée par un bloc de code !!
 
@@ -18988,7 +19020,7 @@ Déplie la section **▶ Point** pour explorer ces types de point !!') data: ((D
         add: self section_Point_BlocDeCode;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Point_BlocDeCode
 ^(EruditeBookSection basicNew title: 'Bloc de code'; document: ((EruditeDocument contents: '!!!!!!Bloc de code
 Fonctionalité avancée où la position du point est définie par un bloc de code.
@@ -19019,7 +19051,7 @@ p _ figure
 	parents first closestPointTo: parents second point]
    parents: {d . m}]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Point_Fixe
 ^(EruditeBookSection basicNew title: 'Fixe'; document: ((EruditeDocument contents: '!!!!!!Point valeur
 //<point>// **pointX:Y:** //v1 v2//
@@ -19035,7 +19067,7 @@ fig
 	Y: (fig longueurDe: segment)]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Point_Intersection
 ^(EruditeBookSection basicNew title: 'Intersection'; document: ((EruditeDocument contents: '!!!!!!Intersection entre deux lignes
 //<point>// **intersectionDe:et:** //l1 l2//
@@ -19058,7 +19090,7 @@ cercle _ f cercleCentre: 0@0 rayon: 5.
 f intersectionDe: droite et: cercle.
 f autreIntersectionDe: droite et: cercle]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Point_Libre
 ^(EruditeBookSection basicNew title: 'Libre'; document: ((EruditeDocument contents: '!!!!!!Point libre
 //<point>// **point:** //pointOuBloc//
@@ -19069,7 +19101,7 @@ section_Point_Libre
 	point: [ 5 auHasard @ 5 auHasard ] ]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Point_Milieu
 ^(EruditeBookSection basicNew title: 'Milieu'; document: ((EruditeDocument contents: '!!!!!!Milieu de deux points
 //<point>// **milieuDe:et:** //p1 p2//
@@ -19090,7 +19122,7 @@ s _ f segmentDe: 0@0 à: 5@3.
 f milieuDe: s]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Point_SurLigne
 ^(EruditeBookSection basicNew title: 'Sur ligne'; document: ((EruditeDocument contents: '!!!!!!Point sur ligne
 //<point>// **pointSurLigne:à:** //curve a//
@@ -19166,7 +19198,7 @@ s _ f segmentDe: 0@0 a: 5@3.
 f pointSurLigne: s a: 0.5]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Styles
 ^(EruditeBookSection basicNew title: 'Styles'; document: ((EruditeDocument contents: '!!!!!!Style
 Pour modifier les attributs d’un objet déjà créé, nous lui envoyons le message approprié. La modification des attributs se fait donc toujours à posteriori.
@@ -19232,7 +19264,7 @@ fig actualiser]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsec
         add: self section_Styles_Texte;
  yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Styles_Ligne
 ^(EruditeBookSection basicNew title: 'Ligne'; document: ((EruditeDocument contents: '!!!!!!Ligne
 Une ligne est un segment, une droite, une demi-droite, un cercle, un arc de cercle, un polygone ou un lieu géométrique.
@@ -19265,7 +19297,7 @@ c épais tiret.
 r _ fig segmentDe: 0@0 à: 1@0.
 r pointillé]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Styles_Point
 ^(EruditeBookSection basicNew title: 'Point'; document: ((EruditeDocument contents: '!!!!!!Point
 
@@ -19302,7 +19334,7 @@ fig _ DrGeoFigure nouveau.
 (fig point: 2@0) large ]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Styles_Segment
 ^(EruditeBookSection basicNew title: 'Segment'; document: ((EruditeDocument contents: '!!!!!!Segment
 
@@ -19340,7 +19372,7 @@ fig _ DrGeoFigure nouveau.
 segment _ fig segmentDe: 0@0 à: 5@1.
 segment flècheDebut]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Styles_Texte
 ^(EruditeBookSection basicNew title: 'Texte'; document: ((EruditeDocument contents: '!!!!!!Texte
 **couleurFond:** //uneCouleur//
@@ -19352,7 +19384,7 @@ t _ fig texte: ''Hello''.
 t couleurFond: Color green]]] withDrGeoActions
 ') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Transformations
 ^(EruditeBookSection basicNew title: 'Transformations'; document: ((EruditeDocument contents: 'Avec les transformations géométriques construis des tranformés d''objets tels des point, segment, droite, demi-droite, vecteur, cercle, arc de cercle, polygone et lieu de point.
 
@@ -19367,7 +19399,7 @@ Déplie la section **▶ Transformations** pour les découvrir !!') data: ((Dict
 section_TransformationsGéométriques
 ^(EruditeBookSection basicNew title: 'Transformations géométriques'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Transformations_Homothétie
 ^(EruditeBookSection basicNew title: 'Homothétie'; document: ((EruditeDocument contents: '!!!!!!Homothétie
 //<objet>// **homothétieDe:centre:facteur:** //i c k//
@@ -19386,7 +19418,7 @@ l _ fig cercleCentre: 0@0 passantPar: 3@3.
 fig homothétieDe: l centre: c facteur: 1.5.
 fig homothétieDe: l centre: c facteur: n]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Transformations_Rotation
 ^(EruditeBookSection basicNew title: 'Rotation'; document: ((EruditeDocument contents: '!!!!!!Rotation
 //<objet>// **rotationDe:centre:angle:** //i c a//
@@ -19405,7 +19437,7 @@ l _ fig droitePassantPar: 1@0 et: 5@5.
 fig rotationDe: l centre: c angleDegrés: 30.
 fig rotationDe: l centre: c angle: n]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Transformations_SymétrieAxiale
 ^(EruditeBookSection basicNew title: 'Symétrie axiale'; document: ((EruditeDocument contents: '!!!!!!Symétrie axiale (réflexion)
 //<objet>// **symétriqueDe:selonAxe:** //o c//
@@ -19420,7 +19452,7 @@ fig
 	symétriqueDe: a 
 	selonAxe: (fig droitePassantPar: 0@0 et: 4@5)]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Transformations_SymétrieCentrale
 ^(EruditeBookSection basicNew title: 'Symétrie centrale'; document: ((EruditeDocument contents: '!!!!!!Symétrie centrale
 //<objet>// **symétriqueDe:selonCentre:** //o c//
@@ -19433,7 +19465,7 @@ fig _ DrGeoFigure nouveau.
 a _ fig point: 4@2.
 fig symétriqueDe: a selonCentre: 0@0]]] withDrGeoActions') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Transformations_Translation
 ^(EruditeBookSection basicNew title: 'Translation'; document: ((EruditeDocument contents: '!!!!!!Translation
 //<objet>// **translationDe:parVecteur:** //o v//
@@ -19460,7 +19492,7 @@ a _ fig translationDe: c parVecteur: u]]] withDrGeoActions
 section_ValeursNumériques
 ^(EruditeBookSection basicNew title: 'Valeurs numériques'; document: ((EruditeDocument contents: '') data: ((Dictionary new)); yourself); subsections: (OrderedCollection new yourself); yourself)! !
 
-!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 10/2/2026 23:08:04'!
+!DrGeoTutorial methodsFor: 'as yet unclassified' stamp: 'drgeo 11/4/2026 00:43:29'!
 section_Vecteur
 ^(EruditeBookSection basicNew title: 'Vecteur'; document: ((EruditeDocument contents: '!!!!!!Vecteur par deux points
 //<vecteur>// **vecteurOrigine:extremité:** //o e//
