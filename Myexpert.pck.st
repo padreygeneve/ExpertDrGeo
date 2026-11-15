@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6452] on 9 November 2026 at 10:11:36 pm'!
+'From Cuis7.1 [latest update: #6452] on 15 November 2026 at 4:32:04 pm'!
 'Description '!
-!provides: 'Myexpert' 1 25!
+!provides: 'Myexpert' 1 26!
 SystemOrganization addCategory: #Myexpert!
 
 
@@ -159,7 +159,7 @@ rel isEmpty ifTrue:[ ^ rel].
 ^rel asArray first.
 ! !
 
-!ExpertRelations methodsFor: 'accessing' stamp: 'drgeo 10/19/2026 16:50:50'!
+!ExpertRelations methodsFor: 'accessing' stamp: 'drgeo 11/12/2026 22:15:35'!
 relationCrée: obj1 et: obj2 nom: n
 	| rel1 rel2 rel e  nom |
 	e := self expert.
@@ -8329,7 +8329,7 @@ t2 concl: 'code ?ls := f droitePassantPar: ?lxx et: ?lyy'.
 t2 com: 'code droite'.
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 9/26/2026 21:21:51'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/12/2026 11:07:55'!
 egalites: e
 	e
 		lisRegle: 'egalité-Points'
@@ -8367,7 +8367,8 @@ pointSur ?obj ?p2'
 		si:
 			'angle0 ?x1
 angle0 ?x2
-relation:et:nom: ?x1 ?x2 isométrique			'
+relation:et:nom: ?x1 ?x2 isométrique
+different:de: ?x1 ?x2			'
 		alors: 'égal ?x1 ?x2'
 		com: 'Des angles isométriques sont égaux'.
 	e
@@ -9319,7 +9320,7 @@ pointSur ?c ?s'
 
 	! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/19/2026 15:52:05'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/13/2026 19:34:25'!
 figuresRectilignes: e
 	e
 		lisRegle: 'égalitéParallèleParallèleDirection'
@@ -9725,7 +9726,7 @@ différence:et:rep: ?per ?m12 ?diff'
 	e
 		lisRegle: 'figuresRectilignes-triangleAngleExtérieur1'
 		si:
-			'triangle ?t [ isocèle: [ sommet: ?s  angles:  [ ?p1 ?p2  ?s ]   ?ang ] ]
+			'triangle ?t [ isocèle: [ sommet: ?s  angles:  [ ?p1 ?p2  ?s ]   ?ang ] ] ]
 angle [ ?p1 ?s ?p2 ] [ supplémentaire: ?sup ]'
 		alors:
 			'triangle ?t [ angleExtérieur: [ [ mesure  ?sup ] = somme [ mesure [ ?p1 ?p2  ?s ] ]  [ mesure  ?ang ] ]  ]'
@@ -9743,7 +9744,7 @@ angle [ ?p2 ?s ?p1 ] [ supplémentaire: ?sup ] ]'
 	e
 		lisRegle: 'figuresRectilignes-triangleAngleIsométriques'
 		si:
-			'triangle ?t [ isocèle: [  angles: ?a1 ?a2 ] ]
+			'triangle ?t [ isocèle: [  angles: ?a1 ?a2 ] 
 relationCrée:et:nom: ?a1 ?a2 isométrique'
 		alors: 'relationCréée  ?a1 ?a2 isométrique'
 		com: 'Angles isométriques d''un triangle isocèles'.
@@ -10005,7 +10006,7 @@ different:de: ?t1 ?t2
 coupleOrdonné [ ?x1 ?y1 ] ?or1
 coupleOrdonné [ ?x2 ?y2 ] ?or2
 relation:et:nom:  ?or1 ?or2 isométrique'
-		alors: 'triangle ?t [ isocèle:  [ ?or1 ?or2 ] ]'
+		alors: 'triangle ?t [ isocèle: [  côtés:  [ ?or1 ?or2 ] ] ] ]'
 		com: 'Un triangle avec 2 côtés isométriquesl est isocèle.'.
 			e
 		lisRegle: 'figuresRectilignes-triangleIsocèle02'
@@ -10031,22 +10032,22 @@ relation:et:nom:  ?or1 ?or3 isométrique'
 			e
 		lisRegle: 'figuresRectilignes-triangleIsocèleAngles'
 		si:
-			'triangle  ?x1 [  isocèle: [ ?c1 ?c2 ] ]
-point ?x
-point ?y
-point ?z
-triangle ?x1 [ sommet:  [ ?y angle: ?angy ]  ] 
-triangle ?x1 [ sommet:  [ ?z angle: ?angz ]  ] 
-relationCrée:et:nom: ?angy ?angz isométrique
-contient:el: ?c1 ?x
-contient:el: ?c2 ?x
-contient:el: ?c1 ?y
-contient:el: ?c2 ?z
-different:de: ?x ?y
-different:de: ?x ?z'
-		alors: 'triangle ?x1 [ isocèle:  [ angles: ?angy ?angz ]'
+			'triangle ?t [ sommet:  [ ?z angle: [ ?y1 ?y2 ?y3 ]  ] 
+triangle ?t [ sommet:  [ ?x angle: [ ?x1 ?x2 ?x3 ]  ] 
+cercle ?c [ centre: ?centre ]
+different:de: ?z ?centre
+different:de: ?x ?centre
+different:de: ?x ?z
+ordonneMot:et:rep1:rep2: ?x ?z ?x ?z
+relationCrée:et:nom: [ ?y1 ?y2 ?y3 ]  [ ?x1 ?x2 ?x3 ] isométrique
+'
+		alors: 'triangle ?t [ isocèle:  [ angles: [ ?y1 ?y2 ?y3 ]  [ ?x1 ?x2 ?x3 ] ] '
 		com: 'Un triangle isocèle a deux angles isométriques.'.
 		
+		e lisRegle: 'figuresRectilignes-triangleIsocèleAnglesIsommétriques'
+		si: 'triangle ?x1 [ isocèle:  [ angles: ?angy ?angz ]'
+		alors: 'relationCréée ?angy ?angz  isométrique'
+		com: 'Un triangle isocéle a deux angles isométriques.'.
 		e
 		lisRegle: 'figuresRectilignes-triangleEquilatéral'
 		si:
@@ -10330,7 +10331,7 @@ Si un triangle est isocèle en un sommet, les couples reliant ce sommet à chacu
 
 	ExpertRegle figuresRectilignesuite: e! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 7/6/2026 19:49:34'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/13/2026 22:44:54'!
 figuresRectilignesSuite2: e
 
 	e
@@ -10492,8 +10493,6 @@ cercle ?cer [ centre: ?O ]
 droite ?d
 ordonneMot:et:rep1:rep2: ?d ?cer ?dd ?ccer
 intersection ?I ?dd ?ccer
-angle0 [ ?A ?S ?O ]
-angle0 [ ?O ?A ?S ]
 different:de: ?I ?S'
 		alors:
 			'égal  [ somme  [ mesure [ ?A ?S ?O ]  ]  [ mesure    [ ?O ?A ?S  ] ]  ]   [ mesure [ ?A ?O ?I ]  ]'
@@ -10666,7 +10665,7 @@ different:de: ?z ?v'
 			com:'si des sommets opposés sont sur la médiatrice de autres côtés opposés, le quadrilatère est un cerf-volant'.
 ! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 7/5/2026 20:02:53'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/12/2026 15:40:40'!
 figuresRectilignesuite: e
 	e
 		lisRegle: 'figuresRectilignes-sommeAngles1'
@@ -10746,7 +10745,7 @@ cercle ?c  [ rayon: ?r ]
 segment ?s2 ?r
  quadrilatère A:B:C:D  [ isocèle:  [ côtés: Segment1 Segment5 ]  ] 
 '
-		alors: 'relationCrée:et:nom: ?s1 ?s2 isométrique'
+		alors: 'relationCréée ?s1 ?s2 isométrique'
 		com: 'Des cercles définis par un segment'.
 		
 		e
@@ -14070,7 +14069,7 @@ different:de: ?x1 ?x2'
 			'si un point est le milieu de deux points,  les couples qui le reiie à chaque point sont isométriques.'.	
 			! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/18/2026 18:00:51'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/15/2026 16:31:02'!
 mesure: e
 	e
 		lisRegle: 'mesure-trianglePérimètreAffichemesure'
@@ -14324,9 +14323,28 @@ relation:et:nom:  ?obj1  ?obj2 isométrique
 different:de: ?obj1  ?obj2'
 		alors: 'égal [ mesure ?obj1 ] [ mesure ?obj2 ]'
 		com: 'Les mesures d'' objets isométriques sont égales'.
+		
+		e
+		lisRegle: 'mesure-isométrieAnglesSymbolique'
+		si:
+			'angle ?obj1
+angle ?obj2
+relation:et:nom:  ?obj1  ?obj2 isométrique
+different:de: ?obj1  ?obj2'
+		alors: 'égal [ mesure ?obj1 ] [ mesure ?obj2 ]'
+		com: 'Les mesures d'' objets isométriques sont égales'.
+		
+		
+			e
+		lisRegle: 'mesure-isométrieAnglesSymboliqueIsocèle'
+		si:
+			'triangle  ?x1 [  isocèle: [ angles: ?ang1   ?ang2 ]  ]
+relation:et:nom: ?ang1  ?ang2 isométrique'
+		alors: 'égal [ mesure ?ang1 ] [ mesure ?ang2 ]'
+		com: 'Les mesures d''angles isométriques sont égales'.
 	"e
 		lisRegle: 'mesure-mesureCoupleInversé'
-		si: 'mesure [ ?x ?y ] ?m'
+		si: 'mesure [ ?x ?y ] ?ms'
 		alors: 'mesure [ ?y ?x ] ?m'
 		com:
 			'La mesure de distance entre deux points  est la  même si on inverse les points'."
@@ -14391,24 +14409,48 @@ different:de: ?y ?z'
 			'Transitivité de l''égalité. x = y et x = z => y =  z.
 		'."
 	e
-		lisRegle: 'mesure-sommeAnglesEgaux'
+		lisRegle: 'mesure-sommeAnglesEgaux1'
 		si:
 			'égal [ mesure ?x1 ] [ mesure ?x2 ]
-ordonneMot:et:rep1:rep2: [ mesure ?x1 ] [ mesure ?x2 ]   ?a ?b
-different:de: ?x1 ?x2'
-		alors: 'égal  [ somme ?a ?b ] [ double   [ mesure ?x1 ] '
+different:de: ?x1 ?x2
+ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1 ?x2'
+		alors: 'égal  [ somme ?x1 ?x2 ]  [ double   [ mesure ?x1 ] '
 		com:
 			'Si les  termes d''une somme sont égaux, la somme est le doule de l''un d''eux'.
-	"	e
+			
+"			e
 		lisRegle: 'mesure-sommeAnglesEgaux2'
 		si:
 			'égal [ mesure ?x1 ] [ mesure ?x2 ]
-ordonneMot:et:rep1:rep2: [ mesure ?x1 ] [ mesure ?x2 ]    ?a ?b
-different:de: ?x1 ?x2'
-		alors: 'égal  [ somme  ?a ?b ] [ double   [ mesure ?x2 ] ]'
+different:de: ?x1 ?x2
+ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1 ?x2'
+		alors: 'égal  [ somme ?x1 ?x2 ] [ double   [ mesure ?x2 ] '
 		com:
-			'Si les termes d''une somme sont égaux la somme est égale au double de l''un des terme'."
-	e
+			'Si les  termes d''une somme sont égaux, la somme est le doule de l''un d''eux'.
+			
+						
+			e
+		lisRegle: 'mesure-sommeAnglesEgaux3'
+		si:
+			'égal [ mesure ?x1 ] [ mesure ?x2 ]
+different:de: ?x1 ?x2
+ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1 ?x2'
+		alors: 'égal  [ somme ?x2 ?x1 ] [ double   [ mesure ?x2 ] '
+		com:
+			'Si les  termes d''une somme sont égaux, la somme est le doule de l''un d''eux'.
+						
+			e
+		lisRegle: 'mesure-sommeAnglesEgaux4'
+		si:
+			'égal [ mesure ?x1 ] [ mesure ?x2 ]
+different:de: ?x1 ?x2
+ordonneMot:et:rep1:rep2: ?x1 ?x2 ?x1 ?x2'
+		alors: 'égal  [ somme ?x2 ?x1 ] [ double   [ mesure ?x1 ] '
+		com:
+			'Si les  termes d''une somme sont égaux, la somme est le doule de l''un d''eux'."
+
+
+"	e
 		lisRegle: 'mesure-SommeDedoubles '
 		si:
 			' angle0 [  ?x1 ?o ?x2 ]  [ AuCentre: ?c ]
@@ -14431,8 +14473,9 @@ different:de:[ double ?x3 ]  ?x4'
 		si:
 			'égal  [ somme ?x1 ?x2 ] ?x3
 égal  [ somme ?x4  ?x2 ] ?x3
-different:de: ?x1 ?x4'
-		alors: 'égal ?x1 ?x4'
+different:de: ?x1 ?x4
+ordonneMot:et:rep1:rep2: ?x1 ?x4 ?a ?b '
+		alors: 'égal ?a ?b'
 		com:
 			'Si deux sommes sont égales et l''un des termes d''une somme est égal à un terme de l''autre somme, les autres termes sont égaux'.
 	e
@@ -14450,7 +14493,7 @@ different:de: ?x1 ?x4'
 égal  [ somme ?x4 ?x2 ] ?x3'
 		alors: 'égal ?x2 ?x4'
 		com:
-			'Si deux sommes sont égales et l''un des termes d''une somme est égal à un terme de l''autre somme, les autres termes sont égaux'.
+			'Si deux sommes sont égales et l''un des termes d''une somme est égal à un terme de l''autre somme, les autres termes sont égaux'."
 	e
 		lisRegle: 'mesure-rapportDouble'
 		si:
@@ -17297,7 +17340,7 @@ different:de: ?i1 ?i2'
 		com: 'Des segments de même directions  sont parallèles.'
 "! !
 
-!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 10/19/2026 23:43:28'!
+!ExpertRegle class methodsFor: 'rules' stamp: 'drgeo 11/13/2026 18:56:15'!
 polygones: e
 	e lisRegle: 'polygones-lignePolygonaleFermée'
 		si: 'lignePolygonaleCouple ?nom ?lp
@@ -17467,19 +17510,25 @@ com:  'Le nom d''une ligne polygonale'.
 
 
 
-
+"
 e lisRegle: 'polygones-lignePolygonaleFerméeNom' 
 si:  'lignePolygonaleFermée  ?x0
 ligne ?res   ?l' 
 alors:  'polygone ?res  ?x0'
-com:  'Le nom du polygone'.
+com:  'Le nom du polygone'."
 	
 	
-	e lisRegle: 'polygones-lignePolygonaleFerméeNom2' 
+	e lisRegle: 'polygones-lignePolygonaleFerméeNom' 
 si:  'lignePolygonaleFermée  ?x0
 premiers:rep: ?x0 ?prems
 créeNom:rep: ?prems ?res'
 alors:  'polygone ?res [ couples:  ?x0 ]'
+com:  'Les côtés du polygone comme couples'.
+
+	e lisRegle: 'polygones-lignePolygonaleFerméeMax' 
+si:  'lignePolygonaleFermée  ?x0
+'
+alors:  'polygone  [ couples:  ?x0 ]'
 com:  'Les côtés du polygone comme couples'.
 e
 		lisRegle: 'polygones-NomGrecPolygoneRégulier'

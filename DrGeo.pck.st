@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6452] on 4 November 2026 at 12:46:51 am'!
+'From Cuis7.1 [latest update: #6452] on 15 November 2026 at 2:01:47 pm'!
 'Description '!
-!provides: 'DrGeo' 1 753!
+!provides: 'DrGeo' 1 754!
 !requires: 'Gettext' 1 17 nil!
 !requires: 'SVG' 1 16 nil!
 !requires: 'YAXO' 1 19 nil!
@@ -30124,7 +30124,7 @@ self expertDisplayTutor: 'Expert' string: str style: true.
 expertDisplayTutor: titre string: str
 self expertDisplayTutor: titre string: str style: false.! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 8/29/2026 18:57:08'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 11/14/2026 20:46:39'!
 expertDisplayTutor: titre string: str style: st
 |fig  exp|
 "self halt."
@@ -30143,7 +30143,7 @@ fig affichage model actualContents: ( fig affichage model actualContents), '
 fig affichage moveTopRight .
 fig affichage windowLeft: 2090@0.
 	
-(((fig affichage submorphs first )submorphs first) submorphs at:2)scrollDown:500000000000.
+(((fig affichage submorphs first )submorphs first) submorphs at:2)scrollDown:50000000000000.
 .! !
 
 !DrGeo methodsFor: 'callback expert' stamp: 'drgeo 6/1/2025 00:54:16'!
