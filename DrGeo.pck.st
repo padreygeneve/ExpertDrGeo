@@ -1,6 +1,6 @@
-'From Cuis7.1 [latest update: #6452] on 19 March 2026 at 1:38:22 am'!
+'From Cuis7.1 [latest update: #6452] on 26 November 2026 at 11:34:51 pm'!
 'Description '!
-!provides: 'DrGeo' 1 752!
+!provides: 'DrGeo' 1 754!
 !requires: 'Gettext' 1 17 nil!
 !requires: 'SVG' 1 16 nil!
 !requires: 'YAXO' 1 19 nil!
@@ -12773,10 +12773,11 @@ delete
 	self view deleteWithoutConfirmation.
 	self release! !
 
-!DrGeoSketch methodsFor: 'initialize-release' stamp: 'drgeo 12/11/2025 18:45:59'!
+!DrGeoSketch methodsFor: 'initialize-release' stamp: 'drgeo 4/28/2026 21:13:03'!
 initialize
 	expert ifNil:[expert := Expert new. expert drgeo: self].	
 	expert indexNom:0.
+	expert chargeRegles: 'EuclideMinimum'.
 	wmenu :=false.
 	presenter := DrGeo service
 		stSketch: self;
@@ -30057,14 +30058,19 @@ e :=self  stSketch expert .
 	
 	ifFalse: [e com:true.self expertDisplay: 'Commentaires activés']! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/10/2025 02:39:01'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 4/20/2026 21:10:00'!
 expertDeductions 
 |f  e|
 f :=self stSketch .
 e:= f expert.
 self expertDisplayTutor: '			
-	exp deduis',
-e deduis.! !
+	exp deduis'.
+Utilities 	informUser: 'Patientez...' during: [ e deduis ]
+	
+
+
+
+ ! !
 
 !DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/12/2025 09:40:12'!
 expertDisplay: str
@@ -30118,7 +30124,7 @@ self expertDisplayTutor: 'Expert' string: str style: true.
 expertDisplayTutor: titre string: str
 self expertDisplayTutor: titre string: str style: false.! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 3/17/2026 21:21:20'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 11/14/2026 20:46:39'!
 expertDisplayTutor: titre string: str style: st
 |fig  exp|
 "self halt."
@@ -30137,7 +30143,7 @@ fig affichage model actualContents: ( fig affichage model actualContents), '
 fig affichage moveTopRight .
 fig affichage windowLeft: 2090@0.
 	
-(((fig affichage submorphs first )submorphs first) submorphs at:2)scrollDown:50000000.
+(((fig affichage submorphs first )submorphs first) submorphs at:2)scrollDown:50000000000000.
 .! !
 
 !DrGeo methodsFor: 'callback expert' stamp: 'drgeo 6/1/2025 00:54:16'!
@@ -30195,24 +30201,27 @@ expertInitRules
 	Règles initialisées'.
 ! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 15:23:44'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/13/2026 21:54:28'!
 expertInspect
-|f  e|
+|f  e t|
 
 f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
 f   affichage ifNil:[ self expertDisplayTutor: 'Initialisation de l''affichage.' ].
-self expertDisplayTutor: 'Examen de la figure.
-'.
+t := Time now.
+self expertDisplayTutor: ('Examen de la figure. 
+	'  ,t asString ) .
 f affichage ifNotNil:[
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
 
-self   expertDisplayModèles.]! !
+self   expertDisplayModèles.].
+self expertDisplayTutor: ('durée:  
+	'  ,(Time now  -t ) asString ).! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 18:21:28'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/13/2026 21:18:14'!
 expertInspect: titre
 |f  e|
 "self halt."
@@ -30220,27 +30229,29 @@ f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
 "f  exert affichage ifNil:[ self expertDisplayTutor: 'Initialisation de l''affichage.' ]."
-self expertDisplayTutor:titre string:'Examen de la figure.
-'.
+self expertDisplayTutor:titre string:'Examen de la figure test'..
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
 self   expertDisplayModèles.! !
 
-!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 10/14/2025 18:21:04'!
+!DrGeo methodsFor: 'callback expert' stamp: 'drgeo 9/13/2026 21:19:06'!
 expertInspect: titre style: st
-|f  e|
+|f  e t|
 "self halt."
 f :=self  stSketch .
 e:= f expert.
 e ifNil: [ e:= Expert new. f expert: e. e drgeo: f].
-self expertDisplayTutor:titre string:'Examen de la figure.' style: st.
+t := Time now.
+self expertDisplayTutor:titre string: ('Examen de la figure. test
+	'  ,t asString ) style: st.
 f affichage ifNotNil:[
 self   expertInitFacts.
 self  expertLoadFactsFigure.
 self  expertDeductions. 
-
-self   expertDisplayModèles.]! !
+self expertDisplayTutor:titre string:'Durée: ',(Time now -t ) asString style: st.
+self   expertDisplayModèles.]
+! !
 
 !DrGeo methodsFor: 'callback expert' stamp: 'drgeo 11/5/2025 10:56:51'!
 expertLoadFactsFigure
@@ -34691,6 +34702,10 @@ hexHtml
 !SequenceableCollection methodsFor: '*DrGeo' stamp: 'hlsf 2/24/2022 22:32:55'!
 shiftRight
 	^ self allButFirst, (Array with: self first)! !
+
+!String methodsFor: '*DrGeo' stamp: 'drgeo 8/9/2026 15:09:21'!
+asList
+^ ExpertList new: self! !
 
 !LinkedList methodsFor: '*DrGeo-Link' stamp: 'hlsf 4/11/2024 10:35:30'!
 add: aLink after: otherLink
